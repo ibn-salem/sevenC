@@ -13,7 +13,7 @@ parseBigWigToRle(inFile, seqInfo, format = "bigWig")
 \item{inFile}{Input file path or connection. See \code{con} paramter in
 \code{\link[rtracklayer]{import}} function.}
 
-\item{seqInfo}{A \cod\link{seqinfo} object defining the reference genome.}
+\item{seqInfo}{A \link{\code{seqinfo}} object defining the reference genome.}
 }
 \value{
 An RLE object with density values for each position in the genome.

@@ -8,7 +8,7 @@
 #'
 #' @param inFile Input file path or connection. See \code{con} paramter in
 #' \code{\link[rtracklayer]{import}} function.
-#' @param seqInfo A \cod\link{seqinfo} object defining the reference genome.
+#' @param seqInfo A \link{\code{seqinfo}} object defining the reference genome.
 #' @return An RLE object with density values for each position in the genome.
 #' @export
 parseBigWigToRle <- function(inFile, seqInfo, format="bigWig"){

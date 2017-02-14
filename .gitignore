@@ -5,3 +5,6 @@
 
 # ignore temporary raw data from ENCODE
 data-raw/GM12878_Stat1.bigWig
+
+# ignore full output of matrix-scan
+data-raw/hg19_MA0139.1.mrkv1.ms
