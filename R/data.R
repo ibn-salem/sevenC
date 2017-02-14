@@ -25,7 +25,6 @@
 #'
 #' The dataset was than filtered to contain only motif hists with
 #' p-value \eqn{\le 10^-5}.
-#' Any other sentence here.
 #'
 #' @format GRanges object with 132739 ranges on
 #'   positive and negative strnad indicated and 5 meta columns:
