@@ -17,8 +17,8 @@ parseBigWigToRle <- function(inFile, seqInfo, format="bigWig"){
   bwGR = rtracklayer::import(inFile, format=format)
 
   # set seqinfo object
-  GenomeInfoDB::seqlevels(bwGR) <- GenomeInfoDB::seqlevels(seqInfo)
-  GenomeInfoDB::seqinfo(bwGR) <- seqInfo
+  GenomeInfoDb::seqlevels(bwGR) <- GenomeInfoDb::seqlevels(seqInfo)
+  GenomeInfoDb::seqinfo(bwGR) <- seqInfo
 
   # compute coverage by using the score as weight
   bwCov = GenomicRanges::coverage(bwGR, weight="score")
