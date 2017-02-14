@@ -43,6 +43,8 @@ motif.hg19.CTCF <- GRanges(
   seqinfo=hg19seqInfo
 )
 
+motif.hg19.CTCF <- sort(motif.hg19.CTCF)
+
 motif.hg19.CTCF <- motif.hg19.CTCF[motif.hg19.CTCF$Pval <= 10^-5]
 
 print(object.size(motif.hg19.CTCF), unit="auto")
