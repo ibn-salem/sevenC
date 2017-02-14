@@ -14,6 +14,7 @@ Encoding: UTF-8
 LazyData: TRUE
 Imports: rtracklayer (>= 1.34.1),
     GenomeInfoDb (>= 1.10.3),
-    GenomicRanges (>= 1.26.2)
+    GenomicRanges (>= 1.26.2),
+    InteractionSet (>= 1.2.0)
 Suggests: testthat
 RoxygenNote: 6.0.1
