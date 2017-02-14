@@ -1,0 +1,14 @@
+Package: chromloop
+Type: Package
+Title: Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs
+Version: 0.0.0.9999
+Authors@R: person("Jonas", "Ibn-Salem", email = "j.ibn-salem@euni-mainz.de", role = c("aut", "cre"))
+Description: Chromatin looping interactions are an importent feature of
+  eukaryotic genomes and can bring regulatory sequences such as enhancers in
+  close physical proximity of regulated target genes.
+  Here we provide a tool that uses protein binding signals from ChIP-seq and
+  sequence motif information to predict chromatin looping events. It can be
+  used to associate binding sites of transcription factors to regulated genes.
+License: GPL-3
+Encoding: UTF-8
+LazyData: TRUE
