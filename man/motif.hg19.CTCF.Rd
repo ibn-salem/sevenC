@@ -67,6 +67,5 @@ page: \url{http://pedagogix-tagc.univ-mrs.fr/rsat/help.matrix-scan.html}
 
 The dataset was than filtered to contain only motif hists with
 p-value \eqn{\le 10^-5}.
-Any other sentence here.
 }
 \keyword{datasets}

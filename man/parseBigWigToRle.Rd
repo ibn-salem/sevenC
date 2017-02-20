@@ -16,7 +16,8 @@ parseBigWigToRle(inFile, seqInfo, format = "bigWig")
 \item{seqInfo}{A \link{\code{seqinfo}} object defining the reference genome.}
 }
 \value{
-An RLE object with density values for each position in the genome.
+An \code{\link{RleList}} object with density values for each
+position in the genome.
 }
 \description{
 The bigWig files contains read counts (or other dense, continouse data)
