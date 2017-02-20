@@ -18,7 +18,7 @@ test_that("getCisPairs works on small example dataset", {
 
   gi <- getCisPairs(inGR, 50)
 
-  expect_equal(length(gi), 6)
+  expect_equal(length(gi), 3)
 
   a1 <- InteractionSet::anchors(gi, type="first", id=TRUE)
   a2 <- InteractionSet::anchors(gi, type="second", id=TRUE)
@@ -100,13 +100,15 @@ test_that("applyToCloseGI runs on small example dataset", {
   expect_equal(names(S4Vectors::mcols(gi)), "value")
 
   # check that all cor values are correct
-  expect_equal(gi$value,
-               cor(t(as.matrix(InteractionSet::regions(gi)$cov)))[
-                 cbind(
-                   InteractionSet::anchors(gi, id=TRUE, type="first"),
-                   InteractionSet::anchors(gi, id=TRUE, type="second")
-               )]
-               )
+
+  expect_warning(
+    manualCor <- cor(t(as.matrix(InteractionSet::regions(gi)$cov)))[
+      cbind(
+        InteractionSet::anchors(gi, id=TRUE, type="first"),
+        InteractionSet::anchors(gi, id=TRUE, type="second")
+      )]
+  )
+  expect_equal(gi$value, manualCor)
 
 })
 
