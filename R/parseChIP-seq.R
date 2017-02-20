@@ -1,15 +1,15 @@
 
-#  Parse a bigWig file as RLE coverage object
+#'  Parse a bigWig file as RleList coverage object
 #'
 #' The bigWig files contains read counts (or other dense, continouse data)
 #' along the genome.
 #' The bigWig format is described here:
-#' https://genome.ucsc.edu/goldenpath/help/bigWig.html
+#' \url{https://genome.ucsc.edu/goldenpath/help/bigWig.html}
 #'
 #' @param inFile Input file path or connection. See \code{con} paramter in
 #' \code{\link[rtracklayer]{import}} function.
-#' @param seqInfo A \link{\code{seqinfo}} object defining the reference genome.
-#' @return An \code{\link{RleList}} object with density values for each
+#' @param seqInfo A \code{\link{seqinfo}} object defining the reference genome.
+#' @return An \code{\link[IRanges]{RleList}} object with density values for each
 #' position in the genome.
 #' @export
 parseBigWigToRle <- function(inFile, seqInfo, format="bigWig"){
@@ -39,7 +39,7 @@ parseBigWigToRle <- function(inFile, seqInfo, format="bigWig"){
 #' @param window the window size arund the center of ranges in \code{gr}.
 #' @param bin_size size of bins to which the coverage values are combined.
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional meta column containing the coverage values for each region.
-#'
+#' @export
 addCovToGR <- function(gr, cov, window=1000, bin_size=10, colname="cov"){
 
   # get windows around gr
@@ -51,11 +51,15 @@ addCovToGR <- function(gr, cov, window=1000, bin_size=10, colname="cov"){
     stop("Windows around regions extend out of chromosomal bounds.")
   }
 
-  # covGRL <- GenomicRanges::ranges(cov)
-  # ancWinR <- IRanges::restrict(ancWin, covGRL)
+  # check taht window reg does not extend range of coverage data
+  covRange <- sapply(cov, length)
+  winRange <- range(range(ancWin))
 
   # get numeric with coverage of each region
   covAnc <- IRanges::NumericList(cov[ancWin])
+
+  # reverse coverage vector for regons on minus strand
+  # TODO
 
   # add as additional column to GRanges object
   S4Vectors::mcols(gr)[,colname] <- covAnc

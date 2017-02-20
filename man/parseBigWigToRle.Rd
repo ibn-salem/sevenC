@@ -2,10 +2,7 @@
 % Please edit documentation in R/parseChIP-seq.R
 \name{parseBigWigToRle}
 \alias{parseBigWigToRle}
-\title{The bigWig files contains read counts (or other dense, continouse data)
-along the genome.
-The bigWig format is described here:
-https://genome.ucsc.edu/goldenpath/help/bigWig.html}
+\title{Parse a bigWig file as RleList coverage object}
 \usage{
 parseBigWigToRle(inFile, seqInfo, format = "bigWig")
 }
@@ -13,15 +10,15 @@ parseBigWigToRle(inFile, seqInfo, format = "bigWig")
 \item{inFile}{Input file path or connection. See \code{con} paramter in
 \code{\link[rtracklayer]{import}} function.}
 
-\item{seqInfo}{A \link{\code{seqinfo}} object defining the reference genome.}
+\item{seqInfo}{A \code{\link{seqinfo}} object defining the reference genome.}
 }
 \value{
-An \code{\link{RleList}} object with density values for each
+An \code{\link[IRanges]{RleList}} object with density values for each
 position in the genome.
 }
 \description{
 The bigWig files contains read counts (or other dense, continouse data)
 along the genome.
 The bigWig format is described here:
-https://genome.ucsc.edu/goldenpath/help/bigWig.html
+\url{https://genome.ucsc.edu/goldenpath/help/bigWig.html}
 }

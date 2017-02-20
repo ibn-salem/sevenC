@@ -33,9 +33,9 @@ test_that("addCovToGR on example dataset", {
       c(10, 20, 30),
       c(10, 30, 35)
     ),
-    seqinfo=GenomeInfoDb::Seqinfo(seqnames=c("chr1"),
-                                  seqlengths=c(200),
-                                  isCircular=c(FALSE),
+    seqinfo=GenomeInfoDb::Seqinfo(seqnames=c("chr1", "chr2"),
+                                  seqlengths=c(200, 200),
+                                  isCircular=c(FALSE, FALSE),
                                   genome="example")
   )
 
@@ -45,7 +45,7 @@ test_that("addCovToGR on example dataset", {
   expect_true(all(all(!is.na(grCov$covTest))))
   expect_equal(length(S4Vectors::mcols(grCov)[, "covTest"]), length(gr))
 
-  expect_equal(sum(grCov$covTest[1]), 0)
+  expect_equal(as.vector(sum(grCov$covTest[1])), 0)
 
 })
 

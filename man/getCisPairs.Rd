@@ -15,6 +15,10 @@ be sorted according to chr, strand, and start position. Use
 \item{maxDist}{maximal distance in base-pairs between pairs of ranges as
 single  numeric value.}
 }
+\value{
+A \code{\link[InteractionSet]{GInteractions}} object with all pairs
+  within the given distance.
+}
 \description{
 Build a \code{\link{GInteractions}} object with all pairs of input
 \code{\link{GRanges}} within a given distance.
