@@ -23,19 +23,29 @@ test_that("parseBigWigToRle on example dataset", {
 test_that("addCovToGR on example dataset", {
 
   cov <- IRanges::RleList(list(
-    "chr1"=rep(0, 1, 0, each=20),
+    "chr1"=rep(c(0, 1, 0), each=20),
     "chr22"=rep(c(0, 5, 1, 5, 0), each=10)
   ))
 
   gr <- GenomicRanges::GRanges(
     rep("chr1", 3),
     IRanges::IRanges(
-      c(0, 10, 10),
-      c(5, 10, 20)
-    )
+      c(10, 20, 30),
+      c(10, 30, 35)
+    ),
+    seqinfo=GenomeInfoDb::Seqinfo(seqnames=c("chr1"),
+                                  seqlengths=c(200),
+                                  isCircular=c(FALSE),
+                                  genome="example")
   )
 
-  grCov <- addCovToGR(gr, cov, window=10, bin_size=1)
+  grCov <- addCovToGR(gr, cov, window=10, bin_size=1, colname="covTest")
+
+  expect_equal(length(gr), length(grCov))
+  expect_true(all(all(!is.na(grCov$covTest))))
+  expect_equal(length(S4Vectors::mcols(grCov)[, "covTest"]), length(gr))
+
+  expect_equal(sum(grCov$covTest[1]), 0)
 
 })
 

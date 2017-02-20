@@ -40,17 +40,25 @@ parseBigWigToRle <- function(inFile, seqInfo, format="bigWig"){
 #' @param bin_size size of bins to which the coverage values are combined.
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional meta column containing the coverage values for each region.
 #'
-addCovToGR <- function(gr, cov, window=1000, bin_size=10){
+addCovToGR <- function(gr, cov, window=1000, bin_size=10, colname="cov"){
 
   # get windows around gr
   ancWin <- GenomicRanges::resize(gr, width=window, fix="center")
 
-  covGRL <- GenomicRanges::ranges(cov)
+  # check if extended regions are out of chromsome space
+  outOfBoundIdx <- GenomicRanges:::get_out_of_bound_index(ancWin)
+  if (length(outOfBoundIdx)>0) {
+    stop("Windows around regions extend out of chromosomal bounds.")
+  }
 
-  ancWinR <- GenomicRanges::restrict(ancWin, covGRL)
+  # covGRL <- GenomicRanges::ranges(cov)
+  # ancWinR <- IRanges::restrict(ancWin, covGRL)
 
   # get numeric with coverage of each region
   covAnc <- IRanges::NumericList(cov[ancWin])
 
+  # add as additional column to GRanges object
+  S4Vectors::mcols(gr)[,colname] <- covAnc
 
+  return(gr)
 }
