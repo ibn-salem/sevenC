@@ -123,7 +123,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
   #-----------------------------------------------------------------------------
   message("INFO: compute correlations for each group...")
 
-  covList <- mcols(InteractionSet::regions(gi))[,datcol]
+  covList <- S4Vectors::mcols(InteractionSet::regions(gi))[,datcol]
   datamat <- as.matrix(covList)
 
   corMatList <- lapply(1:length(binGR), function(i){
@@ -192,7 +192,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
   matches <- corDT[gpDT, on=c("id1", "id2"), mult="first"]
 
   #return(matches$val)
-  mcols(gi)[,colname] <- matches$val
+  S4Vectors::mcols(gi)[,colname] <- matches$val
 
   return(gi)
 }
