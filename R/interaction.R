@@ -1,6 +1,7 @@
 #' Build a \code{\link{GInteractions}} object with all pairs of input
 #' \code{\link{GRanges}} within a given distance.
 #'
+#' Distance is calculated from the center of input regions.
 #'
 #' @param inGR \code{\link{GRanges}} object of genomic regions. The ranges shuld
 #'   be sorted according to chr, strand, and start position. Use
@@ -16,19 +17,20 @@ getCisPairs <- function(inGR, maxDist=10^6){
   if( !all(inGR == sort(inGR))) stop("Input ranges inGR need to be sorted. Use
                                      sort(inGR) to sort it")
 
+  # get center postions of each input range
+  posGR <- GenomicRanges::resize(inGR, width=1, fix="center")
+
   # calculate overlap all possible gene pairs within maxDist bp
-  hits = GenomicRanges::findOverlaps(
-      inGR,
-      inGR,
-      maxgap=maxDist,
-      ignore.strand=TRUE)
+  hits <- GenomicRanges::findOverlaps(posGR,
+                      maxgap=maxDist,
+                      drop.redundant=TRUE,
+                      drop.self=TRUE,
+                      ignore.strand=TRUE)
 
-  # flag pairs with same range
-  sameReg <- S4Vectors::queryHits(hits) == S4Vectors::subjectHits(hits)
-
+  # build IntractionSet object
   gi <- InteractionSet::GInteractions(
-    S4Vectors::queryHits(hits)[!sameReg],
-    S4Vectors::subjectHits(hits)[!sameReg],
+    S4Vectors::queryHits(hits),
+    S4Vectors::subjectHits(hits),
     inGR,
     mode="strict"
   )
@@ -36,8 +38,6 @@ getCisPairs <- function(inGR, maxDist=10^6){
   # sort gi
   gi <- BiocGenerics::sort(gi)
 
-  # remove duplicates
-  gi <- unique(gi)
 
   # add distance
   gi$dist <- InteractionSet::pairdist(gi, type="mid")
