@@ -53,3 +53,26 @@ print(length(motif.hg19.CTCF))
 devtools::use_data(motif.hg19.CTCF, overwrite=TRUE)
 
 
+#-------------------------------------------------------------------------------
+# Download sample loops from Rao et al. 2014 study
+#-------------------------------------------------------------------------------
+loopURL <- "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE63nnn/GSE63525/suppl/GSE63525%5FGM12878%5Fprimary%2Breplicate%5FHiCCUPS%5Flooplist%5Fwith%5Fmotifs%2Etxt%2Egz"
+
+tmp <- tempfile()
+
+download.file(loopURL, tmp)
+
+df <- read.table(gzfile(tmp), header=TRUE)
+
+# filter for only chromosome 22 in some start region
+fltDF <- subset(df, chr1 == 22 &
+                  chr2 == 22 &
+                  x2 <= 18000000 &
+                  y2 <= 18000000)
+
+# save subset of file in inst/extdata as raw .txt file
+loopFinalFile <- "inst/extdata/GM12878_HiCCUPS.chr22_1-18000000.loop.txt"
+
+write.table(fltDF, file=loopFinalFile, col.names = TRUE, row.names=FALSE,
+            quote=FALSE, sep="\t")
+
