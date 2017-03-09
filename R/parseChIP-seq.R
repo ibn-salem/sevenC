@@ -51,9 +51,9 @@ addCovToGR <- function(gr, cov, window=1000, bin_size=10, colname="cov"){
     stop("Windows around regions extend out of chromosomal bounds.")
   }
 
-  # check taht window reg does not extend range of coverage data
-  covRange <- sapply(cov, length)
-  winRange <- range(range(ancWin))
+  # # check taht window reg does not extend range of coverage data
+  # covRange <- sapply(cov, length)
+  # winRange <- range(range(ancWin))
 
   # get numeric with coverage of each region
   covAnc <- IRanges::NumericList(cov[ancWin])
