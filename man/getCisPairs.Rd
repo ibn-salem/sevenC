@@ -20,6 +20,5 @@ A \code{\link[InteractionSet]{GInteractions}} object with all pairs
   within the given distance.
 }
 \description{
-Build a \code{\link{GInteractions}} object with all pairs of input
-\code{\link{GRanges}} within a given distance.
+Distance is calculated from the center of input regions.
 }
