@@ -2,7 +2,8 @@
 % Please edit documentation in R/parseInteractions.R
 \name{parseLoopsRao}
 \alias{parseLoopsRao}
-\title{Parse loops from Rao et al 2014 as two \code{\link{InteractionSet}} object.}
+\title{Parse chromatin loops from Rao et al 2014 as an \code{\link{InteractionSet}}
+object.}
 \usage{
 parseLoopsRao(inFile, ...)
 }
@@ -16,5 +17,6 @@ parseLoopsRao(inFile, ...)
 An code{\link{InteractionSet}} with loops from input file.
 }
 \description{
-Parse loops from Rao et al 2014 as two \code{\link{InteractionSet}} object.
+Parse chromatin loops from Rao et al 2014 as an \code{\link{InteractionSet}}
+object.
 }
