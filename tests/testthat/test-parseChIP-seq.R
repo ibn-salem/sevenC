@@ -48,3 +48,29 @@ test_that("addCovToGR on example dataset", {
 
 })
 
+test_that("addCovToGR handles out of chromosome coordinates by extension", {
+
+  cov <- IRanges::RleList(list(
+    "chr1" = rep(c(0, 1, 0), c(20, 20, 60))
+  ))
+
+  gr <- GenomicRanges::GRanges(
+    rep("chr1", 3),
+    IRanges::IRanges(
+      c(1,  20, 97),
+      c(1, 30, 97)
+    ),
+    seqinfo = GenomeInfoDb::Seqinfo(seqnames = c("chr1"),
+                                    seqlengths = c(100),
+                                    isCircular = c(FALSE),
+                                    genome = "exampleChr1")
+  )
+
+  grCov <- addCovToGR(gr, cov, window = 10, bin_size = 1, colname = "covTest")
+
+  expect_true(!is.null(grCov$covTest))
+  expect_equal(grCov$covTest[[1]], c(rep(NA, 5), rep(0, 5)))
+
+
+
+})

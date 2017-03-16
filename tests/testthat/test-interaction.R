@@ -34,15 +34,18 @@ test_that("coverage is added to gi on small example dataset", {
 
   regGR <- InteractionSet::regions(gi)
 
-  InteractionSet::regions(gi) <- addCovToGR(regGR,
-                            cov,
-                            window = 10,
-                            bin_size = 1,
-                            colname = "cov")
+  InteractionSet::regions(gi) <- addCovToGR(
+    regGR,
+    cov,
+    window = 10,
+    bin_size = 1,
+    colname = "cov")
 
 })
 
 test_that("getCisPairs works with whole CTCF motif data", {
+
+  skip("skipt test on whole CTCF motif data set for time.")
 
   # use internal motif data
   motifGR <- motif.hg19.CTCF
@@ -127,6 +130,8 @@ test_that("applyToCloseGI runs on small example dataset", {
 })
 
 test_that("interactions can be annotated with Hi-C loops", {
+
+  # skip("Skipt test on large files")
 
   # use internal motif data on chr22
   motifGR <- motif.hg19.CTCF[GenomeInfoDb::seqnames(motif.hg19.CTCF) == "chr22"]

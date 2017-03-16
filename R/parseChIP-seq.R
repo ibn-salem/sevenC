@@ -43,20 +43,46 @@ parseBigWigToRle <- function(inFile, seqInfo, format="bigWig"){
 addCovToGR <- function(gr, cov, window=1000, bin_size=10, colname="cov"){
 
   # get windows around gr
-  ancWin <- GenomicRanges::resize(gr, width=window, fix="center")
+  suppressWarnings(ancWin <- GenomicRanges::resize(gr, width=window, fix="center"))
 
   # check if extended regions are out of chromsome space
   outOfBoundIdx <- GenomicRanges:::get_out_of_bound_index(ancWin)
-  if (length(outOfBoundIdx)>0) {
-    stop("Windows around regions extend out of chromosomal bounds.")
-  }
+
+  # save length of left and right out-of-bound lengths
+  outGR <- ancWin[outOfBoundIdx]
+
+  outDF <- data.frame(
+    idx = outOfBoundIdx,
+    left = ifelse(GenomicRanges::start(outGR) <= 0,
+                  abs(GenomicRanges::start(outGR)) + 1,
+                  0),
+    right = ifelse(GenomicRanges::end(outGR) > GenomeInfoDb::seqlengths(outGR),
+                   abs(GenomicRanges::end(outGR) - GenomeInfoDb::seqlengths(outGR)),
+                   0)
+  )
+
+  # if (length(outOfBoundIdx) > 0) {
+  #   stop("Windows around regions extend out of chromosomal bounds.")
+  # }
 
   # # check taht window reg does not extend range of coverage data
   # covRange <- sapply(cov, length)
   # winRange <- range(range(ancWin))
 
+  # trim ranges to fint within chromosomes
+  ancWin <- GenomicRanges::trim(ancWin)
+
   # get numeric with coverage of each region
   covAnc <- IRanges::NumericList(cov[ancWin])
+
+  # add NAs for out of bound regions
+  covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){
+    covAnc[outDF$idx][[i]] <- c(
+      rep(NA, outDF[i, "left"]),
+      covAnc[outDF$idx][[i]],
+      rep(NA, outDF[i, "right"])
+    )
+  })
 
   # reverse coverage vector for regons on minus strand
   # TODO
@@ -65,4 +91,5 @@ addCovToGR <- function(gr, cov, window=1000, bin_size=10, colname="cov"){
   S4Vectors::mcols(gr)[,colname] <- covAnc
 
   return(gr)
+
 }
