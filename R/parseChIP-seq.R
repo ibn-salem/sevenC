@@ -112,14 +112,24 @@ addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
 
   # trim ranges to fint within chromosomes
   ancWin <- GenomicRanges::trim(ancWin)
-
+  
+  message("INFO: Start reading coverage from fiel: ", bwFile, " ...")
   # get numeric with coverage of each region
-  cov <- rtracklayer::import.bw(bwFile,
-                                which = ancWin,
-                                as = "RleList")
-
+  covGR <- rtracklayer::import.bw(
+    bwFile,
+    selection = rtracklayer::BigWigSelection(ancWin),
+    as = "GRanges")
+  message("INFO: Finished reading coverage from fiel: ", bwFile)
+  
+  # update covGR with seqinfo to allow subsetting with ancWin
+  GenomeInfoDb::seqlevels(covGR) <- GenomeInfoDb::seqlevels(ancWin) 
+  GenomeInfoDb::seqinfo(covGR) <- GenomeInfoDb::seqinfo(ancWin)
+  
+  covRle <- GenomicRanges::coverage(covGR, weight=covGR$score)
+    
   # get coverage as for all regions
-  covAnc <- IRanges::NumericList(cov[ancWin])
+  covAncRle <- covRle[ancWin]
+  covAnc <- IRanges::NumericList(covAncRle)
 
   # add NAs for out of bound regions
   covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){
