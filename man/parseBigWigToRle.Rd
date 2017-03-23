@@ -4,7 +4,7 @@
 \alias{parseBigWigToRle}
 \title{Parse a bigWig file as RleList coverage object}
 \usage{
-parseBigWigToRle(inFile, seqInfo, format = "bigWig")
+parseBigWigToRle(inFile, seqInfo, selectionGR = NULL)
 }
 \arguments{
 \item{inFile}{Input file path or connection. See \code{con} paramter in

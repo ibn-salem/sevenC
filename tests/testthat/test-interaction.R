@@ -13,6 +13,8 @@ cov <- IRanges::RleList(list(
   "chr22" = c(rep(c(0, 5, 1, 5, 0), each = 10), rep(0, 1000))
 ))
 
+bwFile <- file.path(tempdir(), "test.bw")
+rtracklayer::export.bw(cov, bwFile)
 
 test_that("getCisPairs works on small example dataset", {
 
@@ -36,7 +38,7 @@ test_that("coverage is added to gi on small example dataset", {
 
   InteractionSet::regions(gi) <- addCovToGR(
     regGR,
-    cov,
+    bwFile,
     window = 10,
     bin_size = 1,
     colname = "cov")
@@ -84,6 +86,9 @@ test_that("applyToCloseGI runs on small example dataset", {
     "chr1" = c(rep(0,4), 1:4, 4:1, rep(0,3), rep(1,4), 0, 1:3, 0, 0)
   ))
 
+  toyCovFile <- file.path(tempdir(), "toy.bw")
+  rtracklayer::export.bw(cov, toyCovFile)
+
   gr <- GenomicRanges::GRanges(
     rep("chr1", 4),
     IRanges::IRanges(
@@ -100,7 +105,7 @@ test_that("applyToCloseGI runs on small example dataset", {
   )
 
   InteractionSet::regions(gi) <- addCovToGR(InteractionSet::regions(gi),
-                                            cov,
+                                            toyCovFile,
                                             window = 4,
                                             bin_size = 1,
                                             colname = "cov")

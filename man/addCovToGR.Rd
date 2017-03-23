@@ -4,20 +4,22 @@
 \alias{addCovToGR}
 \title{Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.}
 \usage{
-addCovToGR(gr, cov, window = 1000, bin_size = 10, colname = "cov")
+addCovToGR(gr, bwFile, window = 1000, bin_size = 1, colname = "cov")
 }
 \arguments{
 \item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions}
 
-\item{cov}{\code{\link{RleList}} object with coverage for each chromosome. Such
-an object is returned from \code{\link{parseBigWigToRle}} function.}
+\item{bwFile}{File path or connection to BigWig file with coverage to parrse
+from.}
 
 \item{window}{the window size arund the center of ranges in \code{gr}.}
 
-\item{bin_size}{size of bins to which the coverage values are combined.}
+\item{bin_size}{size of bins to which the coverage values are combined. This
+is not implemented yet.}
 }
 \value{
-\code{\link[GenomicRanges]{GRanges}} as input but with an additional meta column containing the coverage values for each region.
+\code{\link[GenomicRanges]{GRanges}} as input but with an additional
+  meta column containing the coverage values for each region.
 }
 \description{
 This function adds a coverage vector to each range in a genomic ranges
