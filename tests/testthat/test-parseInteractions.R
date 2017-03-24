@@ -27,7 +27,3 @@ test_that("parseLoopsRao works toy genome as seqinfo", {
   expect_identical(GenomeInfoDb::seqinfo(gi), toySeqInfo)
 
 })
-
-
-n <- 10
-plot(1:n)
