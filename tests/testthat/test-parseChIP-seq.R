@@ -44,8 +44,8 @@ test_bw <- file.path(test_path, "test.bw")
 test_gr <- GenomicRanges::GRanges(
   rep("chr2", 3),
   IRanges::IRanges(
-    c(350, 700, 1300),
-    c(350, 700, 1300)
+    c(350, 900, 1300),
+    c(350, 900, 1300)
   ),
   seqinfo = GenomeInfoDb::Seqinfo(seqnames = c("chr2", "chr19"),
                                   seqlengths = c(3000, 3000),
@@ -135,6 +135,22 @@ test_that("addCovToGR handles input ranges without seqinfo object", {
   expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
   expect_true(all(sapply(grCov$covTest, length) == 10))
   expect_true(!any(is.na(grCov$covTest[[3]])))
+
+})
+
+
+test_that("addCovToGR reversed coverage for regions on negative strand.", {
+
+  stranedGR <- test_gr
+  GenomicRanges::strand(stranedGR) <- c("+", "-", "-")
+
+  grCov <- addCovToGR(test_gr, test_bw, window = 10, bin_size = 1,
+                      colname = "covTest")
+  stranedCov <- addCovToGR(stranedGR, test_bw, window = 10, bin_size = 1,
+                           colname = "covTest")
+
+  expect_equal(stranedCov$covTest[[2]], rev(grCov$covTest[[2]]) )
+  expect_equal(stranedCov$covTest[[1]], grCov$covTest[[1]])
 
 })
 

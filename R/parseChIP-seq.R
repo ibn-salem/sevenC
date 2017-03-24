@@ -44,7 +44,7 @@ parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
 
 #' Get out of chromosomal bound ranges.
 #'
-#' @parm gr A \code{GRanges} object.
+#' @param gr A \code{GRanges} object.
 #' @return A \code{data.frame} with rows for each range in \code{gr} that
 #'   extends out of chromosomes. The first colum holds the index of the range in
 #'   \code{gr}, the second the size of the overlap to the left of the chromsome
@@ -82,7 +82,7 @@ getOutOfBound <- function(gr){
 #'   character vector, it is assumed to be a filename and a corresponding file
 #'   connection is created
 #' @param ... Other parameters to pass to \code{\link[rtracklayer]{import.bw}}.
-#' @value RleList or other object defined by \code{as}.
+#' @return RleList or other object defined by \code{as}.
 parseBigWigCov <- function(inFile, as = "RleList", ...){
 
   cov = rtracklayer::import.bw(con = inFile, as = as, ...)
@@ -156,7 +156,9 @@ addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
   })
 
   # reverse coverage vector for regons on minus strand
-  # TODO
+  negStrand <- which(as.logical(GenomicRanges::strand(gr) == "-"))
+  covAnc[negStrand] <- lapply(covAnc[negStrand], rev)
+
 
   # add as additional column to GRanges object
   S4Vectors::mcols(gr)[,colname] <- covAnc
