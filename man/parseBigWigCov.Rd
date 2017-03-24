@@ -13,6 +13,9 @@ connection is created}
 
 \item{...}{Other parameters to pass to \code{\link[rtracklayer]{import.bw}}.}
 }
+\value{
+RleList or other object defined by \code{as}.
+}
 \description{
 Parse coverage for specific regions from bigWig file.
 }

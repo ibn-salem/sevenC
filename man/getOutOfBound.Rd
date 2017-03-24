@@ -6,6 +6,9 @@
 \usage{
 getOutOfBound(gr)
 }
+\arguments{
+\item{gr}{A \code{GRanges} object.}
+}
 \value{
 A \code{data.frame} with rows for each range in \code{gr} that
   extends out of chromosomes. The first colum holds the index of the range in
