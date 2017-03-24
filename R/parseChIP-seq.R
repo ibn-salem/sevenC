@@ -42,22 +42,34 @@ parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
 }
 
 
+#' Get out of chromosomal bound ranges.
+#'
+#' @parm gr A \code{GRanges} object.
+#' @return A \code{data.frame} with rows for each range in \code{gr} that
+#'   extends out of chromosomes. The first colum holds the index of the range in
+#'   \code{gr}, the second the size of the overlap to the left of the chromsome
+#'   and the third the sieze of the overlap to the right of the chromosme.
 getOutOfBound <- function(gr){
 
   # check if extended regions are out of chromsome space
   outOfBoundIdx <- GenomicRanges:::get_out_of_bound_index(gr)
+  negIdx <- which( GenomicRanges::start(gr) <= 0 )
+
+  outIdx <- union(outOfBoundIdx, negIdx)
 
   # save length of left and right out-of-bound lengths
-  outGR <- gr[outOfBoundIdx]
+  outGR <- gr[outIdx]
 
   outDF <- data.frame(
-    idx = outOfBoundIdx,
-    left = ifelse(GenomicRanges::start(outGR) <= 0,
-                  abs(GenomicRanges::start(outGR)) + 1,
-                  0),
-    right = ifelse(GenomicRanges::end(outGR) > GenomeInfoDb::seqlengths(outGR),
-                   abs(GenomicRanges::end(outGR) - GenomeInfoDb::seqlengths(outGR)),
-                   0)
+    idx = outIdx,
+    left = ifelse(
+      GenomicRanges::start(outGR) <= 0,
+      abs(GenomicRanges::start(outGR)) + 1,
+      0),
+    right = ifelse(
+      GenomicRanges::end(outGR) > GenomeInfoDb::seqlengths(outGR) & !is.na(GenomeInfoDb::seqlengths(outGR)),
+      abs(GenomicRanges::end(outGR) - GenomeInfoDb::seqlengths(outGR)),
+      0)
   )
 
   return(outDF)
@@ -80,9 +92,10 @@ parseBigWigCov <- function(inFile, as = "RleList", ...){
 
 #' Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.
 #'
-#' This function adds a coverage vector to each range in a genomic ranges
-#' object. The coverage is reported for a fixed-sized window around the region
-#' center and is reversed in case of negative strand of the region.
+#' This function adds a vector of coverage (or any other signal in the input
+#' bigWig file) to each range in a genomic ranges object. The coverage is
+#' reported for a fixed-sized window around the region center. For regions with
+#' negative strand, the coverage vector is reversed.
 #'
 #' @param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
 #' @param bwFile File path or connection to BigWig file with coverage to parrse
@@ -95,38 +108,40 @@ parseBigWigCov <- function(inFile, as = "RleList", ...){
 #' @export
 addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
 
-  # get windows around gr
+  # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
     ancWin <- GenomicRanges::resize(gr, width = window, fix = "center")
-    )
+  )
 
+  # Because quering coverage result in error for ranges outisde chromosome we
+  # need to get intervals defined outside of chromosomes
   outDF <- getOutOfBound(ancWin)
-
-  # if (length(outOfBoundIdx) > 0) {
-  #   stop("Windows around regions extend out of chromosomal bounds.")
-  # }
-
-  # # check taht window reg does not extend range of coverage data
-  # covRange <- sapply(cov, length)
-  # winRange <- range(range(ancWin))
 
   # trim ranges to fint within chromosomes
   ancWin <- GenomicRanges::trim(ancWin)
-  
-  message("INFO: Start reading coverage from fiel: ", bwFile, " ...")
+
+  # trim start in case there is no seqinof object
+  GenomicRanges::start(ancWin) <- ifelse(
+    GenomicRanges::start(ancWin) > 0,
+    GenomicRanges::start(ancWin),
+    1)
+
+  message("INFO: Start reading coverage from file: ", bwFile, " ...")
   # get numeric with coverage of each region
   covGR <- rtracklayer::import.bw(
     bwFile,
     selection = rtracklayer::BigWigSelection(ancWin),
     as = "GRanges")
   message("INFO: Finished reading coverage from fiel: ", bwFile)
-  
+
   # update covGR with seqinfo to allow subsetting with ancWin
-  GenomeInfoDb::seqlevels(covGR) <- GenomeInfoDb::seqlevels(ancWin) 
-  GenomeInfoDb::seqinfo(covGR) <- GenomeInfoDb::seqinfo(ancWin)
-  
-  covRle <- GenomicRanges::coverage(covGR, weight=covGR$score)
-    
+  if ( !any(is.na(GenomeInfoDb::seqlengths(ancWin))) ) {
+    GenomeInfoDb::seqlevels(covGR) <- GenomeInfoDb::seqlevels(ancWin)
+    GenomeInfoDb::seqinfo(covGR) <- GenomeInfoDb::seqinfo(ancWin)
+  }
+
+  covRle <- GenomicRanges::coverage(covGR, weight = covGR$score)
+
   # get coverage as for all regions
   covAncRle <- covRle[ancWin]
   covAnc <- IRanges::NumericList(covAncRle)

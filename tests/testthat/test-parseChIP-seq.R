@@ -96,7 +96,7 @@ test_that("addCovToGR on example dataset", {
 
 })
 
-test_that("addCovToGR handles out of chromosome coordinates by extension", {
+test_that("addCovToGR handles out of chromosome coordinates", {
 
   out_gr <- GenomicRanges::GRanges(
     rep("chr2", 3),
@@ -117,3 +117,24 @@ test_that("addCovToGR handles out of chromosome coordinates by extension", {
   expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
   expect_true(all(sapply(grCov$covTest, length) == 10))
 })
+
+test_that("addCovToGR handles input ranges without seqinfo object", {
+
+  out_gr <- GenomicRanges::GRanges(
+    rep("chr2", 3),
+    IRanges::IRanges(
+      c(2, 700, 2999),
+      c(2, 700, 2999)
+    )
+  )
+
+  grCov <- addCovToGR(out_gr, test_bw, window = 10, bin_size = 1,
+                      colname = "covTest")
+
+  expect_true(!is.null(grCov$covTest))
+  expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
+  expect_true(all(sapply(grCov$covTest, length) == 10))
+  expect_true(!any(is.na(grCov$covTest[[3]])))
+
+})
+

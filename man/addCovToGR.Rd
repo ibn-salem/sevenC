@@ -22,7 +22,8 @@ is not implemented yet.}
   meta column containing the coverage values for each region.
 }
 \description{
-This function adds a coverage vector to each range in a genomic ranges
-object. The coverage is reported for a fixed-sized window around the region
-center and is reversed in case of negative strand of the region.
+This function adds a vector of coverage (or any other signal in the input
+bigWig file) to each range in a genomic ranges object. The coverage is
+reported for a fixed-sized window around the region center. For regions with
+negative strand, the coverage vector is reversed.
 }
