@@ -84,6 +84,33 @@ test_that("getCisPairs works on small example dataset", {
 
 })
 
+test_that("getCisPairs returns divergent pairs", {
+
+  gr <- GenomicRanges::GRanges(
+    rep("chr1", 4),
+    IRanges::IRanges(
+      c(5, 15, 1, 20),
+      c(8, 18, 4, 23)
+    ),
+    strand = c("+", "+", "-", "-"),
+    seqinfo = toySeqInfo
+  )
+
+  gi <- getCisPairs(gr, maxDist=10)
+
+  gi <- addStrandCombination(gi)
+
+  # test that idx 1 and 3 are contained
+  anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
+  anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+
+  expect_true(any(anc1 == 1 & anc2 == 3))
+
+  int1_3 <- which(anc1 == 1 & anc2 == 3)
+
+  expect_equal(gi$strandOrientation[int1_3], "divergent")
+
+})
 
 test_that("coverage is added to gi on small example dataset", {
 

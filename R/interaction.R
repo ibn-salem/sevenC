@@ -234,8 +234,16 @@ addInteractionSupport <- function(gi, subject, colname, ...){
 #' @export
 addStrandCombination <- function(gi, colname = "strandOrientation"){
 
-  first <- InteractionSet::anchors(gi, type = "first", id = TRUE)
-  second <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+  anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
+  anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+
+  # because interactions in GInteraction are sorted that + strand comes first
+  # we need to make sure that the more upstream anchor region is taken as first
+  ancStart <- GenomicRanges::start(InteractionSet::regions(gi))
+  anc1First <- ancStart[anc1] <= ancStart[anc2]
+
+  first <- ifelse(anc1First, anc1, anc2)
+  second <- ifelse(anc1First, anc2, anc1)
 
   ancStrand <- GenomicRanges::strand(InteractionSet::regions(gi))
 
