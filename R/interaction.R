@@ -221,4 +221,33 @@ addInteractionSupport <- function(gi, subject, colname, ...){
 }
 
 
+#' Add combination of anchor strand orientation.
+#'
+#' Each anchor region has a strand that is \code{'+'} or \code{'-'}. Threfore
+#' the each interaction between two regions has one of the following strand
+#' combinations: "forward", "reverse", "convergent", or "divergent". Unstranded
+#' ragnes, indicated by (\code{*}), are treated as positive strand.
+#' @param gi \code{\link{GenomicInteraction}}
+#' @return The same \code{\link{GenomicInteraction}} as \code{gi} but with an
+#'   additonal column indicating the four possible combinations of strands
+#'   "forward", "reverse", "convergent", or "divergent".
+#' @export
+addStrandCombination <- function(gi, colname = "strandOrientation"){
+
+  first <- InteractionSet::anchors(gi, type = "first", id = TRUE)
+  second <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+
+  ancStrand <- GenomicRanges::strand(InteractionSet::regions(gi))
+
+  sameStrand <- ancStrand[first] == ancStrand[second]
+  firstPos <- as.character(ancStrand[first]) %in% c("+", "*")
+
+  S4Vectors::mcols(gi)[sameStrand & firstPos, colname] <- "forward"
+  S4Vectors::mcols(gi)[sameStrand & !firstPos, colname] <- "reverse"
+  S4Vectors::mcols(gi)[!sameStrand & firstPos, colname] <- "convergent"
+  S4Vectors::mcols(gi)[!sameStrand & !firstPos, colname] <- "divergent"
+
+  return(gi)
+}
+
 

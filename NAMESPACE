@@ -2,6 +2,7 @@
 
 export(addCovToGR)
 export(addInteractionSupport)
+export(addStrandCombination)
 export(applyToCloseGI)
 export(getCisPairs)
 export(parseBigWigToRle)

@@ -1,5 +1,8 @@
 context("interactions")
 
+
+# Example input data ------------------------------------------------------
+
 inGR <- GenomicRanges::GRanges(
   rep("chr1", 5),
   IRanges::IRanges(
@@ -15,6 +18,58 @@ cov <- IRanges::RleList(list(
 
 bwFile <- file.path(tempdir(), "test.bw")
 rtracklayer::export.bw(cov, bwFile)
+
+
+# Toy example data set ----------------------------------------------------
+
+
+#'      4-|       XX
+#'      3-|      XXXX            X
+#'      2-|     XXXXXX          XX
+#'      1-|    XXXXXXXX   XXXX XXX
+#' chr1   |1...5....1....1....2....2
+#'                  0    5    0    5
+#'         <--><-->     <-->  <-->
+#' grWin     1   2        4     3
+#' strand    +   +        -     +
+#'
+#' pairs:
+#' 1 4
+#' 2 4
+#' 2 3
+
+toySeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1"),
+                                        seqlengths = c(25),
+                                        isCircular = c(FALSE),
+                                        genome = "example")
+
+toyCov <- IRanges::RleList(list(
+  "chr1" = c(rep(0,4), 1:4, 4:1, rep(0,3), rep(1,4), 0, 1:3, 0, 0)
+))
+
+toyCovFile <- file.path(tempdir(), "toy.bw")
+rtracklayer::export.bw(toyCov, toyCovFile)
+
+toyGR <- GenomicRanges::GRanges(
+  rep("chr1", 4),
+  IRanges::IRanges(
+    c(1, 5, 20, 15),
+    c(4, 8, 23, 18)
+  ),
+  strand = c("+", "+", "-", "+"),
+  seqinfo = toySeqInfo
+)
+
+toyGI <- InteractionSet::GInteractions(
+  c(1, 2, 2),
+  c(4, 4, 3),
+  toyGR
+)
+
+
+# Tests -------------------------------------------------------------------
+
+
 
 test_that("getCisPairs works on small example dataset", {
 
@@ -60,77 +115,36 @@ test_that("getCisPairs works with whole CTCF motif data", {
 
 })
 
-test_that("applyToCloseGI runs on small example dataset", {
+test_that("applyToCloseGI runs on toy example dataset", {
 
-  #'      4-|       XX
-  #'      3-|      XXXX            X
-  #'      2-|     XXXXXX          XX
-  #'      1-|    XXXXXXXX   XXXX XXX
-  #' chr1   |1...5....1....1....2....2
-  #'                  0    5    0    5
-  #'         <--><-->     <-->  <-->
-  #' grWin     1   2        3     4
-  #' strand    +   +        -     +
-  #'
-  #' pairs:
-  #' 1 3
-  #' 2 3
-  #' 2 4
 
-  exampleSeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1"),
-                                seqlengths = c(25),
-                                isCircular = c(FALSE),
-                                genome = "example")
-
-  cov <- IRanges::RleList(list(
-    "chr1" = c(rep(0,4), 1:4, 4:1, rep(0,3), rep(1,4), 0, 1:3, 0, 0)
-  ))
-
-  toyCovFile <- file.path(tempdir(), "toy.bw")
-  rtracklayer::export.bw(cov, toyCovFile)
-
-  gr <- GenomicRanges::GRanges(
-    rep("chr1", 4),
-    IRanges::IRanges(
-      c(1, 5, 15, 20),
-      c(4, 8, 18, 23)
-    ),
-    seqinfo = exampleSeqInfo
-  )
-
-  gi <- InteractionSet::GInteractions(
-      c(1, 2, 2),
-      c(3, 3, 4),
-      gr
-  )
-
-  InteractionSet::regions(gi) <- addCovToGR(InteractionSet::regions(gi),
+  InteractionSet::regions(toyGI) <- addCovToGR(InteractionSet::regions(toyGI),
                                             toyCovFile,
                                             window = 4,
                                             bin_size = 1,
                                             colname = "cov")
 
   #
-  l <- InteractionSet::regions(gi)$cov
+  l <- InteractionSet::regions(toyGI)$cov
 
-  ncolBefore <- ncol(S4Vectors::mcols(gi))
+  ncolBefore <- ncol(S4Vectors::mcols(toyGI))
 
-  gi <- applyToCloseGI(gi, "cov", fun = cor, colname = "value")
+  toyGI <- applyToCloseGI(toyGI, "cov", fun = cor, colname = "value")
 
   # check that exactly one column is added
-  expect_equal(ncol(S4Vectors::mcols(gi)), ncolBefore + 1)
-  expect_equal(names(S4Vectors::mcols(gi)), "value")
+  expect_equal(ncol(S4Vectors::mcols(toyGI)), ncolBefore + 1)
+  expect_equal(names(S4Vectors::mcols(toyGI)), "value")
 
   # check that all cor values are correct
 
   expect_warning(
-    manualCor <- cor(t(as.matrix(InteractionSet::regions(gi)$cov)))[
+    manualCor <- cor(t(as.matrix(InteractionSet::regions(toyGI)$cov)))[
       cbind(
-        InteractionSet::anchors(gi, id = TRUE, type = "first"),
-        InteractionSet::anchors(gi, id = TRUE, type = "second")
+        InteractionSet::anchors(toyGI, id = TRUE, type = "first"),
+        InteractionSet::anchors(toyGI, id = TRUE, type = "second")
       )]
   )
-  expect_equal(gi$value, manualCor)
+  expect_equal(toyGI$value, manualCor)
 
 })
 
@@ -157,5 +171,15 @@ test_that("interactions can be annotated with Hi-C loops", {
   ovl <- InteractionSet::countOverlaps(gi, loopGI, type = "within") >= 1
 
   S4Vectors::mcols(gi)[,"loop"] <- ovl
+
+})
+
+
+test_that("addStrandCombination works for straned and unstraed ranges", {
+
+  # TODO: implement test
+  toyGI <- addStrandCombination(toyGI)
+
+
 
 })
