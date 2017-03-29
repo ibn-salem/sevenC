@@ -19,3 +19,4 @@ Imports: rtracklayer (>= 1.34.1),
     data.table (>= 1.10.4)
 Suggests: testthat
 RoxygenNote: 6.0.1
+Depends: InteractionSet
