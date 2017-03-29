@@ -62,11 +62,12 @@ noZeroVar <- function(dat) {
 #' Apply a function to pairs of close genomic regions.
 #'
 #' This function adds a vector with the resulting functin call for each input
-#' interaction.
+#' interaction. Only works for input interaction within the given \code{maxDist}
+#' distance
 #'
 #'
 #' @param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
-#' @param datacol a string matching an annotation column in \code{regions(gi)}.
+#' @param datcol a string matching an annotation column in \code{regions(gi)}.
 #'   This collumn is assumed to hold the same number of values for each
 #'   interaction \code{NumericList}.
 #' @param fun A function that takes two numeric vectors as imput to compute a
@@ -93,11 +94,12 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
 
   # check input
   if ( any(is.na(GenomeInfoDb::seqlengths(gi))) ) stop("gi object need seqlengths.")
+  if ( !is(gi, "StrictGInteractions") ) stop("gi should be of class StrictGInteractions")
 
   #-----------------------------------------------------------------------------
   # (0) define maxDist
   #-----------------------------------------------------------------------------
-  if(is.null(maxDist)){
+  if( is.null(maxDist) ){
     maxDist <- max(InteractionSet::pairdist(gi))
   }else{
     if(maxDist < max(InteractionSet::pairdist(gi))) stop("maxDist is smaller than maximal distance between interactions in input gi.")
@@ -134,7 +136,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
     # get regions in this bin
     regIdx <- S4Vectors::subjectHits(hits)[S4Vectors::queryHits(hits) == i]
 
-    if (length(regIdx) == 1){
+    if (length(regIdx) == 1) {
       dat <- cbind(datamat[regIdx,])
     }else{
       dat <- t(datamat[regIdx,])
@@ -146,7 +148,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
     n = length(subIdx)
 
     # compute pairwise correlations for all regions in this bin
-    if (n != 1){
+    if (n != 1) {
 
       m <- cor(dat[,subIdx])
 
@@ -159,7 +161,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
     # constract data.table object for all pairs
     corDT <- data.table::data.table(
       rep(regIdx[subIdx], n),
-      rep(regIdx[subIdx], each=n),
+      rep(regIdx[subIdx], each = n),
       array(m)
     )
 
@@ -178,14 +180,14 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
 
   # names(corDF) <- c("id1", "id2", "val")
   names(corDT) <- c("id1", "id2", "val")
-  data.table::setkeyv(corDT, cols=c("id1", "id2"))
+  data.table::setkeyv(corDT, cols = c("id1", "id2"))
 
   # convert gp into data.table and set keys to id1 and id2 columns
   #names(gp)[1:2] <- c("id1", "id2")
   gpDT <- data.table::data.table(
-    id1 = InteractionSet::anchors(gi, type="first", id=TRUE),
-    id2 = InteractionSet::anchors(gi, type="second", id=TRUE),
-    key=c("id1", "id2")
+    id1 = InteractionSet::anchors(gi, type = "first", id = TRUE),
+    id2 = InteractionSet::anchors(gi, type = "second", id = TRUE),
+    key = c("id1", "id2")
   )
 
   message("INFO: Query correlation for input pairs...")

@@ -29,6 +29,7 @@ rtracklayer::export.bw(cov, bwFile)
 #'      1-|    XXXXXXXX   XXXX XXX
 #' chr1   |1...5....1....1....2....2
 #'                  0    5    0    5
+#'         0000123443210001111012300
 #'         <--><-->     <-->  <-->
 #' grWin     1   2        4     3
 #' strand    +   +        -     +
@@ -53,17 +54,18 @@ rtracklayer::export.bw(toyCov, toyCovFile)
 toyGR <- GenomicRanges::GRanges(
   rep("chr1", 4),
   IRanges::IRanges(
-    c(1, 5, 20, 15),
-    c(4, 8, 23, 18)
+    c(1, 5, 20, 14),
+    c(4, 8, 23, 17)
   ),
-  strand = c("+", "+", "-", "+"),
+  strand = c("+", "+", "+", "-"),
   seqinfo = toySeqInfo
 )
 
 toyGI <- InteractionSet::GInteractions(
   c(1, 2, 2),
-  c(4, 4, 3),
-  toyGR
+  c(4, 3, 4),
+  toyGR,
+  mode = "strict"
 )
 
 
@@ -151,9 +153,6 @@ test_that("applyToCloseGI runs on toy example dataset", {
                                             bin_size = 1,
                                             colname = "cov")
 
-  #
-  l <- InteractionSet::regions(toyGI)$cov
-
   ncolBefore <- ncol(S4Vectors::mcols(toyGI))
 
   toyGI <- applyToCloseGI(toyGI, "cov", fun = cor, colname = "value")
@@ -164,13 +163,16 @@ test_that("applyToCloseGI runs on toy example dataset", {
 
   # check that all cor values are correct
 
-  expect_warning(
-    manualCor <- cor(t(as.matrix(InteractionSet::regions(toyGI)$cov)))[
-      cbind(
-        InteractionSet::anchors(toyGI, id = TRUE, type = "first"),
-        InteractionSet::anchors(toyGI, id = TRUE, type = "second")
-      )]
+  covLst <- InteractionSet::regions(toyGI)$cov
+  pairIdx <- cbind(
+    InteractionSet::anchors(toyGI, id = TRUE, type = "first"),
+    InteractionSet::anchors(toyGI, id = TRUE, type = "second")
   )
+  expect_warning(
+    corMat <- cor(t(as.matrix(covLst)))
+  )
+  manualCor <- corMat[pairIdx]
+
   expect_equal(toyGI$value, manualCor)
 
 })
