@@ -1,4 +1,4 @@
-
+require(tidyverse)
 
 #-------------------------------------------------------------------------------
 # Download an exampel bigWig file from ENCODE
@@ -74,5 +74,31 @@ fltDF <- subset(df, chr1 == 22 &
 loopFinalFile <- "inst/extdata/GM12878_HiCCUPS.chr22_1-18000000.loop.txt"
 
 write.table(fltDF, file=loopFinalFile, col.names = TRUE, row.names=FALSE,
+            quote=FALSE, sep="\t")
+
+
+
+#-------------------------------------------------------------------------------
+# Download sample ChIA-pet data from Tang et al 2015 Cell
+#-------------------------------------------------------------------------------
+loopURL <- "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1872nnn/GSM1872886/suppl/GSM1872886%5FGM12878%5FCTCF%5FPET%5Fclusters.txt.gz"
+
+tmp <- tempfile()
+
+
+download.file(loopURL, tmp)
+
+df <- read.table(gzfile(tmp), header = FALSE)
+
+# filter for only chromosome 22 in some start region
+fltDF <- subset(df, V1 == "chr22" &
+                  V4 == "chr22" &
+                  V3 <= 18000000 &
+                  V6 <= 18000000)
+
+# save subset of file in inst/extdata as raw .txt file
+loopFinalFile <- "inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt"
+
+write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names=FALSE,
             quote=FALSE, sep="\t")
 
