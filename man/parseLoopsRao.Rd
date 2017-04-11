@@ -2,21 +2,21 @@
 % Please edit documentation in R/parseInteractions.R
 \name{parseLoopsRao}
 \alias{parseLoopsRao}
-\title{Parse chromatin loops from Rao et al 2014 as an \code{\link{InteractionSet}}
+\title{Parse chromatin loops from Rao et al 2014 as an \code{\link{GInteractions}}
 object.}
 \usage{
 parseLoopsRao(inFile, ...)
 }
 \arguments{
+\item{inFile}{input file with loops}
+
 \item{...}{additional arguments, that will be passed to
 \code{\link{GRanges()}} functions.}
-
-\item{infile}{input file with loops}
 }
 \value{
-An code{\link{InteractionSet}} with loops from input file.
+An \code{\link{GInteractions}} with loops from input file.
 }
 \description{
-Parse chromatin loops from Rao et al 2014 as an \code{\link{InteractionSet}}
+Parse chromatin loops from Rao et al 2014 as an \code{\link{GInteractions}}
 object.
 }
