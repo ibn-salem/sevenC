@@ -200,24 +200,26 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
 }
 
 
-#' Add column to \code{\link{GenomicInteraction}} with overlap support.
+#' Add column to \code{\link{GInteractions}} with overlap support.
 #'
 #' See overlap methods in \code{\link{InteractionSet}} package for more details
 #' on the oberlap calculations: \code{?InteractionSet::overlapsAny}
 #'
-#' @param gi \code{\link{GenomicInteraction}} object
-#' @param subject another \code{\link{GenomicInteraction}} object
+#' @param gi \code{\link{GInteractions}} object
+#' @param subject another \code{\link{GInteractions}} object
 #' @param colname name of the new annotation columm in \code{gi}.
 #' @param ... addtional arguments passed to \code{\link{IRanges::overlapsAny}}.
 #' @return \code{\link{InteractionSet}} \code{gi} as input but with additonal
-#'   annotation column \code{colname} indicationg whthere there each interaction
+#'   annotation column \code{colname} indicationg whether each interaction
 #'   is supported by \code{subject} or not.
 #' @export
 addInteractionSupport <- function(gi, subject, colname, ...){
 
   ol <- IRanges::overlapsAny(gi, subject, ...)
 
-  gi$Loop_Rao_GM12878 <- factor(ol, c(FALSE, TRUE), c("No loop", "Loop"))
+  S4Vector::mcols(gi)[,colname] <- factor(ol,
+                                          c(FALSE, TRUE),
+                                          c("No loop", "Loop"))
 
   return(gi)
 }
@@ -229,8 +231,8 @@ addInteractionSupport <- function(gi, subject, colname, ...){
 #' the each interaction between two regions has one of the following strand
 #' combinations: "forward", "reverse", "convergent", or "divergent". Unstranded
 #' ragnes, indicated by (\code{*}), are treated as positive strand.
-#' @param gi \code{\link{GenomicInteraction}}
-#' @return The same \code{\link{GenomicInteraction}} as \code{gi} but with an
+#' @param gi \code{\link{GInteractions}}
+#' @return The same \code{\link{GInteractions}} as \code{gi} but with an
 #'   additonal column indicating the four possible combinations of strands
 #'   "forward", "reverse", "convergent", or "divergent".
 #' @export
