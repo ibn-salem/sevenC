@@ -213,11 +213,11 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
 #'   annotation column \code{colname} indicationg whether each interaction
 #'   is supported by \code{subject} or not.
 #' @export
-addInteractionSupport <- function(gi, subject, colname, ...){
+addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 
   ol <- IRanges::overlapsAny(gi, subject, ...)
 
-  S4Vector::mcols(gi)[,colname] <- factor(ol,
+  S4Vectors::mcols(gi)[,colname] <- factor(ol,
                                           c(FALSE, TRUE),
                                           c("No loop", "Loop"))
 

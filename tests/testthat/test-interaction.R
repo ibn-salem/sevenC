@@ -203,12 +203,23 @@ test_that("interactions can be annotated with Hi-C loops", {
 
 })
 
+test_that("addInteractionSupport works with toy example", {
+
+  toySupport <- InteractionSet::GInteractions(
+    GenomicRanges::GRanges("chr1", IRanges::IRanges(1, 4)),
+    GenomicRanges::GRanges("chr1", IRanges::IRanges(15, 20))
+  )
+
+  toyGI <- addInteractionSupport(toyGI, toySupport)
+
+  expect_equal(toyGI$loop == "Loop", c(TRUE, FALSE, FALSE))
+
+})
 
 test_that("addStrandCombination works for straned and unstraed ranges", {
 
-  # TODO: implement test
+  skip("TODO: implement test")
+
   toyGI <- addStrandCombination(toyGI)
-
-
 
 })
