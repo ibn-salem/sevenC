@@ -1,4 +1,3 @@
-require(tidyverse)
 
 #-------------------------------------------------------------------------------
 # Download an exampel bigWig file from ENCODE
