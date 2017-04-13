@@ -7,10 +7,10 @@
 addStrandCombination(gi, colname = "strandOrientation")
 }
 \arguments{
-\item{gi}{\code{\link{GenomicInteraction}}}
+\item{gi}{\code{\link{GInteractions}}}
 }
 \value{
-The same \code{\link{GenomicInteraction}} as \code{gi} but with an
+The same \code{\link{GInteractions}} as \code{gi} but with an
   additonal column indicating the four possible combinations of strands
   "forward", "reverse", "convergent", or "divergent".
 }

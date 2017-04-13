@@ -54,7 +54,7 @@
 #'    associated to each site. It is computed from the matrix, according to the
 #'     probabilities described in Staden (1989), Bailey (1998).}
 #'  \item{ln_Pval}{The natural logarithm of the p-value.}
-#'  \item{ln_Pval}{The significance, defined as sig = -log_10(P-value)}
+#'  \item{sig}{The significance, defined as sig = -log_10(P-value)}
 #' }
 #' @source \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm} and \url{http://www.rsat.eu/}
 "motif.hg19.CTCF"

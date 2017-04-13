@@ -2,14 +2,14 @@
 % Please edit documentation in R/interaction.R
 \name{addInteractionSupport}
 \alias{addInteractionSupport}
-\title{Add column to \code{\link{GenomicInteraction}} with overlap support.}
+\title{Add column to \code{\link{GInteractions}} with overlap support.}
 \usage{
-addInteractionSupport(gi, subject, colname, ...)
+addInteractionSupport(gi, subject, colname = "loop", ...)
 }
 \arguments{
-\item{gi}{\code{\link{GenomicInteraction}} object}
+\item{gi}{\code{\link{GInteractions}} object}
 
-\item{subject}{another \code{\link{GenomicInteraction}} object}
+\item{subject}{another \code{\link{GInteractions}} object}
 
 \item{colname}{name of the new annotation columm in \code{gi}.}
 
@@ -17,7 +17,7 @@ addInteractionSupport(gi, subject, colname, ...)
 }
 \value{
 \code{\link{InteractionSet}} \code{gi} as input but with additonal
-  annotation column \code{colname} indicationg whthere there each interaction
+  annotation column \code{colname} indicationg whether each interaction
   is supported by \code{subject} or not.
 }
 \description{
