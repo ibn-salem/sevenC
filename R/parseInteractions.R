@@ -102,31 +102,33 @@ parseCaptureHiC <- function(inFile, ...){
 
   message("INFO: Parse interactions from file: ", inFile)
 
-  inDF = read.delim(inFile, header = TRUE)
+  inDF <- readr::read_tsv(inFile, col_names = TRUE)
 
   upAnchor = GenomicRanges::GRanges(
-    inDF[,1],
-    IRanges::IRanges(inDF[,2], inDF[,3]),
-    Symbol = inDF[,4],
-    Ensembl_Gene_ID = inDF[,5],
-    expresssion_quartile = inDF[,6],
+    inDF[[1]],
+    IRanges::IRanges(inDF[[2]], inDF[[3]]),
+    Symbol = inDF[[4]],
+    Ensembl_Gene_ID = inDF[[5]],
+    expresssion_quartile = inDF[[6]],
     ...)
-
 
   downAnchor = GenomicRanges::GRanges(
-    inDF[,7],
-    IRanges::IRanges(inDF[,8], inDF[,9]),
-    Symbol = inDF[,10],
-    Ensembl_Gene_ID = inDF[,11],
-    expresssion_quartile = inDF[,12],
-    ...)
+    inDF[[7]],
+    IRanges::IRanges(inDF[[8]], inDF[[9]]), ...)
+
+  # only promoter-promoter files have the follwoing information
+  if ( ncol(inDF) > 11) {
+    downAnchor$Symbol <- inDF[[10]]
+    downAnchor$Ensembl_Gene_ID <- inDF[[11]]
+    downAnchor$expresssion_quartile <- inDF[[12]]
+  }
 
   # build GInteractions
   gi <- InteractionSet::GInteractions(upAnchor, downAnchor)
 
   # annotate GInteractions object with score
-  gi$raw_count <- inDF[,13]
-  gi$log_observed_expected = inDF[14]
+  gi$raw_count <- inDF$`raw count`
+  gi$log_observed_expected <- inDF$`log(observed/expected)`
 
   # turne into StrictGInteraction object
   gi <- as(gi, "StrictGInteractions")

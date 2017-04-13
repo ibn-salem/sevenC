@@ -16,7 +16,8 @@ Imports: rtracklayer (>= 1.34.1),
     GenomeInfoDb (>= 1.10.3),
     GenomicRanges (>= 1.26.2),
     InteractionSet (>= 1.2.0),
-    data.table (>= 1.10.4)
+    data.table (>= 1.10.4),
+    readr
 Suggests: testthat
 RoxygenNote: 6.0.1
 Depends: InteractionSet
