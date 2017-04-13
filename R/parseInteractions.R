@@ -107,9 +107,9 @@ parseCaptureHiC <- function(inFile, ...){
   upAnchor = GenomicRanges::GRanges(
     inDF[[1]],
     IRanges::IRanges(inDF[[2]], inDF[[3]]),
-    Symbol = inDF[[4]],
-    Ensembl_Gene_ID = inDF[[5]],
-    expresssion_quartile = inDF[[6]],
+    # Symbol = inDF[[4]],
+    # Ensembl_Gene_ID = inDF[[5]],
+    # expresssion_quartile = inDF[[6]],
     ...)
 
   downAnchor = GenomicRanges::GRanges(
@@ -117,11 +117,11 @@ parseCaptureHiC <- function(inFile, ...){
     IRanges::IRanges(inDF[[8]], inDF[[9]]), ...)
 
   # only promoter-promoter files have the follwoing information
-  if ( ncol(inDF) > 11) {
-    downAnchor$Symbol <- inDF[[10]]
-    downAnchor$Ensembl_Gene_ID <- inDF[[11]]
-    downAnchor$expresssion_quartile <- inDF[[12]]
-  }
+  # if ( ncol(inDF) > 11) {
+  #   downAnchor$Symbol <- inDF[[10]]
+  #   downAnchor$Ensembl_Gene_ID <- inDF[[11]]
+  #   downAnchor$expresssion_quartile <- inDF[[12]]
+  # }
 
   # build GInteractions
   gi <- InteractionSet::GInteractions(upAnchor, downAnchor)
