@@ -83,8 +83,6 @@ write.table(fltDF, file=loopFinalFile, col.names = TRUE, row.names=FALSE,
 loopURL <- "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1872nnn/GSM1872886/suppl/GSM1872886%5FGM12878%5FCTCF%5FPET%5Fclusters.txt.gz"
 
 tmp <- tempfile()
-
-
 download.file(loopURL, tmp)
 
 df <- read.table(gzfile(tmp), header = FALSE)
@@ -98,6 +96,51 @@ fltDF <- subset(df, V1 == "chr22" &
 # save subset of file in inst/extdata as raw .txt file
 loopFinalFile <- "inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt"
 
-write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names=FALSE,
-            quote=FALSE, sep="\t")
+write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names = FALSE,
+            quote = FALSE, sep = "\t")
+#
+# #-------------------------------------------------------------------------------
+# # Download Capture-Hi-C sample data from Mifsud et al. 2015
+# #-------------------------------------------------------------------------------
+# zipURL <- "http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip"
+#
+# tmpZip <- tempfile()
+# tmpDir <- tempdir()
+#
+# download.file(zipURL, tmpZip)
+#
+# # unzip file
+# system(paste("unzip", tmpZip, "-d", tmpDir))
+#
+# file <- file.path(tmpDir, "TS5_GM12878_promoter-promoter_significant_interactions.txt")
+# fileFlt <- file.path(tmpDir, "TS5_GM12878_promoter-promoter_significant_interactions.txt.flt")
+#
+# system(paste('cat', file, '| awk -F"\t" {if ($1 == "chr22") print } OFS="\t" >', fileFlt))
+#
+#
+# z <- unz(tmpZip, "TS5_GM12878_promoter-promoter_significant_interactions.txt")
+#
+# df <- read.table(file, header = TRUE, sep = "\t")
+#
+#
+# # filter for only chromosome 22 in some start region
+# fltDF <- subset(df,
+#                 chr == "chr22" &
+#                 chr.1 == "chr22" &
+#                 end <= 18000000 &
+#                 end.1 <= 18000000)
+#
+# # save subset of file in inst/extdata as raw .txt file
+# intFinalFile <- "inst/extdata/TS5_GM12878_promoter-promoter_significant_interactions.chr22_1-18000000.txt"
+#
+# write.table(fltDF, file = intFinalFile,
+#             col.names = c(
+#               "chr",	"start",	"end",	"Symbol",	"Ensembl", "Gene ID",
+#               "expresssion quartile", "chr", 	"start", 	"end", 	"Symbol",
+#               "Ensembl Gene ID", 	"expresssion quartile",
+#               "raw count", 	"log(observed/expected)"
+#             ), row.names  = FALSE,
+#             quote = FALSE, sep = "\t")
+
+
 

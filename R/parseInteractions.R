@@ -62,14 +62,11 @@ parseLoopsRao <- function(inFile, ...){
 #'@export
 parseLoopsTang2015 <- function(inFile, ...){
 
-
-
   message("INFO: Parse ChiA-PET interactions from file: ", inFile)
 
   # parse IMR90 domains from Rao et al 2014:
   inDF = read.delim(inFile, header = FALSE)
 
-  # substract 1 bp from down coordinate to have inclusive interval ranges
   upAnchor = GenomicRanges::GRanges(
     inDF[,1],
     IRanges::IRanges(inDF[,2], inDF[,3]), ...)
@@ -89,4 +86,51 @@ parseLoopsTang2015 <- function(inFile, ...){
 
 }
 
+#'Parse Capture Hi-C intreactions from Mifsud et al. 2015
+#'
+#' Capture Hi-C interactios from the study Mifsud et al. 2015 can be downloaded
+#' from here
+#' \url{http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip}.
+#' Each file in the .zip archive can be parsed with this function.
+#'
+#'@param inFile input file with interactions
+#'@param ... additional arguments, that will be passed to
+#'  \code{\link{GRanges()}} functions.
+#'@return An \code{\link{GInteractions}} with interactions from input file.
+#'@export
+parseCaptureHiC <- function(inFile, ...){
+
+  message("INFO: Parse interactions from file: ", inFile)
+
+  inDF = read.delim(inFile, header = TRUE)
+
+  upAnchor = GenomicRanges::GRanges(
+    inDF[,1],
+    IRanges::IRanges(inDF[,2], inDF[,3]),
+    Symbol = inDF[,4],
+    Ensembl_Gene_ID = inDF[,5],
+    expresssion_quartile = inDF[,6],
+    ...)
+
+
+  downAnchor = GenomicRanges::GRanges(
+    inDF[,7],
+    IRanges::IRanges(inDF[,8], inDF[,9]),
+    Symbol = inDF[,10],
+    Ensembl_Gene_ID = inDF[,11],
+    expresssion_quartile = inDF[,12],
+    ...)
+
+  # build GInteractions
+  gi <- InteractionSet::GInteractions(upAnchor, downAnchor)
+
+  # annotate GInteractions object with score
+  gi$raw_count <- inDF[,13]
+  gi$log_observed_expected = inDF[14]
+
+  # turne into StrictGInteraction object
+  gi <- as(gi, "StrictGInteractions")
+
+  return(gi)
+}
 
