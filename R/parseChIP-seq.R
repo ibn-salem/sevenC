@@ -60,6 +60,9 @@ getOutOfBound <- function(gr){
   # save length of left and right out-of-bound lengths
   outGR <- gr[outIdx]
 
+  chromEnds <- GenomeInfoDb::seqlengths(outGR)[
+    as.vector(GenomeInfoDb::seqnames(outGR))]
+
   outDF <- data.frame(
     idx = outIdx,
     left = ifelse(
@@ -67,8 +70,10 @@ getOutOfBound <- function(gr){
       abs(GenomicRanges::start(outGR)) + 1,
       0),
     right = ifelse(
-      GenomicRanges::end(outGR) > GenomeInfoDb::seqlengths(outGR) & !is.na(GenomeInfoDb::seqlengths(outGR)),
-      abs(GenomicRanges::end(outGR) - GenomeInfoDb::seqlengths(outGR)),
+      !is.na(chromEnds) &
+      GenomicRanges::end(outGR) >
+        chromEnds,
+      abs(GenomicRanges::end(outGR) - chromEnds),
       0)
   )
 
