@@ -90,6 +90,33 @@ parseBigWigCov <- function(inFile, as = "RleList", ...){
   return(cov)
 }
 
+#' Sliding mean over x of intervals of size k
+#'
+#' Source:
+#' \url{http://stats.stackexchange.com/questions/3051/mean-of-a-sliding-window-in-r}
+#'
+#' @param x numeric vector
+#' @param k interval size
+#' @return numeric vector of length \code{length(x) / k}.
+slideMean <- function(x, k){
+
+  n <- length(x)
+  spots <- seq(from = 1, to = n, by = k)
+  result <- vector(length = length(spots))
+
+  # for (i in 1:length(spots)) {
+  #   result[i] <- mean(x[spots[i]:(spots[i] + k - 1)], na.rm = TRUE)
+  # }
+
+  result <- purrr::map_dbl(seq_along(spots), function(i){
+    mean(x[seq(spots[i], (spots[i] + k - 1))], na.rm = TRUE)
+  })
+
+  return(result)
+
+}
+
+
 #' Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.
 #'
 #' This function adds a vector of coverage (or any other signal in the input
@@ -101,8 +128,7 @@ parseBigWigCov <- function(inFile, as = "RleList", ...){
 #' @param bwFile File path or connection to BigWig file with coverage to parrse
 #'   from.
 #' @param window the window size arund the center of ranges in \code{gr}.
-#' @param bin_size size of bins to which the coverage values are combined. This
-#'   is not implemented yet.
+#' @param bin_size size of bins to which the coverage values are combined.
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
 #'   meta column containing the coverage values for each region.
 #' @export
@@ -154,6 +180,12 @@ addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
       rep(NA, outDF[i, "right"])
     )
   })
+
+  # combine coverage for bins
+  if (bin_size > 1) {
+    covAnc <- IRanges::NumericList(lapply(covAnc, slideMean, k = bin_size))
+  }
+
 
   # reverse coverage vector for regons on minus strand
   negStrand <- which(as.logical(GenomicRanges::strand(gr) == "-"))

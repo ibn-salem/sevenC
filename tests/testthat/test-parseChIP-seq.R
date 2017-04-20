@@ -54,11 +54,7 @@ test_gr <- GenomicRanges::GRanges(
 )
 
 
-
 test_that("parseBigWigCov returns RleList of proper dimenstion", {
-
-  test_path <- system.file("tests", package = "rtracklayer")
-  test_bw <- file.path(test_path, "test.bw")
 
   cov <- parseBigWigCov(test_bw)
 
@@ -81,7 +77,7 @@ test_that("parseBigWigToRle can parse only selected regions in example data", {
 })
 
 
-test_that("addCovToGR on example dataset", {
+test_that("addCovToGR works on example dataset", {
 
   grCov <- addCovToGR(
     test_gr,
@@ -151,6 +147,19 @@ test_that("addCovToGR reversed coverage for regions on negative strand.", {
 
   expect_equal(stranedCov$covTest[[2]], rev(grCov$covTest[[2]]) )
   expect_equal(stranedCov$covTest[[1]], grCov$covTest[[1]])
+})
 
+test_that("addCovToGR handles bin_size and window paramter correctly.", {
+
+  grCov <- addCovToGR(
+    test_gr,
+    test_bw, window = 100,
+    bin_size = 10,
+    colname = "covTest")
+
+  expect_equal(length(test_gr), length(grCov))
+  expect_true(all(all(!is.na(grCov$covTest))))
+  expect_equal(length(S4Vectors::mcols(grCov)[, "covTest"]), length(test_gr))
+  expect_equal(length(grCov$covTest[[1]]), 10)
 })
 
