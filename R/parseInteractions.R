@@ -67,14 +67,15 @@ parseLoopsTang2015 <- function(inFile, ...){
   # parse IMR90 domains from Rao et al 2014:
   inDF = read.delim(inFile, header = FALSE)
 
+  # create ranges by adding +1 to start coordintate to convert from 0-based to
+  # to 1-based coordinates.
   upAnchor = GenomicRanges::GRanges(
     inDF[,1],
-    IRanges::IRanges(inDF[,2], inDF[,3]), ...)
+    IRanges::IRanges(inDF[,2] + 1, inDF[,3]), ...)
 
   downAnchor = GenomicRanges::GRanges(
     inDF[,4],
-    IRanges::IRanges(inDF[,5], inDF[,6]), ...)
-
+    IRanges::IRanges(inDF[,5] + 1, inDF[,6]), ...)
 
   # build GInteractions
   gi <- InteractionSet::GInteractions(upAnchor, downAnchor, mode = "strict")
