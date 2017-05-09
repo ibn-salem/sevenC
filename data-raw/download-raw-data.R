@@ -51,6 +51,12 @@ print(length(motif.hg19.CTCF))
 
 devtools::use_data(motif.hg19.CTCF, overwrite=TRUE)
 
+#-------------------------------------------------------------------------------
+# add subset of CTCF moitif locations on chr22
+#-------------------------------------------------------------------------------
+motif.hg19.CTCF.chr22 <- motif.hg19.CTCF[
+  seqnames(motif.hg19.CTCF) == "chr22" & end(motif.hg19.CTCF) <= 18000000]
+devtools::use_data(motif.hg19.CTCF.chr22, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
 # Download sample loops from Rao et al. 2014 study
