@@ -81,7 +81,7 @@ noZeroVar <- function(dat) {
 #'   just wiht an additinoal column added.
 #' @export
 #' @import data.table
-applyToCloseGI <- function(gi, datcol, fun=cor, colname="value", maxDist=NULL){
+applyToCloseGI <- function(gi, datcol, fun=cor, colname="cor", maxDist=NULL){
 
   # Algorithm
   # (0) define maxDist

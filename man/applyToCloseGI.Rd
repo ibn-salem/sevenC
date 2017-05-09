@@ -4,7 +4,7 @@
 \alias{applyToCloseGI}
 \title{Apply a function to pairs of close genomic regions.}
 \usage{
-applyToCloseGI(gi, datcol, fun = cor, colname = "value", maxDist = NULL)
+applyToCloseGI(gi, datcol, fun = cor, colname = "cor", maxDist = NULL)
 }
 \arguments{
 \item{gi}{A sorted \code{\link[InteractionSet]{GInteractions}} object.}
