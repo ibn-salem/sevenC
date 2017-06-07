@@ -3,6 +3,19 @@ Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs
 
 ## Intallation
 
+#### Dependencies
+To install this package you need to install teh follwing packages from Bioconductor:
+
+- rtracklayer (>= 1.34.1),
+- InteractionSet (>= 1.2.0),
+
+```R
+source("https://bioconductor.org/biocLite.R")
+biocLite("rtracklayer", "InteractionSet")
+```
+
+#### Installing this package
+
 ```R
 #install.packages("devtools")
 devtools::install_github("ibn-salem/chromloop")
@@ -66,6 +79,22 @@ gi$pred <- predict(fit, type = "response", newdata = mcols(gi))
 
 # plot prediction score 
 boxplot(gi$pred ~ gi$loop)
+
+```
+
+### Write predicted loops to output file
+Since looping interactions are stored as `GInteraction` objects internaly, they 
+can be exported as 
+[BED-PE](http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) 
+files using functions from 
+[`GenomicInteractions`](https://bioconductor.org/packages/release/bioc/html/GenomicInteractions.html) 
+package.
+
+```R
+require(GenomicInteractions)
+
+# export to output file
+export.bedpe(gi, "interactions.bedpe", score = "pred")
 
 ```
 
