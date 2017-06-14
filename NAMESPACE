@@ -2,6 +2,7 @@
 
 export(addCovToGR)
 export(addInteractionSupport)
+export(addMotifScore)
 export(addStrandCombination)
 export(applyToCloseGI)
 export(getCisPairs)
