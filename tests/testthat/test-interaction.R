@@ -33,6 +33,7 @@ rtracklayer::export.bw(cov, bwFile)
 #'         <--><-->     <-->  <-->
 #' grWin     1   2        4     3
 #' strand    +   +        -     +
+#' score     5   4        6     7
 #'
 #' pairs:
 #' 1 4
@@ -58,6 +59,7 @@ toyGR <- GenomicRanges::GRanges(
     c(4, 8, 23, 17)
   ),
   strand = c("+", "+", "+", "-"),
+  score = c(5, 4, 6, 7),
   seqinfo = toySeqInfo
 )
 
@@ -223,3 +225,14 @@ test_that("addStrandCombination works for straned and unstraed ranges", {
   toyGI <- addStrandCombination(toyGI)
 
 })
+
+test_that("addMotifScore works on toy example", {
+
+  toyGI <- addMotifScore(toyGI, colname = "score")
+
+  expect_true(all(c("score_1", "score_2", "score_min") %in% names(mcols(toyGI))))
+  expect_equal(toyGI$score_1, toyGR$score[anchors(toyGI, "first", id = TRUE)])
+  expect_equal(toyGI$score_min, apply(cbind(toyGI$score_1, toyGI$score_2), 1, min))
+
+})
+

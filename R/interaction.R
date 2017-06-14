@@ -263,3 +263,28 @@ addStrandCombination <- function(gi, colname = "strandOrientation"){
 }
 
 
+#' Add motif score of anchors.
+#'
+#' If each anchor region (motif) has a score as annotation column, this function
+#' adds two new columns named "score_1" and "score_2" with the scores of the
+#' first and the second anchor region, respectively. Additonally a column named
+#' "score_min" is added with holds for each interaction the mimium of "score_1"
+#' and "score_2".
+#' @param gi \code{\link{GInteractions}}
+#' @return The same \code{\link{GInteractions}} as \code{gi} but with three
+#'   additonal annotation columns.
+#' @export
+addMotifScore <- function(gi, colname = "score"){
+
+  anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
+  anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+
+  ancScore <- S4Vectors::mcols(InteractionSet::regions(gi))[, colname]
+
+  S4Vectors::mcols(gi)[, "score_1"] <- ancScore[anc1]
+  S4Vectors::mcols(gi)[, "score_2"] <- ancScore[anc2]
+  S4Vectors::mcols(gi)[, "score_min"] <- apply(cbind(ancScore[anc1], ancScore[anc2]), 1, min)
+
+  return(gi)
+}
+
