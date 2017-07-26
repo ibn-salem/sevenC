@@ -5,7 +5,7 @@
 #'
 #' @param inGR \code{\link{GRanges}} object of genomic regions. The ranges shuld
 #'   be sorted according to chr, strand, and start position. Use
-#'   \code{\link[GenomicRanges]{sort()}} to sort it.
+#'   \code{\link[GenomicRanges]{sort}} to sort it.
 #' @param maxDist maximal distance in base-pairs between pairs of ranges as
 #'   single  numeric value.
 #' @return A \code{\link[InteractionSet]{GInteractions}} object with all pairs
@@ -71,7 +71,7 @@ noZeroVar <- function(dat) {
 #'   This collumn is assumed to hold the same number of values for each
 #'   interaction \code{NumericList}.
 #' @param fun A function that takes two numeric vectors as imput to compute a
-#'   summary statsitic. Default is \code{\link{cor()}}.
+#'   summary statsitic. Default is \code{\link[stats]{cor}}.
 #' @param colname A string that is used as columnname for the new column in
 #'   \code{gi}.
 #' @param maxDist maximal distance of pairs in bp as numeric. If maxDist=NULL,
@@ -208,7 +208,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="cor", maxDist=NULL){
 #' @param gi \code{\link{GInteractions}} object
 #' @param subject another \code{\link{GInteractions}} object
 #' @param colname name of the new annotation columm in \code{gi}.
-#' @param ... addtional arguments passed to \code{\link{IRanges::overlapsAny}}.
+#' @param ... addtional arguments passed to \code{\link[IRanges]{overlapsAny}}.
 #' @return \code{\link{InteractionSet}} \code{gi} as input but with additonal
 #'   annotation column \code{colname} indicationg whether each interaction
 #'   is supported by \code{subject} or not.
@@ -232,6 +232,8 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 #' combinations: "forward", "reverse", "convergent", or "divergent". Unstranded
 #' ragnes, indicated by (\code{*}), are treated as positive strand.
 #' @param gi \code{\link{GInteractions}}
+#' @param colname name of the new colum that is created in \code{gi}.
+#'
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with an
 #'   additonal column indicating the four possible combinations of strands
 #'   "forward", "reverse", "convergent", or "divergent".
@@ -271,6 +273,7 @@ addStrandCombination <- function(gi, colname = "strandOrientation"){
 #' "score_min" is added with holds for each interaction the mimium of "score_1"
 #' and "score_2".
 #' @param gi \code{\link{GInteractions}}
+#' @param colname name of the new colum that is created in \code{gi}.
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with three
 #'   additonal annotation columns.
 #' @export

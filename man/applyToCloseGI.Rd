@@ -14,7 +14,7 @@ This collumn is assumed to hold the same number of values for each
 interaction \code{NumericList}.}
 
 \item{fun}{A function that takes two numeric vectors as imput to compute a
-summary statsitic. Default is \code{\link{cor()}}.}
+summary statsitic. Default is \code{\link[stats]{cor}}.}
 
 \item{colname}{A string that is used as columnname for the new column in
 \code{gi}.}

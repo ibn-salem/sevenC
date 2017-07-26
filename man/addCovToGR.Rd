@@ -15,6 +15,8 @@ from.}
 \item{window}{the window size arund the center of ranges in \code{gr}.}
 
 \item{bin_size}{size of bins to which the coverage values are combined.}
+
+\item{colname}{name of the new colum that is created in \code{gr}.}
 }
 \value{
 \code{\link[GenomicRanges]{GRanges}} as input but with an additional

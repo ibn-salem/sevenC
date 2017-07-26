@@ -59,3 +59,13 @@
 #' @source \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm} and \url{http://www.rsat.eu/}
 "motif.hg19.CTCF"
 
+#' CTCF motif locations on chromosome 22 in human genome hg19.
+#'
+#' A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
+#' database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
+#' \eqn{\le 10^-5} on chromosome 22 are reported.
+#'
+#' See '?motif.hg19.CTCF' for a more details and the full data set.
+#'
+"motif.hg19.CTCF.chr22"
+

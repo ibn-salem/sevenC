@@ -10,7 +10,7 @@ parseCaptureHiC(inFile, ...)
 \item{inFile}{input file with interactions}
 
 \item{...}{additional arguments, that will be passed to
-\code{\link{GRanges()}} functions.}
+\code{\link[GenomicRanges]{GRanges}} functions.}
 }
 \value{
 An \code{\link{GInteractions}} with interactions from input file.

@@ -5,7 +5,7 @@
 #'
 #' @param inFile input file with loops
 #' @param ... additional arguments, that will be passed to
-#'   \code{\link{GRanges()}} functions.
+#'   \code{\link[GenomicRanges]{GRanges}} functions.
 #' @return An \code{\link{GInteractions}} with loops from input file.
 #' @export
 parseLoopsRao <- function(inFile, ...){
@@ -57,8 +57,9 @@ parseLoopsRao <- function(inFile, ...){
 #'
 #'@param inFile input file with loops
 #'@param ... additional arguments, that will be passed to
-#'  \code{\link{GRanges()}} functions.
+#'  \code{\link[GenomicRanges]{GRanges}} functions.
 #'@return An \code{\link{GInteractions}} with loops from input file.
+#'@importFrom utils read.delim
 #'@export
 parseLoopsTang2015 <- function(inFile, ...){
 
@@ -96,7 +97,7 @@ parseLoopsTang2015 <- function(inFile, ...){
 #'
 #'@param inFile input file with interactions
 #'@param ... additional arguments, that will be passed to
-#'  \code{\link{GRanges()}} functions.
+#'  \code{\link[GenomicRanges]{GRanges}} functions.
 #'@return An \code{\link{GInteractions}} with interactions from input file.
 #'@export
 parseCaptureHiC <- function(inFile, ...){

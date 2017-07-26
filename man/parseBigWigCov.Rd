@@ -11,6 +11,9 @@ parseBigWigCov(inFile, as = "RleList", ...)
 character vector, it is assumed to be a filename and a corresponding file
 connection is created}
 
+\item{as}{Specifies the class of the return object. See \code{as} argument of
+\code{\link[rtracklayer]{import.bw}}.}
+
 \item{...}{Other parameters to pass to \code{\link[rtracklayer]{import.bw}}.}
 }
 \value{

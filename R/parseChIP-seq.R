@@ -8,7 +8,9 @@
 #'
 #' @param inFile Input file path or connection. See \code{con} paramter in
 #' \code{\link[rtracklayer]{import}} function.
-#' @param seqInfo A \code{\link{seqinfo}} object defining the reference genome.
+#' @param seqInfo A \code{\link[GenomeInfoDb]{seqinfo}} object defining the reference genome.
+#' @param selectionGR \code\link[GenomicRanges]{GRanges} object with regions for
+#'  which the coverage is selected.
 #' @return An \code{\link[IRanges]{RleList}} object with density values for each
 #' position in the genome.
 #' @export
@@ -30,17 +32,44 @@ parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
                                   as = "RleList")
   }
 
-  # # set seqinfo object
-  # GenomeInfoDb::seqlevels(bwGR) <- GenomeInfoDb::seqlevels(seqInfo)
-  # GenomeInfoDb::seqinfo(bwGR) <- seqInfo
-  #
-  # # compute coverage by using the score as weight
-  # bwCov = GenomicRanges::coverage(bwGR, weight="score")
-
-  # return(bwCov)
   return(cov)
 }
 
+
+#'Parse BAM file as RleList coverage object.
+#'
+#'See http://bioconductor.org/packages/release/bioc/html/Rsamtools.html
+#'
+#'@param inFile a BAM file
+#'@param seqInfo a \code{\link[]{seqinfo}} object.
+#'@param selectionGR \code\link[GenomicRanges]{GRanges} object with regions for
+#'  which the coverage is selected.
+#'@return \code{\link[S4Vectors]{Rle-class}} coverage object. See
+#'  \code{\link[IRanges]{coverage}}.
+#'
+#'@importFrom Rsamtools ScanBamParam scanBamHeader
+parseBAMToRle <- function(inFile, seqInfo, selectionGR = NULL){
+
+  # inFile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
+  inFile <- "../chromloop_analysis/data/ENCODE/bam/wgEncodeSydhTfbsGm12878Rad21IggrabAlnRep1.bam"
+  # selectionGR <- GRanges(paste("seq", 1:2, sep=""), IRanges(1, 1e7))
+  selectionGR <- motif.hg19.CTCF
+
+  seqInfo <- seqinfo(selectionGR)
+  seqlevelsStyle(selectionGR) <- "UCSC"
+  seqlevels(selectionGR)
+
+  param <- ScanBamParam(
+    what = c( "pos" , "qwidth" ),
+    which = selectionGR,
+    flag = scanBamFlag(isUnmappedQuery = FALSE)
+    )
+  h <- scanBamHeader(inFile)
+
+  # x <- scanBam(inFile, param = param, seqinfo = seqinfo(selectionGR))[[1]]
+
+  coverage(IRanges(x[["pos"]], width=x[["qwidth"]]))
+}
 
 #' Get out of chromosomal bound ranges.
 #'
@@ -87,6 +116,8 @@ getOutOfBound <- function(gr){
 #'   character vector, it is assumed to be a filename and a corresponding file
 #'   connection is created
 #' @param ... Other parameters to pass to \code{\link[rtracklayer]{import.bw}}.
+#' @param as Specifies the class of the return object. See \code{as} argument of
+#'   \code{\link[rtracklayer]{import.bw}}.
 #' @return RleList or other object defined by \code{as}.
 parseBigWigCov <- function(inFile, as = "RleList", ...){
 
@@ -134,6 +165,8 @@ slideMean <- function(x, k){
 #'   from.
 #' @param window the window size arund the center of ranges in \code{gr}.
 #' @param bin_size size of bins to which the coverage values are combined.
+#' @param colname name of the new colum that is created in \code{gr}.
+#'
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
 #'   meta column containing the coverage values for each region.
 #' @export

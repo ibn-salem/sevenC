@@ -11,7 +11,7 @@ parseLoopsRao(inFile, ...)
 \item{inFile}{input file with loops}
 
 \item{...}{additional arguments, that will be passed to
-\code{\link{GRanges()}} functions.}
+\code{\link[GenomicRanges]{GRanges}} functions.}
 }
 \value{
 An \code{\link{GInteractions}} with loops from input file.

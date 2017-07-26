@@ -8,6 +8,8 @@ addMotifScore(gi, colname = "score")
 }
 \arguments{
 \item{gi}{\code{\link{GInteractions}}}
+
+\item{colname}{name of the new colum that is created in \code{gi}.}
 }
 \value{
 The same \code{\link{GInteractions}} as \code{gi} but with three

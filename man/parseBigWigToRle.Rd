@@ -10,7 +10,10 @@ parseBigWigToRle(inFile, seqInfo, selectionGR = NULL)
 \item{inFile}{Input file path or connection. See \code{con} paramter in
 \code{\link[rtracklayer]{import}} function.}
 
-\item{seqInfo}{A \code{\link{seqinfo}} object defining the reference genome.}
+\item{seqInfo}{A \code{\link[GenomeInfoDb]{seqinfo}} object defining the reference genome.}
+
+\item{selectionGR}{\code\link[GenomicRanges]{GRanges} object with regions for
+which the coverage is selected.}
 }
 \value{
 An \code{\link[IRanges]{RleList}} object with density values for each
