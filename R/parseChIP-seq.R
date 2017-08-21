@@ -9,7 +9,7 @@
 #' @param inFile Input file path or connection. See \code{con} paramter in
 #' \code{\link[rtracklayer]{import}} function.
 #' @param seqInfo A \code{\link[GenomeInfoDb]{seqinfo}} object defining the reference genome.
-#' @param selectionGR \code\link[GenomicRanges]{GRanges} object with regions for
+#' @param selectionGR \code{\link[GenomicRanges]{GRanges}} object with regions for
 #'  which the coverage is selected.
 #' @return An \code{\link[IRanges]{RleList}} object with density values for each
 #' position in the genome.
@@ -41,8 +41,8 @@ parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
 #'See http://bioconductor.org/packages/release/bioc/html/Rsamtools.html
 #'
 #'@param inFile a BAM file
-#'@param seqInfo a \code{\link[]{seqinfo}} object.
-#'@param selectionGR \code\link[GenomicRanges]{GRanges} object with regions for
+#'@param seqInfo a \code{\link[GenomeInfoDb]{seqinfo}} object.
+#'@param selectionGR \code{\link[GenomicRanges]{GRanges}} object with regions for
 #'  which the coverage is selected.
 #'@return \code{\link[S4Vectors]{Rle-class}} coverage object. See
 #'  \code{\link[IRanges]{coverage}}.

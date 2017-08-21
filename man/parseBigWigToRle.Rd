@@ -12,7 +12,7 @@ parseBigWigToRle(inFile, seqInfo, selectionGR = NULL)
 
 \item{seqInfo}{A \code{\link[GenomeInfoDb]{seqinfo}} object defining the reference genome.}
 
-\item{selectionGR}{\code\link[GenomicRanges]{GRanges} object with regions for
+\item{selectionGR}{\code{\link[GenomicRanges]{GRanges}} object with regions for
 which the coverage is selected.}
 }
 \value{

@@ -9,9 +9,9 @@ parseBAMToRle(inFile, seqInfo, selectionGR = NULL)
 \arguments{
 \item{inFile}{a BAM file}
 
-\item{seqInfo}{a \code{\link[]{seqinfo}} object.}
+\item{seqInfo}{a \code{\link[GenomeInfoDb]{seqinfo}} object.}
 
-\item{selectionGR}{\code\link[GenomicRanges]{GRanges} object with regions for
+\item{selectionGR}{\code{\link[GenomicRanges]{GRanges}} object with regions for
 which the coverage is selected.}
 }
 \value{
