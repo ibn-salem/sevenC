@@ -15,7 +15,8 @@ LazyData: TRUE
 Imports: rtracklayer (>= 1.34.1),
     data.table (>= 1.10.4),
     readr (>= 1.1.0),
-    purrr (>= 0.2.2)
+    purrr (>= 0.2.2),
+    Rsamtools
 Suggests: testthat
 RoxygenNote: 6.0.1
 Depends: InteractionSet (>= 1.2.0)
