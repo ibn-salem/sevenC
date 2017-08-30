@@ -19,6 +19,9 @@
 #' @export
 linkRegions <- function(gr1, gr2, gi, outer_maxgap = 0, inner_maxgap = 0, ...){
 
+  # order anchors that first one is always <= than second one
+  gi <- swapAnchors(gi, mode = "order")
+
   if (outer_maxgap > 0 | inner_maxgap > 0) {
 
     # extend ranges of anchors
@@ -27,14 +30,14 @@ linkRegions <- function(gr1, gr2, gi, outer_maxgap = 0, inner_maxgap = 0, ...){
     # extend end coordinate of fist anchor but only until start of second
     end(anc1) = pmin(
       end(anc1) + inner_maxgap,
-      start(anchors(gi, "second")) - 1
+      pmax(start(anchors(gi, "second")) - 1, end(anc1))
       )
 
     anc2 <- anchors(gi, "second")
     # extend start coordinate of second anchor but only until end of first
     start(anc2) = pmax(
       start(anc2) - inner_maxgap,
-      end(anchors(gi, "first")) + 1
+      pmin(end(anchors(gi, "first")) + 1, start(anc2))
     )
     end(anc2) = end(anc2) + outer_maxgap
 
