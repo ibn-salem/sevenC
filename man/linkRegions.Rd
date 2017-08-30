@@ -2,9 +2,9 @@
 % Please edit documentation in R/gr_associations.R
 \name{linkRegions}
 \alias{linkRegions}
-\title{Associate two sets of regions together by interactinos.}
+\title{Associate two sets of regions together by interactions with ajusted anchors}
 \usage{
-linkRegions(gr1, gr2, gi, ignore.strand = TRUE, ...)
+linkRegions(gr1, gr2, gi, outer_maxgap = 0, inner_maxgap = 0, ...)
 }
 \arguments{
 \item{gr1}{A GRanges object.}
@@ -14,15 +14,20 @@ linkRegions(gr1, gr2, gi, ignore.strand = TRUE, ...)
 \item{gi}{A \code{\link[InteractionSet]{GInteractions}} or
 \code{\link[InteractionSet]{InteractionSet}} object.}
 
-\item{ignore.strand}{Logical. See \code{\link[InteractionSet]{linkOverlaps}}.}
+\item{outer_maxgap}{A scalar, non-negative, maxial allowed distance outside
+interaction loops to be considered as overlap.}
 
-\item{...}{Other arguments passed to \code{\link[GenomicRanges]{findOverlaps}}
-and \code{\link[InteractionSet]{linkOverlaps}}}
+\item{inner_maxgap}{A scalar, non-negative, maxial allowed distance inside
+interaction loops to be considered as overlap.}
+
+\item{...}{Other arguments passed to
+\code{\link[GenomicRanges]{findOverlaps}} and
+\code{\link[InteractionSet]{linkOverlaps}}}
 }
 \value{
 A dataframe of integer indices indicating which elements of
   \code{gr1} link which elements of \code{gr1}.
 }
 \description{
-Associate two sets of regions together by interactinos.
+Associate two sets of regions together by interactions with ajusted anchors
 }

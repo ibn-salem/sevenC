@@ -4,7 +4,7 @@ context("gr-associations")
 
 
 #' chr1   |1...5....1....1....2....2....3
-#'                  0    5    0    5....0
+#'                  0    5    0    5    0
 #' peaks     ==     ==
 #' promoter   -              -
 #'
@@ -40,8 +40,8 @@ toyPromoter <- GenomicRanges::GRanges(
 toyAncGR <- GenomicRanges::GRanges(
   rep("chr1", 6),
   IRanges::IRanges(
-    c(4, 7, 8, 11, 19, 21),
-    c(4, 7, 8, 11, 19, 21)
+    c(4, 6, 7, 10, 19, 21),
+    c(4, 6, 7, 10, 19, 21)
   ),
   seqinfo = toySeqInfo
 )
@@ -66,6 +66,28 @@ test_that("linkRegions works on toy example dataset", {
     gi = c(NA, 2)
   )
 
+  hitsInner3 <-  linkRegions(toyPeaks, toyPromoter, toyGI, inner_maxgap = 3)
+  # expected hits based on toy example data
+  expHitsInner3 <- data.frame(
+    gr1 = c(1, 2, 2),
+    gr2 = c(1, 2, 2),
+    gi = c(NA, 2, 3)
+  )
+
   expect_equal(hits, expHits)
+  expect_equal(hitsInner3, expHitsInner3)
 })
 
+test_that("linkRegionsInLoops works on toy example dataset", {
+
+  hits <- linkRegionsInLoops(toyPeaks, toyPromoter, toyGI)
+
+  # expected hits based on toy example data
+  expHits <- data.frame(
+    gr1 = c(1, 1, 2, 2),
+    gr2 = c(1, 1, 2, 2),
+    gi = c(NA, 1, 2, 3)
+  )
+
+  expect_equal(hits, expHits)
+})

@@ -236,3 +236,11 @@ test_that("addMotifScore works on toy example", {
 
 })
 
+test_that("interactionRange works on toy example", {
+
+  toyRange <- interactionRange(toyGI)
+
+  expect_equal(length(toyRange), length(toyGI))
+  expect_equal(start(toyRange), start(InteractionSet::anchors(toyGI, "first")))
+  expect_equal(end(toyRange), end(InteractionSet::anchors(toyGI, "second")))
+})

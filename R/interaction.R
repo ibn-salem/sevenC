@@ -291,3 +291,40 @@ addMotifScore <- function(gi, colname = "score"){
   return(gi)
 }
 
+
+#' Get genomic ranges spanned by (intracrhomosomal) interactions.
+#'
+#' Note, this method assumes are intra-chromosomal (e.g. only interactions
+#' between regions from the same chromosome).
+#'
+#' @param gi \code{\link{GInteractions}} or \code{\link{InteractionSet}} object
+#' @return A \code{\link{GRanges}} object with ranges spanning the
+#'   interactions in \code{gi}.
+interactionRange <- function(gi){
+
+  # assume only intra-chromosomal interactions
+  stopifnot(all(InteractionSet::intrachr(gi)))
+
+  # make first anchor <= second anchor
+  gi <- swapAnchors(gi, mode = "order")
+
+  # get chroms from first anchor
+  chr <- seqnames(anchors(gi, "first"))
+  start <- start(anchors(gi, "first"))
+  end <- end(anchors(gi, "second"))
+
+  # create GenomicRanges object
+  gr <- GenomicRanges::GRanges(
+    seqnames = chr,
+    ranges = IRanges(start, end),
+    strand = "*",
+    seqinfo = seqinfo(gi)
+  )
+
+  # add mcols
+  mcols(gr) <- mcols(gi)
+
+  return(gr)
+}
+
+
