@@ -300,18 +300,29 @@ addMotifScore <- function(gi, colname = "score"){
 #' @param gi \code{\link{GInteractions}} or \code{\link{InteractionSet}} object
 #' @return A \code{\link{GRanges}} object with ranges spanning the
 #'   interactions in \code{gi}.
+#'
+#' @export
 interactionRange <- function(gi){
 
   # assume only intra-chromosomal interactions
   stopifnot(all(InteractionSet::intrachr(gi)))
 
   # make first anchor <= second anchor
+  strand(regions(gi)) <- "*"
   gi <- swapAnchors(gi, mode = "order")
 
   # get chroms from first anchor
   chr <- seqnames(anchors(gi, "first"))
-  start <- start(anchors(gi, "first"))
-  end <- end(anchors(gi, "second"))
+
+  # take all coordinates to get smalles as start and largest as end
+  coords <- list(
+    start(anchors(gi, "first")),
+    end(anchors(gi, "first")),
+    start(anchors(gi, "second")),
+    end(anchors(gi, "second"))
+  )
+  start <- do.call(pmin, coords)
+  end <- do.call(pmax, coords)
 
   # create GenomicRanges object
   gr <- GenomicRanges::GRanges(
