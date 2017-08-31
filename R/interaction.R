@@ -308,6 +308,7 @@ interactionRange <- function(gi){
   stopifnot(all(InteractionSet::intrachr(gi)))
 
   # make first anchor <= second anchor
+  gi <- as(gi, "GInteractions")
   strand(regions(gi)) <- "*"
   gi <- swapAnchors(gi, mode = "order")
 
@@ -338,4 +339,39 @@ interactionRange <- function(gi){
   return(gr)
 }
 
+#' Extend interaction anchors with specific term for inner and outer site
+#'
+#' @param gi \code{\link{GInteractions}} or \code{\link{InteractionSet}} object
+#' @param inner,outer A scalar, non-negative, of the extension sizes for anchor
+#'   ends outside and inside interaction loops.
+#' @return gi \code{\link{GInteractions}} object with extened regions.
+extendAnchors <- function(gi, inner, outer){
+
+  # turn gi into GIntreactions
+  gi <- as(gi, "GInteractions")
+  strand(regions(gi)) <- "*"
+  gi <- swapAnchors(gi, mode = "order")
+
+  # extend ranges of anchors
+  anc1 <- anchors(gi, "first")
+  start(anc1) = start(anc1) - outer
+  # extend end coordinate of fist anchor but only until start of second
+  end(anc1) = pmin(
+    end(anc1) + inner,
+    pmax(start(anchors(gi, "second")) - 1, end(anc1))
+  )
+
+  anc2 <- anchors(gi, "second")
+  # extend start coordinate of second anchor but only until end of first
+  start(anc2) = pmax(
+    start(anc2) - inner,
+    pmin(end(anchors(gi, "first")) + 1, start(anc2))
+  )
+  end(anc2) = end(anc2) + outer
+
+  extendedGI <- InteractionSet::GInteractions(anc1, anc2)
+  mcols(extendedGI) <- mcols(gi)
+
+  return(extendedGI)
+}
 

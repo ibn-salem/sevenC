@@ -19,30 +19,8 @@
 #' @export
 linkRegions <- function(gr1, gr2, gi, outer_maxgap = 0, inner_maxgap = 0, ...){
 
-  # order anchors that first one is always <= than second one
-  gi <- swapAnchors(gi, mode = "order")
-
-  if (outer_maxgap > 0 | inner_maxgap > 0) {
-
-    # extend ranges of anchors
-    anc1 <- anchors(gi, "first")
-    start(anc1) = start(anc1) - outer_maxgap
-    # extend end coordinate of fist anchor but only until start of second
-    end(anc1) = pmin(
-      end(anc1) + inner_maxgap,
-      pmax(start(anchors(gi, "second")) - 1, end(anc1))
-      )
-
-    anc2 <- anchors(gi, "second")
-    # extend start coordinate of second anchor but only until end of first
-    start(anc2) = pmax(
-      start(anc2) - inner_maxgap,
-      pmin(end(anchors(gi, "first")) + 1, start(anc2))
-    )
-    end(anc2) = end(anc2) + outer_maxgap
-
-    gi <- InteractionSet::GInteractions(anc1, anc2)
-  }
+  # build new GInteraction object with extened anchor regions
+  gi <- extendAnchors(gi, outer = outer_maxgap, inner = inner_maxgap)
 
   # get direct overlapping elements
   ol <- GenomicRanges::findOverlaps(gr1, gr2, ...)

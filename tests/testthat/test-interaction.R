@@ -244,3 +244,28 @@ test_that("interactionRange works on toy example", {
   expect_equal(start(toyRange), start(InteractionSet::anchors(toyGI, "first")))
   expect_equal(end(toyRange), end(InteractionSet::anchors(toyGI, "second")))
 })
+
+test_that("extendAnchors works on consturced example", {
+
+  strandedGI <- InteractionSet::GInteractions(
+    GenomicRanges::GRanges(
+      c("chr1", "chr1"),
+      IRanges::IRanges(
+        c(10, 40),
+        c(20, 50)),
+      strand = c("+", "+")),
+    GenomicRanges::GRanges(
+      c("chr1", "chr1"),
+      IRanges::IRanges(
+        c(15, 10),
+        c(25, 20)),
+      strand = c("+", "-")),
+      mode = "strict"
+    )
+
+  extenedGI <- extendAnchors(strandedGI, inner = 5, outer = 0)
+
+  expect_equal(mcols(extenedGI), mcols(strandedGI))
+  expect_equal(width(anchors(extenedGI, "first")[1]),  width(anchors(strandedGI, "first")[1]))
+
+})

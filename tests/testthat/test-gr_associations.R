@@ -53,6 +53,22 @@ toyGI <- InteractionSet::GInteractions(
   mode = "strict"
 )
 
+# strandedGI <- InteractionSet::GInteractions(
+#   GenomicRanges::GRanges(
+#     c("chr1", "chr1"),
+#     IRanges::IRanges(
+#       c(10, 40),
+#       c(20, 50)),
+#     strand = c("+", "+")),
+#   GenomicRanges::GRanges(
+#     c("chr1", "chr1"),
+#     IRanges::IRanges(
+#       c(15, 10),
+#       c(25, 20)),
+#     strand = c("+", "-")),
+#     mode = "strict"
+#   )
+
 # Tests -------------------------------------------------------------------
 
 test_that("linkRegions works on toy example dataset", {
@@ -91,3 +107,11 @@ test_that("linkRegionsInLoops works on toy example dataset", {
 
   expect_equal(hits, expHits)
 })
+
+# test_that("linkRegionsInLoops works on stranded anchros", {
+#
+#
+#
+# })
+
+
