@@ -236,3 +236,24 @@ addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
   return(gr)
 
 }
+
+
+#' Parse signals along the genome for input regions
+#'
+#' @param files Character vector of bigWig files to be parsed
+#' @param gr A \code{\link[GenomicRanges]{GRanges}} object with regions for which
+#' the signals should be parased.
+#' @param colData A data.frame like object for metadata of \code{files}.
+#'
+#' @return A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object
+# parseRangeSignals <- function(files, gr, colData){
+#
+#   # example code
+#   # cd <- tibble(name = c("a", "b"))
+#   cd <- tibble(name = c("a"))
+#   nl <- NumericList(1:10, 1:10)
+#   nlMat <- as.matrix(as.list(nl))
+#
+#   SummarizedExperiment(cbind(a=as.list(1:10), b=as.list(1:10)), colData = cd)
+#   SummarizedExperiment(nlMat, colData = cd)
+# }
