@@ -13,7 +13,10 @@ extendAnchors(gi, inner, outer)
 ends outside and inside interaction loops.}
 }
 \value{
-gi \code{\link{GInteractions}} object with extened regions.
+gi \code{\link{GInteractions}} object with extened regions. The
+  \code{\link{GInteractions}} object has two metadata columns, \code{dist},
+  and \code{dist_log10} with the genomic distance between the midpointsof
+  anchors and distance in log10 space, respectively.
 }
 \description{
 Extend interaction anchors with specific term for inner and outer site

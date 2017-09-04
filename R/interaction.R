@@ -22,17 +22,17 @@ getCisPairs <- function(inGR, maxDist=10^6){
 
   # calculate overlap all possible gene pairs within maxDist bp
   hits <- GenomicRanges::findOverlaps(posGR,
-                      maxgap=maxDist,
-                      drop.redundant=TRUE,
-                      drop.self=TRUE,
-                      ignore.strand=TRUE)
+                      maxgap = maxDist,
+                      drop.redundant = TRUE,
+                      drop.self = TRUE,
+                      ignore.strand = TRUE)
 
   # build IntractionSet object
   gi <- InteractionSet::GInteractions(
     S4Vectors::queryHits(hits),
     S4Vectors::subjectHits(hits),
     inGR,
-    mode="strict"
+    mode = "strict"
   )
 
   # sort gi
@@ -40,10 +40,13 @@ getCisPairs <- function(inGR, maxDist=10^6){
 
 
   # add distance
-  gi$dist <- InteractionSet::pairdist(gi, type="mid")
+  gi$dist <- InteractionSet::pairdist(gi, type = "mid")
+
+  # add sitance as log10
+  gi$dist_log10 <- log10(InteractionSet::pairdist(gi, type = "mid"))
 
   # remove pairs with distance >= maxDist
-  # this is essential in case of non-zero length ranges in inGR
+  # this is only essential in case of non-zero length ranges in inGR
   gi <- gi[gi$dist <= maxDist]
 
   return(gi)
@@ -344,7 +347,10 @@ interactionRange <- function(gi){
 #' @param gi \code{\link{GInteractions}} or \code{\link{InteractionSet}} object
 #' @param inner,outer A scalar, non-negative, of the extension sizes for anchor
 #'   ends outside and inside interaction loops.
-#' @return gi \code{\link{GInteractions}} object with extened regions.
+#' @return gi \code{\link{GInteractions}} object with extened regions. The
+#'   \code{\link{GInteractions}} object has two metadata columns, \code{dist},
+#'   and \code{dist_log10} with the genomic distance between the midpointsof
+#'   anchors and distance in log10 space, respectively.
 extendAnchors <- function(gi, inner, outer){
 
   # turn gi into GIntreactions
