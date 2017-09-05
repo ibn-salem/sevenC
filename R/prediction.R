@@ -8,6 +8,7 @@
 #'
 #' @return A numeric vector with interaction probabilites for each ovservation
 #'   in \code{df}.
+#' @export
 pred_logit <- function(data, formula, betas){
 
   # save option and set na.action to pass
