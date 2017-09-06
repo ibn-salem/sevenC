@@ -9,13 +9,14 @@ pred_logit(data, formula, betas)
 \arguments{
 \item{data}{A data.frame with predictor variables}
 
-\item{formula}{A modelling formula. All predictor variables should be availabel in the data frame.}
+\item{formula}{A modelling formula. All predictor variables should be
+availabel in the data frame.}
 
 \item{betas}{A vector with parameter estimates for predictor variables}
 }
 \value{
 A numeric vector with interaction probabilites for each ovservation
-  in \code{df}.
+  in \code{df}. NAs are produced for NAs in \code{df}.
 }
 \description{
 Predict interaction probability using logistic regresstion model.
