@@ -1,10 +1,9 @@
 # chromloop
-Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs
+R package for predicting chromatin looping interactions from ChIP-seq and sequnece motifs
 
 ## Intallation
 
-#### Dependencies
-To install this package you need to install teh follwing packages from Bioconductor:
+The chromloop package depends on the follwing R packages from Bioconductor:
 
 - rtracklayer (>= 1.34.1),
 - InteractionSet (>= 1.2.0),
@@ -14,7 +13,7 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("rtracklayer", "InteractionSet")
 ```
 
-#### Installing this package
+Install chromloop from github using devtools:
 
 ```R
 #install.packages("devtools")
@@ -45,11 +44,14 @@ motifs <- addCovToGR(motifs, bigWigFile)
 
 ### Get pairs and correlation of ChIP-seq coverage
 ```R
-# get pairs of motifs
+# get pairs of motifs as GInteraction object
 gi <- getCisPairs(motifs, maxDist = 10^6)
 
 # add motif orientation
 gi <- addStrandCombination(gi)
+
+# add motif score
+gi <- addMotifScore(gi, "sig")
 
 # compute correlation of ChIP-seq profiles
 gi <- applyToCloseGI(gi, "cov", fun = cor)
@@ -67,9 +69,9 @@ knownLoops <- parseLoopsRao(knownLoopFile)
 gi <- addInteractionSupport(gi, knownLoops)
 
 # train model 
-fit <- glm(loop ~ cor + dist + strandOrientation, 
+fit <- glm(loop ~ cor + dist + strandOrientation + score_min, 
   data = mcols(gi), 
-  family = binomial("logit"))
+  family = binomial())
 ```
 
 ### Predict loops
