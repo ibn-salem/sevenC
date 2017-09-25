@@ -1,7 +1,9 @@
 context("parseInteractions")
 
 
-exampleLoopFile <- system.file("extdata", "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package="chromloop")
+exampleLoopFile <- system.file("extdata",
+                               "GM12878_HiCCUPS.chr22_1-18000000.loop.txt",
+                               package = "chromloop")
 
 
 
