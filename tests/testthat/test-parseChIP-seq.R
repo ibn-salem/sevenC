@@ -1,6 +1,7 @@
 context("parseChIP-seq")
 
-exampleBigWig <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+exampleBigWig <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig",
+                             package = "chromloop")
 
 toySeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1", "chr22"),
                                     seqlengths = c(10^8, 10^8),
