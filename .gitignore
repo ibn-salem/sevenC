@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rprofile
 
 # ignore temporary raw data from ENCODE
 data-raw/GM12878_Stat1.bigWig
