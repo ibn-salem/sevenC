@@ -132,7 +132,7 @@ parseCaptureHiC <- function(inFile, ...){
   gi$log_observed_expected <- inDF$`log(observed/expected)`
 
   # turne into StrictGInteraction object
-  gi <- as(gi, "StrictGInteractions")
+  gi <- methods::as(gi, "StrictGInteractions")
 
   return(gi)
 }

@@ -98,7 +98,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   if ( any(is.na(GenomeInfoDb::seqlengths(gi))) ) {
     stop("gi object need seqlengths.")
   }
-  if ( !is(gi, "StrictGInteractions") ) {
+  if ( !methods::is(gi, "StrictGInteractions") ) {
     stop("gi should be of class StrictGInteractions")
   }
 
@@ -163,7 +163,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
     # compute pairwise correlations for all regions in this bin
     if (n != 1) {
 
-      m <- cor(dat[,subIdx])
+      m <- stats::cor(dat[,subIdx])
 
     }else{
 
@@ -321,19 +321,19 @@ interactionRange <- function(gi){
   stopifnot(all(InteractionSet::intrachr(gi)))
 
   # make first anchor <= second anchor
-  gi <- as(gi, "GInteractions")
+  gi <- methods::as(gi, "GInteractions")
   strand(regions(gi)) <- "*"
   gi <- swapAnchors(gi, mode = "order")
 
   # get chroms from first anchor
-  chr <- seqnames(anchors(gi, "first"))
+  chr <- seqnames(InteractionSet::anchors(gi, "first"))
 
   # take all coordinates to get smalles as start and largest as end
   coords <- list(
-    start(anchors(gi, "first")),
-    end(anchors(gi, "first")),
-    start(anchors(gi, "second")),
-    end(anchors(gi, "second"))
+    GenomicRanges::start(InteractionSet::anchors(gi, "first")),
+    GenomicRanges::end(InteractionSet::anchors(gi, "first")),
+    GenomicRanges::start(InteractionSet::anchors(gi, "second")),
+    GenomicRanges::end(InteractionSet::anchors(gi, "second"))
   )
   start <- do.call(pmin, coords)
   end <- do.call(pmax, coords)
@@ -341,13 +341,13 @@ interactionRange <- function(gi){
   # create GenomicRanges object
   gr <- GenomicRanges::GRanges(
     seqnames = chr,
-    ranges = IRanges(start, end),
+    ranges = IRanges::IRanges(start, end),
     strand = "*",
     seqinfo = seqinfo(gi)
   )
 
   # add mcols
-  mcols(gr) <- mcols(gi)
+  S4Vectors::mcols(gr) <- S4Vectors::mcols(gi)
 
   return(gr)
 }
@@ -364,29 +364,29 @@ interactionRange <- function(gi){
 extendAnchors <- function(gi, inner, outer){
 
   # turn gi into GIntreactions
-  gi <- as(gi, "GInteractions")
+  gi <- methods::as(gi, "GInteractions")
   strand(regions(gi)) <- "*"
   gi <- swapAnchors(gi, mode = "order")
 
   # extend ranges of anchors
-  anc1 <- anchors(gi, "first")
+  anc1 <- InteractionSet::anchors(gi, "first")
   start(anc1) = start(anc1) - outer
   # extend end coordinate of fist anchor but only until start of second
-  end(anc1) = pmin(
-    end(anc1) + inner,
-    pmax(start(anchors(gi, "second")) - 1, end(anc1))
+  GenomicRanges::end(anc1) = pmin(
+    GenomicRanges::end(anc1) + inner,
+    pmax(GenomicRanges::start(InteractionSet::anchors(gi, "second")) - 1, GenomicRanges::end(anc1))
   )
 
-  anc2 <- anchors(gi, "second")
+  anc2 <- InteractionSet::anchors(gi, "second")
   # extend start coordinate of second anchor but only until end of first
-  start(anc2) = pmax(
-    start(anc2) - inner,
-    pmin(end(anchors(gi, "first")) + 1, start(anc2))
+  GenomicRanges::start(anc2) = pmax(
+    GenomicRanges::start(anc2) - inner,
+    pmin(GenomicRanges::end(InteractionSet::anchors(gi, "first")) + 1, GenomicRanges::start(anc2))
   )
-  end(anc2) = end(anc2) + outer
+  GenomicRanges::end(anc2) = GenomicRanges::end(anc2) + outer
 
   extendedGI <- InteractionSet::GInteractions(anc1, anc2)
-  mcols(extendedGI) <- mcols(gi)
+  S4Vectors::mcols(extendedGI) <- S4Vectors::mcols(gi)
 
   return(extendedGI)
 }
@@ -431,7 +431,7 @@ addCor <- function(motifs, bwFile, maxDist = 10^6,
 
   InteractionSet::regions(gi) <- addCovToGR(
     InteractionSet::regions(gi),
-    bigWigFile
+    bwFile
     )
 
   # compute correlation of ChIP-seq profiles

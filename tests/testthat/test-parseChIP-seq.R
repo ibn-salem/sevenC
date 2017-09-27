@@ -168,7 +168,7 @@ test_that("addCovToGR handles binSize and window paramter correctly.", {
 test_that("addCovToGR works with chr22 example data", {
 
   # use internal motif data
-  motifGR <- motif.hg19.CTCF.chr22
+  motifGR <- chromloop::motif.hg19.CTCF.chr22
 
   motifGR <- addCovToGR(motifGR, exampleBigWig)
 

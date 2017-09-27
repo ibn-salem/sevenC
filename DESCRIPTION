@@ -19,7 +19,8 @@ Imports: rtracklayer (>= 1.34.1),
     Rsamtools (>= 1.28.0),
     dplyr (>= 0.7.2),
     modelr (>= 0.1.1),
-    boot (>= 1.3-20)
+    boot (>= 1.3-20),
+    methods (>= 3.4.1)
 Suggests: testthat
 Depends: InteractionSet (>= 1.2.0)
 RoxygenNote: 6.0.1

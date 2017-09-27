@@ -140,7 +140,7 @@ test_that("addCovCor works with chr22 example data", {
                                package = "chromloop")
 
   # use internal motif data
-  motifGR <- motif.hg19.CTCF.chr22
+  motifGR <- chromloop::motif.hg19.CTCF.chr22
 
   motifGR <- addCovToGR(motifGR, exampleBigWig)
 
@@ -157,7 +157,7 @@ test_that("getCisPairs works with whole CTCF motif data", {
   skip("skipt test on whole CTCF motif data set for time.")
 
   # use internal motif data
-  motifGR <- motif.hg19.CTCF
+  motifGR <- chromloop::motif.hg19.CTCF
 
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e6)
@@ -192,7 +192,7 @@ test_that("addCovCor runs on toy example dataset", {
     InteractionSet::anchors(toyGI, id = TRUE, type = "second")
   )
   expect_warning(
-    corMat <- cor(t(as.matrix(covLst)))
+    corMat <- stats::cor(t(as.matrix(covLst)))
   )
   manualCor <- corMat[pairIdx]
 
@@ -205,7 +205,7 @@ test_that("interactions can be annotated with Hi-C loops", {
   # skip("Skipt test on large files")
 
   # use internal motif data on chr22
-  motifGR <- motif.hg19.CTCF[GenomeInfoDb::seqnames(motif.hg19.CTCF) == "chr22"]
+  motifGR <- chromloop::motif.hg19.CTCF.chr22
 
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e6)
@@ -251,8 +251,8 @@ test_that("addMotifScore works on toy example", {
 
   toyGI <- addMotifScore(toyGI, scoreColname = "score")
 
-  expect_true(all(c("score_1", "score_2", "score_min") %in% names(mcols(toyGI))))
-  expect_equal(toyGI$score_1, toyGR$score[anchors(toyGI, "first", id = TRUE)])
+  expect_true(all(c("score_1", "score_2", "score_min") %in% names(S4Vectors::mcols(toyGI))))
+  expect_equal(toyGI$score_1, toyGR$score[InteractionSet::anchors(toyGI, "first", id = TRUE)])
   expect_equal(toyGI$score_min, apply(cbind(toyGI$score_1, toyGI$score_2), 1, min))
 
 })
@@ -262,8 +262,12 @@ test_that("interactionRange works on toy example", {
   toyRange <- interactionRange(toyGI)
 
   expect_equal(length(toyRange), length(toyGI))
-  expect_equal(start(toyRange), start(InteractionSet::anchors(toyGI, "first")))
-  expect_equal(end(toyRange), end(InteractionSet::anchors(toyGI, "second")))
+  expect_equal(
+    GenomicRanges::start(toyRange),
+    GenomicRanges::start(InteractionSet::anchors(toyGI, "first")))
+  expect_equal(
+    GenomicRanges::end(toyRange),
+    GenomicRanges::end(InteractionSet::anchors(toyGI, "second")))
 })
 
 test_that("extendAnchors works on consturced example", {
@@ -286,8 +290,11 @@ test_that("extendAnchors works on consturced example", {
 
   extenedGI <- extendAnchors(strandedGI, inner = 5, outer = 0)
 
-  expect_equal(mcols(extenedGI), mcols(strandedGI))
-  expect_equal(width(anchors(extenedGI, "first")[1]),  width(anchors(strandedGI, "first")[1]))
+  expect_equal(S4Vectors::mcols(extenedGI), S4Vectors::mcols(strandedGI))
+  expect_equal(
+    width(InteractionSet::anchors(extenedGI, "first")[1]),
+    width(anchors(strandedGI, "first")[1])
+    )
 
 })
 
@@ -297,7 +304,7 @@ test_that("prepareCandidates works on toy example data", {
   gi <- prepareCandidates(toyGR, 10)
 
   expect_equal(length(gi), 3)
-  expect_true("strandOrientation" %in% names(mcols(gi)))
-  expect_true("score_min" %in% names(mcols(gi)))
+  expect_true("strandOrientation" %in% names(S4Vectors::mcols(gi)))
+  expect_true("score_min" %in% names(S4Vectors::mcols(gi)))
 
 })
