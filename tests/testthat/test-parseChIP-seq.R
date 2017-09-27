@@ -164,3 +164,14 @@ test_that("addCovToGR handles bin_size and window paramter correctly.", {
   expect_equal(length(grCov$covTest[[1]]), 10)
 })
 
+
+test_that("addCovToGR works with chr22 example data", {
+
+  # use internal motif data
+  motifGR <- motif.hg19.CTCF.chr22
+
+  motifGR <- addCovToGR(motifGR, exampleBigWig)
+
+  expect_true("cov" %in% names(S4Vectors::mcols(motifGR)))
+
+})

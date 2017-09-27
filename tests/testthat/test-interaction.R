@@ -131,6 +131,27 @@ test_that("coverage is added to gi on small example dataset", {
 
 })
 
+test_that("applyToCloseGi works with chr22 example data", {
+
+  # skip("skipt for faster test runtime.")
+
+  exampleBigWig <- system.file("extdata",
+                               "GM12878_Stat1.chr22_1-18000000.bigWig",
+                               package = "chromloop")
+
+  # use internal motif data
+  motifGR <- motif.hg19.CTCF.chr22
+
+  motifGR <- addCovToGR(motifGR, exampleBigWig)
+
+  # get all pairs within 1Mb
+  gi <- getCisPairs(motifGR, 1e5)
+
+  gi <- applyToCloseGI(gi, datcol = "cov", fun = cor)
+
+})
+
+
 test_that("getCisPairs works with whole CTCF motif data", {
 
   skip("skipt test on whole CTCF motif data set for time.")
