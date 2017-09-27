@@ -4,12 +4,12 @@
 \alias{addMotifScore}
 \title{Add motif score of anchors.}
 \usage{
-addMotifScore(gi, colname = "score")
+addMotifScore(gi, scoreColname = "score")
 }
 \arguments{
-\item{gi}{\code{\link{GInteractions}}}
+\item{gi}{\code{\link{GInteractions}}.}
 
-\item{colname}{name of the new colum that is created in \code{gi}.}
+\item{scoreColname}{Character as name the metadata column in with motif score.}
 }
 \value{
 The same \code{\link{GInteractions}} as \code{gi} but with three

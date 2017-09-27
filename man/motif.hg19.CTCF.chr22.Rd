@@ -4,14 +4,14 @@
 \name{motif.hg19.CTCF.chr22}
 \alias{motif.hg19.CTCF.chr22}
 \title{CTCF motif locations on chromosome 22 in human genome hg19.}
-\format{An object of class \code{GRanges} of length 105.}
+\format{An object of class \code{GRanges} of length 19.}
 \usage{
 motif.hg19.CTCF.chr22
 }
 \description{
 A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
 database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
-\eqn{\le 10^-5} on chromosome 22 are reported.
+\eqn{\le 10^-6} on chromosome 22 are reported.
 }
 \details{
 See '?motif.hg19.CTCF' for a more details and the full data set.

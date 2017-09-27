@@ -249,7 +249,7 @@ test_that("addStrandCombination works for straned and unstraed ranges", {
 
 test_that("addMotifScore works on toy example", {
 
-  toyGI <- addMotifScore(toyGI, colname = "score")
+  toyGI <- addMotifScore(toyGI, scoreColname = "score")
 
   expect_true(all(c("score_1", "score_2", "score_min") %in% names(mcols(toyGI))))
   expect_equal(toyGI$score_1, toyGR$score[anchors(toyGI, "first", id = TRUE)])
@@ -288,5 +288,16 @@ test_that("extendAnchors works on consturced example", {
 
   expect_equal(mcols(extenedGI), mcols(strandedGI))
   expect_equal(width(anchors(extenedGI, "first")[1]),  width(anchors(strandedGI, "first")[1]))
+
+})
+
+
+test_that("prepareCandidates works on toy example data", {
+
+  gi <- prepareCandidates(toyGR, 10)
+
+  expect_equal(length(gi), 3)
+  expect_true("strandOrientation" %in% names(mcols(gi)))
+  expect_true("score_min" %in% names(mcols(gi)))
 
 })

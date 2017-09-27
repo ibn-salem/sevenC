@@ -285,17 +285,17 @@ addStrandCombination <- function(gi, colname = "strandOrientation"){
 #' first and the second anchor region, respectively. Additonally a column named
 #' "score_min" is added with holds for each interaction the mimium of "score_1"
 #' and "score_2".
-#' @param gi \code{\link{GInteractions}}
-#' @param colname name of the new colum that is created in \code{gi}.
+#' @param gi \code{\link{GInteractions}}.
+#' @param scoreColname Character as name the metadata column in with motif score.
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with three
 #'   additonal annotation columns.
 #' @export
-addMotifScore <- function(gi, colname = "score"){
+addMotifScore <- function(gi, scoreColname = "score"){
 
   anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
   anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
 
-  ancScore <- S4Vectors::mcols(InteractionSet::regions(gi))[, colname]
+  ancScore <- S4Vectors::mcols(InteractionSet::regions(gi))[, scoreColname]
 
   S4Vectors::mcols(gi)[, "score_1"] <- ancScore[anc1]
   S4Vectors::mcols(gi)[, "score_2"] <- ancScore[anc2]
@@ -394,21 +394,28 @@ extendAnchors <- function(gi, inner, outer){
 
 #' Prepares motif pairs and add genomic features.
 #'
-#' @param moitfs GRanges object with motif locations
+#' @param motifs \code{\link[GenomicRanges]{GRanges}} object with motif
+#'   locations.
+#' @inheritParams getCisPairs
+#' @inheritParams addStrandCombination
+#' @inheritParams addMotifScore
+#'
+#' @return An \code{\link[InteractionSet]{GInteractions}} object with moitf
+#'   pairs and annotations of distance, strand orientation, and motif scores.
+#'
 #' @export
-prepareCandidates <- function(motifs, bwFile, maxDist = 10^6,
-                               window = 1000, binSize = 10,
-                               motifScoreCol = "sig"){
+prepareCandidates <- function(motifs, maxDist = 10^6, scoreColname = "score"){
 
   # get pairs of motifs as GInteraction object
   gi <- getCisPairs(motifs, maxDist = maxDist)
 
-  # add motif orientation
+  # add motif orientation combinations
   gi <- addStrandCombination(gi)
 
   # add motif score
-  gi <- addMotifScore(gi, colname = motifScoreCol)
+  gi <- addMotifScore(gi, scoreColname = scoreColname)
 
+  return(gi)
 }
 
 #' Prepares motif pairs and add genomic features.
@@ -416,6 +423,7 @@ prepareCandidates <- function(motifs, bwFile, maxDist = 10^6,
 #' @param gi GInteractions object
 #' @param bwFile File path or connection to BigWig file with coverage to
 #'   parrse from.
+#'
 #' @export
 addCor <- function(motifs, bwFile, maxDist = 10^6,
                               window = 1000, binSize = 10,
@@ -427,6 +435,6 @@ addCor <- function(motifs, bwFile, maxDist = 10^6,
     )
 
   # compute correlation of ChIP-seq profiles
-  gi <- addCovCor(gi, "cov", fun = cor)
+  gi <- addCovCor(gi, "cov")
 }
 
