@@ -22,5 +22,5 @@ Imports: rtracklayer (>= 1.34.1),
     modelr,
     boot
 Suggests: testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Depends: InteractionSet (>= 1.2.0)
