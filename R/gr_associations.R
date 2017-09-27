@@ -58,8 +58,6 @@ linkRegions <- function(gr1, gr2, gi, outer_maxgap = 0, inner_maxgap = 0, ...){
 #' @return A dataframe of integer indices indicating which elements of
 #'   \code{gr1} link which elements of \code{gr1}.
 #'
-#' @importFrom dplyr select left_join rename
-#' @importFrom magrittr '%>%'
 #' @export
 linkRegionsInLoops <- function(gr1, gr2, gi, ...){
 
@@ -69,19 +67,15 @@ linkRegionsInLoops <- function(gr1, gr2, gi, ...){
   # get range of all looping interactions
   loopGR <- interactionRange(gi)
 
-  gr1Hits <- data.frame(
-    GenomicRanges::findOverlaps(gr1, loopGR)
-  ) %>%
-    dplyr::rename(gr1 = queryHits)
+  gr1Hits <- data.frame(GenomicRanges::findOverlaps(gr1, loopGR))
+  gr1Hits <- dplyr::rename(gr1Hits, gr1 = queryHits)
 
-  gr2Hits <- data.frame(
-    GenomicRanges::findOverlaps(gr2, loopGR)
-  ) %>%
-    dplyr::rename(gr2 = queryHits)
+  gr2Hits <- data.frame(GenomicRanges::findOverlaps(gr2, loopGR))
+  gr2Hits <- dplyr::rename(gr2Hits, gr2 = queryHits)
 
   # link reginos by
-  linksDF <- dplyr::left_join(gr1Hits, gr2Hits, by = "subjectHits") %>%
-    dplyr::select(gi = subjectHits, gr1, gr2)
+  linksDF <- dplyr::left_join(gr1Hits, gr2Hits, by = "subjectHits")
+  linksDF <- dplyr::select(linksDF, gi = subjectHits, gr1, gr2)
 
 
   # take only gr1 and gr2 indices and rename to match direct overlap

@@ -47,7 +47,6 @@ parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
 #'@return \code{\link[S4Vectors]{Rle-class}} coverage object. See
 #'  \code{\link[IRanges]{coverage}}.
 #'
-#'@importFrom Rsamtools ScanBamParam scanBamHeader
 parseBAMToRle <- function(inFile, seqInfo, selectionGR = NULL){
 
   # inFile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
@@ -59,12 +58,12 @@ parseBAMToRle <- function(inFile, seqInfo, selectionGR = NULL){
   seqlevelsStyle(selectionGR) <- "UCSC"
   seqlevels(selectionGR)
 
-  param <- ScanBamParam(
+  param <- Rsamtools::ScanBamParam(
     what = c( "pos" , "qwidth" ),
     which = selectionGR,
     flag = scanBamFlag(isUnmappedQuery = FALSE)
     )
-  h <- scanBamHeader(inFile)
+  h <- Rsamtools::scanBamHeader(inFile)
 
   # x <- scanBam(inFile, param = param, seqinfo = seqinfo(selectionGR))[[1]]
 
