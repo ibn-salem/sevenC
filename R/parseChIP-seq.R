@@ -190,12 +190,25 @@ addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
     GenomicRanges::start(ancWin),
     1)
 
-  message("INFO: Start reading coverage from file: ", bwFile, " ...")
   # get numeric with coverage of each region
+
+  # define query region and trim seqinfo to avoid warning in rtracklayer::import.bw
+  selectWin <- ancWin
+  GenomeInfoDb::seqlevels(selectWin) <- as.character(
+    unique(GenomeInfoDb::seqnames(selectWin))
+    )
+  GenomeInfoDb::seqinfo(selectWin) <- GenomeInfoDb::Seqinfo(
+    GenomeInfoDb::seqlevels(selectWin)
+    )
+  selection <- rtracklayer::BigWigSelection(selectWin)
+
+  message("INFO: Start reading coverage from file: ", bwFile, " ...")
+
   covGR <- rtracklayer::import.bw(
     bwFile,
-    selection = rtracklayer::BigWigSelection(ancWin),
-    as = "GRanges")
+    selection = selection,
+    as = "GRanges",
+    seqinfo = seqinfo(ancWin))
   message("INFO: Finished reading coverage from fiel: ", bwFile)
 
   # update covGR with seqinfo to allow subsetting with ancWin
