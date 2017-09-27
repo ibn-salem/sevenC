@@ -66,13 +66,13 @@ noZeroVar <- function(dat) {
 #'
 #' This function adds a vector with the resulting functin call for each input
 #' interaction. Only works for input interaction within the given \code{maxDist}
-#' distance
+#' distance.
 #'
 #'
 #' @param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
 #' @param datcol a string matching an annotation column in \code{regions(gi)}.
 #'   This collumn is assumed to hold the same number of values for each
-#'   interaction \code{NumericList}.
+#'   interaction as a \code{NumericList}.
 #' @param fun A function that takes two numeric vectors as imput to compute a
 #'   summary statsitic. Default is \code{\link[stats]{cor}}.
 #' @param colname A string that is used as columnname for the new column in
@@ -84,28 +84,39 @@ noZeroVar <- function(dat) {
 #'   just wiht an additinoal column added.
 #' @export
 #' @import data.table
-applyToCloseGI <- function(gi, datcol, fun=cor, colname="cor", maxDist=NULL){
+applyToCloseGI <- function(gi, datcol, fun = cor, colname = "cor",
+                           maxDist = NULL){
 
-  # Algorithm
+  # Algorithm to avoid comparisons of distal pairs
   # (0) define maxDist
   # (1) Group genome in overlapping bins of size 2*maxDist
   # (2) Run pairwise correlation for all ranges in each bin
-  # (3) Combine correlations to data.frame with proper id1 and id2 in first columns
-  # (4) Query data frame with input pairs
+  # (3) Combine correlations to data.frame with proper id1 and id2 in first
+  #     columns
+  # (4) Query fubak data.frame with input pairs
   #   /uses inner_join() from dplyr like in
   #  http://stackoverflow.com/questions/26596305/match-two-data-frames-based-on-multiple-columns
 
   # check input
-  if ( any(is.na(GenomeInfoDb::seqlengths(gi))) ) stop("gi object need seqlengths.")
-  if ( !is(gi, "StrictGInteractions") ) stop("gi should be of class StrictGInteractions")
+  if ( any(is.na(GenomeInfoDb::seqlengths(gi))) ) {
+    stop("gi object need seqlengths.")
+  }
+  if ( !is(gi, "StrictGInteractions") ) {
+    stop("gi should be of class StrictGInteractions")
+  }
 
   #-----------------------------------------------------------------------------
   # (0) define maxDist
   #-----------------------------------------------------------------------------
-  if( is.null(maxDist) ){
-    maxDist <- max(InteractionSet::pairdist(gi))
-  }else{
-    if(maxDist < max(InteractionSet::pairdist(gi))) stop("maxDist is smaller than maximal distance between interactions in input gi.")
+  if (is.null(maxDist)) {
+
+    # to avoid too many bins use minimal size of 10^6
+    maxDist <- max(10^6, InteractionSet::pairdist(gi))
+
+    if (maxDist < max(InteractionSet::pairdist(gi))) {
+      stop(paste0("maxDist is smaller than maximal distance between",
+                  "interactions in input gi."))
+    }
   }
 
   #-----------------------------------------------------------------------------
@@ -121,12 +132,14 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="cor", maxDist=NULL){
   # tile genoe in overlapping bins of with 2*maxDist
   binGR <- unlist(GenomicRanges::slidingWindows(genomeGR, 2*maxDist, maxDist))
 
+  # get assign bins to regions
   hits <- GenomicRanges::findOverlaps(binGR, InteractionSet::regions(gi))
 
   #-----------------------------------------------------------------------------
   # (2) compute pairwise correlatin for all ranges in each bin
   #-----------------------------------------------------------------------------
   message("INFO: compute correlations for each group...")
+
 
   covList <- S4Vectors::mcols(InteractionSet::regions(gi))[,datcol]
   datamat <- as.matrix(covList)
@@ -194,7 +207,7 @@ applyToCloseGI <- function(gi, datcol, fun=cor, colname="cor", maxDist=NULL){
   )
 
   message("INFO: Query correlation for input pairs...")
-  matches <- corDT[gpDT, on=c("id1", "id2"), mult="first"]
+  matches <- corDT[gpDT, on = c("id1", "id2"), mult = "first"]
 
   #return(matches$val)
   S4Vectors::mcols(gi)[,colname] <- matches$val
