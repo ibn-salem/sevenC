@@ -62,19 +62,16 @@ noZeroVar <- function(dat) {
   which(out > 1)
 }
 
-#' Apply a function to pairs of close genomic regions.
+#' Add correlation of anchor signals to pairs of close genomic regions.
 #'
-#' This function adds a vector with the resulting functin call for each input
+#' This function adds a vector with correlation values for each input
 #' interaction. Only works for input interaction within the given \code{maxDist}
 #' distance.
-#'
 #'
 #' @param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
 #' @param datcol a string matching an annotation column in \code{regions(gi)}.
 #'   This collumn is assumed to hold the same number of values for each
 #'   interaction as a \code{NumericList}.
-#' @param fun A function that takes two numeric vectors as imput to compute a
-#'   summary statsitic. Default is \code{\link[stats]{cor}}.
 #' @param colname A string that is used as columnname for the new column in
 #'   \code{gi}.
 #' @param maxDist maximal distance of pairs in bp as numeric. If maxDist=NULL,
@@ -84,7 +81,7 @@ noZeroVar <- function(dat) {
 #'   just wiht an additinoal column added.
 #' @export
 #' @import data.table
-applyToCloseGI <- function(gi, datcol, fun = cor, colname = "cor",
+addCovCor <- function(gi, datcol, colname = "cor",
                            maxDist = NULL){
 
   # Algorithm to avoid comparisons of distal pairs
@@ -392,5 +389,44 @@ extendAnchors <- function(gi, inner, outer){
   mcols(extendedGI) <- mcols(gi)
 
   return(extendedGI)
+}
+
+
+#' Prepares motif pairs and add genomic features.
+#'
+#' @param moitfs GRanges object with motif locations
+#' @export
+prepareCandidates <- function(motifs, bwFile, maxDist = 10^6,
+                               window = 1000, binSize = 10,
+                               motifScoreCol = "sig"){
+
+  # get pairs of motifs as GInteraction object
+  gi <- getCisPairs(motifs, maxDist = maxDist)
+
+  # add motif orientation
+  gi <- addStrandCombination(gi)
+
+  # add motif score
+  gi <- addMotifScore(gi, colname = motifScoreCol)
+
+}
+
+#' Prepares motif pairs and add genomic features.
+#'
+#' @param gi GInteractions object
+#' @param bwFile File path or connection to BigWig file with coverage to
+#'   parrse from.
+#' @export
+addCor <- function(motifs, bwFile, maxDist = 10^6,
+                              window = 1000, binSize = 10,
+                              motifScoreCol = "sig"){
+
+  InteractionSet::regions(gi) <- addCovToGR(
+    InteractionSet::regions(gi),
+    bigWigFile
+    )
+
+  # compute correlation of ChIP-seq profiles
+  gi <- addCovCor(gi, "cov", fun = cor)
 }
 

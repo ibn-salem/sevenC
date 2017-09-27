@@ -83,7 +83,7 @@ test_that("addCovToGR works on example dataset", {
   grCov <- addCovToGR(
     test_gr,
     test_bw, window = 10,
-    bin_size = 1,
+    binSize = 1,
     colname = "covTest")
 
   expect_equal(length(test_gr), length(grCov))
@@ -107,7 +107,7 @@ test_that("addCovToGR handles out of chromosome coordinates", {
                                     genome = "example")
   )
 
-  grCov <- addCovToGR(out_gr, test_bw, window = 10, bin_size = 1,
+  grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
                       colname = "covTest")
 
   expect_true(!is.null(grCov$covTest))
@@ -125,7 +125,7 @@ test_that("addCovToGR handles input ranges without seqinfo object", {
     )
   )
 
-  grCov <- addCovToGR(out_gr, test_bw, window = 10, bin_size = 1,
+  grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
                       colname = "covTest")
 
   expect_true(!is.null(grCov$covTest))
@@ -141,21 +141,21 @@ test_that("addCovToGR reversed coverage for regions on negative strand.", {
   stranedGR <- test_gr
   GenomicRanges::strand(stranedGR) <- c("+", "-", "-")
 
-  grCov <- addCovToGR(test_gr, test_bw, window = 10, bin_size = 1,
+  grCov <- addCovToGR(test_gr, test_bw, window = 10, binSize = 1,
                       colname = "covTest")
-  stranedCov <- addCovToGR(stranedGR, test_bw, window = 10, bin_size = 1,
+  stranedCov <- addCovToGR(stranedGR, test_bw, window = 10, binSize = 1,
                            colname = "covTest")
 
   expect_equal(stranedCov$covTest[[2]], rev(grCov$covTest[[2]]) )
   expect_equal(stranedCov$covTest[[1]], grCov$covTest[[1]])
 })
 
-test_that("addCovToGR handles bin_size and window paramter correctly.", {
+test_that("addCovToGR handles binSize and window paramter correctly.", {
 
   grCov <- addCovToGR(
     test_gr,
     test_bw, window = 100,
-    bin_size = 10,
+    binSize = 10,
     colname = "covTest")
 
   expect_equal(length(test_gr), length(grCov))

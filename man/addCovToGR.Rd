@@ -4,7 +4,7 @@
 \alias{addCovToGR}
 \title{Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.}
 \usage{
-addCovToGR(gr, bwFile, window = 1000, bin_size = 1, colname = "cov")
+addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "cov")
 }
 \arguments{
 \item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions}
@@ -14,7 +14,7 @@ from.}
 
 \item{window}{the window size arund the center of ranges in \code{gr}.}
 
-\item{bin_size}{size of bins to which the coverage values are combined.}
+\item{binSize}{size of bins to which the coverage values are combined.}
 
 \item{colname}{name of the new colum that is created in \code{gr}.}
 }

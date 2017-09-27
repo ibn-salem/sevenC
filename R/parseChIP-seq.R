@@ -164,13 +164,13 @@ slideMean <- function(x, k){
 #' @param bwFile File path or connection to BigWig file with coverage to parrse
 #'   from.
 #' @param window the window size arund the center of ranges in \code{gr}.
-#' @param bin_size size of bins to which the coverage values are combined.
+#' @param binSize size of bins to which the coverage values are combined.
 #' @param colname name of the new colum that is created in \code{gr}.
 #'
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
 #'   meta column containing the coverage values for each region.
 #' @export
-addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
+addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
 
   # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
@@ -233,8 +233,8 @@ addCovToGR <- function(gr, bwFile, window=1000, bin_size=1, colname="cov"){
   })
 
   # combine coverage for bins
-  if (bin_size > 1) {
-    covAnc <- IRanges::NumericList(lapply(covAnc, slideMean, k = bin_size))
+  if (binSize > 1) {
+    covAnc <- IRanges::NumericList(lapply(covAnc, slideMean, k = binSize))
   }
 
 

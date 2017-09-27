@@ -126,12 +126,12 @@ test_that("coverage is added to gi on small example dataset", {
     regGR,
     bwFile,
     window = 10,
-    bin_size = 1,
+    binSize = 1,
     colname = "cov")
 
 })
 
-test_that("applyToCloseGi works with chr22 example data", {
+test_that("addCovCor works with chr22 example data", {
 
   # skip("skipt for faster test runtime.")
 
@@ -147,7 +147,7 @@ test_that("applyToCloseGi works with chr22 example data", {
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e5)
 
-  gi <- applyToCloseGI(gi, datcol = "cov", fun = cor)
+  gi <- addCovCor(gi, datcol = "cov")
 
 })
 
@@ -167,18 +167,18 @@ test_that("getCisPairs works with whole CTCF motif data", {
 
 })
 
-test_that("applyToCloseGI runs on toy example dataset", {
+test_that("addCovCor runs on toy example dataset", {
 
 
   InteractionSet::regions(toyGI) <- addCovToGR(InteractionSet::regions(toyGI),
                                             toyCovFile,
                                             window = 4,
-                                            bin_size = 1,
+                                            binSize = 1,
                                             colname = "cov")
 
   ncolBefore <- ncol(S4Vectors::mcols(toyGI))
 
-  toyGI <- applyToCloseGI(toyGI, "cov", fun = cor, colname = "value")
+  toyGI <- addCovCor(toyGI, "cov", colname = "value")
 
   # check that exactly one column is added
   expect_equal(ncol(S4Vectors::mcols(toyGI)), ncolBefore + 1)
