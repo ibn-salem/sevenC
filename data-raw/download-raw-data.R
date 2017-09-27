@@ -31,25 +31,25 @@ require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 hg19seqInfo <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)
 
 # parse matrix-scan motif:
-motifDF <- read.table(CTCF_hg19_file,
-                      sep="\t", header=TRUE, comment.char=";")
+motifDF <- readr::read_tsv(CTCF_hg19_file, comment = ";")
 
 motif.hg19.CTCF <- GRanges(
-  motifDF[,1],
+  motifDF[[1]],
   IRanges(motifDF$start, motifDF$end),
-  strand=ifelse(motifDF$strand == "D", "+", "-"),
-  motifDF[,c("sequence", "weight", "Pval", "ln_Pval", "sig")],
-  seqinfo=hg19seqInfo
+  strand = ifelse(motifDF$strand == "D", "+", "-"),
+  as.data.frame(motifDF[,c("sequence", "weight", "Pval", "ln_Pval", "sig")]),
+  seqinfo = hg19seqInfo
 )
 
 motif.hg19.CTCF <- sort(motif.hg19.CTCF)
 
-motif.hg19.CTCF <- motif.hg19.CTCF[motif.hg19.CTCF$Pval <= 10^-5]
+# filter for p-values <= 10^-6
+motif.hg19.CTCF <- motif.hg19.CTCF[motif.hg19.CTCF$Pval <= 10^-6]
 
-print(object.size(motif.hg19.CTCF), unit="auto")
+print(object.size(motif.hg19.CTCF), unit = "auto")
 print(length(motif.hg19.CTCF))
 
-devtools::use_data(motif.hg19.CTCF, overwrite=TRUE)
+devtools::use_data(motif.hg19.CTCF, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
 # add subset of CTCF moitif locations on chr22

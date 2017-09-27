@@ -1,8 +1,7 @@
 #' CTCF motif locations in human genome hg19.
 #'
 #' A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
-#' database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
-#' \eqn{\le 10^-5} are reported.
+#' database (MA0139.1) in human genome assembly hg19.
 #'
 #' The dataset was created by using the tool RSTA matrix-scan
 #' (\url{http://www.rsat.eu/}) to get all motif hits in the hg19 genome sequence.
@@ -24,7 +23,7 @@
 #' page: \url{http://pedagogix-tagc.univ-mrs.fr/rsat/help.matrix-scan.html}
 #'
 #' The dataset was than filtered to contain only motif hists with
-#' p-value \eqn{\le 10^-5}.
+#' p-value \eqn{\le 10^-6}.
 #'
 #' @format GRanges object with 132739 ranges on
 #'   positive and negative strnad indicated and 5 meta columns:
@@ -63,7 +62,7 @@
 #'
 #' A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
 #' database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
-#' \eqn{\le 10^-5} on chromosome 22 are reported.
+#' \eqn{\le 10^-6} on chromosome 22 are reported.
 #'
 #' See '?motif.hg19.CTCF' for a more details and the full data set.
 #'
