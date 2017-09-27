@@ -59,30 +59,29 @@ parseLoopsRao <- function(inFile, ...){
 #'@param ... additional arguments, that will be passed to
 #'  \code{\link[GenomicRanges]{GRanges}} functions.
 #'@return An \code{\link{GInteractions}} with loops from input file.
-#'@importFrom utils read.delim
 #'@export
 parseLoopsTang2015 <- function(inFile, ...){
 
   message("INFO: Parse ChiA-PET interactions from file: ", inFile)
 
   # parse IMR90 domains from Rao et al 2014:
-  inDF = read.delim(inFile, header = FALSE)
+  inDF = readr::read_tsv(inFile, col_names = FALSE)
 
   # create ranges by adding +1 to start coordintate to convert from 0-based to
   # to 1-based coordinates.
   upAnchor = GenomicRanges::GRanges(
-    inDF[,1],
-    IRanges::IRanges(inDF[,2] + 1, inDF[,3]), ...)
+    inDF[[1]],
+    IRanges::IRanges(inDF[[2]] + 1, inDF[[3]]), ...)
 
   downAnchor = GenomicRanges::GRanges(
-    inDF[,4],
-    IRanges::IRanges(inDF[,5] + 1, inDF[,6]), ...)
+    inDF[[4]],
+    IRanges::IRanges(inDF[[5]] + 1, inDF[[6]]), ...)
 
   # build GInteractions
   gi <- InteractionSet::GInteractions(upAnchor, downAnchor, mode = "strict")
 
   # annotate GInteractions object with score
-  gi$score <- inDF[,7]
+  gi$score <- inDF[[7]]
 
   return(gi)
 
