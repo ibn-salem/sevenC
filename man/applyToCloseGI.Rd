@@ -11,7 +11,7 @@ applyToCloseGI(gi, datcol, fun = cor, colname = "cor", maxDist = NULL)
 
 \item{datcol}{a string matching an annotation column in \code{regions(gi)}.
 This collumn is assumed to hold the same number of values for each
-interaction \code{NumericList}.}
+interaction as a \code{NumericList}.}
 
 \item{fun}{A function that takes two numeric vectors as imput to compute a
 summary statsitic. Default is \code{\link[stats]{cor}}.}
@@ -30,5 +30,5 @@ A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
 \description{
 This function adds a vector with the resulting functin call for each input
 interaction. Only works for input interaction within the given \code{maxDist}
-distance
+distance.
 }
