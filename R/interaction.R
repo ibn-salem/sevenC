@@ -1,11 +1,11 @@
 #' Build a \code{\link{GInteractions}} object with all pairs of input
-#' \code{\link{GRanges}} within a given distance.
+#' \code{\link[GenomicRanges]{GRanges}} within a given distance.
 #'
 #' Distance is calculated from the center of input regions.
 #'
-#' @param inGR \code{\link{GRanges}} object of genomic regions. The ranges shuld
+#' @param inGR \code{\link[GenomicRanges]{GRanges}} object of genomic regions. The ranges shuld
 #'   be sorted according to chr, strand, and start position. Use
-#'   \code{\link[GenomicRanges]{sort}} to sort it.
+#'   \code{\link[BiocGenerics]{sort}} to sort it.
 #' @param maxDist maximal distance in base-pairs between pairs of ranges as
 #'   single  numeric value.
 #' @return A \code{\link[InteractionSet]{GInteractions}} object with all pairs
@@ -310,9 +310,10 @@ addMotifScore <- function(gi, scoreColname = "score"){
 #' Note, this method assumes are intra-chromosomal (e.g. only interactions
 #' between regions from the same chromosome).
 #'
-#' @param gi \code{\link{GInteractions}} or \code{\link{InteractionSet}} object
-#' @return A \code{\link{GRanges}} object with ranges spanning the
-#'   interactions in \code{gi}.
+#' @param gi \code{\link[InteractionSet]{GInteractions}} or
+#'   \code{\link[InteractionSet]{InteractionSet}} object
+#' @return A \code{\link[GenomicRanges]{GRanges}} object with ranges spanning
+#'   the interactions in \code{gi}.
 #'
 #' @export
 interactionRange <- function(gi){
@@ -423,15 +424,16 @@ prepareCandidates <- function(motifs, maxDist = 10^6, scoreColname = "score"){
 #' @param gi GInteractions object
 #' @param bwFile File path or connection to BigWig file with coverage to
 #'   parrse from.
-#'
+#' @param name Character indicating the sample name.
+#' @inheritParams addCovToGR
+#' @inheritParams addCovCor
 #' @export
-addCor <- function(motifs, bwFile, maxDist = 10^6,
-                              window = 1000, binSize = 10,
-                              motifScoreCol = "sig"){
+addCor <- function(gi, bwFile, name = "cov", window = 1000, binSize = 10){
 
   InteractionSet::regions(gi) <- addCovToGR(
     InteractionSet::regions(gi),
-    bwFile
+    bwFile,
+    colname = name
     )
 
   # compute correlation of ChIP-seq profiles

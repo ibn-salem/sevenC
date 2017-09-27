@@ -4,14 +4,19 @@
 \alias{addCor}
 \title{Prepares motif pairs and add genomic features.}
 \usage{
-addCor(motifs, bwFile, maxDist = 10^6, window = 1000, binSize = 10,
-  motifScoreCol = "sig")
+addCor(gi, bwFile, name = "cov", window = 1000, binSize = 10)
 }
 \arguments{
+\item{gi}{GInteractions object}
+
 \item{bwFile}{File path or connection to BigWig file with coverage to
 parrse from.}
 
-\item{gi}{GInteractions object}
+\item{name}{Character indicating the sample name.}
+
+\item{window}{the window size arund the center of ranges in \code{gr}.}
+
+\item{binSize}{size of bins to which the coverage values are combined.}
 }
 \description{
 Prepares motif pairs and add genomic features.

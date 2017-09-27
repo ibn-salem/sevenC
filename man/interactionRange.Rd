@@ -7,11 +7,12 @@
 interactionRange(gi)
 }
 \arguments{
-\item{gi}{\code{\link{GInteractions}} or \code{\link{InteractionSet}} object}
+\item{gi}{\code{\link[InteractionSet]{GInteractions}} or
+\code{\link[InteractionSet]{InteractionSet}} object}
 }
 \value{
-A \code{\link{GRanges}} object with ranges spanning the
-  interactions in \code{gi}.
+A \code{\link[GenomicRanges]{GRanges}} object with ranges spanning
+  the interactions in \code{gi}.
 }
 \description{
 Note, this method assumes are intra-chromosomal (e.g. only interactions
