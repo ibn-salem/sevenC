@@ -322,11 +322,11 @@ interactionRange <- function(gi){
 
   # make first anchor <= second anchor
   gi <- methods::as(gi, "GInteractions")
-  strand(regions(gi)) <- "*"
-  gi <- swapAnchors(gi, mode = "order")
+  GenomicRanges::strand(InteractionSet::regions(gi)) <- "*"
+  gi <- InteractionSet::swapAnchors(gi, mode = "order")
 
   # get chroms from first anchor
-  chr <- seqnames(InteractionSet::anchors(gi, "first"))
+  chr <- GenomeInfoDb::seqnames(InteractionSet::anchors(gi, "first"))
 
   # take all coordinates to get smalles as start and largest as end
   coords <- list(
@@ -343,7 +343,7 @@ interactionRange <- function(gi){
     seqnames = chr,
     ranges = IRanges::IRanges(start, end),
     strand = "*",
-    seqinfo = seqinfo(gi)
+    seqinfo = GenomeInfoDb::seqinfo(gi)
   )
 
   # add mcols
@@ -365,12 +365,12 @@ extendAnchors <- function(gi, inner, outer){
 
   # turn gi into GIntreactions
   gi <- methods::as(gi, "GInteractions")
-  strand(regions(gi)) <- "*"
-  gi <- swapAnchors(gi, mode = "order")
+  GenomicRanges::strand(InteractionSet::regions(gi)) <- "*"
+  gi <- InteractionSet::swapAnchors(gi, mode = "order")
 
   # extend ranges of anchors
   anc1 <- InteractionSet::anchors(gi, "first")
-  start(anc1) = start(anc1) - outer
+  GenomicRanges::start(anc1) = GenomicRanges::start(anc1) - outer
   # extend end coordinate of fist anchor but only until start of second
   GenomicRanges::end(anc1) = pmin(
     GenomicRanges::end(anc1) + inner,

@@ -292,8 +292,8 @@ test_that("extendAnchors works on consturced example", {
 
   expect_equal(S4Vectors::mcols(extenedGI), S4Vectors::mcols(strandedGI))
   expect_equal(
-    width(InteractionSet::anchors(extenedGI, "first")[1]),
-    width(anchors(strandedGI, "first")[1])
+    IRanges::width(InteractionSet::anchors(extenedGI, "first")[1]),
+    IRanges::width(InteractionSet::anchors(strandedGI, "first")[1])
     )
 
 })

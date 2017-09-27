@@ -12,7 +12,8 @@ Description: Chromatin looping interactions are an importent feature of
 License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
-Imports: rtracklayer (>= 1.34.1),
+Imports:     InteractionSet (>= 1.2.0),
+    rtracklayer (>= 1.34.1),
     data.table (>= 1.10.4),
     readr (>= 1.1.0),
     purrr (>= 0.2.2),
@@ -22,5 +23,5 @@ Imports: rtracklayer (>= 1.34.1),
     boot (>= 1.3-20),
     methods (>= 3.4.1)
 Suggests: testthat
-Depends: InteractionSet (>= 1.2.0)
+Depends: R (>= 3.4)
 RoxygenNote: 6.0.1
