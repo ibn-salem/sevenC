@@ -36,40 +36,6 @@ parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
 }
 
 
-#'Parse BAM file as RleList coverage object.
-#'
-#'See http://bioconductor.org/packages/release/bioc/html/Rsamtools.html
-#'
-#'@param inFile a BAM file
-#'@param seqInfo a \code{\link[GenomeInfoDb]{seqinfo}} object.
-#'@param selectionGR \code{\link[GenomicRanges]{GRanges}} object with regions for
-#'  which the coverage is selected.
-#'@return \code{\link[S4Vectors]{Rle-class}} coverage object. See
-#'  \code{\link[IRanges]{coverage}}.
-#'
-parseBAMToRle <- function(inFile, seqInfo, selectionGR = NULL){
-
-  # inFile <- system.file("extdata", "ex1.bam", package = "Rsamtools")
-  inFile <- "../chromloop_analysis/data/ENCODE/bam/wgEncodeSydhTfbsGm12878Rad21IggrabAlnRep1.bam"
-  # selectionGR <- GRanges(paste("seq", 1:2, sep=""), IRanges(1, 1e7))
-  selectionGR <- motif.hg19.CTCF
-
-  seqInfo <- seqinfo(selectionGR)
-  seqlevelsStyle(selectionGR) <- "UCSC"
-  seqlevels(selectionGR)
-
-  param <- Rsamtools::ScanBamParam(
-    what = c( "pos" , "qwidth" ),
-    which = selectionGR,
-    flag = scanBamFlag(isUnmappedQuery = FALSE)
-    )
-  h <- Rsamtools::scanBamHeader(inFile)
-
-  # x <- scanBam(inFile, param = param, seqinfo = seqinfo(selectionGR))[[1]]
-
-  coverage(IRanges(x[["pos"]], width=x[["qwidth"]]))
-}
-
 #' Get out of chromosomal bound ranges.
 #'
 #' @param gr A \code{GRanges} object.
