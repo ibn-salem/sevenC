@@ -3,12 +3,16 @@ Type: Package
 Title: Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs
 Version: 0.0.1.9000
 Authors@R: person("Jonas", "Ibn-Salem", email = "j.ibn-salem@uni-mainz.de", role = c("aut", "cre"))
-Description: Chromatin looping interactions are an importent feature of
-  eukaryotic genomes and can bring regulatory sequences such as enhancers in
-  close physical proximity of regulated target genes.
-  Here we provide a tool that uses protein binding signals from ChIP-seq and
-  sequence motif information to predict chromatin looping events. It can be
-  used to associate binding sites of transcription factors to regulated genes.
+Description: Chromatin looping is an importent feature of
+  eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
+  transcription factor binding sites, in close physical proximity of regulated target genes.
+  Here, we provide a tool that uses protein binding signals from ChIP-seq and
+  sequence motif information to predict chromatin looping events. 
+  Cross-linking of proteins binding close to loop anchors result in ChIP-seq 
+  signals at both anchor loci. These signals are used at CTCF motif pairs 
+  together their distance and orientation to each other to predict chromatin 
+  looping interactions. The looping interactions can associate enhancers or 
+  transcription factor binding sites (ChIP-seq peaks) to regulated genes.
 License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
