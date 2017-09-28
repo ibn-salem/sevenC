@@ -1,7 +1,7 @@
 Package: chromloop
 Type: Package
 Title: Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs
-Version: 0.0.0.9001
+Version: 0.0.1.9000
 Authors@R: person("Jonas", "Ibn-Salem", email = "j.ibn-salem@uni-mainz.de", role = c("aut", "cre"))
 Description: Chromatin looping interactions are an importent feature of
   eukaryotic genomes and can bring regulatory sequences such as enhancers in
@@ -12,7 +12,12 @@ Description: Chromatin looping interactions are an importent feature of
 License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
-Imports:     InteractionSet (>= 1.2.0),
+Imports: InteractionSet (>= 1.2.0),
+    BiocGenerics (>= 0.22.0),
+    GenomeInfoDb (>= 1.12.2),
+    GenomicRanges (>= 1.28.5),
+    IRanges (>= 2.10.3),
+    S4Vectors (>= 0.14.4),
     rtracklayer (>= 1.34.1),
     data.table (>= 1.10.4),
     readr (>= 1.1.0),
