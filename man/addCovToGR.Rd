@@ -24,7 +24,7 @@ from.}
 }
 \description{
 This function adds a vector of coverage (or any other signal in the input
-bigWig file) to each range in a genomic ranges object. The coverage is
-reported for a fixed-sized window around the region center. For regions with
-negative strand, the coverage vector is reversed.
+bigWig file) to each range in a \code{\link[GenomicRanges]{GRanges}} object.
+The coverage is reported for a fixed-sized window around the region center.
+For regions with negative strand, the coverage vector is reversed.
 }

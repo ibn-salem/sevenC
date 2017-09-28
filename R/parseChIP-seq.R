@@ -121,9 +121,9 @@ slideMean <- function(x, k){
 #' Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.
 #'
 #' This function adds a vector of coverage (or any other signal in the input
-#' bigWig file) to each range in a genomic ranges object. The coverage is
-#' reported for a fixed-sized window around the region center. For regions with
-#' negative strand, the coverage vector is reversed.
+#' bigWig file) to each range in a \code{\link[GenomicRanges]{GRanges}} object.
+#' The coverage is reported for a fixed-sized window around the region center.
+#' For regions with negative strand, the coverage vector is reversed.
 #'
 #' @param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
 #' @param bwFile File path or connection to BigWig file with coverage to parrse
@@ -157,7 +157,8 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
 
   # get numeric with coverage of each region
 
-  # define query region and trim seqinfo to avoid warning in rtracklayer::import.bw
+  # define query region and trim seqinfo to avoid
+  # warning in rtracklayer::import.bw
   selectWin <- ancWin
   GenomeInfoDb::seqlevels(selectWin) <- as.character(
     unique(GenomeInfoDb::seqnames(selectWin))
