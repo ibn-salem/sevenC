@@ -308,3 +308,14 @@ test_that("prepareCandidates works on toy example data", {
   expect_true("score_min" %in% names(S4Vectors::mcols(gi)))
 
 })
+
+test_that("addCor works on toy example data", {
+
+  gi <- addCor(toyGI, toyCovFile, name = "toy", window = 4, binSize = 1)
+
+  expect_true("toy" %in% names(S4Vectors::mcols(InteractionSet::regions(gi))))
+  expect_equal(ncol(S4Vectors::mcols(gi)), ncol(S4Vectors::mcols(toyGI)) + 1)
+  expect_true("toy" %in% names(S4Vectors::mcols(gi)))
+
+})
+

@@ -419,24 +419,32 @@ prepareCandidates <- function(motifs, maxDist = 10^6, scoreColname = "score"){
   return(gi)
 }
 
-#' Prepares motif pairs and add genomic features.
+#' Add correlation of ChIP-seq coverage to motif pairs.
 #'
-#' @param gi GInteractions object
-#' @param bwFile File path or connection to BigWig file with coverage to
-#'   parrse from.
+#' This function first adds ChIP-seq signals along all regions of motif location
+#' using the function \code{\link{addCovToGR()}}. Than it calculates the
+#' correlation of coverage for each input pair using the function \code{\link{addCovCor()}}.
+#' The pearson correlation value is added as new column metad data colum to the input interactions.
+#'
+#' @param gi \code{\link[InteractionSet]{GInteractions}} object.
+#' @param bwFile File path or connection to BigWig file with ChIP-seq signals.
 #' @param name Character indicating the sample name.
 #' @inheritParams addCovToGR
 #' @inheritParams addCovCor
 #' @export
-addCor <- function(gi, bwFile, name = "cov", window = 1000, binSize = 10){
+addCor <- function(gi, bwFile, name = "cov", window = 1000, binSize = 1){
 
   InteractionSet::regions(gi) <- addCovToGR(
     InteractionSet::regions(gi),
     bwFile,
-    colname = name
+    colname = name,
+    window = window,
+    binSize = binSize
     )
 
   # compute correlation of ChIP-seq profiles
-  gi <- addCovCor(gi, "cov")
+  gi <- addCovCor(gi, datcol = name, colname = name)
+
+  return(gi)
 }
 

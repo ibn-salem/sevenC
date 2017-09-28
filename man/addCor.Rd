@@ -2,15 +2,14 @@
 % Please edit documentation in R/interaction.R
 \name{addCor}
 \alias{addCor}
-\title{Prepares motif pairs and add genomic features.}
+\title{Add correlation of ChIP-seq coverage to motif pairs.}
 \usage{
-addCor(gi, bwFile, name = "cov", window = 1000, binSize = 10)
+addCor(gi, bwFile, name = "cov", window = 1000, binSize = 1)
 }
 \arguments{
-\item{gi}{GInteractions object}
+\item{gi}{\code{\link[InteractionSet]{GInteractions}} object.}
 
-\item{bwFile}{File path or connection to BigWig file with coverage to
-parrse from.}
+\item{bwFile}{File path or connection to BigWig file with ChIP-seq signals.}
 
 \item{name}{Character indicating the sample name.}
 
@@ -19,5 +18,8 @@ parrse from.}
 \item{binSize}{size of bins to which the coverage values are combined.}
 }
 \description{
-Prepares motif pairs and add genomic features.
+This function first adds ChIP-seq signals along all regions of motif location
+using the function \code{\link{addCovToGR()}}. Than it calculates the
+correlation of coverage for each input pair using the function \code{\link{addCovCor()}}.
+The pearson correlation value is added as new column metad data colum to the input interactions.
 }
