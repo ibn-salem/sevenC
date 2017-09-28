@@ -1,5 +1,17 @@
 # chromloop
-R package for predicting chromatin looping interactions from ChIP-seq and sequnece motifs
+R package to predict chromatin looping interactions from ChIP-seq data and 
+sequnece motifs.
+
+Chromatin looping is an importent feature of
+  eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
+  transcription factor binding sites, in close physical proximity of regulated target genes.
+  Here, we provide a tool that uses protein binding signals from ChIP-seq and
+  sequence motif information to predict chromatin looping events. 
+  Cross-linking of proteins binding close to loop anchors result in ChIP-seq 
+  signals at both anchor loci. These signals are used at CTCF motif pairs 
+  together their distance and orientation to each other to predict chromatin 
+  looping interactions. The looping interactions can associate enhancers or 
+  transcription factor binding sites (ChIP-seq peaks) to regulated genes.
 
 ## Intallation
 
