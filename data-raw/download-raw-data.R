@@ -25,13 +25,16 @@ rtracklayer::export(bwSub, con=bwFinalFile, format="bigWig")
 #-------------------------------------------------------------------------------
 # add CTCF moitif locations in genome
 #-------------------------------------------------------------------------------
-CTCF_hg19_file <- "data-raw/hg19_MA0139.1.mrkv1.ms"
+CTCF_hg19_file <- "data-raw/hg19_MA0139.1.mrkv1.ms.gz"
 
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 hg19seqInfo <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)
 
 # parse matrix-scan motif:
 motifDF <- readr::read_tsv(CTCF_hg19_file, comment = ";")
+
+# filter for p-values <= 10^-6
+motifDF <- motifDF[motifDF$Pval <= 10^-6, ]
 
 motif.hg19.CTCF <- GRanges(
   motifDF[[1]],
@@ -43,8 +46,6 @@ motif.hg19.CTCF <- GRanges(
 
 motif.hg19.CTCF <- sort(motif.hg19.CTCF)
 
-# filter for p-values <= 10^-6
-motif.hg19.CTCF <- motif.hg19.CTCF[motif.hg19.CTCF$Pval <= 10^-6]
 
 print(object.size(motif.hg19.CTCF), unit = "auto")
 print(length(motif.hg19.CTCF))
@@ -54,8 +55,8 @@ devtools::use_data(motif.hg19.CTCF, overwrite = TRUE)
 #-------------------------------------------------------------------------------
 # add subset of CTCF moitif locations on chr22
 #-------------------------------------------------------------------------------
-motif.hg19.CTCF.chr22 <- motif.hg19.CTCF[
-  seqnames(motif.hg19.CTCF) == "chr22" & end(motif.hg19.CTCF) <= 18000000]
+motif.hg19.CTCF.chr22 <- motif.hg19.CTCF[seqnames(motif.hg19.CTCF) == "chr22"]
+  # & end(motif.hg19.CTCF) <= 18000000]
 devtools::use_data(motif.hg19.CTCF.chr22, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
