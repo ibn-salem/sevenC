@@ -4,7 +4,7 @@
 \alias{addCor}
 \title{Add correlation of ChIP-seq coverage to motif pairs.}
 \usage{
-addCor(gi, bwFile, name = "cov", window = 1000, binSize = 1)
+addCor(gi, bwFile, name = "chip", window = 1000, binSize = 1)
 }
 \arguments{
 \item{gi}{\code{\link[InteractionSet]{GInteractions}} object.}
@@ -19,7 +19,7 @@ addCor(gi, bwFile, name = "cov", window = 1000, binSize = 1)
 }
 \description{
 This function first adds ChIP-seq signals along all regions of motif location
-using the function \code{\link{addCovToGR()}}. Than it calculates the
-correlation of coverage for each input pair using the function \code{\link{addCovCor()}}.
+using the function \code{\link{addCovToGR}}. Than it calculates the
+correlation of coverage for each input pair using the function \code{\link{addCovCor}}.
 The pearson correlation value is added as new column metad data colum to the input interactions.
 }
