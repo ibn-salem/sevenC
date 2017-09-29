@@ -8,7 +8,7 @@ predLoops(gi, formula = NULL, betas = NULL, colname = "pred")
 }
 \arguments{
 \item{gi}{A \code{\link[InteractionSet]{GInteractions}} object with coverage
-corealtion and genomic features in metadata columns. See
+correlation and genomic features in metadata columns. See
 \link{prepareCandidates} and \link{addCor} to build it.}
 
 \item{formula}{A \code{\link[stats]{formula}}. All predictor variables should

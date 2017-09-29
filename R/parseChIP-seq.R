@@ -1,41 +1,4 @@
 
-#'  Parse a bigWig file as RleList coverage object
-#'
-#' The bigWig files contains read counts (or other dense, continouse data)
-#' along the genome.
-#' The bigWig format is described here:
-#' \url{https://genome.ucsc.edu/goldenpath/help/bigWig.html}
-#'
-#' @param inFile Input file path or connection. See \code{con} paramter in
-#' \code{\link[rtracklayer]{import}} function.
-#' @param seqInfo A \code{\link[GenomeInfoDb]{seqinfo}} object defining the reference genome.
-#' @param selectionGR \code{\link[GenomicRanges]{GRanges}} object with regions for
-#'  which the coverage is selected.
-#' @return An \code{\link[IRanges]{RleList}} object with density values for each
-#' position in the genome.
-#' @export
-parseBigWigToRle <- function(inFile, seqInfo, selectionGR = NULL){
-
-  # if selection is given, use it.
-  if (is.null(selectionGR)) {
-
-    cov = rtracklayer::import.bw(con = inFile, as = "RleList")
-
-  } else {
-
-    # bwSelection <- rtracklayer::BigWigSelection(selectionGR)
-
-    # parse file as GRange object
-    cov = rtracklayer::import.bw(con = inFile,
-                                  which = selectionGR,
-                                  # selection = bwSelection,
-                                  as = "RleList")
-  }
-
-  return(cov)
-}
-
-
 #' Get out of chromosomal bound ranges.
 #'
 #' @param gr A \code{GRanges} object.
@@ -76,21 +39,6 @@ getOutOfBound <- function(gr){
 }
 
 
-#' Parse coverage for specific regions from bigWig file.
-#' @param inFile The connection from which data is loaded. If this is a
-#'   character vector, it is assumed to be a filename and a corresponding file
-#'   connection is created
-#' @param ... Other parameters to pass to \code{\link[rtracklayer]{import.bw}}.
-#' @param as Specifies the class of the return object. See \code{as} argument of
-#'   \code{\link[rtracklayer]{import.bw}}.
-#' @return RleList or other object defined by \code{as}.
-parseBigWigCov <- function(inFile, as = "RleList", ...){
-
-  cov = rtracklayer::import.bw(con = inFile, as = as, ...)
-
-  return(cov)
-}
-
 #' Sliding mean over x of intervals of size k
 #'
 #' Source:
@@ -104,10 +52,6 @@ slideMean <- function(x, k){
   n <- length(x)
   spots <- seq(from = 1, to = n, by = k)
   result <- vector(length = length(spots))
-
-  # for (i in 1:length(spots)) {
-  #   result[i] <- mean(x[spots[i]:(spots[i] + k - 1)], na.rm = TRUE)
-  # }
 
   result <- purrr::map_dbl(seq_along(spots), function(i){
     mean(x[seq(spots[i], (spots[i] + k - 1))], na.rm = TRUE)
@@ -203,36 +147,12 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
     covAnc <- IRanges::NumericList(lapply(covAnc, slideMean, k = binSize))
   }
 
-
   # reverse coverage vector for regons on minus strand
   negStrand <- which(as.logical(GenomicRanges::strand(gr) == "-"))
   covAnc[negStrand] <- lapply(covAnc[negStrand], rev)
-
 
   # add as additional column to GRanges object
   S4Vectors::mcols(gr)[,colname] <- covAnc
 
   return(gr)
-
 }
-
-
-#' Parse signals along the genome for input regions
-#'
-#' @param files Character vector of bigWig files to be parsed
-#' @param gr A \code{\link[GenomicRanges]{GRanges}} object with regions for which
-#' the signals should be parased.
-#' @param colData A data.frame like object for metadata of \code{files}.
-#'
-#' @return A \code{\link[SummarizedExperiment]{RangedSummarizedExperiment}} object
-# parseRangeSignals <- function(files, gr, colData){
-#
-#   # example code
-#   # cd <- tibble(name = c("a", "b"))
-#   cd <- tibble(name = c("a"))
-#   nl <- NumericList(1:10, 1:10)
-#   nlMat <- as.matrix(as.list(nl))
-#
-#   SummarizedExperiment(cbind(a=as.list(1:10), b=as.list(1:10)), colData = cd)
-#   SummarizedExperiment(nlMat, colData = cd)
-# }

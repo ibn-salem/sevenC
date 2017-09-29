@@ -257,48 +257,6 @@ test_that("addMotifScore works on toy example", {
 
 })
 
-test_that("interactionRange works on toy example", {
-
-  toyRange <- interactionRange(toyGI)
-
-  expect_equal(length(toyRange), length(toyGI))
-  expect_equal(
-    GenomicRanges::start(toyRange),
-    GenomicRanges::start(InteractionSet::anchors(toyGI, "first")))
-  expect_equal(
-    GenomicRanges::end(toyRange),
-    GenomicRanges::end(InteractionSet::anchors(toyGI, "second")))
-})
-
-test_that("extendAnchors works on consturced example", {
-
-  strandedGI <- InteractionSet::GInteractions(
-    GenomicRanges::GRanges(
-      c("chr1", "chr1"),
-      IRanges::IRanges(
-        c(10, 40),
-        c(20, 50)),
-      strand = c("+", "+")),
-    GenomicRanges::GRanges(
-      c("chr1", "chr1"),
-      IRanges::IRanges(
-        c(15, 10),
-        c(25, 20)),
-      strand = c("+", "-")),
-      mode = "strict"
-    )
-
-  extenedGI <- extendAnchors(strandedGI, inner = 5, outer = 0)
-
-  expect_equal(S4Vectors::mcols(extenedGI), S4Vectors::mcols(strandedGI))
-  expect_equal(
-    IRanges::width(InteractionSet::anchors(extenedGI, "first")[1]),
-    IRanges::width(InteractionSet::anchors(strandedGI, "first")[1])
-    )
-
-})
-
-
 test_that("prepareCandidates works on toy example data", {
 
   gi <- prepareCandidates(toyGR, 10)

@@ -50,7 +50,3 @@ test_that("parseLoopsTang2015 works with example file", {
   expect_equal(gi$score, df$V7)
 
 })
-
-test_that("parseCaptureHiC works with example file", {
-  skip("TODO: implement test")
-})

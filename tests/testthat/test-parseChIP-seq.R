@@ -55,29 +55,6 @@ test_gr <- GenomicRanges::GRanges(
 )
 
 
-test_that("parseBigWigCov returns RleList of proper dimenstion", {
-
-  cov <- parseBigWigCov(test_bw)
-
-})
-
-test_that("parseBigWigToRle on example dataset", {
-
-  bwCov <- parseBigWigToRle(exampleBigWig, toySeqInfo)
-
-  expect_true(length(bwCov) > 0)
-
-})
-
-test_that("parseBigWigToRle can parse only selected regions in example data", {
-
-  bwCov <- parseBigWigToRle(exampleBigWig, toySeqInfo)
-
-  expect_true(length(bwCov) > 0)
-
-})
-
-
 test_that("addCovToGR works on example dataset", {
 
   grCov <- addCovToGR(

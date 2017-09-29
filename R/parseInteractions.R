@@ -1,22 +1,21 @@
 
-
-#' Parse chromatin loops from Rao et al 2014 as an \code{\link{GInteractions}}
-#' object.
+#' Parse chromatin loops from Rao et al 2014 as
+#' \code{\link[InteractionSet]{StrictGInteractions}}.
 #'
 #' @param inFile input file with loops
 #' @param ... additional arguments, that will be passed to
 #'   \code{\link[GenomicRanges]{GRanges}} functions.
-#' @return An \code{\link{GInteractions}} with loops from input file.
+#' @return \code{\link{GInteractions}} with loops from input file.
 #' @export
 parseLoopsRao <- function(inFile, ...){
 
-  # parse IMR90 domains from Rao et al 2014:
-  raoDF = utils::read.delim(inFile)
+  # parse input file
+  raoDF = as.data.frame(readr::read_tsv(inFile))
 
   # get chromsome column
   chr = paste0("chr", raoDF$chr1)
 
-  # substract 1 bp from down coordinate to have inclusive interval ranges
+  # substract 1 bp from end coordinate to have inclusive interval ranges
   upAnchor = GenomicRanges::GRanges(
       chr,
       IRanges::IRanges(raoDF[,"x1"], raoDF[,"x2"] - 1),

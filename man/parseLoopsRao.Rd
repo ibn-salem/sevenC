@@ -2,8 +2,8 @@
 % Please edit documentation in R/parseInteractions.R
 \name{parseLoopsRao}
 \alias{parseLoopsRao}
-\title{Parse chromatin loops from Rao et al 2014 as an \code{\link{GInteractions}}
-object.}
+\title{Parse chromatin loops from Rao et al 2014 as
+\code{\link[InteractionSet]{StrictGInteractions}}.}
 \usage{
 parseLoopsRao(inFile, ...)
 }
@@ -14,9 +14,9 @@ parseLoopsRao(inFile, ...)
 \code{\link[GenomicRanges]{GRanges}} functions.}
 }
 \value{
-An \code{\link{GInteractions}} with loops from input file.
+\code{\link{GInteractions}} with loops from input file.
 }
 \description{
-Parse chromatin loops from Rao et al 2014 as an \code{\link{GInteractions}}
-object.
+Parse chromatin loops from Rao et al 2014 as
+\code{\link[InteractionSet]{StrictGInteractions}}.
 }
