@@ -1,3 +1,5 @@
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+require(tidyverse)
 
 #-------------------------------------------------------------------------------
 # Download an exampel bigWig file from ENCODE
@@ -27,7 +29,6 @@ rtracklayer::export(bwSub, con=bwFinalFile, format="bigWig")
 #-------------------------------------------------------------------------------
 CTCF_hg19_file <- "data-raw/hg19_MA0139.1.mrkv1.ms.gz"
 
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 hg19seqInfo <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)
 
 # parse matrix-scan motif:
@@ -60,6 +61,16 @@ motif.hg19.CTCF.chr22 <- motif.hg19.CTCF[seqnames(motif.hg19.CTCF) == "chr22"]
 devtools::use_data(motif.hg19.CTCF.chr22, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
+# add default model parametes trained on best 10 performing TF ChIP-seq data
+#-------------------------------------------------------------------------------
+model_best_n_file <- "data-raw/v04_screen_TF_lfc.motifSig6_w1000_b1.bestNModelDF.tsv"
+modelBest10Avg <- readr::read_tsv(model_best_n_file) %>%
+  select(term, estimate_mean) %>%
+  rename(estimate = estimate_mean) %>%
+  as.data.frame()
+devtools::use_data(modelBest10Avg, overwrite = TRUE)
+
+#-------------------------------------------------------------------------------
 # Download sample loops from Rao et al. 2014 study
 #-------------------------------------------------------------------------------
 loopURL <- "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE63nnn/GSE63525/suppl/GSE63525%5FGM12878%5Fprimary%2Breplicate%5FHiCCUPS%5Flooplist%5Fwith%5Fmotifs%2Etxt%2Egz"
@@ -82,8 +93,6 @@ loopFinalFile <- "inst/extdata/GM12878_HiCCUPS.chr22_1-18000000.loop.txt"
 write.table(fltDF, file=loopFinalFile, col.names = TRUE, row.names=FALSE,
             quote=FALSE, sep="\t")
 
-
-
 #-------------------------------------------------------------------------------
 # Download sample ChIA-pet data from Tang et al 2015 Cell
 #-------------------------------------------------------------------------------
@@ -105,6 +114,8 @@ loopFinalFile <- "inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.cluste
 
 write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names = FALSE,
             quote = FALSE, sep = "\t")
+
+
 #
 # #-------------------------------------------------------------------------------
 # # Download Capture-Hi-C sample data from Mifsud et al. 2015

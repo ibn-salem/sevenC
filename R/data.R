@@ -22,10 +22,12 @@
 #' @format GRanges object with 132739 ranges on positive and negative strnad
 #'   indicated and 5 meta columns:
 #'
-#'   \describe{ \item{sequence}{genomic DNA sequnece} \item{weight}{ The program
-#'   scans the input sequences with a position-specific scoring matrix (PSSM) by
-#'   selecting, at each position, a sequence segment (S) of the same length as
-#'   the matrix, and assigning a score to this segment.
+#'   \describe{ \item{sequence}{genomic DNA sequnece}
+#'
+#'   \item{weight}{ The program scans the input sequences with a
+#'   position-specific scoring matrix (PSSM) by selecting, at each position, a
+#'   sequence segment (S) of the same length as the matrix, and assigning a
+#'   score to this segment.
 #'
 #'   The segment score (weight) is calculated according to the theory developed
 #'   by Jerry Hertz and Gary Stormo (1999), but with the capability to use
@@ -35,14 +37,18 @@
 #'   between two probabilities: \deqn{ Ws = log(P(S|M)/P(S|B)) } where
 #'   \deqn{proba_M = P(S|M)} is the probability to generate the sequence segment
 #'   given the matrix. \deqn{proba_B = P(S|B)} is the probability to generate
-#'   the sequence segment given the background model.} \item{Pval}{The site-wise
-#'   P-value estimates the significance of the weight associated to each site.
-#'   It is computed from the matrix, according to the probabilities described in
-#'   Staden (1989), Bailey (1998).} \item{ln_Pval}{The natural logarithm of the
-#'   p-value.} \item{sig}{The significance, defined as sig = -log_10(P-value)} }
+#'   the sequence segment given the background model.}
+#'
+#'   \item{Pval}{The site-wise P-value estimates the significance of the weight
+#'   associated to each site. It is computed from the matrix, according to the
+#'   probabilities described in Staden (1989), Bailey (1998).}
+#'
+#'   \item{ln_Pval}{The natural logarithm of the p-value.}
+#'
+#'   \item{sig}{The significance, defined as sig = -log_10(P-value)} }
 #' @source
-#'   \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm}
-#'   and \url{http://www.rsat.eu/}
+#' \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm}
+#' and \url{http://www.rsat.eu/}
 "motif.hg19.CTCF"
 
 #' CTCF motif locations on chromosome 22 in human genome hg19.
@@ -55,3 +61,30 @@
 #'
 "motif.hg19.CTCF.chr22"
 
+#' Default parameters for logistic regression model.
+#'
+#' This dataset contain term names and estimates for logistic regression model
+#' to predict chromatin looping interactions. The estimate represent an average
+#' of the 10 best performing models out of 121 transcription factor ChIP-seq
+#' data sets from ENCODE.
+#'
+#' Each of 121 transcritpion factor ChIP-seq data sets from ENCODE in GM12878
+#' cells were used to train a logistic regression model. All CTCF moifs in
+#' \code{\link{motif.hg19.CTCF}} wihtin a distance of 1 Mb were used as
+#' candidates. A given pair was labeld as true loop interactions, if it has
+#' interaction support based on Hi-C lops in GM12878 from Rao et al. 2014 or
+#' ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best perfroming
+#' models were selcted based on the average area under the
+#' precision-recall-cureve in 10-fold cross-validation.
+#'
+#' @format An object of class \code{data.frame} with 7 rows and 2 columns:
+#'
+#'   \describe{
+#'
+#'   \item{term}{Term name}
+#'
+#'   \item{estimate}{Parameter estimate}
+#'
+#'   }
+#'
+"modelBest10Avg"
