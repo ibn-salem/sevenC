@@ -7,12 +7,13 @@
 pred_logit(data, formula, betas)
 }
 \arguments{
-\item{data}{A data.frame with predictor variables}
+\item{data}{A data.frame like object with predictor variables.}
 
-\item{formula}{A modelling formula. All predictor variables should be
-availabel in the data frame.}
+\item{formula}{A \code{\link[stats]{formula}}. All predictor variables should
+be availabel in the data frame.}
 
-\item{betas}{A vector with parameter estimates for predictor variables}
+\item{betas}{A vector with parameter estimates for predictor variables. They
+should be in the same order as variables in \code{formula}.}
 }
 \value{
 A numeric vector with interaction probabilites for each ovservation
