@@ -1,6 +1,6 @@
 
-#' Parse chromatin loops from Rao et al 2014 as
-#' \code{\link[InteractionSet]{StrictGInteractions}}.
+#' Parse chromatin loops from Rao et al 2014 as strict
+#' \code{\link[InteractionSet]{GInteractions}}.
 #'
 #' @param inFile input file with loops
 #' @param ... additional arguments, that will be passed to
