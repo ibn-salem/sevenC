@@ -71,6 +71,24 @@ modelBest10Avg <- readr::read_tsv(model_best_n_file) %>%
 devtools::use_data(modelBest10Avg, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
+# add best f1-score cutoff for each TF
+#-------------------------------------------------------------------------------
+f1ModelDF_file <- "data-raw/v04_screen_TF_lfc.motifSig6_w1000_b1.f1ModelDF.tsv"
+
+cutoffByTF <- readr::read_tsv(f1ModelDF_file) %>%
+  select(-max_idx)
+
+devtools::use_data(cutoffByTF, overwrite = TRUE)
+
+#-------------------------------------------------------------------------------
+# add default cutoff using optimal f1-score on best 10 performing TF datasets
+#-------------------------------------------------------------------------------
+topNf1ModelDF_file <- "data-raw/v04_screen_TF_lfc.motifSig6_w1000_b1.topNf1ModelDF.tsv"
+cutoffBest10 <- readr::read_tsv(topNf1ModelDF_file)$mean_max_cutoff
+
+devtools::use_data(cutoffBest10, overwrite = TRUE)
+
+#-------------------------------------------------------------------------------
 # Download sample loops from Rao et al. 2014 study
 #-------------------------------------------------------------------------------
 loopURL <- "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE63nnn/GSE63525/suppl/GSE63525%5FGM12878%5Fprimary%2Breplicate%5FHiCCUPS%5Flooplist%5Fwith%5Fmotifs%2Etxt%2Egz"

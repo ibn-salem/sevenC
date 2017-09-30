@@ -88,3 +88,37 @@
 #'   }
 #'
 "modelBest10Avg"
+
+
+#' Optimal cutoff values for logistic regression models.
+#'
+#' This dataset contains opimal cutoff scores for the response value of logistic
+#' regression models. The cutoff is based on optimal F1-scores. A separate model
+#' was trained For each of 121 TF ChIP-seq datasets in human GM12878 cells. The
+#' model performance were calculated with Hi-C and ChIA-PET interactions using
+#' 10-fold cross-validation.
+#'
+#' @format An object of class \code{tbl_df} with 121 rows and 3 columns:
+#'
+#'   \describe{
+#'
+#'   \item{TF}{Transcription factor name}
+#'
+#'   \item{max_cutoff}{The optimal cutoff on the logistic regression response
+#'   value}
+#'
+#'   \item{max_f1}{The optimal f1-score associated to the \code{max_cutoff}
+#'   value}
+#'
+#'   }
+#'
+"cutoffByTF"
+
+#' Default optimal cutoff value of logistic regression.
+#'
+#' This value is the average optimal cutoff value on the 10 best perfroming TF
+#' ChIP-seq data sets. It is used as default cutoff value on the logistc
+#' regression response score in \code{\link{predLoops}} fucntion. See
+#' \code{?'cutoffByTF'} for more details.
+"cutoffBest10"
+
