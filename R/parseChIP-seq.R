@@ -112,14 +112,14 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
     )
   selection <- rtracklayer::BigWigSelection(selectWin)
 
-  message("INFO: Start reading coverage from file: ", bwFile, " ...")
+  # message("INFO: Reading from file: ", bwFile, " ...")
 
   covGR <- rtracklayer::import.bw(
     bwFile,
     selection = selection,
     as = "GRanges",
     seqinfo = seqinfo(ancWin))
-  message("INFO: Finished reading coverage from fiel: ", bwFile)
+  # message("INFO: Finished reading coverage from fiel: ", bwFile)
 
   # update covGR with seqinfo to allow subsetting with ancWin
   if ( !any(is.na(GenomeInfoDb::seqlengths(ancWin))) ) {

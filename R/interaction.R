@@ -120,9 +120,8 @@ addCovCor <- function(gi, datcol, colname = "cor",
   # (1) group ranges in by bins
   #-----------------------------------------------------------------------------
 
-  message("INFO: Prepare Genomic bins...")
+  # message("INFO: Prepare genomic bins...")
 
-  # if (all(!is.na(seqlengths(ancGR))))
   # create GRanges object for entire genome
   genomeGR <- GenomicRanges::GRanges(GenomeInfoDb::seqinfo(gi))
 
@@ -135,16 +134,13 @@ addCovCor <- function(gi, datcol, colname = "cor",
   #-----------------------------------------------------------------------------
   # (2) compute pairwise correlatin for all ranges in each bin
   #-----------------------------------------------------------------------------
-  message("INFO: compute correlations for each group...")
+  # message("INFO: compute correlations for each group...")
 
 
   covList <- S4Vectors::mcols(InteractionSet::regions(gi))[,datcol]
   datamat <- as.matrix(covList)
 
   corMatList <- lapply(1:length(binGR), function(i){
-
-    # #DEBUG:
-    # message("DEBUG: index i, ", i)
 
     # get regions in this bin
     regIdx <- S4Vectors::subjectHits(hits)[S4Vectors::queryHits(hits) == i]
@@ -183,30 +179,27 @@ addCovCor <- function(gi, datcol, colname = "cor",
   #-----------------------------------------------------------------------------
   # (3) combine all data.frames
   #-----------------------------------------------------------------------------
-  message("INFO: Combine data.tables of pairwise correlations...")
-  # corDF <- data.frame(do.call("rbind", corMatList))
+  # message("INFO: Combine data.tables of pairwise correlations...")
+
   corDT <- data.table::rbindlist(corMatList)
 
   #-----------------------------------------------------------------------------
   # (4) Query with input pairs
   #-----------------------------------------------------------------------------
 
-  # names(corDF) <- c("id1", "id2", "val")
   names(corDT) <- c("id1", "id2", "val")
   data.table::setkeyv(corDT, cols = c("id1", "id2"))
 
   # convert gp into data.table and set keys to id1 and id2 columns
-  #names(gp)[1:2] <- c("id1", "id2")
   gpDT <- data.table::data.table(
     id1 = InteractionSet::anchors(gi, type = "first", id = TRUE),
     id2 = InteractionSet::anchors(gi, type = "second", id = TRUE),
     key = c("id1", "id2")
   )
 
-  message("INFO: Query correlation for input pairs...")
+  # message("INFO: Query correlation for input pairs...")
   matches <- corDT[gpDT, on = c("id1", "id2"), mult = "first"]
 
-  #return(matches$val)
   S4Vectors::mcols(gi)[,colname] <- matches$val
 
   return(gi)
