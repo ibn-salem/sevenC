@@ -4,7 +4,8 @@
 \alias{predLoops}
 \title{Predict looping interaction probability.}
 \usage{
-predLoops(gi, formula = NULL, betas = NULL, colname = "pred")
+predLoops(gi, formula = NULL, betas = NULL, colname = "pred",
+  cutoff = cutoffBest10)
 }
 \arguments{
 \item{gi}{A \code{\link[InteractionSet]{GInteractions}} object with coverage
@@ -21,6 +22,12 @@ should be in the same order as variables in \code{formula}.}
 
 \item{colname}{A \code{character} as column name of new metadata colum in
 \code{gi} for predictions.}
+
+\item{cutoff}{Numeric cutoff on prediction score. Only interactions with
+interaction probability >= \code{cutoff} are reported. If \code{NULL}, all
+input interactions are reported. Default is \code{\link{cutoffBest10}}, an
+optimal cutoff based on F1-score on 10 best performing TF ChIP-seq data
+sets. See \code{?'cutoffBest10'} for more details.}
 }
 \value{
 A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an

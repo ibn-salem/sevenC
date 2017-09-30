@@ -38,6 +38,11 @@ pred_logit <- function(data, formula, betas){
 #'   should be in the same order as variables in \code{formula}.
 #' @param colname A \code{character} as column name of new metadata colum in
 #'   \code{gi} for predictions.
+#' @param cutoff Numeric cutoff on prediction score. Only interactions with
+#'   interaction probability >= \code{cutoff} are reported. If \code{NULL}, all
+#'   input interactions are reported. Default is \code{\link{cutoffBest10}}, an
+#'   optimal cutoff based on F1-score on 10 best performing TF ChIP-seq data
+#'   sets. See \code{?'cutoffBest10'} for more details.
 #'
 #' @return A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an
 #'   additional metadata colum holdin the predicted looping probability.
@@ -46,7 +51,8 @@ pred_logit <- function(data, formula, betas){
 #'   \code{\link{pred_logit}}
 #' @export
 #'
-predLoops <- function(gi, formula = NULL, betas = NULL, colname = "pred"){
+predLoops <- function(gi, formula = NULL, betas = NULL, colname = "pred",
+                      cutoff = cutoffBest10){
 
   # if no estimates are given, use the default parameters
   if (is.null(betas)) {
@@ -65,6 +71,13 @@ predLoops <- function(gi, formula = NULL, betas = NULL, colname = "pred"){
 
   # add prediction as new metadata column
   S4Vectors::mcols(gi)[, colname] <- pred
+
+  # test cutoff argument
+  if (!is.null(cutoff)) {
+
+    # filter interactions with by cutoff
+    gi <- gi[!is.na(pred) & pred >= cutoff]
+  }
 
   return(gi)
 }

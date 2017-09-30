@@ -44,17 +44,29 @@ test_that("pred_logit works on chr22 example data", {
 
 })
 
-test_that("predLoops works with default parameters", {
+test_that("predLoops works with default parameters and without cutoff", {
+
+  # run prediction
+  predGI <- predLoops(exampleGI, cutoff = NULL)
+
+  expect_true(is.numeric(predGI$pred))
+  expect_equal(length(predGI),  length(exampleGI))
+  expect_true(all(predGI$pred <= 1 & predGI$pred >= 0, na.rm = TRUE))
+  expect_equal(
+    S4Vectors::mcols(predGI)[, -ncol(S4Vectors::mcols(predGI))],
+    S4Vectors::mcols(exampleGI))
+})
+
+
+test_that("predLoops works with default cutoff", {
 
   # run prediction
   predGI <- predLoops(exampleGI)
 
   expect_true(is.numeric(predGI$pred))
-  expect_equal(length(predGI), length(exampleGI))
+  expect_true(length(predGI) <= length(exampleGI))
+  expect_true(all(predGI$pred >= cutoffBest10))
   expect_equal(
-      S4Vectors::mcols(predGI)[, -ncol(S4Vectors::mcols(predGI))],
-      S4Vectors::mcols(exampleGI))
-  expect_true(all(predGI$pred <= 1 & predGI$pred >= 0, na.rm = TRUE))
-
+    ncol(S4Vectors::mcols(predGI)),
+    ncol(S4Vectors::mcols(exampleGI)) + 1)
 })
-
