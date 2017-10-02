@@ -22,3 +22,23 @@ A \code{\link[InteractionSet]{GInteractions}} object with all pairs
 \description{
 Distance is calculated from the center of input regions.
 }
+\examples{
+# build example GRanges as input
+inGR <- GenomicRanges::GRanges(
+rep("chr1", 5),
+IRanges::IRanges(
+  c(10, 20, 30, 100, 1000),
+  c(15, 25, 35, 105, 1005)
+)
+)
+
+# get all pairs within 50 bp
+gi <- getCisPairs(inGR, maxDist = 50)
+
+# getCisPiars returns a StrictGInteractions object
+class(gi)
+
+# The input regions are accessibly via regions()
+InteractionSet::regions(gi)
+
+}

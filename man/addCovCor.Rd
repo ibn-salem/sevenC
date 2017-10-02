@@ -29,3 +29,25 @@ This function adds a vector with correlation values for each input
 interaction. Only works for input interaction within the given \code{maxDist}
 distance.
 }
+\examples{
+
+# use internal motif data on chromosome 22
+motifGR <- chromloop::motif.hg19.CTCF.chr22
+
+# use example bigWig file
+exampleBigWig <- system.file("extdata",
+"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+
+# add coverage from bigWig file
+motifGR <- addCovToGR(motifGR, exampleBigWig)
+
+# get all pairs within 1Mb
+gi <- getCisPairs(motifGR, 1e5)
+
+# compute correaltion of coverge for each pair
+gi <- addCovCor(gi, datcol = "cov")
+
+# addCovCor adds a new metadata column:
+S4Vectors::mcols(gi)
+
+}

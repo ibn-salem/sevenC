@@ -22,3 +22,36 @@ the each interaction between two regions has one of the following strand
 combinations: "forward", "reverse", "convergent", or "divergent". Unstranded
 ranges, indicated by \code{*}, are treated as positive strand.
 }
+\examples{
+
+# build example GRanges as anchors
+anchorGR <- GenomicRanges::GRanges(
+ rep("chr1", 4),
+ IRanges::IRanges(
+   c(1, 5, 20, 14),
+   c(4, 8, 23, 17)
+ ),
+ strand = c("+", "+", "+", "-"),
+ score = c(5, 4, 6, 7)
+)
+
+
+# build example GIntreaction object
+gi <- InteractionSet::GInteractions(
+ c(1, 2, 2),
+ c(4, 3, 4),
+ anchorGR,
+ mode = "strict"
+)
+
+# add combination of anchor strands as new metadata column
+gi <- addStrandCombination(gi)
+
+# build small matrix to check strand combination
+cbind(
+as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "first"))),
+as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "second"))),
+S4Vectors::mcols(gi)[, "strandOrientation"]
+)
+
+}

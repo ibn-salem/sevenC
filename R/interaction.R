@@ -10,6 +10,25 @@
 #'   single  numeric value.
 #' @return A \code{\link[InteractionSet]{GInteractions}} object with all pairs
 #'   within the given distance.
+#' @examples
+#'# build example GRanges as input
+#'inGR <- GenomicRanges::GRanges(
+#' rep("chr1", 5),
+#' IRanges::IRanges(
+#'   c(10, 20, 30, 100, 1000),
+#'   c(15, 25, 35, 105, 1005)
+#' )
+#')
+#'
+#'# get all pairs within 50 bp
+#'gi <- getCisPairs(inGR, maxDist = 50)
+#'
+#'# getCisPiars returns a StrictGInteractions object
+#'class(gi)
+#'
+#'# The input regions are accessibly via regions()
+#'InteractionSet::regions(gi)
+#'
 #' @export
 getCisPairs <- function(inGR, maxDist = 10e6){
 
@@ -76,6 +95,27 @@ noZeroVar <- function(dat) {
 #'   \code{max(pairdist(gi))}.
 #' @return A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
 #'   just with an additional column added.
+#' @examples
+#'
+#' # use internal motif data on chromosome 22
+#' motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'
+#' # use example bigWig file
+#' exampleBigWig <- system.file("extdata",
+#' "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'
+#' # add coverage from bigWig file
+#' motifGR <- addCovToGR(motifGR, exampleBigWig)
+#'
+#' # get all pairs within 1Mb
+#' gi <- getCisPairs(motifGR, 1e5)
+#'
+#' # compute correaltion of coverge for each pair
+#' gi <- addCovCor(gi, datcol = "cov")
+#'
+#' # addCovCor adds a new metadata column:
+#' S4Vectors::mcols(gi)
+#'
 #' @export
 #' @import data.table
 addCovCor <- function(gi, datcol, colname = "cor",
@@ -209,6 +249,40 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #' @return \code{\link{InteractionSet}} \code{gi} as input but with additional
 #'   annotation column \code{colname} indicating whether each interaction
 #'   is supported by \code{subject} or not.
+#' @examples
+#'
+#' # build example GRanges as anchors
+#'anchorGR <- GenomicRanges::GRanges(
+#'  rep("chr1", 4),
+#'  IRanges::IRanges(
+#'    c(1, 5, 20, 14),
+#'    c(4, 8, 23, 17)
+#'  ),
+#'  strand = c("+", "+", "+", "-"),
+#'  score = c(5, 4, 6, 7)
+#')
+#'
+#'
+#'# build example GIntreaction object
+#'gi <- InteractionSet::GInteractions(
+#'  c(1, 2, 2),
+#'  c(4, 3, 4),
+#'  anchorGR,
+#'  mode = "strict"
+#')
+#'
+#'# build exapple support GInteractions object
+#'exampleSupport <- InteractionSet::GInteractions(
+#'     GenomicRanges::GRanges("chr1", IRanges::IRanges(1, 4)),
+#'     GenomicRanges::GRanges("chr1", IRanges::IRanges(15, 20))
+#')
+#'
+#'# add support
+#'gi <- addInteractionSupport(gi, subject = exampleSupport)
+#'
+#'# Use colname argument to add support to differnt metadata column name
+#'gi <- addInteractionSupport(gi, subject = exampleSupport, colname = "example")
+#'
 #' @export
 addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 
@@ -234,7 +308,40 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with an
 #'   additional column indicating the four possible combinations of strands
 #'   "forward", "reverse", "convergent", or "divergent".
-#' @export
+#'
+#' @examples
+#'
+#'# build example GRanges as anchors
+#'anchorGR <- GenomicRanges::GRanges(
+#'  rep("chr1", 4),
+#'  IRanges::IRanges(
+#'    c(1, 5, 20, 14),
+#'    c(4, 8, 23, 17)
+#'  ),
+#'  strand = c("+", "+", "+", "-"),
+#'  score = c(5, 4, 6, 7)
+#')
+#'
+#'
+#'# build example GIntreaction object
+#'gi <- InteractionSet::GInteractions(
+#'  c(1, 2, 2),
+#'  c(4, 3, 4),
+#'  anchorGR,
+#'  mode = "strict"
+#')
+#'
+#'# add combination of anchor strands as new metadata column
+#'gi <- addStrandCombination(gi)
+#'
+#'# build small matrix to check strand combination
+#'cbind(
+#' as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "first"))),
+#' as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "second"))),
+#' S4Vectors::mcols(gi)[, "strandOrientation"]
+#')
+#'
+#'@export
 addStrandCombination <- function(gi, colname = "strandOrientation"){
 
   anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
