@@ -9,3 +9,6 @@ data-raw/GM12878_Stat1.bigWig
 # ignore bin directory
 bin
 inst/doc
+
+# example outputof vignettes
+vignettes/loop_interactions.bedpe
