@@ -112,7 +112,7 @@ write.table(fltDF, file=loopFinalFile, col.names = TRUE, row.names=FALSE,
             quote=FALSE, sep="\t")
 
 #-------------------------------------------------------------------------------
-# Download sample ChIA-pet data from Tang et al 2015 Cell
+# Download sample ChIA-pet data from Tang et al. 2015 Cell
 #-------------------------------------------------------------------------------
 loopURL <- "ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1872nnn/GSM1872886/suppl/GSM1872886%5FGM12878%5FCTCF%5FPET%5Fclusters.txt.gz"
 

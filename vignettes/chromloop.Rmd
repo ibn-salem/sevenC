@@ -37,33 +37,32 @@ vignette: >
 ---
 # Introduction
 
-Gene expression is regulated by bindig of transcription factors (TF) to genomic DNA. 
+Gene expression is regulated by binding of transcription factors (TF) to genomic DNA. 
 However, many binding sites are in distal regulatory region, such as enhancers, that are hundreds of kilo bases apart of genes.
-These regulatory regoins can physically interact with promoters of regulated genes by chromatin looping interactions. 
-These looping interaction can be meseared genome wide by chromatin conformation capture techniques such as Hi-C or ChIA-PET [@Rao2014, @Tang2015a]. Dispite many exciting insights into the three-dimensional organization of genoms, thse experimental methods are not only elaborate and expencsive but also require require lots of sample material (in case of ChIA-PET) or have limited resolution of 5-40 kb (in case of Hi-C). 
+These regulatory regions can physically interact with promoters of regulated genes by chromatin looping interactions. 
+These looping interaction can be measured genome wide by chromatin conformation capture techniques such as Hi-C or ChIA-PET [@Rao2014, @Tang2015a]. Despite many exciting insights into the three-dimensional organization of genomes, these experimental methods are not only elaborate and expansive but also require require lots of sample material (in case of ChIA-PET) or have limited resolution of 5-40 kb (in case of Hi-C). 
 
-In contrast, the binding sites of TFs can be detected genome-weide by ChIP-seq experiment which are availabel for hundreds of TFs in many cell type and conditions. However, classical analysis of ChIP-seq gives only the direct binding sites of targeted TFs (peaks) and it is not trivial to associate them to the regualted gene without chomatin looping information.
+In contrast, the binding sites of TFs can be detected genome-wide by ChIP-seq experiment which are available for hundreds of TFs in many cell type and conditions. However, classical analysis of ChIP-seq gives only the direct binding sites of targeted TFs (peaks) and it is not trivial to associate them to the regulated gene without chromatin looping information.
 
-Therefore, we provide a computational mehtod to predict chromatin interactions from only genomic sequence feqtures and ChIP-seq data. 
-The predicted looping interacitons can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thery improve functional downstream analysis on the level of genes.
+Therefore, we provide a computational method to predict chromatin interactions from only genomic sequence features and ChIP-seq data. 
+The predicted looping interactions can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thereby improve functional downstream analysis on the level of genes.
 
 In this vignette, we show how to use the R package `r Biocpkg("chromloop")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
 Furthermore, we show how to train the the prediction model using custom data.
 
-
-## Predict chromatin interaction form a single ChIP-seq experiment
+# Predict chromatin interaction form ChIP-seq
 
 Here we show how to use the package to predict chromatin looping interactions 
-among CTCF moif locations on chromosome 22. 
+among CTCF motif locations on chromosome 22. 
 As input only a single bigWig file is used with coverage from a STAT1 ChIP-seq experiment 
 in human GM12878 cells[^1]. 
 
-[^1]: An example file with only data on a subset of chromsome 22 is provied as part of 
+[^1]: An example file with only data on a subset of chromosome 22 is provide as part of 
 the `r Biocpkg("chromloop")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).
 
-### Prepare CTCF motif pairs
-First, we need to preapare CTCF motif pairs as candiate achros for chromatin loop interactions. 
-We use CTCF motif hits in human chromsome 22 as provied by `r Biocpkg("chromloop")` package.
+## Prepare CTCF motif pairs
+First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. 
+We use CTCF motif hits in human chromosome 22 as provide by `r Biocpkg("chromloop")` package.
 
 ```{r, results = "hide", message = FALSE}
 library(chromloop)
@@ -81,10 +80,10 @@ motifs
 ```
 There are `r length(motifs)` CTCF motif locations on chromosome 22. 
 The genome assembly is hg19. 
-Four metadata columns show motif match similarity as weihgt score, p-value, log transformed p-value and significance score. 
-Use `help(motif.hg19.CTCF)` to get more infromation on the motif dataset.
+Four metadata columns show motif match similarity as weight score, p-value, log transformed p-value and significance score. 
+Use `help(motif.hg19.CTCF)` to get more information on the motif dataset.
 
-Now we build a dataset with all pairs of CTCF motif wihin 1 mega basepair and annotate it with distnace, mtoif oreintation, and motif score. 
+Now we build a dataset with all pairs of CTCF motif within 1 mega base pair and annotate it with distance, motif orientation, and motif score. 
 ```{r}
 gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
 
@@ -92,9 +91,9 @@ gi
 ```
 The return value `gi` of the function `prepareCandidates()` is `GInteractoin` object from the `r Biocpkg("InteractonSet")` package. 
 
-### Parse ChIP-seq signals and compute similarity at motif pairs
+## Parse ChIP-seq signals and compute similarity at motif pairs
 
-Now we read an example bigWig file wiht ChIP-seq signals. For each position along the genome, the file contains the log fold-chnage of ChIP signals compared to imput control. A sample file with data on a subset of chromosome 22 is provided in the package. 
+Now we read an example bigWig file with ChIP-seq signals. For each position along the genome, the file contains the log fold-change of ChIP signals compared to input control. A sample file with data on a subset of chromosome 22 is provided in the package. 
 ```{r}
 # use example ChIP-seq bigWig file
 bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
@@ -104,16 +103,16 @@ bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig",
 gi <- addCor(gi, bigWigFile)
 ```
 
-### Predict loops
+## Predict loops
 Now we can predict chromatin loops using the default trained model. 
 ```{r}
 loops <- predLoops(gi)
 
 loops
 ```
-This result in a subset of motif pairs that are predicted to interact. The interactions are annotated wiht ChIP-seq correlation in column `chip` and interaction probability in `pred`.
+This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column `chip` and interaction probability in `pred`.
 
-### Write predicted loops to output file
+## Write predicted loops to output file
 Since looping interactions are stored as `GInteraction` objects, they 
 can be exported as 
 [BED-PE](http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) 
@@ -128,8 +127,8 @@ export.bedpe(loops, "loop_interactions.bedpe", score = "pred")
 ```
 
 
-## Train Prediciton model using custom looping data
-
+# Train prediciton model using custom data
+Instructions on how to fit a logistic regression model with user provided data will be explained here soon.
 
 
 <!-- ## Figures -->

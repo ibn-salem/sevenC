@@ -2,7 +2,7 @@
 % Please edit documentation in R/parseInteractions.R
 \name{parseCaptureHiC}
 \alias{parseCaptureHiC}
-\title{Parse Capture Hi-C intreactions from Mifsud et al. 2015}
+\title{Parse Capture Hi-C interactions from Mifsud et al. 2015}
 \usage{
 parseCaptureHiC(inFile, ...)
 }
@@ -16,7 +16,7 @@ parseCaptureHiC(inFile, ...)
 An \code{\link{GInteractions}} with interactions from input file.
 }
 \description{
-Capture Hi-C interactios from the study Mifsud et al. 2015 can be downloaded
+Capture Hi-C interactions from the study Mifsud et al. 2015 can be downloaded
 from here
 \url{http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip}.
 Each file in the .zip archive can be parsed with this function.

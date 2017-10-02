@@ -4,10 +4,10 @@
 \name{motif.hg19.CTCF}
 \alias{motif.hg19.CTCF}
 \title{CTCF motif locations in human genome hg19.}
-\format{GRanges object with 132739 ranges on positive and negative strnad
+\format{GRanges object with 132739 ranges on positive and negative strand
   indicated and 5 meta columns:
 
-  \describe{ \item{sequence}{genomic DNA sequnece}
+  \describe{ \item{sequence}{genomic DNA sequence}
 
   \item{weight}{ The program scans the input sequences with a
   position-specific scoring matrix (PSSM) by selecting, at each position, a
@@ -39,11 +39,11 @@ and \url{http://www.rsat.eu/}
 motif.hg19.CTCF
 }
 \description{
-A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
+A dataset containing the motif hits of the CTCF recognition motif from JASPAR
 database (MA0139.1) in human genome assembly hg19.
 }
 \details{
-The dataset was created by using the tool RSTA matrix-scan
+The dataset was created by using the tool RSAT matrix-scan
 (\url{http://www.rsat.eu/}) to get all motif hits in the hg19 genome
 sequence. The PFM motif model for CTCF was downloaded from JASPAR database
 using this url:

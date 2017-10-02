@@ -9,8 +9,8 @@
 cutoffBest10
 }
 \description{
-This value is the average optimal cutoff value on the 10 best perfroming TF
-ChIP-seq data sets. It is used as default cutoff value on the logistc
+This value is the average optimal cutoff value on the 10 best performing TF
+ChIP-seq data sets. It is used as default cutoff value on the logistic
 regression response score in \code{\link{predLoops}} fucntion. See
 \code{?'cutoffByTF'} for more details.
 }

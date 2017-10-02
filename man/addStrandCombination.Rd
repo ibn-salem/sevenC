@@ -9,16 +9,16 @@ addStrandCombination(gi, colname = "strandOrientation")
 \arguments{
 \item{gi}{\code{\link{GInteractions}}}
 
-\item{colname}{name of the new colum that is created in \code{gi}.}
+\item{colname}{name of the new column that is created in \code{gi}.}
 }
 \value{
 The same \code{\link{GInteractions}} as \code{gi} but with an
-  additonal column indicating the four possible combinations of strands
+  additional column indicating the four possible combinations of strands
   "forward", "reverse", "convergent", or "divergent".
 }
 \description{
-Each anchor region has a strand that is \code{'+'} or \code{'-'}. Threfore
+Each anchor region has a strand that is \code{'+'} or \code{'-'}. Therefore,
 the each interaction between two regions has one of the following strand
 combinations: "forward", "reverse", "convergent", or "divergent". Unstranded
-ragnes, indicated by (\code{*}), are treated as positive strand.
+ranges, indicated by \code{*}, are treated as positive strand.
 }

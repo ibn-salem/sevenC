@@ -11,16 +11,16 @@ addInteractionSupport(gi, subject, colname = "loop", ...)
 
 \item{subject}{another \code{\link{GInteractions}} object}
 
-\item{colname}{name of the new annotation columm in \code{gi}.}
+\item{colname}{name of the new annotation column in \code{gi}.}
 
-\item{...}{addtional arguments passed to \code{\link[IRanges]{overlapsAny}}.}
+\item{...}{additional arguments passed to \code{\link[IRanges]{overlapsAny}}.}
 }
 \value{
-\code{\link{InteractionSet}} \code{gi} as input but with additonal
-  annotation column \code{colname} indicationg whether each interaction
+\code{\link{InteractionSet}} \code{gi} as input but with additional
+  annotation column \code{colname} indicating whether each interaction
   is supported by \code{subject} or not.
 }
 \description{
 See overlap methods in \code{\link{InteractionSet}} package for more details
-on the oberlap calculations: \code{?InteractionSet::overlapsAny}
+on the overlap calculations: \code{?InteractionSet::overlapsAny}
 }

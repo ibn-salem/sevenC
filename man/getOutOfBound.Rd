@@ -11,9 +11,9 @@ getOutOfBound(gr)
 }
 \value{
 A \code{data.frame} with rows for each range in \code{gr} that
-  extends out of chromosomes. The first colum holds the index of the range in
-  \code{gr}, the second the size of the overlap to the left of the chromsome
-  and the third the sieze of the overlap to the right of the chromosme.
+  extends out of chromosomes. The first column holds the index of the range in
+  \code{gr}, the second the size of the overlap to the left of the chromosome
+  and the third the size of the overlap to the right of the chromosome.
 }
 \description{
 Get out of chromosomal bound ranges.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/parseInteractions.R
 \name{parseLoopsTang2015}
 \alias{parseLoopsTang2015}
-\title{Parse chromatin interactions from Tang et al 2015 as \code{GInteractions}.}
+\title{Parse chromatin interactions from Tang et al. 2015 as \code{GInteractions}.}
 \usage{
 parseLoopsTang2015(inFile, ...)
 }
@@ -19,7 +19,7 @@ An \code{\link{GInteractions}} with loops from input file.
 Reads pairwise ChIA-PET interaction from an input file.
 }
 \details{
-It reads files with the follwoing tab-delimited format:
+It reads files with the following tab-delimited format:
 
 \tabular{lllllll}{ chr12\tab 48160351\tab 48161634\tab  chr12\tab 48230665\tab
 48232848\tab 27 \cr chr7\tab 77284664\tab 77285815\tab chr7\tab  77388242\tab

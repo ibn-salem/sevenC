@@ -23,13 +23,13 @@ of the 10 best performing models out of 121 transcription factor ChIP-seq
 data sets from ENCODE.
 }
 \details{
-Each of 121 transcritpion factor ChIP-seq data sets from ENCODE in GM12878
-cells were used to train a logistic regression model. All CTCF moifs in
-\code{\link{motif.hg19.CTCF}} wihtin a distance of 1 Mb were used as
-candidates. A given pair was labeld as true loop interactions, if it has
+Each of 121 transcriptin factor (TF) ChIP-seq data sets from ENCODE in
+GM12878 cells were used to train a logistic regression model. All CTCF motifs
+in \code{\link{motif.hg19.CTCF}} within a distance of 1 Mb were used as
+candidates. A given pair was labled as true loop interactions, if it has
 interaction support based on Hi-C lops in GM12878 from Rao et al. 2014 or
-ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best perfroming
-models were selcted based on the average area under the
-precision-recall-cureve in 10-fold cross-validation.
+ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best performing
+models were selected based on the average area under the
+precision-recall-curve in 10-fold cross-validation.
 }
 \keyword{datasets}

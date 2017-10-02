@@ -3,22 +3,22 @@
 #'
 #' Distance is calculated from the center of input regions.
 #'
-#' @param inGR \code{\link[GenomicRanges]{GRanges}} object of genomic regions. The ranges shuld
-#'   be sorted according to chr, strand, and start position. Use
-#'   \code{\link[BiocGenerics]{sort}} to sort it.
+#' @param inGR \code{\link[GenomicRanges]{GRanges}} object of genomic regions.
+#'   The ranges shuld be sorted according to chr, strand, and start position.
+#'   Use \code{\link[BiocGenerics]{sort}} to sort it.
 #' @param maxDist maximal distance in base-pairs between pairs of ranges as
 #'   single  numeric value.
 #' @return A \code{\link[InteractionSet]{GInteractions}} object with all pairs
 #'   within the given distance.
 #' @export
-getCisPairs <- function(inGR, maxDist=10^6){
+getCisPairs <- function(inGR, maxDist = 10e6){
 
   # check that input GRanges object is sorted
-  if( !all(inGR == sort(inGR))) stop("Input ranges inGR need to be sorted. Use
+  if (!all(inGR == sort(inGR))) stop("Input ranges inGR need to be sorted. Use
                                      sort(inGR) to sort it")
 
   # get center postions of each input range
-  posGR <- GenomicRanges::resize(inGR, width=1, fix="center")
+  posGR <- GenomicRanges::resize(inGR, width = 1, fix = "center")
 
   # calculate overlap all possible gene pairs within maxDist bp
   hits <- GenomicRanges::findOverlaps(posGR,
@@ -42,9 +42,6 @@ getCisPairs <- function(inGR, maxDist=10^6){
   # add distance
   gi$dist <- InteractionSet::pairdist(gi, type = "mid")
 
-  # add sitance as log10
-  gi$dist_log10 <- log10(InteractionSet::pairdist(gi, type = "mid"))
-
   # remove pairs with distance >= maxDist
   # this is only essential in case of non-zero length ranges in inGR
   gi <- gi[gi$dist <= maxDist]
@@ -53,10 +50,10 @@ getCisPairs <- function(inGR, maxDist=10^6){
 }
 
 
-#' returns indecies of columns with non-zero variance
+#' returns indices of columns with non-zero variance
 #'
-#' @param dat data.frame or matirx
-#' @return column indecies of columns with non-zero variance
+#' @param dat data.frame or matrix
+#' @return column indices of columns with non-zero variance
 noZeroVar <- function(dat) {
   out <- apply(dat, 2, function(x) length(unique(x)))
   which(out > 1)
@@ -70,7 +67,7 @@ noZeroVar <- function(dat) {
 #'
 #' @param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
 #' @param datcol a string matching an annotation column in \code{regions(gi)}.
-#'   This collumn is assumed to hold the same number of values for each
+#'   This column is assumed to hold the same number of values for each
 #'   interaction as a \code{NumericList}.
 #' @param colname A string that is used as columnname for the new column in
 #'   \code{gi}.
@@ -78,7 +75,7 @@ noZeroVar <- function(dat) {
 #'   the maximal distance is computed from input interactions gi by
 #'   \code{max(pairdist(gi))}.
 #' @return A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
-#'   just wiht an additinoal column added.
+#'   just with an additional column added.
 #' @export
 #' @import data.table
 addCovCor <- function(gi, datcol, colname = "cor",
@@ -91,8 +88,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   # (3) Combine correlations to data.frame with proper id1 and id2 in first
   #     columns
   # (4) Query fubak data.frame with input pairs
-  #   /uses inner_join() from dplyr like in
-  #  http://stackoverflow.com/questions/26596305/match-two-data-frames-based-on-multiple-columns
+  #   /uses inner_join() from dplyr
 
   # check input
   if ( any(is.na(GenomeInfoDb::seqlengths(gi))) ) {
@@ -108,7 +104,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   if (is.null(maxDist)) {
 
     # to avoid too many bins use minimal size of 10^6
-    maxDist <- max(10^6, InteractionSet::pairdist(gi))
+    maxDist <- max(10e6, InteractionSet::pairdist(gi))
 
     if (maxDist < max(InteractionSet::pairdist(gi))) {
       stop(paste0("maxDist is smaller than maximal distance between",
@@ -120,13 +116,11 @@ addCovCor <- function(gi, datcol, colname = "cor",
   # (1) group ranges in by bins
   #-----------------------------------------------------------------------------
 
-  # message("INFO: Prepare genomic bins...")
-
   # create GRanges object for entire genome
   genomeGR <- GenomicRanges::GRanges(GenomeInfoDb::seqinfo(gi))
 
   # tile genoe in overlapping bins of with 2*maxDist
-  binGR <- unlist(GenomicRanges::slidingWindows(genomeGR, 2*maxDist, maxDist))
+  binGR <- unlist(GenomicRanges::slidingWindows(genomeGR, 2 * maxDist, maxDist))
 
   # get assign bins to regions
   hits <- GenomicRanges::findOverlaps(binGR, InteractionSet::regions(gi))
@@ -134,10 +128,8 @@ addCovCor <- function(gi, datcol, colname = "cor",
   #-----------------------------------------------------------------------------
   # (2) compute pairwise correlatin for all ranges in each bin
   #-----------------------------------------------------------------------------
-  # message("INFO: compute correlations for each group...")
 
-
-  covList <- S4Vectors::mcols(InteractionSet::regions(gi))[,datcol]
+  covList <- S4Vectors::mcols(InteractionSet::regions(gi))[, datcol]
   datamat <- as.matrix(covList)
 
   corMatList <- lapply(1:length(binGR), function(i){
@@ -146,20 +138,20 @@ addCovCor <- function(gi, datcol, colname = "cor",
     regIdx <- S4Vectors::subjectHits(hits)[S4Vectors::queryHits(hits) == i]
 
     if (length(regIdx) == 1) {
-      dat <- cbind(datamat[regIdx,])
+      dat <- cbind(datamat[regIdx, ])
     }else{
-      dat <- t(datamat[regIdx,])
+      dat <- t(datamat[regIdx, ])
     }
 
     # get indices with non-zero variance (they casue warning and NA in cor())
     subIdx <- noZeroVar(dat)
 
-    n = length(subIdx)
+    n <- length(subIdx)
 
     # compute pairwise correlations for all regions in this bin
     if (n != 1) {
 
-      m <- stats::cor(dat[,subIdx])
+      m <- stats::cor(dat[, subIdx])
 
     }else{
 
@@ -179,7 +171,6 @@ addCovCor <- function(gi, datcol, colname = "cor",
   #-----------------------------------------------------------------------------
   # (3) combine all data.frames
   #-----------------------------------------------------------------------------
-  # message("INFO: Combine data.tables of pairwise correlations...")
 
   corDT <- data.table::rbindlist(corMatList)
 
@@ -197,10 +188,10 @@ addCovCor <- function(gi, datcol, colname = "cor",
     key = c("id1", "id2")
   )
 
-  # message("INFO: Query correlation for input pairs...")
+
   matches <- corDT[gpDT, on = c("id1", "id2"), mult = "first"]
 
-  S4Vectors::mcols(gi)[,colname] <- matches$val
+  S4Vectors::mcols(gi)[, colname] <- matches$val
 
   return(gi)
 }
@@ -209,21 +200,21 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #' Add column to \code{\link{GInteractions}} with overlap support.
 #'
 #' See overlap methods in \code{\link{InteractionSet}} package for more details
-#' on the oberlap calculations: \code{?InteractionSet::overlapsAny}
+#' on the overlap calculations: \code{?InteractionSet::overlapsAny}
 #'
 #' @param gi \code{\link{GInteractions}} object
 #' @param subject another \code{\link{GInteractions}} object
-#' @param colname name of the new annotation columm in \code{gi}.
-#' @param ... addtional arguments passed to \code{\link[IRanges]{overlapsAny}}.
-#' @return \code{\link{InteractionSet}} \code{gi} as input but with additonal
-#'   annotation column \code{colname} indicationg whether each interaction
+#' @param colname name of the new annotation column in \code{gi}.
+#' @param ... additional arguments passed to \code{\link[IRanges]{overlapsAny}}.
+#' @return \code{\link{InteractionSet}} \code{gi} as input but with additional
+#'   annotation column \code{colname} indicating whether each interaction
 #'   is supported by \code{subject} or not.
 #' @export
 addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 
   ol <- IRanges::overlapsAny(gi, subject, ...)
 
-  S4Vectors::mcols(gi)[,colname] <- factor(ol,
+  S4Vectors::mcols(gi)[, colname] <- factor(ol,
                                           c(FALSE, TRUE),
                                           c("No loop", "Loop"))
 
@@ -233,15 +224,15 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 
 #' Add combination of anchor strand orientation.
 #'
-#' Each anchor region has a strand that is \code{'+'} or \code{'-'}. Threfore
+#' Each anchor region has a strand that is \code{'+'} or \code{'-'}. Therefore,
 #' the each interaction between two regions has one of the following strand
 #' combinations: "forward", "reverse", "convergent", or "divergent". Unstranded
-#' ragnes, indicated by (\code{*}), are treated as positive strand.
+#' ranges, indicated by \code{*}, are treated as positive strand.
 #' @param gi \code{\link{GInteractions}}
-#' @param colname name of the new colum that is created in \code{gi}.
+#' @param colname name of the new column that is created in \code{gi}.
 #'
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with an
-#'   additonal column indicating the four possible combinations of strands
+#'   additional column indicating the four possible combinations of strands
 #'   "forward", "reverse", "convergent", or "divergent".
 #' @export
 addStrandCombination <- function(gi, colname = "strandOrientation"){
@@ -275,13 +266,14 @@ addStrandCombination <- function(gi, colname = "strandOrientation"){
 #'
 #' If each anchor region (motif) has a score as annotation column, this function
 #' adds two new columns named "score_1" and "score_2" with the scores of the
-#' first and the second anchor region, respectively. Additonally a column named
-#' "score_min" is added with holds for each interaction the mimium of "score_1"
-#' and "score_2".
+#' first and the second anchor region, respectively. Additionally, a column
+#' named "score_min" is added with holds for each interaction the minimum of
+#' "score_1" and "score_2".
 #' @param gi \code{\link{GInteractions}}.
-#' @param scoreColname Character as name the metadata column in with motif score.
+#' @param scoreColname Character as name the metadata column in with motif
+#'   score.
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with three
-#'   additonal annotation columns.
+#'   additional annotation columns.
 #' @export
 addMotifScore <- function(gi, scoreColname = "score"){
 
@@ -292,7 +284,9 @@ addMotifScore <- function(gi, scoreColname = "score"){
 
   S4Vectors::mcols(gi)[, "score_1"] <- ancScore[anc1]
   S4Vectors::mcols(gi)[, "score_2"] <- ancScore[anc2]
-  S4Vectors::mcols(gi)[, "score_min"] <- apply(cbind(ancScore[anc1], ancScore[anc2]), 1, min)
+  S4Vectors::mcols(gi)[, "score_min"] <- apply(
+    cbind(ancScore[anc1], ancScore[anc2]), 1, min
+    )
 
   return(gi)
 }
@@ -305,11 +299,11 @@ addMotifScore <- function(gi, scoreColname = "score"){
 #' @inheritParams addStrandCombination
 #' @inheritParams addMotifScore
 #'
-#' @return An \code{\link[InteractionSet]{GInteractions}} object with moitf
+#' @return An \code{\link[InteractionSet]{GInteractions}} object with motif
 #'   pairs and annotations of distance, strand orientation, and motif scores.
 #'
 #' @export
-prepareCandidates <- function(motifs, maxDist = 10^6, scoreColname = "score"){
+prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
 
   # get pairs of motifs as GInteraction object
   gi <- getCisPairs(motifs, maxDist = maxDist)
@@ -327,8 +321,9 @@ prepareCandidates <- function(motifs, maxDist = 10^6, scoreColname = "score"){
 #'
 #' This function first adds ChIP-seq signals along all regions of motif location
 #' using the function \code{\link{addCovToGR}}. Than it calculates the
-#' correlation of coverage for each input pair using the function \code{\link{addCovCor}}.
-#' The pearson correlation value is added as new column metad data colum to the input interactions.
+#' correlation of coverage for each input pair using the function
+#' \code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
+#' metadata column to the input interactions.
 #'
 #' @param gi \code{\link[InteractionSet]{GInteractions}} object.
 #' @param bwFile File path or connection to BigWig file with ChIP-seq signals.
@@ -351,4 +346,3 @@ addCor <- function(gi, bwFile, name = "chip", window = 1000, binSize = 1){
 
   return(gi)
 }
-

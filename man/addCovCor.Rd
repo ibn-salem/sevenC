@@ -10,7 +10,7 @@ addCovCor(gi, datcol, colname = "cor", maxDist = NULL)
 \item{gi}{A sorted \code{\link[InteractionSet]{GInteractions}} object.}
 
 \item{datcol}{a string matching an annotation column in \code{regions(gi)}.
-This collumn is assumed to hold the same number of values for each
+This column is assumed to hold the same number of values for each
 interaction as a \code{NumericList}.}
 
 \item{colname}{A string that is used as columnname for the new column in
@@ -22,7 +22,7 @@ the maximal distance is computed from input interactions gi by
 }
 \value{
 A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
-  just wiht an additinoal column added.
+  just with an additional column added.
 }
 \description{
 This function adds a vector with correlation values for each input

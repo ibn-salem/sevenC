@@ -3,12 +3,12 @@
 #'
 #' @param gr A \code{GRanges} object.
 #' @return A \code{data.frame} with rows for each range in \code{gr} that
-#'   extends out of chromosomes. The first colum holds the index of the range in
-#'   \code{gr}, the second the size of the overlap to the left of the chromsome
-#'   and the third the sieze of the overlap to the right of the chromosme.
+#'   extends out of chromosomes. The first column holds the index of the range in
+#'   \code{gr}, the second the size of the overlap to the left of the chromosome
+#'   and the third the size of the overlap to the right of the chromosome.
 getOutOfBound <- function(gr){
 
-  # check if extended regions are out of chromsome space
+  # check if extended regions are out of chromosome space
   outOfBoundIdx <- GenomicRanges:::get_out_of_bound_index(gr)
   negIdx <- which( GenomicRanges::start(gr) <= 0 )
 
@@ -70,11 +70,11 @@ slideMean <- function(x, k){
 #' For regions with negative strand, the coverage vector is reversed.
 #'
 #' @param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
-#' @param bwFile File path or connection to BigWig file with coverage to parrse
+#' @param bwFile File path or connection to BigWig file with coverage to parse
 #'   from.
-#' @param window the window size arund the center of ranges in \code{gr}.
+#' @param window the window size around the center of ranges in \code{gr}.
 #' @param binSize size of bins to which the coverage values are combined.
-#' @param colname name of the new colum that is created in \code{gr}.
+#' @param colname name of the new column that is created in \code{gr}.
 #'
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
 #'   meta column containing the coverage values for each region.
@@ -112,14 +112,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
     )
   selection <- rtracklayer::BigWigSelection(selectWin)
 
-  # message("INFO: Reading from file: ", bwFile, " ...")
-
   covGR <- rtracklayer::import.bw(
     bwFile,
     selection = selection,
     as = "GRanges",
     seqinfo = seqinfo(ancWin))
-  # message("INFO: Finished reading coverage from fiel: ", bwFile)
 
   # update covGR with seqinfo to allow subsetting with ancWin
   if ( !any(is.na(GenomeInfoDb::seqlengths(ancWin))) ) {
@@ -152,7 +149,7 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   covAnc[negStrand] <- lapply(covAnc[negStrand], rev)
 
   # add as additional column to GRanges object
-  S4Vectors::mcols(gr)[,colname] <- covAnc
+  S4Vectors::mcols(gr)[, colname] <- covAnc
 
   return(gr)
 }

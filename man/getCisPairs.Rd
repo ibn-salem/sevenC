@@ -5,12 +5,12 @@
 \title{Build a \code{\link{GInteractions}} object with all pairs of input
 \code{\link[GenomicRanges]{GRanges}} within a given distance.}
 \usage{
-getCisPairs(inGR, maxDist = 10^6)
+getCisPairs(inGR, maxDist = 1e+07)
 }
 \arguments{
-\item{inGR}{\code{\link[GenomicRanges]{GRanges}} object of genomic regions. The ranges shuld
-be sorted according to chr, strand, and start position. Use
-\code{\link[BiocGenerics]{sort}} to sort it.}
+\item{inGR}{\code{\link[GenomicRanges]{GRanges}} object of genomic regions.
+The ranges shuld be sorted according to chr, strand, and start position.
+Use \code{\link[BiocGenerics]{sort}} to sort it.}
 
 \item{maxDist}{maximal distance in base-pairs between pairs of ranges as
 single  numeric value.}

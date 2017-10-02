@@ -10,13 +10,13 @@ pred_logit(data, formula, betas)
 \item{data}{A data.frame like object with predictor variables.}
 
 \item{formula}{A \code{\link[stats]{formula}}. All predictor variables should
-be availabel in the data frame.}
+be available in the data frame.}
 
 \item{betas}{A vector with parameter estimates for predictor variables. They
 should be in the same order as variables in \code{formula}.}
 }
 \value{
-A numeric vector with interaction probabilites for each ovservation
+A numeric vector with interaction probabilities for each ovservation
   in \code{df}. NAs are produced for NAs in \code{df}.
 }
 \description{

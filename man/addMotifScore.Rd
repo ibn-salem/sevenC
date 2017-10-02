@@ -9,16 +9,17 @@ addMotifScore(gi, scoreColname = "score")
 \arguments{
 \item{gi}{\code{\link{GInteractions}}.}
 
-\item{scoreColname}{Character as name the metadata column in with motif score.}
+\item{scoreColname}{Character as name the metadata column in with motif
+score.}
 }
 \value{
 The same \code{\link{GInteractions}} as \code{gi} but with three
-  additonal annotation columns.
+  additional annotation columns.
 }
 \description{
 If each anchor region (motif) has a score as annotation column, this function
 adds two new columns named "score_1" and "score_2" with the scores of the
-first and the second anchor region, respectively. Additonally a column named
-"score_min" is added with holds for each interaction the mimium of "score_1"
-and "score_2".
+first and the second anchor region, respectively. Additionally, a column
+named "score_min" is added with holds for each interaction the minimum of
+"score_1" and "score_2".
 }

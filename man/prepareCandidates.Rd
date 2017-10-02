@@ -4,7 +4,7 @@
 \alias{prepareCandidates}
 \title{Prepares motif pairs and add genomic features.}
 \usage{
-prepareCandidates(motifs, maxDist = 10^6, scoreColname = "score")
+prepareCandidates(motifs, maxDist = 1e+07, scoreColname = "score")
 }
 \arguments{
 \item{motifs}{\code{\link[GenomicRanges]{GRanges}} object with motif
@@ -13,10 +13,11 @@ locations.}
 \item{maxDist}{maximal distance in base-pairs between pairs of ranges as
 single  numeric value.}
 
-\item{scoreColname}{Character as name the metadata column in with motif score.}
+\item{scoreColname}{Character as name the metadata column in with motif
+score.}
 }
 \value{
-An \code{\link[InteractionSet]{GInteractions}} object with moitf
+An \code{\link[InteractionSet]{GInteractions}} object with motif
   pairs and annotations of distance, strand orientation, and motif scores.
 }
 \description{

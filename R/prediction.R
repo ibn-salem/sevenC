@@ -3,17 +3,17 @@
 #'
 #' @param data  A data.frame like object with predictor variables.
 #' @param formula A \code{\link[stats]{formula}}. All predictor variables should
-#'   be availabel in the data frame.
+#'   be available in the data frame.
 #' @param betas A vector with parameter estimates for predictor variables. They
 #'   should be in the same order as variables in \code{formula}.
 #'
-#' @return A numeric vector with interaction probabilites for each ovservation
+#' @return A numeric vector with interaction probabilities for each ovservation
 #'   in \code{df}. NAs are produced for NAs in \code{df}.
 #' @export
 pred_logit <- function(data, formula, betas){
 
   # save option and set na.action to pass
-  op <- options(na.action = 'na.pass')
+  op <- options(na.action = "na.pass")
   on.exit(options(op), add = TRUE)
 
   # build model matrix
@@ -31,32 +31,33 @@ pred_logit <- function(data, formula, betas){
 #'   correlation and genomic features in metadata columns. See
 #'   \link{prepareCandidates} and \link{addCor} to build it.
 #' @param formula A \code{\link[stats]{formula}}. All predictor variables should
-#'   be availabel in the in metadat colums of \code{gi}. If NULL, the following
-#'   default formular is used: \code{~ dist + strandOrientation + score_min +
-#'   chip}.
+#'   be available in the in metadata columns of \code{gi}. If NULL, the
+#'   following default formula is used: \code{~ dist + strandOrientation +
+#'   score_min + chip}.
 #' @param betas A vector with parameter estimates for predictor variables. They
 #'   should be in the same order as variables in \code{formula}.
-#' @param colname A \code{character} as column name of new metadata colum in
+#' @param colname A \code{character} as column name of new metadata column in
 #'   \code{gi} for predictions.
 #' @param cutoff Numeric cutoff on prediction score. Only interactions with
 #'   interaction probability >= \code{cutoff} are reported. If \code{NULL}, all
 #'   input interactions are reported. Default is \code{\link{cutoffBest10}}, an
-#'   optimal cutoff based on F1-score on 10 best performing TF ChIP-seq data
-#'   sets. See \code{?'cutoffBest10'} for more details.
+#'   optimal cutoff based on F1-score on 10 best performing transcription factor
+#'   ChIP-seq data sets. See \code{?'cutoffBest10'} for more details.
 #'
 #' @return A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an
-#'   additional metadata colum holdin the predicted looping probability.
+#'   additional metadata column hold in the predicted looping probability.
 #'
 #' @seealso \code{\link{prepareCandidates}}, \code{\link{addCor}},
 #'   \code{\link{pred_logit}}
 #' @export
 #'
-predLoops <- function(gi, formula = NULL, betas = NULL, colname = "pred",
+predLoops <- function(gi, formula = NULL, betas=NULL, colname = "pred",
                       cutoff = cutoffBest10){
 
   # if no estimates are given, use the default parameters
   if (is.null(betas)) {
-    betas <- modelBest10Avg$estimate
+    defaultModel <- get("modelBest10Avg")
+    betas <- defaultModel$estimate
   }
 
   # if no formula is given, use default formula

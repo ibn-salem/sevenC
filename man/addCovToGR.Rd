@@ -9,14 +9,14 @@ addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "cov")
 \arguments{
 \item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions}
 
-\item{bwFile}{File path or connection to BigWig file with coverage to parrse
+\item{bwFile}{File path or connection to BigWig file with coverage to parse
 from.}
 
-\item{window}{the window size arund the center of ranges in \code{gr}.}
+\item{window}{the window size around the center of ranges in \code{gr}.}
 
 \item{binSize}{size of bins to which the coverage values are combined.}
 
-\item{colname}{name of the new colum that is created in \code{gr}.}
+\item{colname}{name of the new column that is created in \code{gr}.}
 }
 \value{
 \code{\link[GenomicRanges]{GRanges}} as input but with an additional

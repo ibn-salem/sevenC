@@ -1,0 +1,6 @@
+linters:  with_defaults(camel_case_linter, snake_case_linter = NULL)
+exclusions: list("tests/testthat.R",
+                 "tests/testthat/test-interaction.R",
+                 "tests/testthat/test-parseChIP-seq.R",
+                 "tests/testthat/test-parseInteractions.R",
+                 "tests/testthat/test-prediction.R")

@@ -13,13 +13,14 @@ addCor(gi, bwFile, name = "chip", window = 1000, binSize = 1)
 
 \item{name}{Character indicating the sample name.}
 
-\item{window}{the window size arund the center of ranges in \code{gr}.}
+\item{window}{the window size around the center of ranges in \code{gr}.}
 
 \item{binSize}{size of bins to which the coverage values are combined.}
 }
 \description{
 This function first adds ChIP-seq signals along all regions of motif location
 using the function \code{\link{addCovToGR}}. Than it calculates the
-correlation of coverage for each input pair using the function \code{\link{addCovCor}}.
-The pearson correlation value is added as new column metad data colum to the input interactions.
+correlation of coverage for each input pair using the function
+\code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
+metadata column to the input interactions.
 }

@@ -4,14 +4,18 @@
 \name{chromloop}
 \alias{chromloop}
 \alias{chromloop-package}
-\title{Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece
+\title{Prediction of Chromatin Looping Interaction from ChIP-seq and Sequence
 Motifs.}
 \description{
-Chromatin looping interactions are an importent feature of eukaryotic genomes
-and can bring regulatory sequences such as enhancers in close physical
-proximity of regulated target genes.
-Here we provide a tool that uses protein
-binding signals from ChIP-seq and sequence motif information to predict
-chromatin looping events. It can be used to associate binding sites of
-transcription factors to regulated genes.
+Folding of genomic DNA is an importent feature of eukaryotic genomes and can
+bring regulatory sequences, such as enhancers or transcription factor binding
+sites, in close physical proximity of regulated target genes. Here, we
+provide a tool that uses protein binding signals from ChIP-seq and sequence
+motif information to predict chromatin looping events. Cross-linking of
+proteins binding close to loop anchors result in ChIP-seq signals at both
+anchor loci. These signals are used at CTCF motif pairs together with their
+distance and orientation to each other to predict whether they interact or
+not. The resulting chromatin loops can be used to associate enhancers or
+transcription factor binding sites in form of ChIP-seq peaks to regulated
+target genes.
 }

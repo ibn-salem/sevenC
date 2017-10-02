@@ -2,7 +2,7 @@
 % Please edit documentation in R/parseInteractions.R
 \name{parseLoopsRao}
 \alias{parseLoopsRao}
-\title{Parse chromatin loops from Rao et al 2014 as strict
+\title{Parse chromatin loops from Rao et al. 2014 as strict
 \code{\link[InteractionSet]{GInteractions}}.}
 \usage{
 parseLoopsRao(inFile, ...)
@@ -17,6 +17,6 @@ parseLoopsRao(inFile, ...)
 \code{\link{GInteractions}} with loops from input file.
 }
 \description{
-Parse chromatin loops from Rao et al 2014 as strict
+Parse chromatin loops from Rao et al. 2014 as strict
 \code{\link[InteractionSet]{GInteractions}}.
 }

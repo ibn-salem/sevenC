@@ -1,13 +1,15 @@
 #' CTCF motif locations in human genome hg19.
 #'
-#' A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
+#' A dataset containing the motif hits of the CTCF recognition motif from JASPAR
 #' database (MA0139.1) in human genome assembly hg19.
 #'
-#' The dataset was created by using the tool RSTA matrix-scan
+#' The dataset was created by using the tool RSAT matrix-scan
 #' (\url{http://www.rsat.eu/}) to get all motif hits in the hg19 genome
 #' sequence. The PFM motif model for CTCF was downloaded from JASPAR database
 #' using this url:
+# nolint start
 #' \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm}
+# nolint end
 #' The following parameters where used.
 #'
 #' \describe{ \item{-quick}{} \item{origin start}{} \item{-bginput}{}
@@ -19,10 +21,10 @@
 #' The dataset was than filtered to contain only motif hists with p-value
 #' \eqn{\le 10^-6}.
 #'
-#' @format GRanges object with 132739 ranges on positive and negative strnad
+#' @format GRanges object with 132739 ranges on positive and negative strand
 #'   indicated and 5 meta columns:
 #'
-#'   \describe{ \item{sequence}{genomic DNA sequnece}
+#'   \describe{ \item{sequence}{genomic DNA sequence}
 #'
 #'   \item{weight}{ The program scans the input sequences with a
 #'   position-specific scoring matrix (PSSM) by selecting, at each position, a
@@ -47,13 +49,15 @@
 #'
 #'   \item{sig}{The significance, defined as sig = -log_10(P-value)} }
 #' @source
+# nolint start
 #' \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm}
+# nolint end
 #' and \url{http://www.rsat.eu/}
 "motif.hg19.CTCF"
 
 #' CTCF motif locations on chromosome 22 in human genome hg19.
 #'
-#' A dataset containing the motif hits of the CTCF recogintion motif from JASPAR
+#' A dataset containing the motif hits of the CTCF recognition motif from JASPAR
 #' database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
 #' \eqn{\le 10^-6} on chromosome 22 are reported.
 #'
@@ -68,14 +72,14 @@
 #' of the 10 best performing models out of 121 transcription factor ChIP-seq
 #' data sets from ENCODE.
 #'
-#' Each of 121 transcritpion factor ChIP-seq data sets from ENCODE in GM12878
-#' cells were used to train a logistic regression model. All CTCF moifs in
-#' \code{\link{motif.hg19.CTCF}} wihtin a distance of 1 Mb were used as
-#' candidates. A given pair was labeld as true loop interactions, if it has
+#' Each of 121 transcriptin factor (TF) ChIP-seq data sets from ENCODE in
+#' GM12878 cells were used to train a logistic regression model. All CTCF motifs
+#' in \code{\link{motif.hg19.CTCF}} within a distance of 1 Mb were used as
+#' candidates. A given pair was labled as true loop interactions, if it has
 #' interaction support based on Hi-C lops in GM12878 from Rao et al. 2014 or
-#' ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best perfroming
-#' models were selcted based on the average area under the
-#' precision-recall-cureve in 10-fold cross-validation.
+#' ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best performing
+#' models were selected based on the average area under the
+#' precision-recall-curve in 10-fold cross-validation.
 #'
 #' @format An object of class \code{data.frame} with 7 rows and 2 columns:
 #'
@@ -116,9 +120,8 @@
 
 #' Default optimal cutoff value of logistic regression.
 #'
-#' This value is the average optimal cutoff value on the 10 best perfroming TF
-#' ChIP-seq data sets. It is used as default cutoff value on the logistc
+#' This value is the average optimal cutoff value on the 10 best performing TF
+#' ChIP-seq data sets. It is used as default cutoff value on the logistic
 #' regression response score in \code{\link{predLoops}} fucntion. See
 #' \code{?'cutoffByTF'} for more details.
 "cutoffBest10"
-

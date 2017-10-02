@@ -13,25 +13,25 @@ correlation and genomic features in metadata columns. See
 \link{prepareCandidates} and \link{addCor} to build it.}
 
 \item{formula}{A \code{\link[stats]{formula}}. All predictor variables should
-be availabel in the in metadat colums of \code{gi}. If NULL, the following
-default formular is used: \code{~ dist + strandOrientation + score_min +
-chip}.}
+be available in the in metadata columns of \code{gi}. If NULL, the
+following default formula is used: \code{~ dist + strandOrientation +
+score_min + chip}.}
 
 \item{betas}{A vector with parameter estimates for predictor variables. They
 should be in the same order as variables in \code{formula}.}
 
-\item{colname}{A \code{character} as column name of new metadata colum in
+\item{colname}{A \code{character} as column name of new metadata column in
 \code{gi} for predictions.}
 
 \item{cutoff}{Numeric cutoff on prediction score. Only interactions with
 interaction probability >= \code{cutoff} are reported. If \code{NULL}, all
 input interactions are reported. Default is \code{\link{cutoffBest10}}, an
-optimal cutoff based on F1-score on 10 best performing TF ChIP-seq data
-sets. See \code{?'cutoffBest10'} for more details.}
+optimal cutoff based on F1-score on 10 best performing transcription factor
+ChIP-seq data sets. See \code{?'cutoffBest10'} for more details.}
 }
 \value{
 A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an
-  additional metadata colum holdin the predicted looping probability.
+  additional metadata column hold in the predicted looping probability.
 }
 \description{
 Predict looping interaction probability.

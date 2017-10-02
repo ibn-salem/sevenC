@@ -1,5 +1,5 @@
 
-#' Parse chromatin loops from Rao et al 2014 as strict
+#' Parse chromatin loops from Rao et al. 2014 as strict
 #' \code{\link[InteractionSet]{GInteractions}}.
 #'
 #' @param inFile input file with loops
@@ -10,20 +10,20 @@
 parseLoopsRao <- function(inFile, ...){
 
   # parse input file
-  raoDF = as.data.frame(readr::read_tsv(inFile))
+  raoDF <- as.data.frame(readr::read_tsv(inFile))
 
-  # get chromsome column
-  chr = paste0("chr", raoDF$chr1)
+  # get chromosome column
+  chr <- paste0("chr", raoDF$chr1)
 
   # substract 1 bp from end coordinate to have inclusive interval ranges
-  upAnchor = GenomicRanges::GRanges(
+  upAnchor <- GenomicRanges::GRanges(
       chr,
-      IRanges::IRanges(raoDF[,"x1"], raoDF[,"x2"] - 1),
+      IRanges::IRanges(raoDF[, "x1"], raoDF[, "x2"] - 1),
       ...)
 
-  downAnchor = GenomicRanges::GRanges(
+  downAnchor <- GenomicRanges::GRanges(
     chr,
-    IRanges::IRanges(raoDF[,"y1"], raoDF[,"y2"] - 1),
+    IRanges::IRanges(raoDF[, "y1"], raoDF[, "y2"] - 1),
     ...)
 
   # build GInteractions
@@ -39,11 +39,11 @@ parseLoopsRao <- function(inFile, ...){
 }
 
 
-#'Parse chromatin interactions from Tang et al 2015 as \code{GInteractions}.
+#'Parse chromatin interactions from Tang et al. 2015 as \code{GInteractions}.
 #'
 #'Reads pairwise ChIA-PET interaction from an input file.
 #'
-#'It reads files with the follwoing tab-delimited format:
+#'It reads files with the following tab-delimited format:
 #'
 #'\tabular{lllllll}{ chr12\tab 48160351\tab 48161634\tab  chr12\tab 48230665\tab
 #'48232848\tab 27 \cr chr7\tab 77284664\tab 77285815\tab chr7\tab  77388242\tab
@@ -63,16 +63,16 @@ parseLoopsTang2015 <- function(inFile, ...){
 
   message("INFO: Parse ChiA-PET interactions from file: ", inFile)
 
-  # parse IMR90 domains from Rao et al 2014:
-  inDF = readr::read_tsv(inFile, col_names = FALSE)
+  # parse IMR90 domains from Rao et al. 2014:
+  inDF <- readr::read_tsv(inFile, col_names = FALSE)
 
   # create ranges by adding +1 to start coordintate to convert from 0-based to
   # to 1-based coordinates.
-  upAnchor = GenomicRanges::GRanges(
+  upAnchor <- GenomicRanges::GRanges(
     inDF[[1]],
     IRanges::IRanges(inDF[[2]] + 1, inDF[[3]]), ...)
 
-  downAnchor = GenomicRanges::GRanges(
+  downAnchor <- GenomicRanges::GRanges(
     inDF[[4]],
     IRanges::IRanges(inDF[[5]] + 1, inDF[[6]]), ...)
 
@@ -86,9 +86,9 @@ parseLoopsTang2015 <- function(inFile, ...){
 
 }
 
-#'Parse Capture Hi-C intreactions from Mifsud et al. 2015
+#'Parse Capture Hi-C interactions from Mifsud et al. 2015
 #'
-#' Capture Hi-C interactios from the study Mifsud et al. 2015 can be downloaded
+#' Capture Hi-C interactions from the study Mifsud et al. 2015 can be downloaded
 #' from here
 #' \url{http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip}.
 #' Each file in the .zip archive can be parsed with this function.
@@ -104,7 +104,7 @@ parseCaptureHiC <- function(inFile, ...){
 
   inDF <- readr::read_tsv(inFile, col_names = TRUE)
 
-  upAnchor = GenomicRanges::GRanges(
+  upAnchor <- GenomicRanges::GRanges(
     inDF[[1]],
     IRanges::IRanges(inDF[[2]], inDF[[3]]),
     # Symbol = inDF[[4]],
@@ -112,27 +112,19 @@ parseCaptureHiC <- function(inFile, ...){
     # expresssion_quartile = inDF[[6]],
     ...)
 
-  downAnchor = GenomicRanges::GRanges(
+  downAnchor <- GenomicRanges::GRanges(
     inDF[[7]],
     IRanges::IRanges(inDF[[8]], inDF[[9]]), ...)
-
-  # only promoter-promoter files have the follwoing information
-  # if ( ncol(inDF) > 11) {
-  #   downAnchor$Symbol <- inDF[[10]]
-  #   downAnchor$Ensembl_Gene_ID <- inDF[[11]]
-  #   downAnchor$expresssion_quartile <- inDF[[12]]
-  # }
 
   # build GInteractions
   gi <- InteractionSet::GInteractions(upAnchor, downAnchor)
 
   # annotate GInteractions object with score
-  gi$raw_count <- inDF$`raw count`
-  gi$log_observed_expected <- inDF$`log(observed/expected)`
+  gi$rawCount <- inDF$`raw count`
+  gi$logObservedExpected <- inDF$`log(observed/expected)`
 
   # turne into StrictGInteraction object
   gi <- methods::as(gi, "StrictGInteractions")
 
   return(gi)
 }
-

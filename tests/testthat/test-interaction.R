@@ -46,7 +46,7 @@ toySeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1"),
                                         genome = "example")
 
 toyCov <- IRanges::RleList(list(
-  "chr1" = c(rep(0,4), 1:4, 4:1, rep(0,3), rep(1,4), 0, 1:3, 0, 0)
+  "chr1" = c(rep(0, 4), 1:4, 4:1, rep(0, 3), rep(1, 4), 0, 1:3, 0, 0)
 ))
 
 toyCovFile <- file.path(tempdir(), "toy.bw")
@@ -100,7 +100,7 @@ test_that("getCisPairs returns divergent pairs", {
     seqinfo = toySeqInfo
   )
 
-  gi <- getCisPairs(gr, maxDist=10)
+  gi <- getCisPairs(gr, maxDist = 10)
 
   gi <- addStrandCombination(gi)
 
@@ -110,9 +110,9 @@ test_that("getCisPairs returns divergent pairs", {
 
   expect_true(any(anc1 == 1 & anc2 == 3))
 
-  int1_3 <- which(anc1 == 1 & anc2 == 3)
+  int13 <- which(anc1 == 1 & anc2 == 3)
 
-  expect_equal(gi$strandOrientation[int1_3], "divergent")
+  expect_equal(gi$strandOrientation[int13], "divergent")
 
 })
 
@@ -132,8 +132,6 @@ test_that("coverage is added to gi on small example dataset", {
 })
 
 test_that("addCovCor works with chr22 example data", {
-
-  # skip("skipt for faster test runtime.")
 
   exampleBigWig <- system.file("extdata",
                                "GM12878_Stat1.chr22_1-18000000.bigWig",
@@ -202,8 +200,6 @@ test_that("addCovCor runs on toy example dataset", {
 
 test_that("interactions can be annotated with Hi-C loops", {
 
-  # skip("Skipt test on large files")
-
   # use internal motif data on chr22
   motifGR <- chromloop::motif.hg19.CTCF.chr22
 
@@ -217,8 +213,6 @@ test_that("interactions can be annotated with Hi-C loops", {
     package = "chromloop")
 
   loopGI <- parseLoopsRao(exampleLoopFile, seqinfo = GenomeInfoDb::seqinfo(gi))
-
-  # hits <- InteractionSet::findOverlaps(gi, loopGI, type="within")
 
   ovl <- InteractionSet::countOverlaps(gi, loopGI, type = "within") >= 1
 

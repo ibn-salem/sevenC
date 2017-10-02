@@ -2,16 +2,16 @@
 % Please edit documentation in R/interaction.R
 \name{noZeroVar}
 \alias{noZeroVar}
-\title{returns indecies of columns with non-zero variance}
+\title{returns indices of columns with non-zero variance}
 \usage{
 noZeroVar(dat)
 }
 \arguments{
-\item{dat}{data.frame or matirx}
+\item{dat}{data.frame or matrix}
 }
 \value{
-column indecies of columns with non-zero variance
+column indices of columns with non-zero variance
 }
 \description{
-returns indecies of columns with non-zero variance
+returns indices of columns with non-zero variance
 }
