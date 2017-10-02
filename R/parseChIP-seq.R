@@ -96,22 +96,13 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   ancWin <- trim(ancWin)
 
   # trim start in case there is no seqinof object
-  start(ancWin) <- ifelse(
-    start(ancWin) > 0,
-    start(ancWin),
-    1)
+  start(ancWin) <- ifelse(start(ancWin) > 0, start(ancWin), 1)
 
   # get numeric with coverage of each region
 
   # define query region and trim seqinfo to avoid
   # warning in rtracklayer::import.bw
-  selectWin <- ancWin
-  seqlevels(selectWin) <- as.character(
-    unique(seqnames(selectWin))
-    )
-  seqinfo(selectWin) <- Seqinfo(
-    seqlevels(selectWin)
-    )
+  selectWin <- keepSeqlevels(ancWin, unique(seqnames(ancWin)))
   selection <- rtracklayer::BigWigSelection(selectWin)
 
   covGR <- rtracklayer::import.bw(
