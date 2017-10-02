@@ -48,6 +48,6 @@ gi <- getCisPairs(motifGR, 1e5)
 gi <- addCovCor(gi, datcol = "cov")
 
 # addCovCor adds a new metadata column:
-S4Vectors::mcols(gi)
+mcols(gi)
 
 }

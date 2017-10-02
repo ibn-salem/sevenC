@@ -3,15 +3,15 @@ context("interactions")
 
 # Example input data ------------------------------------------------------
 
-inGR <- GenomicRanges::GRanges(
+inGR <- GRanges(
   rep("chr1", 5),
-  IRanges::IRanges(
+  IRanges(
     c(10, 20, 30, 100, 1000),
     c(15, 25, 35, 105, 1005)
   )
 )
 
-cov <- IRanges::RleList(list(
+cov <- RleList(list(
   "chr1" = c(rep(c(0, 1, 0), each = 20), rep(0, 1000)),
   "chr22" = c(rep(c(0, 5, 1, 5, 0), each = 10), rep(0, 1000))
 ))
@@ -40,21 +40,21 @@ rtracklayer::export.bw(cov, bwFile)
 #' 2 4
 #' 2 3
 
-toySeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1"),
+toySeqInfo <- Seqinfo(seqnames = c("chr1"),
                                         seqlengths = c(25),
                                         isCircular = c(FALSE),
                                         genome = "example")
 
-toyCov <- IRanges::RleList(list(
+toyCov <- RleList(list(
   "chr1" = c(rep(0, 4), 1:4, 4:1, rep(0, 3), rep(1, 4), 0, 1:3, 0, 0)
 ))
 
 toyCovFile <- file.path(tempdir(), "toy.bw")
 rtracklayer::export.bw(toyCov, toyCovFile)
 
-toyGR <- GenomicRanges::GRanges(
+toyGR <- GRanges(
   rep("chr1", 4),
-  IRanges::IRanges(
+  IRanges(
     c(1, 5, 20, 14),
     c(4, 8, 23, 17)
   ),
@@ -63,7 +63,7 @@ toyGR <- GenomicRanges::GRanges(
   seqinfo = toySeqInfo
 )
 
-toyGI <- InteractionSet::GInteractions(
+toyGI <- GInteractions(
   c(1, 2, 2),
   c(4, 3, 4),
   toyGR,
@@ -81,18 +81,18 @@ test_that("getCisPairs works on small example dataset", {
 
   expect_equal(length(gi), 3)
 
-  a1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
-  a2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+  a1 <- anchors(gi, type = "first", id = TRUE)
+  a2 <- anchors(gi, type = "second", id = TRUE)
   expect_true(all(a1 < a2))
-  expect_true(all(InteractionSet::pairdist(gi) <= 50))
+  expect_true(all(pairdist(gi) <= 50))
 
 })
 
 test_that("getCisPairs returns divergent pairs", {
 
-  gr <- GenomicRanges::GRanges(
+  gr <- GRanges(
     rep("chr1", 4),
-    IRanges::IRanges(
+    IRanges(
       c(5, 15, 1, 20),
       c(8, 18, 4, 23)
     ),
@@ -105,8 +105,8 @@ test_that("getCisPairs returns divergent pairs", {
   gi <- addStrandCombination(gi)
 
   # test that idx 1 and 3 are contained
-  anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
-  anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+  anc1 <- anchors(gi, type = "first", id = TRUE)
+  anc2 <- anchors(gi, type = "second", id = TRUE)
 
   expect_true(any(anc1 == 1 & anc2 == 3))
 
@@ -120,9 +120,9 @@ test_that("coverage is added to gi on small example dataset", {
 
   gi <- getCisPairs(inGR, 50)
 
-  regGR <- InteractionSet::regions(gi)
+  regGR <- regions(gi)
 
-  InteractionSet::regions(gi) <- addCovToGR(
+  regions(gi) <- addCovToGR(
     regGR,
     bwFile,
     window = 10,
@@ -160,34 +160,34 @@ test_that("getCisPairs works with whole CTCF motif data", {
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e6)
 
-  expect_equal(InteractionSet::regions(gi), motifGR)
-  expect_true(max(InteractionSet::pairdist(gi)) <= 1e6)
+  expect_equal(regions(gi), motifGR)
+  expect_true(max(pairdist(gi)) <= 1e6)
 
 })
 
 test_that("addCovCor runs on toy example dataset", {
 
 
-  InteractionSet::regions(toyGI) <- addCovToGR(InteractionSet::regions(toyGI),
+  regions(toyGI) <- addCovToGR(regions(toyGI),
                                             toyCovFile,
                                             window = 4,
                                             binSize = 1,
                                             colname = "cov")
 
-  ncolBefore <- ncol(S4Vectors::mcols(toyGI))
+  ncolBefore <- ncol(mcols(toyGI))
 
   toyGI <- addCovCor(toyGI, "cov", colname = "value")
 
   # check that exactly one column is added
-  expect_equal(ncol(S4Vectors::mcols(toyGI)), ncolBefore + 1)
-  expect_equal(names(S4Vectors::mcols(toyGI)), "value")
+  expect_equal(ncol(mcols(toyGI)), ncolBefore + 1)
+  expect_equal(names(mcols(toyGI)), "value")
 
   # check that all cor values are correct
 
-  covLst <- InteractionSet::regions(toyGI)$cov
+  covLst <- regions(toyGI)$cov
   pairIdx <- cbind(
-    InteractionSet::anchors(toyGI, id = TRUE, type = "first"),
-    InteractionSet::anchors(toyGI, id = TRUE, type = "second")
+    anchors(toyGI, id = TRUE, type = "first"),
+    anchors(toyGI, id = TRUE, type = "second")
   )
   expect_warning(
     corMat <- stats::cor(t(as.matrix(covLst)))
@@ -212,19 +212,19 @@ test_that("interactions can be annotated with Hi-C loops", {
     "GM12878_HiCCUPS.chr22_1-18000000.loop.txt",
     package = "chromloop")
 
-  loopGI <- parseLoopsRao(exampleLoopFile, seqinfo = GenomeInfoDb::seqinfo(gi))
+  loopGI <- parseLoopsRao(exampleLoopFile, seqinfo = seqinfo(gi))
 
-  ovl <- InteractionSet::countOverlaps(gi, loopGI, type = "within") >= 1
+  ovl <- countOverlaps(gi, loopGI, type = "within") >= 1
 
-  S4Vectors::mcols(gi)[,"loop"] <- ovl
+  mcols(gi)[,"loop"] <- ovl
 
 })
 
 test_that("addInteractionSupport works with toy example", {
 
-  toySupport <- InteractionSet::GInteractions(
-    GenomicRanges::GRanges("chr1", IRanges::IRanges(1, 4)),
-    GenomicRanges::GRanges("chr1", IRanges::IRanges(15, 20))
+  toySupport <- GInteractions(
+    GRanges("chr1", IRanges(1, 4)),
+    GRanges("chr1", IRanges(15, 20))
   )
 
   toyGI <- addInteractionSupport(toyGI, toySupport)
@@ -245,8 +245,8 @@ test_that("addMotifScore works on toy example", {
 
   toyGI <- addMotifScore(toyGI, scoreColname = "score")
 
-  expect_true(all(c("score_1", "score_2", "score_min") %in% names(S4Vectors::mcols(toyGI))))
-  expect_equal(toyGI$score_1, toyGR$score[InteractionSet::anchors(toyGI, "first", id = TRUE)])
+  expect_true(all(c("score_1", "score_2", "score_min") %in% names(mcols(toyGI))))
+  expect_equal(toyGI$score_1, toyGR$score[anchors(toyGI, "first", id = TRUE)])
   expect_equal(toyGI$score_min, apply(cbind(toyGI$score_1, toyGI$score_2), 1, min))
 
 })
@@ -256,8 +256,8 @@ test_that("prepareCandidates works on toy example data", {
   gi <- prepareCandidates(toyGR, 10)
 
   expect_equal(length(gi), 3)
-  expect_true("strandOrientation" %in% names(S4Vectors::mcols(gi)))
-  expect_true("score_min" %in% names(S4Vectors::mcols(gi)))
+  expect_true("strandOrientation" %in% names(mcols(gi)))
+  expect_true("score_min" %in% names(mcols(gi)))
 
 })
 
@@ -265,9 +265,9 @@ test_that("addCor works on toy example data", {
 
   gi <- addCor(toyGI, toyCovFile, name = "toy", window = 4, binSize = 1)
 
-  expect_true("toy" %in% names(S4Vectors::mcols(InteractionSet::regions(gi))))
-  expect_equal(ncol(S4Vectors::mcols(gi)), ncol(S4Vectors::mcols(toyGI)) + 1)
-  expect_true("toy" %in% names(S4Vectors::mcols(gi)))
+  expect_true("toy" %in% names(mcols(regions(gi))))
+  expect_equal(ncol(mcols(gi)), ncol(mcols(toyGI)) + 1)
+  expect_true("toy" %in% names(mcols(gi)))
 
 })
 

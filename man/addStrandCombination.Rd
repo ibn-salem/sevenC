@@ -25,9 +25,9 @@ ranges, indicated by \code{*}, are treated as positive strand.
 \examples{
 
 # build example GRanges as anchors
-anchorGR <- GenomicRanges::GRanges(
+anchorGR <- GRanges(
  rep("chr1", 4),
- IRanges::IRanges(
+ IRanges(
    c(1, 5, 20, 14),
    c(4, 8, 23, 17)
  ),
@@ -37,7 +37,7 @@ anchorGR <- GenomicRanges::GRanges(
 
 
 # build example GIntreaction object
-gi <- InteractionSet::GInteractions(
+gi <- GInteractions(
  c(1, 2, 2),
  c(4, 3, 4),
  anchorGR,
@@ -49,9 +49,9 @@ gi <- addStrandCombination(gi)
 
 # build small matrix to check strand combination
 cbind(
-as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "first"))),
-as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "second"))),
-S4Vectors::mcols(gi)[, "strandOrientation"]
+as.character(strand(anchors(gi, "first"))),
+as.character(strand(anchors(gi, "second"))),
+mcols(gi)[, "strandOrientation"]
 )
 
 }

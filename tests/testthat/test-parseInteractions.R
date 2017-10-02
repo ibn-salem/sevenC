@@ -7,7 +7,7 @@ exampleLoopFile <- system.file("extdata",
 
 
 
-toySeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1", "chr22"),
+toySeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
                                     seqlengths = c(10^8, 10^8),
                                     isCircular = c(FALSE, FALSE),
                                     genome = "toy")
@@ -20,7 +20,7 @@ test_that("parseLoopsRao works with example file", {
 
   expect_equal(length(gi),  nrow(df))
   expect_true(all(
-    GenomicRanges::seqnames(InteractionSet::regions(gi)) == "chr22"
+    seqnames(regions(gi)) == "chr22"
     ))
 })
 
@@ -28,7 +28,7 @@ test_that("parseLoopsRao works toy genome as seqinfo", {
 
   gi <- parseLoopsRao(exampleLoopFile, seqinfo=toySeqInfo)
 
-  expect_identical(GenomeInfoDb::seqinfo(gi), toySeqInfo)
+  expect_identical(seqinfo(gi), toySeqInfo)
 
 })
 
@@ -45,7 +45,7 @@ test_that("parseLoopsTang2015 works with example file", {
 
   expect_equal(length(gi),  nrow(df))
   expect_true(all(
-    GenomicRanges::seqnames(InteractionSet::regions(gi)) == "chr22"
+    seqnames(regions(gi)) == "chr22"
   ))
   expect_equal(gi$score, df$V7)
 

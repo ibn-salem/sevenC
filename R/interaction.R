@@ -12,9 +12,9 @@
 #'   within the given distance.
 #' @examples
 #'# build example GRanges as input
-#'inGR <- GenomicRanges::GRanges(
+#'inGR <- GRanges(
 #' rep("chr1", 5),
-#' IRanges::IRanges(
+#' IRanges(
 #'   c(10, 20, 30, 100, 1000),
 #'   c(15, 25, 35, 105, 1005)
 #' )
@@ -27,8 +27,9 @@
 #'class(gi)
 #'
 #'# The input regions are accessibly via regions()
-#'InteractionSet::regions(gi)
+#'regions(gi)
 #'
+#' @import InteractionSet
 #' @export
 getCisPairs <- function(inGR, maxDist = 10e6){
 
@@ -37,29 +38,29 @@ getCisPairs <- function(inGR, maxDist = 10e6){
                                      sort(inGR) to sort it")
 
   # get center postions of each input range
-  posGR <- GenomicRanges::resize(inGR, width = 1, fix = "center")
+  posGR <- resize(inGR, width = 1, fix = "center")
 
   # calculate overlap all possible gene pairs within maxDist bp
-  hits <- GenomicRanges::findOverlaps(posGR,
+  hits <- findOverlaps(posGR,
                       maxgap = maxDist,
                       drop.redundant = TRUE,
                       drop.self = TRUE,
                       ignore.strand = TRUE)
 
   # build IntractionSet object
-  gi <- InteractionSet::GInteractions(
-    S4Vectors::queryHits(hits),
-    S4Vectors::subjectHits(hits),
+  gi <- GInteractions(
+    queryHits(hits),
+    subjectHits(hits),
     inGR,
     mode = "strict"
   )
 
   # sort gi
-  gi <- BiocGenerics::sort(gi)
+  gi <- sort(gi)
 
 
   # add distance
-  gi$dist <- InteractionSet::pairdist(gi, type = "mid")
+  gi$dist <- pairdist(gi, type = "mid")
 
   # remove pairs with distance >= maxDist
   # this is only essential in case of non-zero length ranges in inGR
@@ -114,10 +115,11 @@ noZeroVar <- function(dat) {
 #' gi <- addCovCor(gi, datcol = "cov")
 #'
 #' # addCovCor adds a new metadata column:
-#' S4Vectors::mcols(gi)
+#' mcols(gi)
 #'
-#' @export
 #' @import data.table
+#' @import InteractionSet
+#' @export
 addCovCor <- function(gi, datcol, colname = "cor",
                            maxDist = NULL){
 
@@ -131,7 +133,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   #   /uses inner_join() from dplyr
 
   # check input
-  if ( any(is.na(GenomeInfoDb::seqlengths(gi))) ) {
+  if ( any(is.na(seqlengths(gi))) ) {
     stop("gi object need seqlengths.")
   }
   if ( !methods::is(gi, "StrictGInteractions") ) {
@@ -144,9 +146,9 @@ addCovCor <- function(gi, datcol, colname = "cor",
   if (is.null(maxDist)) {
 
     # to avoid too many bins use minimal size of 10^6
-    maxDist <- max(10e6, InteractionSet::pairdist(gi))
+    maxDist <- max(10e6, pairdist(gi))
 
-    if (maxDist < max(InteractionSet::pairdist(gi))) {
+    if (maxDist < max(pairdist(gi))) {
       stop(paste0("maxDist is smaller than maximal distance between",
                   "interactions in input gi."))
     }
@@ -157,25 +159,25 @@ addCovCor <- function(gi, datcol, colname = "cor",
   #-----------------------------------------------------------------------------
 
   # create GRanges object for entire genome
-  genomeGR <- GenomicRanges::GRanges(GenomeInfoDb::seqinfo(gi))
+  genomeGR <- GRanges(seqinfo(gi))
 
   # tile genoe in overlapping bins of with 2*maxDist
-  binGR <- unlist(GenomicRanges::slidingWindows(genomeGR, 2 * maxDist, maxDist))
+  binGR <- unlist(slidingWindows(genomeGR, 2 * maxDist, maxDist))
 
   # get assign bins to regions
-  hits <- GenomicRanges::findOverlaps(binGR, InteractionSet::regions(gi))
+  hits <- findOverlaps(binGR, regions(gi))
 
   #-----------------------------------------------------------------------------
   # (2) compute pairwise correlatin for all ranges in each bin
   #-----------------------------------------------------------------------------
 
-  covList <- S4Vectors::mcols(InteractionSet::regions(gi))[, datcol]
+  covList <- mcols(regions(gi))[, datcol]
   datamat <- as.matrix(covList)
 
   corMatList <- lapply(1:length(binGR), function(i){
 
     # get regions in this bin
-    regIdx <- S4Vectors::subjectHits(hits)[S4Vectors::queryHits(hits) == i]
+    regIdx <- subjectHits(hits)[queryHits(hits) == i]
 
     if (length(regIdx) == 1) {
       dat <- cbind(datamat[regIdx, ])
@@ -223,15 +225,15 @@ addCovCor <- function(gi, datcol, colname = "cor",
 
   # convert gp into data.table and set keys to id1 and id2 columns
   gpDT <- data.table::data.table(
-    id1 = InteractionSet::anchors(gi, type = "first", id = TRUE),
-    id2 = InteractionSet::anchors(gi, type = "second", id = TRUE),
+    id1 = anchors(gi, type = "first", id = TRUE),
+    id2 = anchors(gi, type = "second", id = TRUE),
     key = c("id1", "id2")
   )
 
 
   matches <- corDT[gpDT, on = c("id1", "id2"), mult = "first"]
 
-  S4Vectors::mcols(gi)[, colname] <- matches$val
+  mcols(gi)[, colname] <- matches$val
 
   return(gi)
 }
@@ -240,7 +242,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #' Add column to \code{\link{GInteractions}} with overlap support.
 #'
 #' See overlap methods in \code{\link{InteractionSet}} package for more details
-#' on the overlap calculations: \code{?InteractionSet::overlapsAny}
+#' on the overlap calculations: \code{?overlapsAny}
 #'
 #' @param gi \code{\link{GInteractions}} object
 #' @param subject another \code{\link{GInteractions}} object
@@ -252,9 +254,9 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #' @examples
 #'
 #' # build example GRanges as anchors
-#'anchorGR <- GenomicRanges::GRanges(
+#'anchorGR <- GRanges(
 #'  rep("chr1", 4),
-#'  IRanges::IRanges(
+#'  IRanges(
 #'    c(1, 5, 20, 14),
 #'    c(4, 8, 23, 17)
 #'  ),
@@ -264,7 +266,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #'
 #'
 #'# build example GIntreaction object
-#'gi <- InteractionSet::GInteractions(
+#'gi <- GInteractions(
 #'  c(1, 2, 2),
 #'  c(4, 3, 4),
 #'  anchorGR,
@@ -272,9 +274,9 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #')
 #'
 #'# build exapple support GInteractions object
-#'exampleSupport <- InteractionSet::GInteractions(
-#'     GenomicRanges::GRanges("chr1", IRanges::IRanges(1, 4)),
-#'     GenomicRanges::GRanges("chr1", IRanges::IRanges(15, 20))
+#'exampleSupport <- GInteractions(
+#'     GRanges("chr1", IRanges(1, 4)),
+#'     GRanges("chr1", IRanges(15, 20))
 #')
 #'
 #'# add support
@@ -283,12 +285,13 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #'# Use colname argument to add support to differnt metadata column name
 #'gi <- addInteractionSupport(gi, subject = exampleSupport, colname = "example")
 #'
+#' @import InteractionSet
 #' @export
 addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 
-  ol <- IRanges::overlapsAny(gi, subject, ...)
+  ol <- overlapsAny(gi, subject, ...)
 
-  S4Vectors::mcols(gi)[, colname] <- factor(ol,
+  mcols(gi)[, colname] <- factor(ol,
                                           c(FALSE, TRUE),
                                           c("No loop", "Loop"))
 
@@ -312,9 +315,9 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 #' @examples
 #'
 #'# build example GRanges as anchors
-#'anchorGR <- GenomicRanges::GRanges(
+#'anchorGR <- GRanges(
 #'  rep("chr1", 4),
-#'  IRanges::IRanges(
+#'  IRanges(
 #'    c(1, 5, 20, 14),
 #'    c(4, 8, 23, 17)
 #'  ),
@@ -324,7 +327,7 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 #'
 #'
 #'# build example GIntreaction object
-#'gi <- InteractionSet::GInteractions(
+#'gi <- GInteractions(
 #'  c(1, 2, 2),
 #'  c(4, 3, 4),
 #'  anchorGR,
@@ -336,34 +339,35 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 #'
 #'# build small matrix to check strand combination
 #'cbind(
-#' as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "first"))),
-#' as.character(GenomicRanges::strand(InteractionSet::anchors(gi, "second"))),
-#' S4Vectors::mcols(gi)[, "strandOrientation"]
+#' as.character(strand(anchors(gi, "first"))),
+#' as.character(strand(anchors(gi, "second"))),
+#' mcols(gi)[, "strandOrientation"]
 #')
 #'
-#'@export
+#' @import InteractionSet
+#' @export
 addStrandCombination <- function(gi, colname = "strandOrientation"){
 
-  anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
-  anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+  anc1 <- anchors(gi, type = "first", id = TRUE)
+  anc2 <- anchors(gi, type = "second", id = TRUE)
 
   # because interactions in GInteraction are sorted that + strand comes first
   # we need to make sure that the more upstream anchor region is taken as first
-  ancStart <- GenomicRanges::start(InteractionSet::regions(gi))
+  ancStart <- start(regions(gi))
   anc1First <- ancStart[anc1] <= ancStart[anc2]
 
   first <- ifelse(anc1First, anc1, anc2)
   second <- ifelse(anc1First, anc2, anc1)
 
-  ancStrand <- GenomicRanges::strand(InteractionSet::regions(gi))
+  ancStrand <- strand(regions(gi))
 
   sameStrand <- ancStrand[first] == ancStrand[second]
   firstPos <- as.character(ancStrand[first]) %in% c("+", "*")
 
-  S4Vectors::mcols(gi)[sameStrand & firstPos, colname] <- "forward"
-  S4Vectors::mcols(gi)[sameStrand & !firstPos, colname] <- "reverse"
-  S4Vectors::mcols(gi)[!sameStrand & firstPos, colname] <- "convergent"
-  S4Vectors::mcols(gi)[!sameStrand & !firstPos, colname] <- "divergent"
+  mcols(gi)[sameStrand & firstPos, colname] <- "forward"
+  mcols(gi)[sameStrand & !firstPos, colname] <- "reverse"
+  mcols(gi)[!sameStrand & firstPos, colname] <- "convergent"
+  mcols(gi)[!sameStrand & !firstPos, colname] <- "divergent"
 
   return(gi)
 }
@@ -381,17 +385,19 @@ addStrandCombination <- function(gi, colname = "strandOrientation"){
 #'   score.
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with three
 #'   additional annotation columns.
+#'
+#' @import InteractionSet
 #' @export
 addMotifScore <- function(gi, scoreColname = "score"){
 
-  anc1 <- InteractionSet::anchors(gi, type = "first", id = TRUE)
-  anc2 <- InteractionSet::anchors(gi, type = "second", id = TRUE)
+  anc1 <- anchors(gi, type = "first", id = TRUE)
+  anc2 <- anchors(gi, type = "second", id = TRUE)
 
-  ancScore <- S4Vectors::mcols(InteractionSet::regions(gi))[, scoreColname]
+  ancScore <- mcols(regions(gi))[, scoreColname]
 
-  S4Vectors::mcols(gi)[, "score_1"] <- ancScore[anc1]
-  S4Vectors::mcols(gi)[, "score_2"] <- ancScore[anc2]
-  S4Vectors::mcols(gi)[, "score_min"] <- apply(
+  mcols(gi)[, "score_1"] <- ancScore[anc1]
+  mcols(gi)[, "score_2"] <- ancScore[anc2]
+  mcols(gi)[, "score_min"] <- apply(
     cbind(ancScore[anc1], ancScore[anc2]), 1, min
     )
 
@@ -409,6 +415,7 @@ addMotifScore <- function(gi, scoreColname = "score"){
 #' @return An \code{\link[InteractionSet]{GInteractions}} object with motif
 #'   pairs and annotations of distance, strand orientation, and motif scores.
 #'
+#' @import InteractionSet
 #' @export
 prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
 
@@ -437,11 +444,13 @@ prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
 #' @param name Character indicating the sample name.
 #' @inheritParams addCovToGR
 #' @inheritParams addCovCor
+#'
+#' @import InteractionSet
 #' @export
 addCor <- function(gi, bwFile, name = "chip", window = 1000, binSize = 1){
 
-  InteractionSet::regions(gi) <- addCovToGR(
-    InteractionSet::regions(gi),
+  regions(gi) <- addCovToGR(
+    regions(gi),
     bwFile,
     colname = name,
     window = window,

@@ -6,6 +6,8 @@
 #' @param ... additional arguments, that will be passed to
 #'   \code{\link[GenomicRanges]{GRanges}} functions.
 #' @return \code{\link{GInteractions}} with loops from input file.
+#'
+#' @import InteractionSet
 #' @export
 parseLoopsRao <- function(inFile, ...){
 
@@ -16,24 +18,24 @@ parseLoopsRao <- function(inFile, ...){
   chr <- paste0("chr", raoDF$chr1)
 
   # substract 1 bp from end coordinate to have inclusive interval ranges
-  upAnchor <- GenomicRanges::GRanges(
+  upAnchor <- GRanges(
       chr,
-      IRanges::IRanges(raoDF[, "x1"], raoDF[, "x2"] - 1),
+      IRanges(raoDF[, "x1"], raoDF[, "x2"] - 1),
       ...)
 
-  downAnchor <- GenomicRanges::GRanges(
+  downAnchor <- GRanges(
     chr,
-    IRanges::IRanges(raoDF[, "y1"], raoDF[, "y2"] - 1),
+    IRanges(raoDF[, "y1"], raoDF[, "y2"] - 1),
     ...)
 
   # build GInteractions
-  gi <- InteractionSet::GInteractions(upAnchor, downAnchor, mode = "strict")
+  gi <- GInteractions(upAnchor, downAnchor, mode = "strict")
 
   # define and add additional annotations to each interaction
   annotationCols <- setdiff(names(raoDF),
                             c("chr1", "x1", "x2", "chr2", "y1", "y2"))
 
-  S4Vectors::mcols(gi) <- raoDF[, annotationCols]
+  mcols(gi) <- raoDF[, annotationCols]
 
   return(gi)
 }
@@ -58,7 +60,9 @@ parseLoopsRao <- function(inFile, ...){
 #'@param ... additional arguments, that will be passed to
 #'  \code{\link[GenomicRanges]{GRanges}} functions.
 #'@return An \code{\link{GInteractions}} with loops from input file.
-#'@export
+#'
+#' @import InteractionSet
+#' @export
 parseLoopsTang2015 <- function(inFile, ...){
 
   message("INFO: Parse ChiA-PET interactions from file: ", inFile)
@@ -68,16 +72,16 @@ parseLoopsTang2015 <- function(inFile, ...){
 
   # create ranges by adding +1 to start coordintate to convert from 0-based to
   # to 1-based coordinates.
-  upAnchor <- GenomicRanges::GRanges(
+  upAnchor <- GRanges(
     inDF[[1]],
-    IRanges::IRanges(inDF[[2]] + 1, inDF[[3]]), ...)
+    IRanges(inDF[[2]] + 1, inDF[[3]]), ...)
 
-  downAnchor <- GenomicRanges::GRanges(
+  downAnchor <- GRanges(
     inDF[[4]],
-    IRanges::IRanges(inDF[[5]] + 1, inDF[[6]]), ...)
+    IRanges(inDF[[5]] + 1, inDF[[6]]), ...)
 
   # build GInteractions
-  gi <- InteractionSet::GInteractions(upAnchor, downAnchor, mode = "strict")
+  gi <- GInteractions(upAnchor, downAnchor, mode = "strict")
 
   # annotate GInteractions object with score
   gi$score <- inDF[[7]]
@@ -97,27 +101,29 @@ parseLoopsTang2015 <- function(inFile, ...){
 #'@param ... additional arguments, that will be passed to
 #'  \code{\link[GenomicRanges]{GRanges}} functions.
 #'@return An \code{\link{GInteractions}} with interactions from input file.
-#'@export
+#'
+#' @import InteractionSet
+#' @export
 parseCaptureHiC <- function(inFile, ...){
 
   message("INFO: Parse interactions from file: ", inFile)
 
   inDF <- readr::read_tsv(inFile, col_names = TRUE)
 
-  upAnchor <- GenomicRanges::GRanges(
+  upAnchor <- GRanges(
     inDF[[1]],
-    IRanges::IRanges(inDF[[2]], inDF[[3]]),
+    IRanges(inDF[[2]], inDF[[3]]),
     # Symbol = inDF[[4]],
     # Ensembl_Gene_ID = inDF[[5]],
     # expresssion_quartile = inDF[[6]],
     ...)
 
-  downAnchor <- GenomicRanges::GRanges(
+  downAnchor <- GRanges(
     inDF[[7]],
-    IRanges::IRanges(inDF[[8]], inDF[[9]]), ...)
+    IRanges(inDF[[8]], inDF[[9]]), ...)
 
   # build GInteractions
-  gi <- InteractionSet::GInteractions(upAnchor, downAnchor)
+  gi <- GInteractions(upAnchor, downAnchor)
 
   # annotate GInteractions object with score
   gi$rawCount <- inDF$`raw count`

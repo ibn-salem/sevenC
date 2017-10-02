@@ -38,5 +38,5 @@ Predict looping interaction probability.
 }
 \seealso{
 \code{\link{prepareCandidates}}, \code{\link{addCor}},
-  \code{\link{pred_logit}}
+  \code{\link{predLogit}}
 }

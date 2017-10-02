@@ -1,7 +1,7 @@
 Package: chromloop
 Type: Package
 Title: Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person("Jonas", "Ibn-Salem", email = "j.ibn-salem@uni-mainz.de", role = c("aut", "cre"))
 Description: Chromatin looping is an importent feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
@@ -18,27 +18,21 @@ Description: Chromatin looping is an importent feature of
 License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
-Imports: InteractionSet (>= 1.2.0),
-    BiocGenerics (>= 0.22.0),
-    GenomeInfoDb (>= 1.12.2),
-    GenomicRanges (>= 1.28.5),
-    IRanges (>= 2.10.3),
-    S4Vectors (>= 0.14.4),
-    rtracklayer (>= 1.34.1),
-    data.table (>= 1.10.4),
+Imports: rtracklayer (>= 1.34.1),
+    Rsamtools (>= 1.28.0),
     readr (>= 1.1.0),
     purrr (>= 0.2.2),
-    Rsamtools (>= 1.28.0),
     dplyr (>= 0.7.2),
     modelr (>= 0.1.1),
+    data.table (>= 1.10.4),
     boot (>= 1.3-20),
     methods (>= 3.4.1)
 Suggests: testthat,
     BiocStyle,
     knitr,
-    rmarkdown,
-    GenomicInteractions
-Depends: R (>= 3.4)
+    rmarkdown
+Depends: R (>= 3.4),
+  InteractionSet (>= 1.2.0)
 RoxygenNote: 6.0.1
 biocViews: DNA3DStructure, ChIPchip, Coverage, DataImport, Epigenetics, 
   FunctionalGenomics, Classification, Regression, ChIPSeq, HiC, Annotation

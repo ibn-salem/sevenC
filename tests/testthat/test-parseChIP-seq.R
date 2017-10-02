@@ -3,18 +3,18 @@ context("parseChIP-seq")
 exampleBigWig <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig",
                              package = "chromloop")
 
-toySeqInfo <- GenomeInfoDb::Seqinfo(seqnames = c("chr1", "chr22"),
+toySeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
                                     seqlengths = c(10^8, 10^8),
                                     isCircular = c(FALSE, FALSE),
                                     genome = "toy")
 
-exampleGR <- GenomicRanges::GRanges(
+exampleGR <- GRanges(
   rep("chr22", 3),
-  IRanges::IRanges(
+  IRanges(
     18000000 - c(1000, 500, 100),
     18000000 - c(991, 491, 91)
   ),
-  seqinfo = GenomeInfoDb::Seqinfo(seqnames = "chr22",
+  seqinfo = Seqinfo(seqnames = "chr22",
                                   seqlengths = 10^8,
                                   isCircular = FALSE,
                                   genome = "toy_hr22")
@@ -37,18 +37,18 @@ test_bw <- file.path(test_path, "test.bw")
 # -------
 #   seqinfo: 2 sequences from an unspecified genome
 
-# cov <- IRanges::RleList(list(
+# cov <- RleList(list(
 #   "chr1" = rep(c(0, 1, 0), each = 20),
 #   "chr22" = rep(c(0, 5, 1, 5, 0), each = 10)
 # ))
 
-test_gr <- GenomicRanges::GRanges(
+test_gr <- GRanges(
   rep("chr2", 3),
-  IRanges::IRanges(
+  IRanges(
     c(350, 900, 1300),
     c(350, 900, 1300)
   ),
-  seqinfo = GenomeInfoDb::Seqinfo(seqnames = c("chr2", "chr19"),
+  seqinfo = Seqinfo(seqnames = c("chr2", "chr19"),
                                   seqlengths = c(3000, 3000),
                                   isCircular = c(FALSE, FALSE),
                                   genome = "example")
@@ -65,20 +65,20 @@ test_that("addCovToGR works on example dataset", {
 
   expect_equal(length(test_gr), length(grCov))
   expect_true(all(all(!is.na(grCov$covTest))))
-  expect_equal(length(S4Vectors::mcols(grCov)[, "covTest"]), length(test_gr))
+  expect_equal(length(mcols(grCov)[, "covTest"]), length(test_gr))
   expect_equal(as.vector(sum(grCov$covTest[1])), 10 * -0.75)
 
 })
 
 test_that("addCovToGR handles out of chromosome coordinates", {
 
-  out_gr <- GenomicRanges::GRanges(
+  out_gr <- GRanges(
     rep("chr2", 3),
-    IRanges::IRanges(
+    IRanges(
       c(2, 700, 2999),
       c(2, 700, 2999)
     ),
-    seqinfo = GenomeInfoDb::Seqinfo(seqnames = c("chr2", "chr19"),
+    seqinfo = Seqinfo(seqnames = c("chr2", "chr19"),
                                     seqlengths = c(3000, 3000),
                                     isCircular = c(FALSE, FALSE),
                                     genome = "example")
@@ -94,9 +94,9 @@ test_that("addCovToGR handles out of chromosome coordinates", {
 
 test_that("addCovToGR handles input ranges without seqinfo object", {
 
-  out_gr <- GenomicRanges::GRanges(
+  out_gr <- GRanges(
     rep("chr2", 3),
-    IRanges::IRanges(
+    IRanges(
       c(2, 700, 2999),
       c(2, 700, 2999)
     )
@@ -116,7 +116,7 @@ test_that("addCovToGR handles input ranges without seqinfo object", {
 test_that("addCovToGR reversed coverage for regions on negative strand.", {
 
   stranedGR <- test_gr
-  GenomicRanges::strand(stranedGR) <- c("+", "-", "-")
+  strand(stranedGR) <- c("+", "-", "-")
 
   grCov <- addCovToGR(test_gr, test_bw, window = 10, binSize = 1,
                       colname = "covTest")
@@ -137,7 +137,7 @@ test_that("addCovToGR handles binSize and window paramter correctly.", {
 
   expect_equal(length(test_gr), length(grCov))
   expect_true(all(all(!is.na(grCov$covTest))))
-  expect_equal(length(S4Vectors::mcols(grCov)[, "covTest"]), length(test_gr))
+  expect_equal(length(mcols(grCov)[, "covTest"]), length(test_gr))
   expect_equal(length(grCov$covTest[[1]]), 10)
 })
 
@@ -149,6 +149,6 @@ test_that("addCovToGR works with chr22 example data", {
 
   motifGR <- addCovToGR(motifGR, exampleBigWig)
 
-  expect_true("cov" %in% names(S4Vectors::mcols(motifGR)))
+  expect_true("cov" %in% names(mcols(motifGR)))
 
 })

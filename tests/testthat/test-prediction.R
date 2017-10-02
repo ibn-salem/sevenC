@@ -9,11 +9,9 @@ exampleBigWig <- system.file(
 
 exampleGI <- addCor(exampleGI, exampleBigWig)
 
-
-
 # Tests -------------------------------------------------------------------
 
-test_that("pred_logit gives same result as predict.glm()", {
+test_that("predLogit gives same result as predict.glm()", {
 
 
   formula <- am ~ wt + cyl + hp
@@ -21,7 +19,7 @@ test_that("pred_logit gives same result as predict.glm()", {
   mod <- glm(formula, mtcars, family = binomial())
   betas <- coef(mod)
 
-  pred <- pred_logit(mtcars, betas, formula = formula)
+  pred <- predLogit(mtcars, betas, formula = formula)
   pred_glm <- predict.glm(mod, newdata = mtcars, type = "response")
   names(pred_glm) <- NULL
 
@@ -29,11 +27,11 @@ test_that("pred_logit gives same result as predict.glm()", {
 })
 
 
-test_that("pred_logit works on chr22 example data", {
+test_that("predLogit works on chr22 example data", {
 
   # run prediction
-  pred <- pred_logit(
-    S4Vectors::mcols(exampleGI),
+  pred <- predLogit(
+    mcols(exampleGI),
     stats::as.formula(" ~ dist + strandOrientation + score_min + chip"),
     modelBest10Avg$estimate
   )
@@ -53,8 +51,8 @@ test_that("predLoops works with default parameters and without cutoff", {
   expect_equal(length(predGI),  length(exampleGI))
   expect_true(all(predGI$pred <= 1 & predGI$pred >= 0, na.rm = TRUE))
   expect_equal(
-    S4Vectors::mcols(predGI)[, -ncol(S4Vectors::mcols(predGI))],
-    S4Vectors::mcols(exampleGI))
+    mcols(predGI)[, -ncol(mcols(predGI))],
+    mcols(exampleGI))
 })
 
 
@@ -67,6 +65,6 @@ test_that("predLoops works with default cutoff", {
   expect_true(length(predGI) <= length(exampleGI))
   expect_true(all(predGI$pred >= cutoffBest10))
   expect_equal(
-    ncol(S4Vectors::mcols(predGI)),
-    ncol(S4Vectors::mcols(exampleGI)) + 1)
+    ncol(mcols(predGI)),
+    ncol(mcols(exampleGI)) + 1)
 })

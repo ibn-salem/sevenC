@@ -9,8 +9,8 @@
 #'
 #' @return A numeric vector with interaction probabilities for each ovservation
 #'   in \code{df}. NAs are produced for NAs in \code{df}.
-#' @export
-pred_logit <- function(data, formula, betas){
+#'
+predLogit <- function(data, formula, betas){
 
   # save option and set na.action to pass
   op <- options(na.action = "na.pass")
@@ -48,9 +48,10 @@ pred_logit <- function(data, formula, betas){
 #'   additional metadata column hold in the predicted looping probability.
 #'
 #' @seealso \code{\link{prepareCandidates}}, \code{\link{addCor}},
-#'   \code{\link{pred_logit}}
-#' @export
+#'   \code{\link{predLogit}}
 #'
+#' @import InteractionSet
+#' @export
 predLoops <- function(gi, formula = NULL, betas=NULL, colname = "pred",
                       cutoff = cutoffBest10){
 
@@ -68,10 +69,10 @@ predLoops <- function(gi, formula = NULL, betas=NULL, colname = "pred",
   }
 
   # predict interaction
-  pred <- pred_logit(S4Vectors::mcols(gi), formula, betas)
+  pred <- predLogit(mcols(gi), formula, betas)
 
   # add prediction as new metadata column
-  S4Vectors::mcols(gi)[, colname] <- pred
+  mcols(gi)[, colname] <- pred
 
   # test cutoff argument
   if (!is.null(cutoff)) {

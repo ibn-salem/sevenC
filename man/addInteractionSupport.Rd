@@ -22,14 +22,14 @@ addInteractionSupport(gi, subject, colname = "loop", ...)
 }
 \description{
 See overlap methods in \code{\link{InteractionSet}} package for more details
-on the overlap calculations: \code{?InteractionSet::overlapsAny}
+on the overlap calculations: \code{?overlapsAny}
 }
 \examples{
 
 # build example GRanges as anchors
-anchorGR <- GenomicRanges::GRanges(
+anchorGR <- GRanges(
  rep("chr1", 4),
- IRanges::IRanges(
+ IRanges(
    c(1, 5, 20, 14),
    c(4, 8, 23, 17)
  ),
@@ -39,7 +39,7 @@ anchorGR <- GenomicRanges::GRanges(
 
 
 # build example GIntreaction object
-gi <- InteractionSet::GInteractions(
+gi <- GInteractions(
  c(1, 2, 2),
  c(4, 3, 4),
  anchorGR,
@@ -47,9 +47,9 @@ gi <- InteractionSet::GInteractions(
 )
 
 # build exapple support GInteractions object
-exampleSupport <- InteractionSet::GInteractions(
-    GenomicRanges::GRanges("chr1", IRanges::IRanges(1, 4)),
-    GenomicRanges::GRanges("chr1", IRanges::IRanges(15, 20))
+exampleSupport <- GInteractions(
+    GRanges("chr1", IRanges(1, 4)),
+    GRanges("chr1", IRanges(15, 20))
 )
 
 # add support

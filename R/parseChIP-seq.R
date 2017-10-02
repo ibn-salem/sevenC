@@ -10,27 +10,27 @@ getOutOfBound <- function(gr){
 
   # check if extended regions are out of chromosome space
   outOfBoundIdx <- GenomicRanges:::get_out_of_bound_index(gr)
-  negIdx <- which( GenomicRanges::start(gr) <= 0 )
+  negIdx <- which( start(gr) <= 0 )
 
   outIdx <- union(outOfBoundIdx, negIdx)
 
   # save length of left and right out-of-bound lengths
   outGR <- gr[outIdx]
 
-  chromEnds <- GenomeInfoDb::seqlengths(outGR)[
-    as.vector(GenomeInfoDb::seqnames(outGR))]
+  chromEnds <- seqlengths(outGR)[
+    as.vector(seqnames(outGR))]
 
   outDF <- data.frame(
     idx = outIdx,
     left = ifelse(
-      GenomicRanges::start(outGR) <= 0,
-      abs(GenomicRanges::start(outGR)) + 1,
+      start(outGR) <= 0,
+      abs(start(outGR)) + 1,
       0),
     right = ifelse(
       !is.na(chromEnds) &
-      GenomicRanges::end(outGR) >
+      end(outGR) >
         chromEnds,
-      abs(GenomicRanges::end(outGR) - chromEnds),
+      abs(end(outGR) - chromEnds),
       0)
   )
 
@@ -78,12 +78,14 @@ slideMean <- function(x, k){
 #'
 #' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
 #'   meta column containing the coverage values for each region.
+#'
+#' @import InteractionSet
 #' @export
 addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
 
   # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
-    ancWin <- GenomicRanges::resize(gr, width = window, fix = "center")
+    ancWin <- resize(gr, width = window, fix = "center")
   )
 
   # Because quering coverage result in error for ranges outisde chromosome we
@@ -91,12 +93,12 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   outDF <- getOutOfBound(ancWin)
 
   # trim ranges to fint within chromosomes
-  ancWin <- GenomicRanges::trim(ancWin)
+  ancWin <- trim(ancWin)
 
   # trim start in case there is no seqinof object
-  GenomicRanges::start(ancWin) <- ifelse(
-    GenomicRanges::start(ancWin) > 0,
-    GenomicRanges::start(ancWin),
+  start(ancWin) <- ifelse(
+    start(ancWin) > 0,
+    start(ancWin),
     1)
 
   # get numeric with coverage of each region
@@ -104,11 +106,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   # define query region and trim seqinfo to avoid
   # warning in rtracklayer::import.bw
   selectWin <- ancWin
-  GenomeInfoDb::seqlevels(selectWin) <- as.character(
-    unique(GenomeInfoDb::seqnames(selectWin))
+  seqlevels(selectWin) <- as.character(
+    unique(seqnames(selectWin))
     )
-  GenomeInfoDb::seqinfo(selectWin) <- GenomeInfoDb::Seqinfo(
-    GenomeInfoDb::seqlevels(selectWin)
+  seqinfo(selectWin) <- Seqinfo(
+    seqlevels(selectWin)
     )
   selection <- rtracklayer::BigWigSelection(selectWin)
 
@@ -119,16 +121,16 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
     seqinfo = seqinfo(ancWin))
 
   # update covGR with seqinfo to allow subsetting with ancWin
-  if ( !any(is.na(GenomeInfoDb::seqlengths(ancWin))) ) {
-    GenomeInfoDb::seqlevels(covGR) <- GenomeInfoDb::seqlevels(ancWin)
-    GenomeInfoDb::seqinfo(covGR) <- GenomeInfoDb::seqinfo(ancWin)
+  if ( !any(is.na(seqlengths(ancWin))) ) {
+    seqlevels(covGR) <- seqlevels(ancWin)
+    seqinfo(covGR) <- seqinfo(ancWin)
   }
 
-  covRle <- GenomicRanges::coverage(covGR, weight = covGR$score)
+  covRle <- coverage(covGR, weight = covGR$score)
 
   # get coverage as for all regions
   covAncRle <- covRle[ancWin]
-  covAnc <- IRanges::NumericList(covAncRle)
+  covAnc <- NumericList(covAncRle)
 
   # add NAs for out of bound regions
   covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){
@@ -141,15 +143,15 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
 
   # combine coverage for bins
   if (binSize > 1) {
-    covAnc <- IRanges::NumericList(lapply(covAnc, slideMean, k = binSize))
+    covAnc <- NumericList(lapply(covAnc, slideMean, k = binSize))
   }
 
   # reverse coverage vector for regons on minus strand
-  negStrand <- which(as.logical(GenomicRanges::strand(gr) == "-"))
+  negStrand <- which(as.logical(strand(gr) == "-"))
   covAnc[negStrand] <- lapply(covAnc[negStrand], rev)
 
   # add as additional column to GRanges object
-  S4Vectors::mcols(gr)[, colname] <- covAnc
+  mcols(gr)[, colname] <- covAnc
 
   return(gr)
 }
