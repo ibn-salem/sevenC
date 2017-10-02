@@ -47,7 +47,7 @@ In contrast, the binding sites of TFs can be detected genome-wide by ChIP-seq ex
 Therefore, we provide a computational method to predict chromatin interactions from only genomic sequence features and ChIP-seq data. 
 The predicted looping interactions can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thereby improve functional downstream analysis on the level of genes.
 
-In this vignette, we show how to use the R package `r Biocpkg("chromloop")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
+In this vignette, we show how to use the R package `r BiocStyle::Biocpkg("chromloop")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
 Furthermore, we show how to train the the prediction model using custom data.
 
 # Predict chromatin interaction form ChIP-seq
@@ -58,11 +58,11 @@ As input only a single bigWig file is used with coverage from a STAT1 ChIP-seq e
 in human GM12878 cells[^1]. 
 
 [^1]: An example file with only data on a subset of chromosome 22 is provide as part of 
-the `r Biocpkg("chromloop")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).
+the `r BiocStyle::Biocpkg("chromloop")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).
 
 ## Prepare CTCF motif pairs
 First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. 
-We use CTCF motif hits in human chromosome 22 as provide by `r Biocpkg("chromloop")` package.
+We use CTCF motif hits in human chromosome 22 as provide by `r BiocStyle::Biocpkg("chromloop")` package.
 
 ```{r, results = "hide", message = FALSE}
 library(chromloop)
@@ -71,7 +71,7 @@ library(InteractionSet)
 # load provided CTCF motifs
 motifs <- motif.hg19.CTCF.chr22
 ```
-The CTCF motif are represented as `GRanges` object from the `r Biocpkg("GenomicRanges")` package. 
+The CTCF motif are represented as `GRanges` object from the `r BiocStyle::Biocpkg("GenomicRanges")` package. 
 
 ```{r}
 class(motifs)
@@ -89,7 +89,7 @@ gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
 
 gi
 ```
-The return value `gi` of the function `prepareCandidates()` is `GInteractoin` object from the `r Biocpkg("InteractonSet")` package. 
+The return value `gi` of the function `prepareCandidates()` is `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
 
 ## Parse ChIP-seq signals and compute similarity at motif pairs
 
@@ -116,7 +116,7 @@ This result in a subset of motif pairs that are predicted to interact. The inter
 Since looping interactions are stored as `GInteraction` objects, they 
 can be exported as 
 [BED-PE](http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) 
-files using functions from `r Biocpkg("GenomicInteractions")` package.
+files using functions from `r BiocStyle::Biocpkg("GenomicInteractions")` package.
 
 ```{r, message = FALSE}
 require(GenomicInteractions)
