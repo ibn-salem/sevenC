@@ -134,49 +134,27 @@ write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names = FALSE,
             quote = FALSE, sep = "\t")
 
 
-#
 # #-------------------------------------------------------------------------------
 # # Download Capture-Hi-C sample data from Mifsud et al. 2015
 # #-------------------------------------------------------------------------------
+#
+# work_dir <- getwd()
 # zipURL <- "http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip"
+# zipFile <- "E-MTAB-2323.additional.1.zip"
+# inFile <- "TS5_GM12878_promoter-promoter_significant_interactions.txt"
+# outFile <- paste0(work_dir, "/inst/extdata/", inFile, ".chr22")
 #
-# tmpZip <- tempfile()
-# tmpDir <- tempdir()
+# setwd("data-raw")
 #
-# download.file(zipURL, tmpZip)
+# download.file(zipURL, zipFile)
+# system(paste("unzip", zipFile))
+# # grep for header and chr22
+# system(
+#   paste("grep -E -e \"^chr[[:space:]]\" -e \"chr22\" ", inFile, ">", outFile)
+#   )
 #
-# # unzip file
-# system(paste("unzip", tmpZip, "-d", tmpDir))
-#
-# file <- file.path(tmpDir, "TS5_GM12878_promoter-promoter_significant_interactions.txt")
-# fileFlt <- file.path(tmpDir, "TS5_GM12878_promoter-promoter_significant_interactions.txt.flt")
-#
-# system(paste('cat', file, '| awk -F"\t" {if ($1 == "chr22") print } OFS="\t" >', fileFlt))
-#
-#
-# z <- unz(tmpZip, "TS5_GM12878_promoter-promoter_significant_interactions.txt")
-#
-# df <- read.table(file, header = TRUE, sep = "\t")
-#
-#
-# # filter for only chromosome 22 in some start region
-# fltDF <- subset(df,
-#                 chr == "chr22" &
-#                 chr.1 == "chr22" &
-#                 end <= 18000000 &
-#                 end.1 <= 18000000)
-#
-# # save subset of file in inst/extdata as raw .txt file
-# intFinalFile <- "inst/extdata/TS5_GM12878_promoter-promoter_significant_interactions.chr22_1-18000000.txt"
-#
-# write.table(fltDF, file = intFinalFile,
-#             col.names = c(
-#               "chr",	"start",	"end",	"Symbol",	"Ensembl", "Gene ID",
-#               "expresssion quartile", "chr", 	"start", 	"end", 	"Symbol",
-#               "Ensembl Gene ID", 	"expresssion quartile",
-#               "raw count", 	"log(observed/expected)"
-#             ), row.names  = FALSE,
-#             quote = FALSE, sep = "\t")
+# setwd(work_dir)
+
 
 
 

@@ -111,6 +111,35 @@ single  numeric value.</p></td>
   within the given distance.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># build example GRanges as input</span>
+<span class='no'>inGR</span> <span class='kw'>&lt;-</span> <span class='fu'>GRanges</span>(
+<span class='fu'>rep</span>(<span class='st'>"chr1"</span>, <span class='fl'>5</span>),
+<span class='fu'>IRanges</span>(
+  <span class='fu'>c</span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>100</span>, <span class='fl'>1000</span>),
+  <span class='fu'>c</span>(<span class='fl'>15</span>, <span class='fl'>25</span>, <span class='fl'>35</span>, <span class='fl'>105</span>, <span class='fl'>1005</span>)
+)
+)
+
+<span class='co'># get all pairs within 50 bp</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>getCisPairs</span>(<span class='no'>inGR</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>50</span>)
+
+<span class='co'># getCisPiars returns a StrictGInteractions object</span>
+<span class='fu'>class</span>(<span class='no'>gi</span>)</div><div class='output co'>#&gt; [1] "StrictGInteractions"
+#&gt; attr(,"package")
+#&gt; [1] "InteractionSet"</div><div class='input'>
+<span class='co'># The input regions are accessibly via regions()</span>
+<span class='fu'>regions</span>(<span class='no'>gi</span>)</div><div class='output co'>#&gt; GRanges object with 5 ranges and 0 metadata columns:
+#&gt;       seqnames       ranges strand
+#&gt;          &lt;Rle&gt;    &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1 [  10,   15]      *
+#&gt;   [2]     chr1 [  20,   25]      *
+#&gt;   [3]     chr1 [  30,   35]      *
+#&gt;   [4]     chr1 [ 100,  105]      *
+#&gt;   [5]     chr1 [1000, 1005]      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -118,7 +147,9 @@ single  numeric value.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

@@ -82,10 +82,12 @@
     </div>
 
     
-    <p>This function adds a vector of coverage (or any other signal in the input
-bigWig file) to each range in a <code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object.
-The coverage is reported for a fixed-sized window around the region center.
-For regions with negative strand, the coverage vector is reversed.</p>
+    <p>This function adds a <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code>  of coverage (or any
+other signal in the input bigWig file) to each range in a
+<code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object. The coverage is reported for a
+fixed-sized window around the region center. For regions with negative strand,
+the coverage vector is reversed. The coverage signal is added as new metadata
+colum holding a <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code> object.</p>
     
 
     <pre class="usage"><span class='fu'>addCovToGR</span>(<span class='no'>gr</span>, <span class='no'>bwFile</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>binSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"cov"</span>)</pre>
@@ -104,24 +106,48 @@ from.</p></td>
     </tr>
     <tr>
       <th>window</th>
-      <td><p>the window size around the center of ranges in <code>gr</code>.</p></td>
+      <td><p>Numeric scalar for window size around the center of ranges in
+<code>gr</code>.</p></td>
     </tr>
     <tr>
       <th>binSize</th>
-      <td><p>size of bins to which the coverage values are combined.</p></td>
+      <td><p>Integer scalar as size of bins to which the coverage values are
+combined.</p></td>
     </tr>
     <tr>
       <th>colname</th>
-      <td><p>name of the new column that is created in <code>gr</code>.</p></td>
+      <td><p>Character as name of the new column that is created in
+<code>gr</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> as input but with an additional
-  meta column containing the coverage values for each region.</p>
+ meta column containing the coverage values for each region as
+ <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># use example bigWig file of ChIP-seq signals on human chromosome 22</span>
+<span class='no'>exampleBigWig</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>,
+<span class='st'>"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"chromloop"</span>)
+
+<span class='co'># use example CTCF moitf location on human chromosome 22</span>
+<span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>chromloop</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/chromloop/topics/motif.hg19.CTCF.chr22'>motif.hg19.CTCF.chr22</a></span>
+
+<span class='co'># add ChIP-seq signals to motif regions</span>
+<span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='fu'>addCovToGR</span>(<span class='no'>motifGR</span>, <span class='no'>exampleBigWig</span>)
+
+<span class='co'># add ChIP-seq signals as column named "Stat1"</span>
+<span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='fu'>addCovToGR</span>(<span class='no'>motifGR</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"Stat1"</span>)
+
+<span class='co'># add ChIP-seq signals in windows of 500bp around motif centers</span>
+<span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='fu'>addCovToGR</span>(<span class='no'>motifGR</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+
+<span class='co'># add ChIP-seq signals in bins of 10 bp</span>
+<span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='fu'>addCovToGR</span>(<span class='no'>motifGR</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>binSize</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -129,7 +155,9 @@ from.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

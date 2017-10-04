@@ -110,6 +110,41 @@ ranges, indicated by <code>*</code>, are treated as positive strand.</p>
   "forward", "reverse", "convergent", or "divergent".</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># build example GRanges as anchors</span>
+<span class='no'>anchorGR</span> <span class='kw'>&lt;-</span> <span class='fu'>GRanges</span>(
+ <span class='fu'>rep</span>(<span class='st'>"chr1"</span>, <span class='fl'>4</span>),
+ <span class='fu'>IRanges</span>(
+   <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>20</span>, <span class='fl'>14</span>),
+   <span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>8</span>, <span class='fl'>23</span>, <span class='fl'>17</span>)
+ ),
+ <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>),
+ <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>7</span>)
+)
+
+
+<span class='co'># build example GIntreaction object</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>GInteractions</span>(
+ <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
+ <span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>4</span>),
+ <span class='no'>anchorGR</span>,
+ <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"strict"</span>
+)
+
+<span class='co'># add combination of anchor strands as new metadata column</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addStrandCombination</span>(<span class='no'>gi</span>)
+
+<span class='co'># build small matrix to check strand combination</span>
+<span class='fu'>cbind</span>(
+<span class='fu'>as.character</span>(<span class='fu'>strand</span>(<span class='fu'>anchors</span>(<span class='no'>gi</span>, <span class='st'>"first"</span>))),
+<span class='fu'>as.character</span>(<span class='fu'>strand</span>(<span class='fu'>anchors</span>(<span class='no'>gi</span>, <span class='st'>"second"</span>))),
+<span class='fu'>mcols</span>(<span class='no'>gi</span>)[, <span class='st'>"strandOrientation"</span>]
+)</div><div class='output co'>#&gt;      [,1] [,2] [,3]        
+#&gt; [1,] "+"  "-"  "convergent"
+#&gt; [2,] "+"  "+"  "forward"   
+#&gt; [3,] "+"  "-"  "convergent"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -117,7 +152,9 @@ ranges, indicated by <code>*</code>, are treated as positive strand.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

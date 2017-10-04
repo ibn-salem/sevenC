@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepares motif pairs and add genomic features. — prepareCandidates • chromloop</title>
+<title>Predict interaction probability using logistic regresstion model. — predLogit • chromloop</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -78,66 +78,40 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepares motif pairs and add genomic features.</h1>
+    <h1>Predict interaction probability using logistic regresstion model.</h1>
     </div>
 
     
-    <p>Prepares motif pairs and add genomic features.</p>
+    <p>Predict interaction probability using logistic regresstion model.</p>
     
 
-    <pre class="usage"><span class='fu'>prepareCandidates</span>(<span class='no'>motifs</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>1e+07</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
+    <pre class="usage"><span class='fu'>predLogit</span>(<span class='no'>data</span>, <span class='no'>formula</span>, <span class='no'>betas</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>motifs</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object with motif
-locations.</p></td>
+      <th>data</th>
+      <td><p>A data.frame like object with predictor variables.</p></td>
     </tr>
     <tr>
-      <th>maxDist</th>
-      <td><p>maximal distance in base-pairs between pairs of ranges as
-single  numeric value.</p></td>
+      <th>formula</th>
+      <td><p>A <code><a href='http://www.rdocumentation.org/packages/stats/topics/formula'>formula</a></code>. All predictor variables should
+be available in the data frame.</p></td>
     </tr>
     <tr>
-      <th>scoreColname</th>
-      <td><p>Character as name the metadata column in with motif
-score.</p></td>
+      <th>betas</th>
+      <td><p>A vector with parameter estimates for predictor variables. They
+should be in the same order as variables in <code>formula</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code><a href='http://www.rdocumentation.org/packages/InteractionSet/topics/GInteractions-class'>GInteractions</a></code> object with motif
-  pairs and annotations of distance, strand orientation, and motif scores.</p>
+    <p>A numeric vector with interaction probabilities for each ovservation
+  in <code>df</code>. NAs are produced for NAs in <code>df</code>.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># build example GRanges as anchors</span>
-<span class='no'>anchorGR</span> <span class='kw'>&lt;-</span> <span class='fu'>GRanges</span>(
- <span class='fu'>rep</span>(<span class='st'>"chr1"</span>, <span class='fl'>4</span>),
- <span class='fu'>IRanges</span>(
-   <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>5</span>, <span class='fl'>20</span>, <span class='fl'>14</span>),
-   <span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>8</span>, <span class='fl'>23</span>, <span class='fl'>17</span>)
- ),
- <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>),
- <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>7</span>)
-)
-
-
-
-<span class='co'># prepare candidates</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCandidates</span>(<span class='no'>anchorGR</span>)
-
-
-<span class='co'># prepare candidates using a mimial distance of 10 bp</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCandidates</span>(<span class='no'>anchorGR</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-
-<span class='co'># prepare candidates using an alternative score value in anchors</span>
-<span class='no'>anchorGR</span>$<span class='no'>myScore</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fu'>length</span>(<span class='no'>anchorGR</span>))
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCandidates</span>(<span class='no'>anchorGR</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"myScore"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -145,9 +119,7 @@ score.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
