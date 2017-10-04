@@ -7,6 +7,22 @@
 #'   \code{\link[GenomicRanges]{GRanges}} functions.
 #' @return \code{\link{GInteractions}} with loops from input file.
 #'
+#' @examples
+#'
+#' # use example loop file
+#'exampleLoopFile <- system.file("extdata",
+#'   "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "chromloop")
+#'
+#'# read loops form example file:
+#'gi <- parseLoopsRao(exampleLoopFile)
+#'
+#'
+#'# read loops with custom seqinfo object:
+#'customSeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
+#'    seqlengths = c(10^8, 10^8), isCircular = c(FALSE, FALSE),
+#'    genome = "custom")
+#'gi <- parseLoopsRao(exampleLoopFile, seqinfo = customSeqInfo)
+#'
 #' @import InteractionSet
 #' @export
 parseLoopsRao <- function(inFile, ...){
@@ -56,10 +72,24 @@ parseLoopsRao <- function(inFile, ...){
 #'\url{http://dx.doi.org/10.1016/j.cell.2015.11.024}. The last column of input
 #'file is added as annotation column with colname "score".
 #'
-#'@param inFile input file with loops
-#'@param ... additional arguments, that will be passed to
+#' @param inFile input file with loops
+#' @param ... additional arguments, that will be passed to
 #'  \code{\link[GenomicRanges]{GRanges}} functions.
-#'@return An \code{\link{GInteractions}} with loops from input file.
+#' @return An \code{\link{GInteractions}} with loops from input file.
+#'
+#' @examples
+#'exampleLoopTang2015File <- system.file("extdata",
+#'    "ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt",
+#'    package = "chromloop")
+#'
+#'gi <- parseLoopsTang2015(exampleLoopTang2015File)
+#'
+#'# read loops with custom seqinfo object:
+#'customSeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
+#'    seqlengths = c(10^8, 10^8), isCircular = c(FALSE, FALSE),
+#'    genome = "custom")
+#'gi <- parseLoopsTang2015(exampleLoopTang2015File, seqinfo = customSeqInfo)
+#'
 #'
 #' @import InteractionSet
 #' @export
@@ -90,47 +120,3 @@ parseLoopsTang2015 <- function(inFile, ...){
 
 }
 
-#'Parse Capture Hi-C interactions from Mifsud et al. 2015
-#'
-#' Capture Hi-C interactions from the study Mifsud et al. 2015 can be downloaded
-#' from here
-#' \url{http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip}.
-#' Each file in the .zip archive can be parsed with this function.
-#'
-#'@param inFile input file with interactions
-#'@param ... additional arguments, that will be passed to
-#'  \code{\link[GenomicRanges]{GRanges}} functions.
-#'@return An \code{\link{GInteractions}} with interactions from input file.
-#'
-#' @import InteractionSet
-#' @export
-parseCaptureHiC <- function(inFile, ...){
-
-  message("INFO: Parse interactions from file: ", inFile)
-
-  inDF <- readr::read_tsv(inFile, col_names = TRUE)
-
-  upAnchor <- GRanges(
-    inDF[[1]],
-    IRanges(inDF[[2]], inDF[[3]]),
-    # Symbol = inDF[[4]],
-    # Ensembl_Gene_ID = inDF[[5]],
-    # expresssion_quartile = inDF[[6]],
-    ...)
-
-  downAnchor <- GRanges(
-    inDF[[7]],
-    IRanges(inDF[[8]], inDF[[9]]), ...)
-
-  # build GInteractions
-  gi <- GInteractions(upAnchor, downAnchor)
-
-  # annotate GInteractions object with score
-  gi$rawCount <- inDF$`raw count`
-  gi$logObservedExpected <- inDF$`log(observed/expected)`
-
-  # turne into StrictGInteraction object
-  gi <- methods::as(gi, "StrictGInteractions")
-
-  return(gi)
-}
