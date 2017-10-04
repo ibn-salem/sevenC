@@ -152,8 +152,6 @@ test_that("addCovCor works with chr22 example data", {
 
 test_that("getCisPairs works with whole CTCF motif data", {
 
-  skip("skipt test on whole CTCF motif data set for time.")
-
   # use internal motif data
   motifGR <- chromloop::motif.hg19.CTCF
 
@@ -235,9 +233,23 @@ test_that("addInteractionSupport works with toy example", {
 
 test_that("addStrandCombination works for straned and unstraed ranges", {
 
-  skip("TODO: implement test")
-
   toyGI <- addStrandCombination(toyGI)
+
+  unstrandedGR <- regions(toyGI)
+  strand(unstrandedGR) <- "*"
+
+  unstrandedGI <- GInteractions(
+    c(1, 2, 2),
+    c(4, 3, 4),
+    unstrandedGR,
+    mode = "strict"
+  )
+
+  unstrandedGI <- addStrandCombination(unstrandedGI)
+
+  expect_true("strandOrientation" %in% names(mcols(toyGI)))
+  expect_true("strandOrientation" %in% names(mcols(unstrandedGI)))
+  expect_true(any(toyGI$strandOrientation != unstrandedGI$strandOrientation))
 
 })
 
