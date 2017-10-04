@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prediction of Chromatin Looping Interaction from ChIP-seq and Sequnece Motifs • chromloop</title>
+<title>Prediction of chromatin looping interactions from ChIP-seq and sequence motifs • chromloop</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -56,7 +56,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#chromloop" class="anchor"></a>chromloop</h1></div>
 <p>R package to predict chromatin looping interactions from ChIP-seq data and sequnece motifs.</p>
-<p>Folding of genomic DNA is an importent feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins binding close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites in form of ChIP-seq peaks to regulated target genes.</p>
+<p>Chromatin looping is an importent feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
 <div id="intallation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#intallation" class="anchor"></a>Intallation</h2>
@@ -78,10 +78,9 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="get-motif-pairs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-motif-pairs" class="anchor"></a>Get motif pairs</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(InteractionSet)
-<span class="kw">library</span>(chromloop)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(chromloop)
 
-<span class="co"># load provided CTCF motifs</span>
+<span class="co"># load provided CTCF motifs in human genome</span>
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
 
 <span class="co"># get motifs pairs</span>
@@ -102,7 +101,7 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="reference/addCor.html
 <h3 class="hasAnchor">
 <a href="#predict-loops" class="anchor"></a>Predict loops</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loops &lt;-<span class="st"> </span><span class="kw"><a href="reference/predLoops.html">predLoops</a></span>(gi)</code></pre></div>
-<p>For more detailed usage instructions, see the package <a href="vignettes/chromloop.Rmd">vignette</a>.</p>
+<p>For more detailed usage instructions, see the package <a href="https://ibn-salem.github.io/chromloop/articles/chromloop.html">vignette</a>.</p>
 </div>
 </div>
 </div>

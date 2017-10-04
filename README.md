@@ -2,18 +2,18 @@
 R package to predict chromatin looping interactions from ChIP-seq data and 
 sequnece motifs.
 
-Folding of genomic DNA is an importent feature of
+Chromatin looping is an importent feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
   transcription factor binding sites, in close physical proximity of regulated 
   target genes.
   Here, we provide a tool that uses protein binding signals from ChIP-seq and
   sequence motif information to predict chromatin looping events. Cross-linking 
-  of proteins binding close to loop anchors result in ChIP-seq signals at both 
+  of proteins that bind close to loop anchors result in ChIP-seq signals at both 
   anchor loci. These signals are used at CTCF motif pairs together with their 
   distance and orientation to each other to predict whether they interact or not.
   The resulting chromatin loops can be used to associate enhancers or 
-  transcription factor binding sites in form of ChIP-seq peaks to regulated 
-  target genes.
+  transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target 
+  genes.
   
 ## Intallation
 
@@ -42,10 +42,9 @@ in human GM12878 cells.
 
 ### Get motif pairs
 ```R
-library(InteractionSet)
 library(chromloop)
 
-# load provided CTCF motifs
+# load provided CTCF motifs in human genome
 motifs <- motif.hg19.CTCF.chr22
 
 # get motifs pairs
@@ -70,5 +69,5 @@ loops <- predLoops(gi)
 ```
 
 For more detailed usage instructions, see the package 
-[vignette](vignettes/chromloop.Rmd).
+[vignette](https://ibn-salem.github.io/chromloop/articles/chromloop.html).
 
