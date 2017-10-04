@@ -30,3 +30,18 @@ This file format was used for ChIA-PET interaction data by Tang et al. 2015
 \url{http://dx.doi.org/10.1016/j.cell.2015.11.024}. The last column of input
 file is added as annotation column with colname "score".
 }
+\examples{
+exampleLoopTang2015File <- system.file("extdata",
+   "ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt",
+   package = "chromloop")
+
+gi <- parseLoopsTang2015(exampleLoopTang2015File)
+
+# read loops with custom seqinfo object:
+customSeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
+   seqlengths = c(10^8, 10^8), isCircular = c(FALSE, FALSE),
+   genome = "custom")
+gi <- parseLoopsTang2015(exampleLoopTang2015File, seqinfo = customSeqInfo)
+
+
+}

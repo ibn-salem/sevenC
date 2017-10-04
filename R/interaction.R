@@ -130,7 +130,6 @@ addCovCor <- function(gi, datcol, colname = "cor",
   # (3) Combine correlations to data.frame with proper id1 and id2 in first
   #     columns
   # (4) Query fubak data.frame with input pairs
-  #   /uses inner_join() from dplyr
 
   # check input
   if ( any(is.na(seqlengths(gi))) ) {
@@ -386,9 +385,37 @@ addStrandCombination <- function(gi, colname = "strandOrientation"){
 #' @return The same \code{\link{GInteractions}} as \code{gi} but with three
 #'   additional annotation columns.
 #'
+#' @examples
+#'
+#'# build example GRanges as anchors
+#'anchorGR <- GRanges(
+#'  rep("chr1", 4),
+#'  IRanges(
+#'    c(1, 5, 20, 14),
+#'    c(4, 8, 23, 17)
+#'  ),
+#'  strand = c("+", "+", "+", "-"),
+#'  score = c(5, 4, 6, 7)
+#')
+#'
+#'
+#'# build example GIntreaction object
+#'gi <- GInteractions(
+#'  c(1, 2, 2),
+#'  c(4, 3, 4),
+#'  anchorGR,
+#'  mode = "strict"
+#')
+#'
+#'# add add motif score
+#'gi <- addMotifScore(gi, scoreColname = "score")
+#'
 #' @import InteractionSet
 #' @export
 addMotifScore <- function(gi, scoreColname = "score"){
+
+  # check arguments:
+  stopifnot(scoreColname %in% names(mcols(regions(gi))))
 
   anc1 <- anchors(gi, type = "first", id = TRUE)
   anc2 <- anchors(gi, type = "second", id = TRUE)
@@ -414,6 +441,32 @@ addMotifScore <- function(gi, scoreColname = "score"){
 #'
 #' @return An \code{\link[InteractionSet]{GInteractions}} object with motif
 #'   pairs and annotations of distance, strand orientation, and motif scores.
+#'
+#' @examples
+#'
+#'# build example GRanges as anchors
+#'anchorGR <- GRanges(
+#'  rep("chr1", 4),
+#'  IRanges(
+#'    c(1, 5, 20, 14),
+#'    c(4, 8, 23, 17)
+#'  ),
+#'  strand = c("+", "+", "+", "-"),
+#'  score = c(5, 4, 6, 7)
+#')
+#'
+#'
+#'
+#'# prepare candidates
+#'gi <- prepareCandidates(anchorGR)
+#'
+#'
+#'# prepare candidates using a mimial distance of 10 bp
+#'gi <- prepareCandidates(anchorGR, maxDist = 10)
+#'
+#'# prepare candidates using an alternative score value in anchors
+#'anchorGR$myScore <- rnorm(length(anchorGR))
+#'gi <- prepareCandidates(anchorGR, scoreColname = "myScore")
 #'
 #' @import InteractionSet
 #' @export
@@ -444,6 +497,38 @@ prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
 #' @param name Character indicating the sample name.
 #' @inheritParams addCovToGR
 #' @inheritParams addCovCor
+#'
+#' @return An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
+#'   with a new metadata column \code{colname} holding Pearson correlation
+#'   coeffiicents of ChIP-seq signals for each anchor pair.
+#'
+#'@examples
+#'
+#'# use example bigWig file of ChIP-seq signals on human chromosome 22
+#'exampleBigWig <- system.file("extdata",
+#'"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'
+#'# use example CTCF moitf location on human chromosome 22
+#'motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'
+#'# build candidate interactions
+#'gi <- prepareCandidates(motifGR, scoreColname = "sig")
+#'
+#'
+#'# add ChIP-seq signals correlation
+#'gi <- addCor(gi, exampleBigWig)
+#'
+#'# use an alternative metadata column name for ChIP-seq correlation
+#'gi <- addCor(gi, exampleBigWig, name = "Stat1")
+#'
+#'
+#'# add ChIP-seq correlation for signals signals in windows of 500bp around
+#'# motif centers
+#'gi <- addCor(gi, exampleBigWig, window = 500)
+#'
+#'
+#'# add ChIP-seq correlation for signals in bins of 10 bp
+#'gi <- addCor(gi, exampleBigWig, window = 500)
 #'
 #' @import InteractionSet
 #' @export

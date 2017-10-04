@@ -13,9 +13,16 @@ addCor(gi, bwFile, name = "chip", window = 1000, binSize = 1)
 
 \item{name}{Character indicating the sample name.}
 
-\item{window}{the window size around the center of ranges in \code{gr}.}
+\item{window}{Numeric scalar for window size around the center of ranges in
+\code{gr}.}
 
-\item{binSize}{size of bins to which the coverage values are combined.}
+\item{binSize}{Integer scalar as size of bins to which the coverage values are
+combined.}
+}
+\value{
+An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
+  with a new metadata column \code{colname} holding Pearson correlation
+  coeffiicents of ChIP-seq signals for each anchor pair.
 }
 \description{
 This function first adds ChIP-seq signals along all regions of motif location
@@ -23,4 +30,33 @@ using the function \code{\link{addCovToGR}}. Than it calculates the
 correlation of coverage for each input pair using the function
 \code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
 metadata column to the input interactions.
+}
+\examples{
+
+# use example bigWig file of ChIP-seq signals on human chromosome 22
+exampleBigWig <- system.file("extdata",
+"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+
+# use example CTCF moitf location on human chromosome 22
+motifGR <- chromloop::motif.hg19.CTCF.chr22
+
+# build candidate interactions
+gi <- prepareCandidates(motifGR, scoreColname = "sig")
+
+
+# add ChIP-seq signals correlation
+gi <- addCor(gi, exampleBigWig)
+
+# use an alternative metadata column name for ChIP-seq correlation
+gi <- addCor(gi, exampleBigWig, name = "Stat1")
+
+
+# add ChIP-seq correlation for signals signals in windows of 500bp around
+# motif centers
+gi <- addCor(gi, exampleBigWig, window = 500)
+
+
+# add ChIP-seq correlation for signals in bins of 10 bp
+gi <- addCor(gi, exampleBigWig, window = 500)
+
 }

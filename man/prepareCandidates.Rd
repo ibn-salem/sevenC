@@ -23,3 +23,30 @@ An \code{\link[InteractionSet]{GInteractions}} object with motif
 \description{
 Prepares motif pairs and add genomic features.
 }
+\examples{
+
+# build example GRanges as anchors
+anchorGR <- GRanges(
+ rep("chr1", 4),
+ IRanges(
+   c(1, 5, 20, 14),
+   c(4, 8, 23, 17)
+ ),
+ strand = c("+", "+", "+", "-"),
+ score = c(5, 4, 6, 7)
+)
+
+
+
+# prepare candidates
+gi <- prepareCandidates(anchorGR)
+
+
+# prepare candidates using a mimial distance of 10 bp
+gi <- prepareCandidates(anchorGR, maxDist = 10)
+
+# prepare candidates using an alternative score value in anchors
+anchorGR$myScore <- rnorm(length(anchorGR))
+gi <- prepareCandidates(anchorGR, scoreColname = "myScore")
+
+}

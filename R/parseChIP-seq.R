@@ -62,25 +62,52 @@ slideMean <- function(x, k){
 }
 
 
-#' Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.
+#'Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.
 #'
-#' This function adds a vector of coverage (or any other signal in the input
-#' bigWig file) to each range in a \code{\link[GenomicRanges]{GRanges}} object.
-#' The coverage is reported for a fixed-sized window around the region center.
-#' For regions with negative strand, the coverage vector is reversed.
+#'This function adds a \code{\link[IRanges]{NumericList}}  of coverage (or any
+#'other signal in the input bigWig file) to each range in a
+#'\code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
+#'fixed-sized window around the region center. For regions with negative strand,
+#'the coverage vector is reversed. The coverage signal is added as new metadata
+#'colum holding a \code{\link[IRanges]{NumericList}} object.
 #'
-#' @param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
-#' @param bwFile File path or connection to BigWig file with coverage to parse
-#'   from.
-#' @param window the window size around the center of ranges in \code{gr}.
-#' @param binSize size of bins to which the coverage values are combined.
-#' @param colname name of the new column that is created in \code{gr}.
+#'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
+#'@param bwFile File path or connection to BigWig file with coverage to parse
+#'  from.
+#'@param window Numeric scalar for window size around the center of ranges in
+#'  \code{gr}.
+#'@param binSize Integer scalar as size of bins to which the coverage values are
+#'  combined.
+#'@param colname Character as name of the new column that is created in
+#'  \code{gr}.
 #'
-#' @return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
-#'   meta column containing the coverage values for each region.
+#'@return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
+#'  meta column containing the coverage values for each region as
+#'  \code{\link[IRanges]{NumericList}}.
 #'
-#' @import InteractionSet
-#' @export
+#'@examples
+#'
+#'# use example bigWig file of ChIP-seq signals on human chromosome 22
+#'exampleBigWig <- system.file("extdata",
+#'"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'
+#'# use example CTCF moitf location on human chromosome 22
+#'motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'
+#'# add ChIP-seq signals to motif regions
+#'motifGR <- addCovToGR(motifGR, exampleBigWig)
+#'
+#'# add ChIP-seq signals as column named "Stat1"
+#'motifGR <- addCovToGR(motifGR, exampleBigWig, colname = "Stat1")
+#'
+#'# add ChIP-seq signals in windows of 500bp around motif centers
+#'motifGR <- addCovToGR(motifGR, exampleBigWig, window = 500)
+#'
+#'# add ChIP-seq signals in bins of 10 bp
+#'motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
+#'
+#'@import InteractionSet
+#'@export
 addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
 
   # get windows around gr without warnding if ranges extend chromosome borders

@@ -23,3 +23,29 @@ first and the second anchor region, respectively. Additionally, a column
 named "score_min" is added with holds for each interaction the minimum of
 "score_1" and "score_2".
 }
+\examples{
+
+# build example GRanges as anchors
+anchorGR <- GRanges(
+ rep("chr1", 4),
+ IRanges(
+   c(1, 5, 20, 14),
+   c(4, 8, 23, 17)
+ ),
+ strand = c("+", "+", "+", "-"),
+ score = c(5, 4, 6, 7)
+)
+
+
+# build example GIntreaction object
+gi <- GInteractions(
+ c(1, 2, 2),
+ c(4, 3, 4),
+ anchorGR,
+ mode = "strict"
+)
+
+# add add motif score
+gi <- addMotifScore(gi, scoreColname = "score")
+
+}

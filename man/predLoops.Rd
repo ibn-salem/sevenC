@@ -5,7 +5,7 @@
 \title{Predict looping interaction probability.}
 \usage{
 predLoops(gi, formula = NULL, betas = NULL, colname = "pred",
-  cutoff = cutoffBest10)
+  cutoff = get("cutoffBest10"))
 }
 \arguments{
 \item{gi}{A \code{\link[InteractionSet]{GInteractions}} object with coverage
@@ -35,6 +35,43 @@ A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an
 }
 \description{
 Predict looping interaction probability.
+}
+\examples{
+# use example bigWig file with Stat1 ChIP-seq signals on human chromosome 22
+exampleBigWig <- system.file("extdata",
+"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+
+# use example CTCF moitf location on human chromosome 22
+motifGR <- chromloop::motif.hg19.CTCF.chr22
+
+# build candidate interactions
+gi <- prepareCandidates(motifGR, scoreColname = "sig")
+
+# add ChIP-seq signals correlation
+gi <- addCor(gi, exampleBigWig)
+
+# predict chromatin looping interactions
+loops <- predLoops(gi)
+
+# add prediction score for all candidates without filter
+gi <- predLoops(gi, cutof = NULL)
+
+# add prediction score using custom column name
+gi <- predLoops(gi, cutof = NULL, colname = "my_colname")
+
+# Filter loop predictions on custom cutoff
+loops <- predLoops(gi, cutoff = 0.4)
+
+# predict chromatin looping interactions using custom model parameters
+myParams <- c(-4, -5, -2, -1, -1, 5, 3)
+loops <- predLoops(gi, betas = myParams)
+
+# predict chromatin loops using custom model formula and params
+myFormula <- ~ dist + score_min
+# define parameters for intercept, dist and motif_min
+myParams <- c(-5, -4, 6)
+loops <- predLoops(gi, formula = myFormula, betas = myParams)
+
 }
 \seealso{
 \code{\link{prepareCandidates}}, \code{\link{addCor}},

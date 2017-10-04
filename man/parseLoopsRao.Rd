@@ -20,3 +20,20 @@ parseLoopsRao(inFile, ...)
 Parse chromatin loops from Rao et al. 2014 as strict
 \code{\link[InteractionSet]{GInteractions}}.
 }
+\examples{
+
+# use example loop file
+exampleLoopFile <- system.file("extdata",
+  "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "chromloop")
+
+# read loops form example file:
+gi <- parseLoopsRao(exampleLoopFile)
+
+
+# read loops with custom seqinfo object:
+customSeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
+   seqlengths = c(10^8, 10^8), isCircular = c(FALSE, FALSE),
+   genome = "custom")
+gi <- parseLoopsRao(exampleLoopFile, seqinfo = customSeqInfo)
+
+}
