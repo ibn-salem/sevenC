@@ -70,6 +70,7 @@ slideMean <- function(x, k){
 #'fixed-sized window around the region center. For regions with negative strand,
 #'the coverage vector is reversed. The coverage signal is added as new metadata
 #'colum holding a \code{\link[IRanges]{NumericList}} object.
+#'This function does not work on Windows. Only NAs are added on Windows.
 #'
 #'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
 #'@param bwFile File path or connection to BigWig file with coverage to parse
@@ -109,6 +110,22 @@ slideMean <- function(x, k){
 #'@import InteractionSet
 #'@export
 addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
+
+  # check input arguments
+  stopifnot(file.exists(bwFile), length(bwFile) == 1)
+  stopifnot(is.numeric(window), length(window) == 1)
+  stopifnot(is.numeric(binSize), length(binSize) == 1)
+  stopifnot(is.character(colname), length(colname) == 1)
+
+  # check if OS is windows because BioC rtracklayer does not support it BigWig
+  # files on windows
+  if(.Platform$OS.type == 'windows') {
+    warning('Reading of bigWig files is not supported on Winodws. The function addCovToGR() will only add NA.')
+
+    # add NA and return
+    mcols(gr)[, colname] <- NA
+    return(gr)
+  }
 
   # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
