@@ -33,7 +33,7 @@ other signal in the input bigWig file) to each range in a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
 colum holding a \code{\link[IRanges]{NumericList}} object.
-This function does not work on Windows. Only NAs are added on Windows.
+This function does not work on Windows.
 }
 \examples{
 

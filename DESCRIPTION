@@ -19,6 +19,11 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: TRUE
 Imports: rtracklayer (>= 1.34.1),
+    BiocGenerics (>= 0.22.0),
+    GenomeInfoDb (>= 1.12.2),
+    GenomicRanges (>= 1.28.5),
+    IRanges (>= 2.10.3),
+    S4Vectors (>= 0.14.4),
     readr (>= 1.1.0),
     purrr (>= 0.2.2),
     modelr (>= 0.1.1),
@@ -31,7 +36,6 @@ Suggests: testthat,
     rmarkdown,
     GenomicInteractions
 Depends: R (>= 3.4),
-  GenomicRanges (>= 1.28.5),
   InteractionSet (>= 1.2.0)
 RoxygenNote: 6.0.1
 biocViews: DNA3DStructure, ChIPchip, Coverage, DataImport, Epigenetics, 

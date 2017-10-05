@@ -24,6 +24,7 @@
 #'gi <- parseLoopsRao(exampleLoopFile, seqinfo = customSeqInfo)
 #'
 #' @import InteractionSet
+#' @importFrom IRanges IRanges
 #' @export
 parseLoopsRao <- function(inFile, ...){
 
@@ -92,6 +93,7 @@ parseLoopsRao <- function(inFile, ...){
 #'
 #'
 #' @import InteractionSet
+#' @importFrom IRanges IRanges
 #' @export
 parseLoopsTang2015 <- function(inFile, ...){
 

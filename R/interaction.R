@@ -30,6 +30,8 @@
 #'regions(gi)
 #'
 #' @import InteractionSet
+#' @importFrom BiocGenerics sort
+#' @importFrom GenomicRanges resize findOverlaps
 #' @export
 getCisPairs <- function(inGR, maxDist = 10e6){
 
@@ -119,9 +121,16 @@ noZeroVar <- function(dat) {
 #'
 #' @import data.table
 #' @import InteractionSet
+#' @importFrom BiocGenerics start
+#' @importFrom GenomeInfoDb seqlengths seqinfo keepSeqlevels seqnames
+#' @importFrom GenomicRanges GRanges findOverlaps slidingWindows
+#' @importFrom S4Vectors mcols mcols<- queryHits subjectHits
+#' @importFrom methods is
 #' @export
 addCovCor <- function(gi, datcol, colname = "cor",
                            maxDist = NULL){
+
+
 
   # Algorithm to avoid comparisons of distal pairs
   # (0) define maxDist
@@ -135,7 +144,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   if ( any(is.na(seqlengths(gi))) ) {
     stop("gi object need seqlengths.")
   }
-  if ( !methods::is(gi, "StrictGInteractions") ) {
+  if ( !is(gi, "StrictGInteractions") ) {
     stop("gi should be of class StrictGInteractions")
   }
 
@@ -285,6 +294,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
 #'gi <- addInteractionSupport(gi, subject = exampleSupport, colname = "example")
 #'
 #' @import InteractionSet
+#' @importFrom IRanges overlapsAny
 #' @export
 addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 
@@ -344,6 +354,7 @@ addInteractionSupport <- function(gi, subject, colname = "loop", ...){
 #')
 #'
 #' @import InteractionSet
+#' @importFrom BiocGenerics strand
 #' @export
 addStrandCombination <- function(gi, colname = "strandOrientation"){
 
