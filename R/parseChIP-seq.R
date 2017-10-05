@@ -6,6 +6,7 @@
 #'   extends out of chromosomes. The first column holds the index of the range in
 #'   \code{gr}, the second the size of the overlap to the left of the chromosome
 #'   and the third the size of the overlap to the right of the chromosome.
+#' @importFrom BiocGenerics end
 getOutOfBound <- function(gr){
 
   # check if extended regions are out of chromosome space
@@ -70,7 +71,7 @@ slideMean <- function(x, k){
 #'fixed-sized window around the region center. For regions with negative strand,
 #'the coverage vector is reversed. The coverage signal is added as new metadata
 #'colum holding a \code{\link[IRanges]{NumericList}} object.
-#'This function does not work on Windows. Only NAs are added on Windows.
+#'This function does not work on Windows.
 #'
 #'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
 #'@param bwFile File path or connection to BigWig file with coverage to parse
@@ -108,6 +109,11 @@ slideMean <- function(x, k){
 #'motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
 #'
 #'@import InteractionSet
+#' @importFrom BiocGenerics start start<- strand
+#' @importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<- seqinfo<-
+#' @importFrom GenomicRanges resize coverage
+#' @importFrom IRanges trim NumericList
+#' @importFrom methods is
 #'@export
 addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
 
@@ -116,16 +122,6 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   stopifnot(is.numeric(window), length(window) == 1)
   stopifnot(is.numeric(binSize), length(binSize) == 1)
   stopifnot(is.character(colname), length(colname) == 1)
-
-  # check if OS is windows because BioC rtracklayer does not support it BigWig
-  # files on windows
-  if(.Platform$OS.type == 'windows') {
-    warning('Reading of bigWig files is not supported on Winodws. The function addCovToGR() will only add NA.')
-
-    # add NA and return
-    mcols(gr)[, colname] <- NA
-    return(gr)
-  }
 
   # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
