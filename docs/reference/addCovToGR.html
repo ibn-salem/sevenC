@@ -87,7 +87,8 @@ other signal in the input bigWig file) to each range in a
 <code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object. The coverage is reported for a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
-colum holding a <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code> object.</p>
+colum holding a <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code> object.
+This function does not work on Windows.</p>
     
 
     <pre class="usage"><span class='fu'>addCovToGR</span>(<span class='no'>gr</span>, <span class='no'>bwFile</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>binSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"cov"</span>)</pre>

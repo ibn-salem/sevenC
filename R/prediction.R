@@ -17,7 +17,7 @@ predLogit <- function(data, formula, betas){
   on.exit(options(op), add = TRUE)
 
   # build model matrix
-  mat <- modelr::model_matrix(data, formula)
+  mat <- stats::model.matrix(formula, data)
 
   pred <- as.numeric(betas %*% t(mat))
   pred <- boot::inv.logit(pred)
