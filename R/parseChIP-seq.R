@@ -145,23 +145,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   selectWin <- keepSeqlevels(ancWin, unique(seqnames(ancWin)))
   selection <- rtracklayer::BigWigSelection(selectWin)
 
-  covGR <- rtracklayer::import.bw(
+  # parse coverage for selected regions as NumericList
+  covAnc <- rtracklayer::import.bw(
     bwFile,
     selection = selection,
-    as = "GRanges",
-    seqinfo = seqinfo(ancWin))
-
-  # update covGR with seqinfo to allow subsetting with ancWin
-  if ( !any(is.na(seqlengths(ancWin))) ) {
-    seqlevels(covGR) <- seqlevels(ancWin)
-    seqinfo(covGR) <- seqinfo(ancWin)
-  }
-
-  covRle <- coverage(covGR, weight = covGR$score)
-
-  # get coverage as for all regions
-  covAncRle <- covRle[ancWin]
-  covAnc <- NumericList(covAncRle)
+    as = "NumericList")
 
   # add NAs for out of bound regions
   covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){
