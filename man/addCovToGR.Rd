@@ -4,7 +4,7 @@
 \alias{addCovToGR}
 \title{Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.}
 \usage{
-addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "cov")
+addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
 }
 \arguments{
 \item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions}

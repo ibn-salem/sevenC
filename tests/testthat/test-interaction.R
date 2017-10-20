@@ -145,7 +145,7 @@ test_that("addCovCor works with chr22 example data", {
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e5)
 
-  gi <- addCovCor(gi, datacol = "cov")
+  gi <- addCovCor(gi, datacol = "chip")
 
 })
 
@@ -279,7 +279,7 @@ test_that("addCor works on toy example data", {
 
   expect_true("toy" %in% names(mcols(regions(gi))))
   expect_equal(ncol(mcols(gi)), ncol(mcols(toyGI)) + 1)
-  expect_true("toy" %in% names(mcols(gi)))
+  expect_true("cor_toy" %in% names(mcols(gi)))
 
 })
 

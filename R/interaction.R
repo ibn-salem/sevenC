@@ -114,7 +114,7 @@ noZeroVar <- function(dat) {
 #' gi <- getCisPairs(motifGR, 1e5)
 #'
 #' # compute correaltion of coverge for each pair
-#' gi <- addCovCor(gi, datacol = "cov")
+#' gi <- addCovCor(gi)
 #'
 #' # addCovCor adds a new metadata column:
 #' mcols(gi)
@@ -127,7 +127,7 @@ noZeroVar <- function(dat) {
 #' @importFrom S4Vectors mcols mcols<- queryHits subjectHits
 #' @importFrom methods is
 #' @export
-addCovCor <- function(gi, datacol, colname = "cor",
+addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
                            maxDist = NULL){
 
 
@@ -554,7 +554,7 @@ addCor <- function(gi, bwFile, name = "chip", window = 1000, binSize = 1){
     )
 
   # compute correlation of ChIP-seq profiles
-  gi <- addCovCor(gi, datacol = name, colname = name)
+  gi <- addCovCor(gi, datacol = name, colname = paste0("cor_", name))
 
   return(gi)
 }

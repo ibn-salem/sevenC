@@ -4,12 +4,12 @@
 \alias{addCovCor}
 \title{Add correlation of anchor signals to pairs of close genomic regions.}
 \usage{
-addCovCor(gi, datcol, colname = "cor", maxDist = NULL)
+addCovCor(gi, datacol = "chip", colname = "cor_chip", maxDist = NULL)
 }
 \arguments{
 \item{gi}{A sorted \code{\link[InteractionSet]{GInteractions}} object.}
 
-\item{datcol}{a string matching an annotation column in \code{regions(gi)}.
+\item{datacol}{a string matching an annotation column in \code{regions(gi)}.
 This column is assumed to hold the same number of values for each
 interaction as a \code{NumericList}.}
 
@@ -45,7 +45,7 @@ motifGR <- addCovToGR(motifGR, exampleBigWig)
 gi <- getCisPairs(motifGR, 1e5)
 
 # compute correaltion of coverge for each pair
-gi <- addCovCor(gi, datcol = "cov")
+gi <- addCovCor(gi)
 
 # addCovCor adds a new metadata column:
 mcols(gi)

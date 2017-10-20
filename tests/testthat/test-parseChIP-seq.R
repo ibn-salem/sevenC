@@ -149,6 +149,6 @@ test_that("addCovToGR works with chr22 example data", {
 
   motifGR <- addCovToGR(motifGR, exampleBigWig)
 
-  expect_true("cov" %in% names(mcols(motifGR)))
+  expect_true("chip" %in% names(mcols(motifGR)))
 
 })

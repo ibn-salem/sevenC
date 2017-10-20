@@ -115,7 +115,7 @@ slideMean <- function(x, k){
 #' @importFrom IRanges trim NumericList
 #' @importFrom methods is
 #'@export
-addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
+addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip"){
 
   # check input arguments
   stopifnot(file.exists(bwFile), length(bwFile) == 1)

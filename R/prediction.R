@@ -97,7 +97,7 @@ predLoops <- function(gi, formula = NULL, betas=NULL, colname = "pred",
   # if no formula is given, use default formula
   if (is.null(formula)) {
     formula <- stats::as.formula(
-      " ~ dist + strandOrientation + score_min + chip"
+      " ~ dist + strandOrientation + score_min + cor_chip"
     )
   }
 
