@@ -123,6 +123,19 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
   stopifnot(is.numeric(binSize), length(binSize) == 1)
   stopifnot(is.character(colname), length(colname) == 1)
 
+  # if OS is Windows rais warning, add NA, and return.
+  if (.Platform$OS.type == 'windows') {
+
+    warning(paste(
+      "Reading of bigWig files is not supported on winodws",
+      "in rtracklayer::import.bw().",
+      "The function addCovToGR() will add only NA."))
+
+    # add NA and return
+    mcols(gr)[, colname] <- NA
+    return(gr)
+  }
+
   # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
     ancWin <- resize(gr, width = window, fix = "center")
