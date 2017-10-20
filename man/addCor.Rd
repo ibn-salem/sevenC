@@ -34,31 +34,33 @@ on windows because reading of bigWig fiels is currently not supported on
 windows.
 }
 \examples{
+if (.Platform$OS.type != "windows") {
 
-# use example bigWig file of ChIP-seq signals on human chromosome 22
-exampleBigWig <- system.file("extdata",
-"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+ # use example bigWig file of ChIP-seq signals on human chromosome 22
+ exampleBigWig <- system.file("extdata",
+ "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 
-# use example CTCF moitf location on human chromosome 22
-motifGR <- chromloop::motif.hg19.CTCF.chr22
+ # use example CTCF moitf location on human chromosome 22
+ motifGR <- chromloop::motif.hg19.CTCF.chr22
 
-# build candidate interactions
-gi <- prepareCandidates(motifGR, scoreColname = "sig")
-
-
-# add ChIP-seq signals correlation
-gi <- addCor(gi, exampleBigWig)
-
-# use an alternative metadata column name for ChIP-seq correlation
-gi <- addCor(gi, exampleBigWig, name = "Stat1")
+ # build candidate interactions
+ gi <- prepareCandidates(motifGR, scoreColname = "sig")
 
 
-# add ChIP-seq correlation for signals signals in windows of 500bp around
-# motif centers
-gi <- addCor(gi, exampleBigWig, window = 500)
+ # add ChIP-seq signals correlation
+ gi <- addCor(gi, exampleBigWig)
+
+ # use an alternative metadata column name for ChIP-seq correlation
+ gi <- addCor(gi, exampleBigWig, name = "Stat1")
 
 
-# add ChIP-seq correlation for signals in bins of 10 bp
-gi <- addCor(gi, exampleBigWig, window = 500)
+ # add ChIP-seq correlation for signals signals in windows of 500bp around
+ # motif centers
+ gi <- addCor(gi, exampleBigWig, window = 500)
 
+
+ # add ChIP-seq correlation for signals in bins of 10 bp
+ gi <- addCor(gi, exampleBigWig, window = 500)
+
+}
 }

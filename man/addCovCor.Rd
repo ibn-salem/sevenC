@@ -31,24 +31,26 @@ distance. Note, this function does not work on windows because reading of
 bigWig fiels is currently not supported on windows.
 }
 \examples{
+if (.Platform$OS.type != "windows") {
 
-# use internal motif data on chromosome 22
-motifGR <- chromloop::motif.hg19.CTCF.chr22
+  # use internal motif data on chromosome 22
+  motifGR <- chromloop::motif.hg19.CTCF.chr22
 
-# use example bigWig file
-exampleBigWig <- system.file("extdata",
-"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+  # use example bigWig file
+  exampleBigWig <- system.file("extdata",
+  "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 
-# add coverage from bigWig file
-motifGR <- addCovToGR(motifGR, exampleBigWig)
+  # add coverage from bigWig file
+  motifGR <- addCovToGR(motifGR, exampleBigWig)
 
-# get all pairs within 1Mb
-gi <- getCisPairs(motifGR, 1e5)
+  # get all pairs within 1Mb
+  gi <- getCisPairs(motifGR, 1e5)
 
-# compute correaltion of coverge for each pair
-gi <- addCovCor(gi)
+  # compute correaltion of coverge for each pair
+  gi <- addCovCor(gi)
 
-# addCovCor adds a new metadata column:
-mcols(gi)
+  # addCovCor adds a new metadata column:
+  mcols(gi)
 
+}
 }

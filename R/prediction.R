@@ -51,18 +51,15 @@ predLogit <- function(data, formula, betas){
 #'   \code{\link{predLogit}}
 #'
 #' @examples
-#'# use example bigWig file with Stat1 ChIP-seq signals on human chromosome 22
-#'exampleBigWig <- system.file("extdata",
-#'"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 #'
-#'# use example CTCF moitf location on human chromosome 22
-#'motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'# use example CTCF moitf location on human chromosome 22 with chip coverage
+#'motifGR <- chromloop::motif.hg19.CTCF.chr22.cov
 #'
 #'# build candidate interactions
 #'gi <- prepareCandidates(motifGR, scoreColname = "sig")
 #'
 #'# add ChIP-seq signals correlation
-#'gi <- addCor(gi, exampleBigWig)
+#'gi <- addCovCor(gi)
 #'
 #'# predict chromatin looping interactions
 #'loops <- predLoops(gi)
