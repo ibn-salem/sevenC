@@ -1,7 +1,7 @@
 Package: chromloop
 Type: Package
 Title: Prediction of chromatin looping interactions from ChIP-seq and sequence motifs
-Version: 0.99.8
+Version: 0.99.9
 Authors@R: person("Jonas", "Ibn-Salem", email = "j.ibn-salem@uni-mainz.de", role = c("aut", "cre"))
 Description: Chromatin looping is an importent feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
