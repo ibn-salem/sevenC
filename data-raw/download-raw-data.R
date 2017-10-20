@@ -13,15 +13,17 @@ dir.create("inst/extdata", recursive = TRUE)
 #require(RCurl)
 # bwURL <- getURLContent()
 
-download.file(bwURLstr, destfile=bwTmpFile)
+download.file(bwURLstr, destfile = bwTmpFile)
 
 bw <- rtracklayer::import(bwTmpFile)
-bwSub <- IRanges::subsetByOverlaps(bw, GenomicRanges::GRanges("chr22", IRanges::IRanges(1, 18000000)))
+bwSub <- IRanges::subsetByOverlaps(
+  bw, GenomicRanges::GRanges("chr22", IRanges::IRanges(1, 18000000))
+  )
 
-print(object.size(bwSub), unit="Kb")
+print(object.size(bwSub), unit = "Kb")
 
 # save subset of file in inst/extdata as bigWig file
-rtracklayer::export(bwSub, con=bwFinalFile, format="bigWig")
+rtracklayer::export(bwSub, con = bwFinalFile, format = "bigWig")
 
 
 #-------------------------------------------------------------------------------
@@ -59,6 +61,14 @@ devtools::use_data(motif.hg19.CTCF, overwrite = TRUE)
 motif.hg19.CTCF.chr22 <- motif.hg19.CTCF[seqnames(motif.hg19.CTCF) == "chr22"]
   # & end(motif.hg19.CTCF) <= 18000000]
 devtools::use_data(motif.hg19.CTCF.chr22, overwrite = TRUE)
+
+#-------------------------------------------------------------------------------
+# add example ChIP-seq coverage
+#-------------------------------------------------------------------------------
+motif.hg19.CTCF.chr22.cov <- chromloop::addCovToGR(
+  motif.hg19.CTCF.chr22,
+  bwFinalFile)
+devtools::use_data(motif.hg19.CTCF.chr22.cov, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
 # add default model parametes trained on best 10 performing TF ChIP-seq data
