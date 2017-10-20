@@ -66,7 +66,6 @@ We use CTCF motif hits in human chromosome 22 as provide by `r BiocStyle::Biocpk
 
 ```{r, results = "hide", message = FALSE}
 library(chromloop)
-library(InteractionSet)
 
 # load provided CTCF motifs
 motifs <- motif.hg19.CTCF.chr22
@@ -83,6 +82,45 @@ The genome assembly is hg19.
 Four metadata columns show motif match similarity as weight score, p-value, log transformed p-value and significance score. 
 Use `help(motif.hg19.CTCF)` to get more information on the motif dataset.
 
+### Add ChIP-seq signals at motifs sites
+
+To predict loops we need the ChIP-seq signals at all motif sites. 
+Therefore, we read an example bigWig file with ChIP-seq signals^[Note, reading of bigWig files is currently not supported on Windows. 
+See `help(rtracklayer::import.bw)` for more information. Users on Windows need to add coverage signals as `NumierList` by other means.]. 
+For each position along the genome, the file contains the log fold-change of ChIP signals compared to input control. 
+A sample file with data on a subset of chromosome 22 is provided in the package. 
+```{r}
+# use example ChIP-seq bigWig file
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+  package = "chromloop")
+```
+
+We add ChIP-seq signals to all motifs in a window of 1000 bp using the function `addCovToGR()` as follows
+```{r eval = FALSE}
+# read ChIP-seq coverage 
+motifs <- addCovToGR(motifs, bigWigFile)
+```
+
+```{r eval = TRUE, echo = FALSE}
+# check if OS is windows
+if (.Platform$OS.type == 'windows') {
+  motifs <- motif.hg19.CTCF.chr22.cov
+} else {
+  # read ChIP-seq coverage 
+  motifs <- addCovToGR(motifs, bigWigFile)
+}
+```
+
+
+This adds a new metadata column to `motifs` holding a `NumericList` with ChIP-seq signals for each motif location. 
+```{r}
+motifs$cov
+```
+
+
+
+### Build pairs of motifs as candidate interactions
+
 Now we build a dataset with all pairs of CTCF motif within 1 mega base pair and annotate it with distance, motif orientation, and motif score. 
 ```{r}
 gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
@@ -91,16 +129,13 @@ gi
 ```
 The return value `gi` of the function `prepareCandidates()` is `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
 
-## Parse ChIP-seq signals and compute similarity at motif pairs
+## Compute similarity at motif pairs
 
-Now we read an example bigWig file with ChIP-seq signals. For each position along the genome, the file contains the log fold-change of ChIP signals compared to input control. A sample file with data on a subset of chromosome 22 is provided in the package. 
+Now, we compute the correlation of ChIP-seq signals for all motif pairs.
+The correlation coefficient is added as additinoal metadata column to `gi`.
 ```{r}
-# use example ChIP-seq bigWig file
-bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
-  package = "chromloop")
-
 # add ChIP-seq coverage and compute correaltion at motif pairs
-gi <- addCor(gi, bigWigFile)
+gi <- addCovCor(gi)
 ```
 
 ## Predict loops
@@ -130,36 +165,6 @@ export.bedpe(loops, "loop_interactions.bedpe", score = "pred")
 # Train prediciton model using custom data
 Instructions on how to fit a logistic regression model with user provided data will be explained here soon.
 
-
-<!-- ## Figures -->
-
-<!-- The figure sizes have been customised so that you can easily put two images side-by-side.  -->
-
-<!-- ```{r, fig.show='hold'} -->
-<!-- plot(1:10) -->
-<!-- plot(10:1) -->
-<!-- ``` -->
-
-<!-- You can enable figure captions by `fig_caption: yes` in YAML: -->
-
-<!--     output: -->
-<!--       rmarkdown::html_vignette: -->
-<!--         fig_caption: yes -->
-
-<!-- Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**. -->
-
-<!-- ## More Examples -->
-
-<!-- You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`. -->
-
-<!-- ```{r, echo=FALSE, results='asis'} -->
-<!-- knitr::kable(head(mtcars, 10)) -->
-<!-- ``` -->
-
-<!-- Also a quote using `>`: -->
-
-<!-- > "He who gives up [code] safety for [code] speed deserves neither." -->
-<!-- ([via](https://twitter.com/hadleywickham/status/504368538874703872)) -->
 
 # References
 
