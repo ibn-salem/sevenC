@@ -88,7 +88,7 @@ noZeroVar <- function(dat) {
 #' distance.
 #'
 #' @param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
-#' @param datcol a string matching an annotation column in \code{regions(gi)}.
+#' @param datacol a string matching an annotation column in \code{regions(gi)}.
 #'   This column is assumed to hold the same number of values for each
 #'   interaction as a \code{NumericList}.
 #' @param colname A string that is used as columnname for the new column in
@@ -114,7 +114,7 @@ noZeroVar <- function(dat) {
 #' gi <- getCisPairs(motifGR, 1e5)
 #'
 #' # compute correaltion of coverge for each pair
-#' gi <- addCovCor(gi, datcol = "cov")
+#' gi <- addCovCor(gi, datacol = "cov")
 #'
 #' # addCovCor adds a new metadata column:
 #' mcols(gi)
@@ -127,7 +127,7 @@ noZeroVar <- function(dat) {
 #' @importFrom S4Vectors mcols mcols<- queryHits subjectHits
 #' @importFrom methods is
 #' @export
-addCovCor <- function(gi, datcol, colname = "cor",
+addCovCor <- function(gi, datacol, colname = "cor",
                            maxDist = NULL){
 
 
@@ -179,7 +179,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   # (2) compute pairwise correlatin for all ranges in each bin
   #-----------------------------------------------------------------------------
 
-  covList <- mcols(regions(gi))[, datcol]
+  covList <- mcols(regions(gi))[, datacol]
   datamat <- as.matrix(covList)
 
   corMatList <- lapply(1:length(binGR), function(i){
@@ -554,7 +554,7 @@ addCor <- function(gi, bwFile, name = "chip", window = 1000, binSize = 1){
     )
 
   # compute correlation of ChIP-seq profiles
-  gi <- addCovCor(gi, datcol = name, colname = name)
+  gi <- addCovCor(gi, datacol = name, colname = name)
 
   return(gi)
 }

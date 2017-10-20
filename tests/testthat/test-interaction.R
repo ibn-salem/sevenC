@@ -145,7 +145,7 @@ test_that("addCovCor works with chr22 example data", {
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e5)
 
-  gi <- addCovCor(gi, datcol = "cov")
+  gi <- addCovCor(gi, datacol = "cov")
 
 })
 
