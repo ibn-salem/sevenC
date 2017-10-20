@@ -70,8 +70,9 @@ slideMean <- function(x, k){
 #'\code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
 #'fixed-sized window around the region center. For regions with negative strand,
 #'the coverage vector is reversed. The coverage signal is added as new metadata
-#'colum holding a \code{\link[IRanges]{NumericList}} object.
-#'This function does not work on Windows.
+#'colum holding a \code{\link[IRanges]{NumericList}} object. Note, this function
+#'does not work on windows because reading of bigWig fiels is currently not
+#'supported on windows.
 #'
 #'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
 #'@param bwFile File path or connection to BigWig file with coverage to parse
@@ -88,40 +89,56 @@ slideMean <- function(x, k){
 #'  \code{\link[IRanges]{NumericList}}.
 #'
 #'@examples
+#'if (.Platform$OS.type != "windows") {
 #'
-#'# use example bigWig file of ChIP-seq signals on human chromosome 22
-#'exampleBigWig <- system.file("extdata",
-#'"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'  # use example bigWig file of ChIP-seq signals on human chromosome 22
+#'  exampleBigWig <- system.file("extdata",
+#'  "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 #'
-#'# use example CTCF moitf location on human chromosome 22
-#'motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'  # use example CTCF moitf location on human chromosome 22
+#'  motifGR <- chromloop::motif.hg19.CTCF.chr22
 #'
-#'# add ChIP-seq signals to motif regions
-#'motifGR <- addCovToGR(motifGR, exampleBigWig)
+#'  # add ChIP-seq signals to motif regions
+#'  motifGR <- addCovToGR(motifGR, exampleBigWig)
 #'
-#'# add ChIP-seq signals as column named "Stat1"
-#'motifGR <- addCovToGR(motifGR, exampleBigWig, colname = "Stat1")
+#'  # add ChIP-seq signals as column named "Stat1"
+#'  motifGR <- addCovToGR(motifGR, exampleBigWig, colname = "Stat1")
 #'
-#'# add ChIP-seq signals in windows of 500bp around motif centers
-#'motifGR <- addCovToGR(motifGR, exampleBigWig, window = 500)
+#'  # add ChIP-seq signals in windows of 500bp around motif centers
+#'  motifGR <- addCovToGR(motifGR, exampleBigWig, window = 500)
 #'
-#'# add ChIP-seq signals in bins of 10 bp
-#'motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
+#'  # add ChIP-seq signals in bins of 10 bp
+#'  motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
 #'
+#'}
 #'@import InteractionSet
-#' @importFrom BiocGenerics start start<- strand
-#' @importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<- seqinfo<-
-#' @importFrom GenomicRanges resize coverage
-#' @importFrom IRanges trim NumericList
-#' @importFrom methods is
+#'@importFrom BiocGenerics start start<- strand
+#'@importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<-
+#'  seqinfo<-
+#'@importFrom GenomicRanges resize coverage
+#'@importFrom IRanges trim NumericList
+#'@importFrom methods is
 #'@export
-addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
+addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip"){
 
   # check input arguments
   stopifnot(file.exists(bwFile), length(bwFile) == 1)
   stopifnot(is.numeric(window), length(window) == 1)
   stopifnot(is.numeric(binSize), length(binSize) == 1)
   stopifnot(is.character(colname), length(colname) == 1)
+
+  # if OS is Windows rais warning, add NA, and return.
+  if (.Platform$OS.type == 'windows') {
+
+    warning(paste(
+      "Reading of bigWig files is not supported on winodws",
+      "in rtracklayer::import.bw().",
+      "The function addCovToGR() will add only NA."))
+
+    # add NA and return
+    mcols(gr)[, colname] <- NA
+    return(gr)
+  }
 
   # get windows around gr without warnding if ranges extend chromosome borders
   suppressWarnings(
@@ -145,23 +162,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "cov"){
   selectWin <- keepSeqlevels(ancWin, unique(seqnames(ancWin)))
   selection <- rtracklayer::BigWigSelection(selectWin)
 
-  covGR <- rtracklayer::import.bw(
+  # parse coverage for selected regions as NumericList
+  covAnc <- rtracklayer::import.bw(
     bwFile,
     selection = selection,
-    as = "GRanges",
-    seqinfo = seqinfo(ancWin))
-
-  # update covGR with seqinfo to allow subsetting with ancWin
-  if ( !any(is.na(seqlengths(ancWin))) ) {
-    seqlevels(covGR) <- seqlevels(ancWin)
-    seqinfo(covGR) <- seqinfo(ancWin)
-  }
-
-  covRle <- coverage(covGR, weight = covGR$score)
-
-  # get coverage as for all regions
-  covAncRle <- covRle[ancWin]
-  covAnc <- NumericList(covAncRle)
+    as = "NumericList")
 
   # add NAs for out of bound regions
   covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){

@@ -55,61 +55,80 @@ test_gr <- GRanges(
 )
 
 
-test_that("addCovToGR works on example dataset", {
+test_that("addCovToGR works on example dataset and gives warning on windows", {
 
-  grCov <- addCovToGR(
-    test_gr,
-    test_bw, window = 10,
-    binSize = 1,
-    colname = "covTest")
+  if (.Platform$OS.type == 'windows') {
 
-  expect_equal(length(test_gr), length(grCov))
-  expect_true(all(all(!is.na(grCov$covTest))))
-  expect_equal(length(mcols(grCov)[, "covTest"]), length(test_gr))
-  expect_equal(as.vector(sum(grCov$covTest[1])), 10 * -0.75)
+    expect_warning(
+      addCovToGR(
+        test_gr,
+        test_bw, window = 10,
+        binSize = 1,
+        colname = "covTest")
+    )
 
+  } else {
+
+    grCov <- addCovToGR(
+      test_gr,
+      test_bw, window = 10,
+      binSize = 1,
+      colname = "covTest")
+
+    expect_equal(length(test_gr), length(grCov))
+    expect_true(all(all(!is.na(grCov$covTest))))
+    expect_equal(length(mcols(grCov)[, "covTest"]), length(test_gr))
+    expect_equal(as.vector(sum(grCov$covTest[1])), 10 * -0.75)
+  }
 })
 
 test_that("addCovToGR handles out of chromosome coordinates", {
 
-  out_gr <- GRanges(
-    rep("chr2", 3),
-    IRanges(
-      c(2, 700, 2999),
-      c(2, 700, 2999)
-    ),
-    seqinfo = Seqinfo(seqnames = c("chr2", "chr19"),
-                                    seqlengths = c(3000, 3000),
-                                    isCircular = c(FALSE, FALSE),
-                                    genome = "example")
-  )
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
 
-  grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
-                      colname = "covTest")
+    out_gr <- GRanges(
+      rep("chr2", 3),
+      IRanges(
+        c(2, 700, 2999),
+        c(2, 700, 2999)
+      ),
+      seqinfo = Seqinfo(seqnames = c("chr2", "chr19"),
+                                      seqlengths = c(3000, 3000),
+                                      isCircular = c(FALSE, FALSE),
+                                      genome = "example")
+    )
 
-  expect_true(!is.null(grCov$covTest))
-  expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
-  expect_true(all(sapply(grCov$covTest, length) == 10))
+    grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
+                        colname = "covTest")
+
+    expect_true(!is.null(grCov$covTest))
+    expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
+    expect_true(all(sapply(grCov$covTest, length) == 10))
+  }
 })
 
 test_that("addCovToGR handles input ranges without seqinfo object", {
 
-  out_gr <- GRanges(
-    rep("chr2", 3),
-    IRanges(
-      c(2, 700, 2999),
-      c(2, 700, 2999)
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
+
+    out_gr <- GRanges(
+      rep("chr2", 3),
+      IRanges(
+        c(2, 700, 2999),
+        c(2, 700, 2999)
+      )
     )
-  )
 
-  grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
-                      colname = "covTest")
+    grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
+                        colname = "covTest")
 
-  expect_true(!is.null(grCov$covTest))
-  expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
-  expect_true(all(sapply(grCov$covTest, length) == 10))
-  expect_true(!any(is.na(grCov$covTest[[3]])))
-
+    expect_true(!is.null(grCov$covTest))
+    expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
+    expect_true(all(sapply(grCov$covTest, length) == 10))
+    expect_true(!any(is.na(grCov$covTest[[3]])))
+  }
 })
 
 
@@ -118,27 +137,35 @@ test_that("addCovToGR reversed coverage for regions on negative strand.", {
   stranedGR <- test_gr
   strand(stranedGR) <- c("+", "-", "-")
 
-  grCov <- addCovToGR(test_gr, test_bw, window = 10, binSize = 1,
-                      colname = "covTest")
-  stranedCov <- addCovToGR(stranedGR, test_bw, window = 10, binSize = 1,
-                           colname = "covTest")
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
+    grCov <- addCovToGR(test_gr, test_bw, window = 10, binSize = 1,
+                        colname = "covTest")
+    stranedCov <- addCovToGR(stranedGR, test_bw, window = 10, binSize = 1,
+                             colname = "covTest")
 
-  expect_equal(stranedCov$covTest[[2]], rev(grCov$covTest[[2]]) )
-  expect_equal(stranedCov$covTest[[1]], grCov$covTest[[1]])
+    expect_equal(stranedCov$covTest[[2]], rev(grCov$covTest[[2]]) )
+    expect_equal(stranedCov$covTest[[1]], grCov$covTest[[1]])
+  }
+
 })
 
 test_that("addCovToGR handles binSize and window paramter correctly.", {
 
-  grCov <- addCovToGR(
-    test_gr,
-    test_bw, window = 100,
-    binSize = 10,
-    colname = "covTest")
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
 
-  expect_equal(length(test_gr), length(grCov))
-  expect_true(all(all(!is.na(grCov$covTest))))
-  expect_equal(length(mcols(grCov)[, "covTest"]), length(test_gr))
-  expect_equal(length(grCov$covTest[[1]]), 10)
+    grCov <- addCovToGR(
+      test_gr,
+      test_bw, window = 100,
+      binSize = 10,
+      colname = "covTest")
+
+    expect_equal(length(test_gr), length(grCov))
+    expect_true(all(all(!is.na(grCov$covTest))))
+    expect_equal(length(mcols(grCov)[, "covTest"]), length(test_gr))
+    expect_equal(length(grCov$covTest[[1]]), 10)
+  }
 })
 
 
@@ -147,8 +174,11 @@ test_that("addCovToGR works with chr22 example data", {
   # use internal motif data
   motifGR <- chromloop::motif.hg19.CTCF.chr22
 
-  motifGR <- addCovToGR(motifGR, exampleBigWig)
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
 
-  expect_true("cov" %in% names(mcols(motifGR)))
+    motifGR <- addCovToGR(motifGR, exampleBigWig)
 
+    expect_true("chip" %in% names(mcols(motifGR)))
+  }
 })

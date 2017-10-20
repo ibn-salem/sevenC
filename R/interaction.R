@@ -81,53 +81,56 @@ noZeroVar <- function(dat) {
   which(out > 1)
 }
 
-#' Add correlation of anchor signals to pairs of close genomic regions.
+#'Add correlation of anchor signals to pairs of close genomic regions.
 #'
-#' This function adds a vector with correlation values for each input
-#' interaction. Only works for input interaction within the given \code{maxDist}
-#' distance.
+#'This function adds a vector with correlation values for each input
+#'interaction. Only works for input interaction within the given \code{maxDist}
+#'distance. Note, this function does not work on windows because reading of
+#'bigWig fiels is currently not supported on windows.
 #'
-#' @param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
-#' @param datcol a string matching an annotation column in \code{regions(gi)}.
-#'   This column is assumed to hold the same number of values for each
-#'   interaction as a \code{NumericList}.
-#' @param colname A string that is used as columnname for the new column in
-#'   \code{gi}.
-#' @param maxDist maximal distance of pairs in bp as numeric. If maxDist=NULL,
-#'   the maximal distance is computed from input interactions gi by
-#'   \code{max(pairdist(gi))}.
-#' @return A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
-#'   just with an additional column added.
+#'@param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
+#'@param datacol a string matching an annotation column in \code{regions(gi)}.
+#'  This column is assumed to hold the same number of values for each
+#'  interaction as a \code{NumericList}.
+#'@param colname A string that is used as columnname for the new column in
+#'  \code{gi}.
+#'@param maxDist maximal distance of pairs in bp as numeric. If maxDist=NULL,
+#'  the maximal distance is computed from input interactions gi by
+#'  \code{max(pairdist(gi))}.
+#'@return A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
+#'  just with an additional column added.
 #' @examples
+#'if (.Platform$OS.type != "windows") {
 #'
-#' # use internal motif data on chromosome 22
-#' motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'   # use internal motif data on chromosome 22
+#'   motifGR <- chromloop::motif.hg19.CTCF.chr22
 #'
-#' # use example bigWig file
-#' exampleBigWig <- system.file("extdata",
-#' "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'   # use example bigWig file
+#'   exampleBigWig <- system.file("extdata",
+#'   "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 #'
-#' # add coverage from bigWig file
-#' motifGR <- addCovToGR(motifGR, exampleBigWig)
+#'   # add coverage from bigWig file
+#'   motifGR <- addCovToGR(motifGR, exampleBigWig)
 #'
-#' # get all pairs within 1Mb
-#' gi <- getCisPairs(motifGR, 1e5)
+#'   # get all pairs within 1Mb
+#'   gi <- getCisPairs(motifGR, 1e5)
 #'
-#' # compute correaltion of coverge for each pair
-#' gi <- addCovCor(gi, datcol = "cov")
+#'   # compute correaltion of coverge for each pair
+#'   gi <- addCovCor(gi)
 #'
-#' # addCovCor adds a new metadata column:
-#' mcols(gi)
+#'   # addCovCor adds a new metadata column:
+#'   mcols(gi)
 #'
-#' @import data.table
-#' @import InteractionSet
-#' @importFrom BiocGenerics start
-#' @importFrom GenomeInfoDb seqlengths seqinfo keepSeqlevels seqnames
-#' @importFrom GenomicRanges GRanges findOverlaps slidingWindows
-#' @importFrom S4Vectors mcols mcols<- queryHits subjectHits
-#' @importFrom methods is
-#' @export
-addCovCor <- function(gi, datcol, colname = "cor",
+#'}
+#'@import data.table
+#'@import InteractionSet
+#'@importFrom BiocGenerics start
+#'@importFrom GenomeInfoDb seqlengths seqinfo keepSeqlevels seqnames
+#'@importFrom GenomicRanges GRanges findOverlaps slidingWindows
+#'@importFrom S4Vectors mcols mcols<- queryHits subjectHits
+#'@importFrom methods is
+#'@export
+addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
                            maxDist = NULL){
 
 
@@ -179,7 +182,7 @@ addCovCor <- function(gi, datcol, colname = "cor",
   # (2) compute pairwise correlatin for all ranges in each bin
   #-----------------------------------------------------------------------------
 
-  covList <- mcols(regions(gi))[, datcol]
+  covList <- mcols(regions(gi))[, datacol]
   datamat <- as.matrix(covList)
 
   corMatList <- lapply(1:length(binGR), function(i){
@@ -495,54 +498,58 @@ prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
   return(gi)
 }
 
-#' Add correlation of ChIP-seq coverage to motif pairs.
+#'Add correlation of ChIP-seq coverage to motif pairs.
 #'
-#' This function first adds ChIP-seq signals along all regions of motif location
-#' using the function \code{\link{addCovToGR}}. Than it calculates the
-#' correlation of coverage for each input pair using the function
-#' \code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
-#' metadata column to the input interactions.
+#'This function first adds ChIP-seq signals along all regions of motif location
+#'using the function \code{\link{addCovToGR}}. Than it calculates the
+#'correlation of coverage for each input pair using the function
+#'\code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
+#'metadata column to the input interactions. Note, this function does not work
+#'on windows because reading of bigWig fiels is currently not supported on
+#'windows.
 #'
-#' @param gi \code{\link[InteractionSet]{GInteractions}} object.
-#' @param bwFile File path or connection to BigWig file with ChIP-seq signals.
-#' @param name Character indicating the sample name.
-#' @inheritParams addCovToGR
-#' @inheritParams addCovCor
+#'@param gi \code{\link[InteractionSet]{GInteractions}} object.
+#'@param bwFile File path or connection to BigWig file with ChIP-seq signals.
+#'@param name Character indicating the sample name.
+#'@inheritParams addCovToGR
+#'@inheritParams addCovCor
 #'
-#' @return An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
-#'   with a new metadata column \code{colname} holding Pearson correlation
-#'   coeffiicents of ChIP-seq signals for each anchor pair.
+#'@return An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
+#'  with a new metadata column \code{colname} holding Pearson correlation
+#'  coeffiicents of ChIP-seq signals for each anchor pair.
 #'
 #'@examples
+#'if (.Platform$OS.type != "windows") {
 #'
-#'# use example bigWig file of ChIP-seq signals on human chromosome 22
-#'exampleBigWig <- system.file("extdata",
-#'"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'  # use example bigWig file of ChIP-seq signals on human chromosome 22
+#'  exampleBigWig <- system.file("extdata",
+#'  "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 #'
-#'# use example CTCF moitf location on human chromosome 22
-#'motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'  # use example CTCF moitf location on human chromosome 22
+#'  motifGR <- chromloop::motif.hg19.CTCF.chr22
 #'
-#'# build candidate interactions
-#'gi <- prepareCandidates(motifGR, scoreColname = "sig")
-#'
-#'
-#'# add ChIP-seq signals correlation
-#'gi <- addCor(gi, exampleBigWig)
-#'
-#'# use an alternative metadata column name for ChIP-seq correlation
-#'gi <- addCor(gi, exampleBigWig, name = "Stat1")
+#'  # build candidate interactions
+#'  gi <- prepareCandidates(motifGR, scoreColname = "sig")
 #'
 #'
-#'# add ChIP-seq correlation for signals signals in windows of 500bp around
-#'# motif centers
-#'gi <- addCor(gi, exampleBigWig, window = 500)
+#'  # add ChIP-seq signals correlation
+#'  gi <- addCor(gi, exampleBigWig)
+#'
+#'  # use an alternative metadata column name for ChIP-seq correlation
+#'  gi <- addCor(gi, exampleBigWig, name = "Stat1")
 #'
 #'
-#'# add ChIP-seq correlation for signals in bins of 10 bp
-#'gi <- addCor(gi, exampleBigWig, window = 500)
+#'  # add ChIP-seq correlation for signals signals in windows of 500bp around
+#'  # motif centers
+#'  gi <- addCor(gi, exampleBigWig, window = 500)
 #'
-#' @import InteractionSet
-#' @export
+#'
+#'  # add ChIP-seq correlation for signals in bins of 10 bp
+#'  gi <- addCor(gi, exampleBigWig, window = 500)
+#'
+#'}
+#'@import InteractionSet
+#'@export
 addCor <- function(gi, bwFile, name = "chip", window = 1000, binSize = 1){
 
   regions(gi) <- addCovToGR(
@@ -554,7 +561,7 @@ addCor <- function(gi, bwFile, name = "chip", window = 1000, binSize = 1){
     )
 
   # compute correlation of ChIP-seq profiles
-  gi <- addCovCor(gi, datcol = name, colname = name)
+  gi <- addCovCor(gi, datacol = name, colname = paste0("cor_", name))
 
   return(gi)
 }

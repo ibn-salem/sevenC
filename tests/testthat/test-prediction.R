@@ -32,7 +32,7 @@ test_that("predLogit works on chr22 example data", {
   # run prediction
   pred <- predLogit(
     mcols(exampleGI),
-    stats::as.formula(" ~ dist + strandOrientation + score_min + chip"),
+    stats::as.formula(" ~ dist + strandOrientation + score_min + cor_chip"),
     modelBest10Avg$estimate
   )
 

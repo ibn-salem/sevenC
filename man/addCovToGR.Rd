@@ -4,7 +4,7 @@
 \alias{addCovToGR}
 \title{Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.}
 \usage{
-addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "cov")
+addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
 }
 \arguments{
 \item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions}
@@ -32,28 +32,31 @@ other signal in the input bigWig file) to each range in a
 \code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
-colum holding a \code{\link[IRanges]{NumericList}} object.
-This function does not work on Windows.
+colum holding a \code{\link[IRanges]{NumericList}} object. Note, this function
+does not work on windows because reading of bigWig fiels is currently not
+supported on windows.
 }
 \examples{
+if (.Platform$OS.type != "windows") {
 
-# use example bigWig file of ChIP-seq signals on human chromosome 22
-exampleBigWig <- system.file("extdata",
-"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+ # use example bigWig file of ChIP-seq signals on human chromosome 22
+ exampleBigWig <- system.file("extdata",
+ "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 
-# use example CTCF moitf location on human chromosome 22
-motifGR <- chromloop::motif.hg19.CTCF.chr22
+ # use example CTCF moitf location on human chromosome 22
+ motifGR <- chromloop::motif.hg19.CTCF.chr22
 
-# add ChIP-seq signals to motif regions
-motifGR <- addCovToGR(motifGR, exampleBigWig)
+ # add ChIP-seq signals to motif regions
+ motifGR <- addCovToGR(motifGR, exampleBigWig)
 
-# add ChIP-seq signals as column named "Stat1"
-motifGR <- addCovToGR(motifGR, exampleBigWig, colname = "Stat1")
+ # add ChIP-seq signals as column named "Stat1"
+ motifGR <- addCovToGR(motifGR, exampleBigWig, colname = "Stat1")
 
-# add ChIP-seq signals in windows of 500bp around motif centers
-motifGR <- addCovToGR(motifGR, exampleBigWig, window = 500)
+ # add ChIP-seq signals in windows of 500bp around motif centers
+ motifGR <- addCovToGR(motifGR, exampleBigWig, window = 500)
 
-# add ChIP-seq signals in bins of 10 bp
-motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
+ # add ChIP-seq signals in bins of 10 bp
+ motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
 
+}
 }

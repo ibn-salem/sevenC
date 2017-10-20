@@ -4,12 +4,12 @@
 \alias{addCovCor}
 \title{Add correlation of anchor signals to pairs of close genomic regions.}
 \usage{
-addCovCor(gi, datcol, colname = "cor", maxDist = NULL)
+addCovCor(gi, datacol = "chip", colname = "cor_chip", maxDist = NULL)
 }
 \arguments{
 \item{gi}{A sorted \code{\link[InteractionSet]{GInteractions}} object.}
 
-\item{datcol}{a string matching an annotation column in \code{regions(gi)}.
+\item{datacol}{a string matching an annotation column in \code{regions(gi)}.
 This column is assumed to hold the same number of values for each
 interaction as a \code{NumericList}.}
 
@@ -22,32 +22,35 @@ the maximal distance is computed from input interactions gi by
 }
 \value{
 A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
-  just with an additional column added.
+ just with an additional column added.
 }
 \description{
 This function adds a vector with correlation values for each input
 interaction. Only works for input interaction within the given \code{maxDist}
-distance.
+distance. Note, this function does not work on windows because reading of
+bigWig fiels is currently not supported on windows.
 }
 \examples{
+if (.Platform$OS.type != "windows") {
 
-# use internal motif data on chromosome 22
-motifGR <- chromloop::motif.hg19.CTCF.chr22
+  # use internal motif data on chromosome 22
+  motifGR <- chromloop::motif.hg19.CTCF.chr22
 
-# use example bigWig file
-exampleBigWig <- system.file("extdata",
-"GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+  # use example bigWig file
+  exampleBigWig <- system.file("extdata",
+  "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
 
-# add coverage from bigWig file
-motifGR <- addCovToGR(motifGR, exampleBigWig)
+  # add coverage from bigWig file
+  motifGR <- addCovToGR(motifGR, exampleBigWig)
 
-# get all pairs within 1Mb
-gi <- getCisPairs(motifGR, 1e5)
+  # get all pairs within 1Mb
+  gi <- getCisPairs(motifGR, 1e5)
 
-# compute correaltion of coverge for each pair
-gi <- addCovCor(gi, datcol = "cov")
+  # compute correaltion of coverge for each pair
+  gi <- addCovCor(gi)
 
-# addCovCor adds a new metadata column:
-mcols(gi)
+  # addCovCor adds a new metadata column:
+  mcols(gi)
 
+}
 }
