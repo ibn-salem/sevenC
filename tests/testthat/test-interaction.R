@@ -122,13 +122,24 @@ test_that("coverage is added to gi on small example dataset", {
 
   regGR <- regions(gi)
 
-  regions(gi) <- addCovToGR(
-    regGR,
-    bwFile,
-    window = 10,
-    binSize = 1,
-    colname = "cov")
-
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type == 'windows') {
+    expect_warning(
+      addCovToGR(
+        regGR,
+        bwFile,
+        window = 10,
+        binSize = 1,
+        colname = "cov")
+    )
+  } else {
+    regions(gi) <- addCovToGR(
+      regGR,
+      bwFile,
+      window = 10,
+      binSize = 1,
+      colname = "cov")
+  }
 })
 
 test_that("addCovCor works with chr22 example data", {
@@ -140,13 +151,16 @@ test_that("addCovCor works with chr22 example data", {
   # use internal motif data
   motifGR <- chromloop::motif.hg19.CTCF.chr22
 
-  motifGR <- addCovToGR(motifGR, exampleBigWig)
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type == 'windows') {
 
-  # get all pairs within 1Mb
-  gi <- getCisPairs(motifGR, 1e5)
+    motifGR <- addCovToGR(motifGR, exampleBigWig)
 
-  gi <- addCovCor(gi, datacol = "chip")
+    # get all pairs within 1Mb
+    gi <- getCisPairs(motifGR, 1e5)
 
+    gi <- addCovCor(gi, datacol = "chip")
+  }
 })
 
 
@@ -165,35 +179,38 @@ test_that("getCisPairs works with whole CTCF motif data", {
 
 test_that("addCovCor runs on toy example dataset", {
 
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type == 'windows') {
 
-  regions(toyGI) <- addCovToGR(regions(toyGI),
-                                            toyCovFile,
-                                            window = 4,
-                                            binSize = 1,
-                                            colname = "cov")
+    regions(toyGI) <- addCovToGR(
+      regions(toyGI),
+      toyCovFile,
+      window = 4,
+      binSize = 1,
+      colname = "cov")
 
-  ncolBefore <- ncol(mcols(toyGI))
+    ncolBefore <- ncol(mcols(toyGI))
 
-  toyGI <- addCovCor(toyGI, "cov", colname = "value")
+    toyGI <- addCovCor(toyGI, "cov", colname = "value")
 
-  # check that exactly one column is added
-  expect_equal(ncol(mcols(toyGI)), ncolBefore + 1)
-  expect_equal(names(mcols(toyGI)), "value")
+    # check that exactly one column is added
+    expect_equal(ncol(mcols(toyGI)), ncolBefore + 1)
+    expect_equal(names(mcols(toyGI)), "value")
 
-  # check that all cor values are correct
+    # check that all cor values are correct
 
-  covLst <- regions(toyGI)$cov
-  pairIdx <- cbind(
-    anchors(toyGI, id = TRUE, type = "first"),
-    anchors(toyGI, id = TRUE, type = "second")
-  )
-  expect_warning(
-    corMat <- stats::cor(t(as.matrix(covLst)))
-  )
-  manualCor <- corMat[pairIdx]
+    covLst <- regions(toyGI)$cov
+    pairIdx <- cbind(
+      anchors(toyGI, id = TRUE, type = "first"),
+      anchors(toyGI, id = TRUE, type = "second")
+    )
+    expect_warning(
+      corMat <- stats::cor(t(as.matrix(covLst)))
+    )
+    manualCor <- corMat[pairIdx]
 
-  expect_equal(toyGI$value, manualCor)
-
+    expect_equal(toyGI$value, manualCor)
+  }
 })
 
 test_that("interactions can be annotated with Hi-C loops", {
@@ -275,11 +292,13 @@ test_that("prepareCandidates works on toy example data", {
 
 test_that("addCor works on toy example data", {
 
-  gi <- addCor(toyGI, toyCovFile, name = "toy", window = 4, binSize = 1)
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
+    gi <- addCor(toyGI, toyCovFile, name = "toy", window = 4, binSize = 1)
 
-  expect_true("toy" %in% names(mcols(regions(gi))))
-  expect_equal(ncol(mcols(gi)), ncol(mcols(toyGI)) + 1)
-  expect_true("cor_toy" %in% names(mcols(gi)))
-
+    expect_true("toy" %in% names(mcols(regions(gi))))
+    expect_equal(ncol(mcols(gi)), ncol(mcols(toyGI)) + 1)
+    expect_true("cor_toy" %in% names(mcols(gi)))
+  }
 })
 
