@@ -21,15 +21,17 @@ combined.}
 }
 \value{
 An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
-  with a new metadata column \code{colname} holding Pearson correlation
-  coeffiicents of ChIP-seq signals for each anchor pair.
+ with a new metadata column \code{colname} holding Pearson correlation
+ coeffiicents of ChIP-seq signals for each anchor pair.
 }
 \description{
 This function first adds ChIP-seq signals along all regions of motif location
 using the function \code{\link{addCovToGR}}. Than it calculates the
 correlation of coverage for each input pair using the function
 \code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
-metadata column to the input interactions.
+metadata column to the input interactions. Note, this function does not work
+on windows because reading of bigWig fiels is currently not supported on
+windows.
 }
 \examples{
 

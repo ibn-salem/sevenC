@@ -32,8 +32,9 @@ other signal in the input bigWig file) to each range in a
 \code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
-colum holding a \code{\link[IRanges]{NumericList}} object.
-This function does not work on Windows.
+colum holding a \code{\link[IRanges]{NumericList}} object. Note, this function
+does not work on windows because reading of bigWig fiels is currently not
+supported on windows.
 }
 \examples{
 

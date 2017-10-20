@@ -22,12 +22,13 @@ the maximal distance is computed from input interactions gi by
 }
 \value{
 A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
-  just with an additional column added.
+ just with an additional column added.
 }
 \description{
 This function adds a vector with correlation values for each input
 interaction. Only works for input interaction within the given \code{maxDist}
-distance.
+distance. Note, this function does not work on windows because reading of
+bigWig fiels is currently not supported on windows.
 }
 \examples{
 

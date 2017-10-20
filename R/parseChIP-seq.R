@@ -70,8 +70,9 @@ slideMean <- function(x, k){
 #'\code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
 #'fixed-sized window around the region center. For regions with negative strand,
 #'the coverage vector is reversed. The coverage signal is added as new metadata
-#'colum holding a \code{\link[IRanges]{NumericList}} object.
-#'This function does not work on Windows.
+#'colum holding a \code{\link[IRanges]{NumericList}} object. Note, this function
+#'does not work on windows because reading of bigWig fiels is currently not
+#'supported on windows.
 #'
 #'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
 #'@param bwFile File path or connection to BigWig file with coverage to parse
@@ -109,11 +110,12 @@ slideMean <- function(x, k){
 #'motifGR <- addCovToGR(motifGR, exampleBigWig, binSize = 10)
 #'
 #'@import InteractionSet
-#' @importFrom BiocGenerics start start<- strand
-#' @importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<- seqinfo<-
-#' @importFrom GenomicRanges resize coverage
-#' @importFrom IRanges trim NumericList
-#' @importFrom methods is
+#'@importFrom BiocGenerics start start<- strand
+#'@importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<-
+#'  seqinfo<-
+#'@importFrom GenomicRanges resize coverage
+#'@importFrom IRanges trim NumericList
+#'@importFrom methods is
 #'@export
 addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip"){
 
