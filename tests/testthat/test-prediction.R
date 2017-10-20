@@ -2,12 +2,9 @@ context("predictions")
 
 
 # prepare gi from chr22 exampple data set
-exampleGI <- prepareCandidates(motif.hg19.CTCF.chr22, scoreColname = "sig")
+exampleGI <- prepareCandidates(motif.hg19.CTCF.chr22.cov, scoreColname = "sig")
 
-exampleBigWig <- system.file(
-  "extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
-
-exampleGI <- addCor(exampleGI, exampleBigWig)
+exampleGI <- addCovCor(exampleGI)
 
 # Tests -------------------------------------------------------------------
 
