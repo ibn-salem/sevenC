@@ -152,7 +152,7 @@ test_that("addCovCor works with chr22 example data", {
   motifGR <- chromloop::motif.hg19.CTCF.chr22
 
   # bigWig parsing fails on windows in rtracklayer::import.bw()
-  if (.Platform$OS.type == 'windows') {
+  if (.Platform$OS.type != 'windows') {
 
     motifGR <- addCovToGR(motifGR, exampleBigWig)
 
@@ -180,7 +180,7 @@ test_that("getCisPairs works with whole CTCF motif data", {
 test_that("addCovCor runs on toy example dataset", {
 
   # bigWig parsing fails on windows in rtracklayer::import.bw()
-  if (.Platform$OS.type == 'windows') {
+  if (.Platform$OS.type != 'windows') {
 
     regions(toyGI) <- addCovToGR(
       regions(toyGI),
