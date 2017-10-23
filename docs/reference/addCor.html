@@ -86,7 +86,9 @@
 using the function <code><a href='addCovToGR.html'>addCovToGR</a></code>. Than it calculates the
 correlation of coverage for each input pair using the function
 <code><a href='addCovCor.html'>addCovCor</a></code>. The Pearson correlation coeffiicent is added as new
-metadata column to the input interactions.</p>
+metadata column to the input interactions. Note, this function does not work
+on windows because reading of bigWig fiels is currently not supported on
+windows.</p>
     
 
     <pre class="usage"><span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>bwFile</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"chip"</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>binSize</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
@@ -121,37 +123,40 @@ combined.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An <code><a href='http://www.rdocumentation.org/packages/InteractionSet/topics/GInteractions-class'>GInteractions</a></code> object like <code>gi</code>
-  with a new metadata column <code>colname</code> holding Pearson correlation
-  coeffiicents of ChIP-seq signals for each anchor pair.</p>
+ with a new metadata column <code>colname</code> holding Pearson correlation
+ coeffiicents of ChIP-seq signals for each anchor pair.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># use example bigWig file of ChIP-seq signals on human chromosome 22</span>
-<span class='no'>exampleBigWig</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>,
-<span class='st'>"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"chromloop"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
 
-<span class='co'># use example CTCF moitf location on human chromosome 22</span>
-<span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>chromloop</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/chromloop/topics/motif.hg19.CTCF.chr22'>motif.hg19.CTCF.chr22</a></span>
+ <span class='co'># use example bigWig file of ChIP-seq signals on human chromosome 22</span>
+ <span class='no'>exampleBigWig</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>,
+ <span class='st'>"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"chromloop"</span>)
 
-<span class='co'># build candidate interactions</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepareCandidates.html'>prepareCandidates</a></span>(<span class='no'>motifGR</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"sig"</span>)
+ <span class='co'># use example CTCF moitf location on human chromosome 22</span>
+ <span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>chromloop</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/chromloop/topics/motif.hg19.CTCF.chr22'>motif.hg19.CTCF.chr22</a></span>
 
-
-<span class='co'># add ChIP-seq signals correlation</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>)
-
-<span class='co'># use an alternative metadata column name for ChIP-seq correlation</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Stat1"</span>)
+ <span class='co'># build candidate interactions</span>
+ <span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepareCandidates.html'>prepareCandidates</a></span>(<span class='no'>motifGR</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"sig"</span>)
 
 
-<span class='co'># add ChIP-seq correlation for signals signals in windows of 500bp around</span>
-<span class='co'># motif centers</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+ <span class='co'># add ChIP-seq signals correlation</span>
+ <span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>)
+
+ <span class='co'># use an alternative metadata column name for ChIP-seq correlation</span>
+ <span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"Stat1"</span>)
 
 
-<span class='co'># add ChIP-seq correlation for signals in bins of 10 bp</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>500</span>)</div></pre>
+ <span class='co'># add ChIP-seq correlation for signals signals in windows of 500bp around</span>
+ <span class='co'># motif centers</span>
+ <span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+
+
+ <span class='co'># add ChIP-seq correlation for signals in bins of 10 bp</span>
+ <span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>addCor</span>(<span class='no'>gi</span>, <span class='no'>exampleBigWig</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

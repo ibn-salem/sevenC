@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • chromloop</title>
+<title>CTCF motifs on human chromosome 22 with example coverage. — motif.hg19.CTCF.chr22.cov • chromloop</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-vignette-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -75,20 +75,44 @@
       
       </header>
 
-      <div class="page-header">
-  <h1>Articles <small>version&nbsp;0.99.11</small></h1>
-</div>
-
-<div class="row">
-  <div class="col-md-9">
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="chromloop.html">Prediction of chromatin looping interactions with *chromloop*</a></li>
-      </ul>
+      <div class="row">
+  <div class="col-md-9 contents">
+    <div class="page-header">
+    <h1>CTCF motifs on human chromosome 22 with example coverage.</h1>
     </div>
+
+    
+    <p>This dataset is the same as <code><a href='motif.hg19.CTCF.chr22.html'>motif.hg19.CTCF.chr22</a></code> but with one
+additional metadata colum, named "chip", holding ChIP-seq signals for all
+motifs in a windows of 1000 bp around the motif center as
+<code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code>. The data is from a ChIP-seq experiment
+for STAT1 in human GM12878 cells. The full bigWig file can be downloaded from
+ENCODE (Dunham et al. 2012)
+[here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).</p>
+    
+
+    <pre class="usage"><span class='no'>motif.hg19.CTCF.chr22.cov</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>An object of class <code>GRanges</code> of length 696.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>See <code><a href='motif.hg19.CTCF.html'>motif.hg19.CTCF</a></code> and <code><a href='motif.hg19.CTCF.chr22.html'>motif.hg19.CTCF.chr22</a></code> for
+a more details and the motif data set.</p>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
+
   </div>
 </div>
 
