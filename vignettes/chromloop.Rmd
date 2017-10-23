@@ -121,18 +121,19 @@ motifs$cov
 
 ### Build pairs of motifs as candidate interactions
 
-Now we build a dataset with all pairs of CTCF motif within 1 mega base pair and annotate it with distance, motif orientation, and motif score. 
+Now we build a dataset with all pairs of CTCF motif within 1 Mb and annotate it with distance, motif orientation, and motif score. 
 ```{r}
 gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
 
 gi
 ```
-The return value `gi` of the function `prepareCandidates()` is `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
+The function `prepareCandidates()` returns a `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
+Metadata columns of the `GInteractoin` object hold the genomic distance between motifs in bp (`dist`), the orientation of motifs (`strandOrientation`), and motif score as -log~10~ of the motif hit p-value (`score_1`, `score_2`, and `score_min`). 
 
 ## Compute similarity at motif pairs
 
 Now, we compute the correlation of ChIP-seq signals for all motif pairs.
-The correlation coefficient is added as additinoal metadata column to `gi`.
+The correlation coefficient is added as additional metadata column to `gi`.
 ```{r}
 # add ChIP-seq coverage and compute correaltion at motif pairs
 gi <- addCovCor(gi)
@@ -163,8 +164,110 @@ export.bedpe(loops, "loop_interactions.bedpe", score = "pred")
 
 
 # Train prediciton model using custom data
-Instructions on how to fit a logistic regression model with user provided data will be explained here soon.
+Here, we show how to use  `r BiocStyle::Biocpkg("chromloop")` to build and train a logistic regression model for loop prediction. 
 
+## Prepare moitf pairs and add ChIP-seq data
+First, we need to build the pairs of motifs as candidate and add the ChIP-seq data as shown above. 
+
+```{r eval = FALSE, echo = TRUE}
+# load provided CTCF motifs
+motifs <- motif.hg19.CTCF.chr22
+
+# use example ChIP-seq coverage file
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+  package = "chromloop")
+
+# add ChIP-seq coverage
+motifs <- addCovToGR(motifs, bigWigFile)
+
+# build motif pairs
+gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
+
+# add correaltion of ChIP-signal
+gi <- addCovCor(gi)
+```
+
+```{r eval = TRUE, echo = FALSE}
+# check if OS is windows
+if (.Platform$OS.type == 'windows') {
+  motifs <- motif.hg19.CTCF.chr22.cov
+} else {
+  # load provided CTCF motifs
+  motifs <- motif.hg19.CTCF.chr22
+  
+  # use example ChIP-seq coverage file
+  bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+    package = "chromloop")
+  
+  # add ChIP-seq coverage
+  motifs <- addCovToGR(motifs, bigWigFile)
+}
+  
+gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
+
+# add correaltion of ChIP-signal
+gi <- addCovCor(gi)
+```
+
+## Train predictor with known loops
+
+We need to label true looping interactions by using experimental data of chromatin interactions. 
+Here, we use loops from high resolution Hi-C experiments in human GM12878 cells [@Rao2014].
+An example file with loops on chromosome 22 is provided with the `r BiocStyle::Biocpkg("chromloop")` package and the function `parseLoopsRao()` reads loops in the format provided by Rao et al. and returns a `GInteraction` object.
+We can add a new metadata column to the motif pairs indicating whether the pair is interacting in the experimental data using the function `addInteractionSupport()`.
+
+```{r}
+# parse known loops
+knownLoopFile <- system.file("extdata", 
+  "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "chromloop")
+
+knownLoops <- parseLoopsRao(knownLoopFile)
+
+# add known loops
+gi <- addInteractionSupport(gi, knownLoops)
+```
+The experimental support is added as factor with levels `"Loop"` and `"No loop"` as metadata column named `loop` (which can be modified using the `colname` argument).
+
+## Train logistic regression model 
+We can use the `glm()` function in R to fit a logistic regression model in which the `loop` column is the dependent variable and the ChIP-seq correlation, distance, and strandOrientation are the predictors. 
+
+```{r}
+fit <- glm(
+  formula = loop ~ cor_chip + dist + strandOrientation, 
+  data = mcols(gi), 
+  family = binomial()
+  )
+```
+
+## Predict loops with custom model
+Now, we can use this model to add predicted looping probabilities.
+
+```{r}
+# add predict loops
+gi <- predLoops(
+  gi,
+  formula = loop ~ cor_chip + dist + strandOrientation,
+  betas = coef(fit),
+  cutoff = NULL
+)
+```
+Here, we have to use the same formula as argument as in the model fitting step above. 
+The `betas` argument takes the coefficients of the logistic regression model.
+Finally, the argument `cutoff = NULL` ensures that no filtering is done and all input candidates are reported.
+The prediction score is added as a new metadata column to `gi`.
+```{r}
+gi 
+```
+
+As a very simple validation we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.
+
+```{r, fig.width = 6}
+boxplot(gi$pred ~ gi$loop)
+
+```
+This shows higher prediction scores for truly looping motif pairs.
+However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. 
+A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the chromloop paper. 
 
 # References
 
