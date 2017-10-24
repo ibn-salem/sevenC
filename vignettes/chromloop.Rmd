@@ -35,7 +35,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
-# Introduction
+# Background and introduction
 
 Gene expression is regulated by binding of transcription factors (TF) to genomic DNA. 
 However, many binding sites are in distal regulatory region, such as enhancers, that are hundreds of kilo bases apart of genes.
@@ -50,34 +50,81 @@ The predicted looping interactions can be used to associate TF binding sites (Ch
 In this vignette, we show how to use the R package `r BiocStyle::Biocpkg("chromloop")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
 Furthermore, we show how to train the the prediction model using custom data.
 
-# Predict chromatin interaction form ChIP-seq
+# Predict chromatin looping interactions
 
-Here we show how to use the package to predict chromatin looping interactions 
-among CTCF motif locations on chromosome 22. 
+## Basic usage example
+Here we show how to use the `r BiocStyle::Biocpkg("chromloop")` package with 
+default options to predict chromatin looping interactions 
+among CTCF motif locations on chromosome 22. As input only a single bigWig file 
+with example ChIP-seq data is used.
+
+### Get motif pairs
+```{r, results = "hide", message = FALSE}
+library(chromloop)
+
+# load provided CTCF motifs in human genome
+motifs <- motif.hg19.CTCF.chr22
+
+# get motifs pairs
+gi <- prepareCandidates(motifs, scoreColname = "sig")
+```
+
+### Add ChIP-seq data and compute correaltion
+```{r eval = FALSE, echo = TRUE}
+
+# use example ChIP-seq bigWig file
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+  package = "chromloop")
+
+# add ChIP-seq coverage and compute correaltion at motif pairs
+gi <- addCor(gi, bigWigFile)
+```
+
+```{r eval = TRUE, echo = FALSE}
+# check if on windows to prevent bigWig reading errors from rtracklayer
+if (.Platform$OS.type == 'windows') {
+  # use motif data with ChIP-seq coverage
+  motifs <- motif.hg19.CTCF.chr22.cov
+  gi <- prepareCandidates(motifs, scoreColname = "sig")
+  gi <- addCovCor(gi)
+  
+} else {
+  # use example ChIP-seq bigWig file
+  bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+    package = "chromloop")
+  
+  # add ChIP-seq coverage and compute correaltion at motif pairs
+  gi <- addCor(gi, bigWigFile)
+}
+```
+
+###  Predict loops
+
+```{r}
+# predict looping interactions among all motif pairs
+loops <- predLoops(gi)
+```
+
+## More detailed usage example
+
+Here we show in more detail each step of the loop prediction process. 
+Again, we want to predict chromatin looping interactions among CTCF motif locations on chromosome 22. 
 As input only a single bigWig file is used with coverage from a STAT1 ChIP-seq experiment 
-in human GM12878 cells[^1]. 
+in human GM12878 cells.
 
-[^1]: An example file with only data on a subset of chromosome 22 is provide as part of 
-the `r BiocStyle::Biocpkg("chromloop")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).
-
-## Prepare CTCF motif pairs
+### Prepare CTCF motif pairs
 First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. 
 We use CTCF motif hits in human chromosome 22 as provide by `r BiocStyle::Biocpkg("chromloop")` package.
-
+In general, any CTCF motif pairs can be used if provided as `GRanges` object. 
+To use the motif hit score, the motif data should contain a -log~10~ transformed p-value describing the significance of each motif hit.
+Here, we use CTCF motif hits from RSAT matrix-scan on chromosome 22 as provided as `motif.hg19.CTCF.chr22` in the `r BiocStyle::Biocpkg("chromloop")` package. For more information on the motif data set, see `?motif.hg19.CTCF`.
 ```{r, results = "hide", message = FALSE}
 library(chromloop)
 
 # load provided CTCF motifs
 motifs <- motif.hg19.CTCF.chr22
 ```
-The CTCF motif are represented as `GRanges` object from the `r BiocStyle::Biocpkg("GenomicRanges")` package. 
-
-```{r}
-class(motifs)
-
-motifs
-```
-There are `r length(motifs)` CTCF motif locations on chromosome 22. 
+The CTCF motif are represented as `GRanges` object from the `r BiocStyle::Biocpkg("GenomicRanges")` package. There are `r length(motifs)` CTCF motif locations on chromosome 22. 
 The genome assembly is hg19. 
 Four metadata columns show motif match similarity as weight score, p-value, log transformed p-value and significance score. 
 Use `help(motif.hg19.CTCF)` to get more information on the motif dataset.
@@ -86,9 +133,11 @@ Use `help(motif.hg19.CTCF)` to get more information on the motif dataset.
 
 To predict loops we need the ChIP-seq signals at all motif sites. 
 Therefore, we read an example bigWig file with ChIP-seq signals^[Note, reading of bigWig files is currently not supported on Windows. 
-See `help(rtracklayer::import.bw)` for more information. Users on Windows need to add coverage signals as `NumierList` by other means.]. 
-For each position along the genome, the file contains the log fold-change of ChIP signals compared to input control. 
-A sample file with data on a subset of chromosome 22 is provided in the package. 
+See `help(rtracklayer::import.bw)` for more information. Users on Windows need to add ChIP-seq signals as `NumierList` by other means.]. 
+
+An example file with only data on a subset of chromosome 22 is provide as part of
+the `r BiocStyle::Biocpkg("chromloop")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig). The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.
+
 ```{r}
 # use example ChIP-seq bigWig file
 bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
@@ -117,8 +166,6 @@ This adds a new metadata column to `motifs` holding a `NumericList` with ChIP-se
 motifs$cov
 ```
 
-
-
 ### Build pairs of motifs as candidate interactions
 
 Now we build a dataset with all pairs of CTCF motif within 1 Mb and annotate it with distance, motif orientation, and motif score. 
@@ -127,12 +174,16 @@ gi <- prepareCandidates(motifs, maxDist = 10^6, scoreColname = "sig")
 
 gi
 ```
-The function `prepareCandidates()` returns a `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
+The function `prepareCandidates()` returns a `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package, representing all motif pairs within the defined distance. 
 Metadata columns of the `GInteractoin` object hold the genomic distance between motifs in bp (`dist`), the orientation of motifs (`strandOrientation`), and motif score as -log~10~ of the motif hit p-value (`score_1`, `score_2`, and `score_min`). 
+Note, that the function `prepareCandidates()` is wrapper for three individual functions that performs each step separately and allow more options. 
+First, `getCisPairs()` is used to builds the `GInteractoin` object. Than `addStrandCombination()` adds the four possible strand combinations of motifs pairs. Finally, `addMotifScore()` adds the minimum motif score for each pair.
+These features are later used as variables for predictions. 
 
-## Compute similarity at motif pairs
+## Compute ChIP-seq similarity at motif pairs
 
-Now, we compute the correlation of ChIP-seq signals for all motif pairs.
+Now, we compute the correlation of ChIP-seq signals for all motif pairs across positions around motif centers.
+Essentially, for two motifs the corresponding ChIP-seq signal vectors that were added to `motifs` before, are compared by Pearson correlation. High correlation of ChIP-seq signals at two motifs indicate a similar ChIP-seq coverage profile at the two motifs. This in turn is characteristic for interacting motifs, where ChIP signals are found on both side with a similar distance to motif centers.
 The correlation coefficient is added as additional metadata column to `gi`.
 ```{r}
 # add ChIP-seq coverage and compute correaltion at motif pairs
@@ -140,7 +191,7 @@ gi <- addCovCor(gi)
 ```
 
 ## Predict loops
-Now we can predict chromatin loops using the default trained model. 
+Now we can predict chromatin loops integrating the ChIP-seq correlation with other genomic features in a logistic regression model.
 ```{r}
 loops <- predLoops(gi)
 
@@ -148,14 +199,25 @@ loops
 ```
 This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column `chip` and interaction probability in `pred`.
 
+Note, that without specifying further options, the function `predLoops()` uses a default model that was optimized for several transcription factor ChIP-seq data sets by using experimental chromatin loops from Hi-C and ChIA-PET for validations. 
+However, users can specify custom features using the `formular` argument and provide custom parameters using the `betas`argument. 
+Furthermore, per default the `predLoops()` function report only looping interactions that mead a minimal prediction score threshold. This can be modified using the `cutoff` argument. 
+
+# Downstream analysis with chromatin loops
+
+## Linking sets of regions
+Predicted loops are represented as `GInteraction` and can therefore be used easily for downstream analysis with functions from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
+For example linking two sets of regions (like ChIP-seq peaks and genes) can be done using the `linkOverlaps` function. 
+See the [vignette](http://bioconductor.org/packages/release/bioc/vignettes/InteractionSet/inst/doc/interactions.html) of the `r BiocStyle::Biocpkg("InteractonSet")` package for more details and examples. 
+
 ## Write predicted loops to output file
 Since looping interactions are stored as `GInteraction` objects, they 
 can be exported as 
 [BED-PE](http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) 
 files using functions from `r BiocStyle::Biocpkg("GenomicInteractions")` package.
 
-```{r, message = FALSE}
-require(GenomicInteractions)
+```{r, results = "hide", message = FALSE}
+library(GenomicInteractions)
 
 # export to output file
 export.bedpe(loops, "loop_interactions.bedpe", score = "pred")
@@ -214,22 +276,23 @@ gi <- addCovCor(gi)
 We need to label true looping interactions by using experimental data of chromatin interactions. 
 Here, we use loops from high resolution Hi-C experiments in human GM12878 cells [@Rao2014].
 An example file with loops on chromosome 22 is provided with the `r BiocStyle::Biocpkg("chromloop")` package and the function `parseLoopsRao()` reads loops in the format provided by Rao et al. and returns a `GInteraction` object.
-We can add a new metadata column to the motif pairs indicating whether the pair is interacting in the experimental data using the function `addInteractionSupport()`.
-
-```{r}
+```{r, message = FALSE}
 # parse known loops
 knownLoopFile <- system.file("extdata", 
   "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "chromloop")
 
 knownLoops <- parseLoopsRao(knownLoopFile)
+```
+We can add a new metadata column to the motif pairs `gi`, indicating whether the pair is interacting in the experimental data using the function `addInteractionSupport()`.
 
+```{r}
 # add known loops
 gi <- addInteractionSupport(gi, knownLoops)
 ```
-The experimental support is added as factor with levels `"Loop"` and `"No loop"` as metadata column named `loop` (which can be modified using the `colname` argument).
+The experimental support is added as factor with levels `"Loop"` and `"No loop"` as metadata column named `loop`. The column name  can be modified using the `colname` argument.
 
 ## Train logistic regression model 
-We can use the `glm()` function in R to fit a logistic regression model in which the `loop` column is the dependent variable and the ChIP-seq correlation, distance, and strandOrientation are the predictors. 
+We can use the `glm()` function in R to fit a logistic regression model in which the `loop` column is the dependent variable and the ChIP-seq correlation, distance, and strand orientation are the predictors. 
 
 ```{r}
 fit <- glm(
