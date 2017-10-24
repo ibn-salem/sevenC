@@ -41,7 +41,14 @@
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ibn-salem/chromloop">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -56,18 +63,14 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#chromloop" class="anchor"></a>chromloop</h1></div>
 <p>R package to predict chromatin looping interactions from ChIP-seq data and sequnece motifs.</p>
-<p>Chromatin looping is an importent feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
+<p>Chromatin looping is an important feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
 <div id="intallation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#intallation" class="anchor"></a>Intallation</h2>
-<p>The chromloop package depends on the follwing R packages from Bioconductor:</p>
-<ul>
-<li>rtracklayer (&gt;= 1.34.1),</li>
-<li>InteractionSet (&gt;= 1.2.0),</li>
-</ul>
+<p>The chromloop package depends on some R packages from Bioconductor. They can be installed as follows</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
 <span class="kw">biocLite</span>(<span class="st">"rtracklayer"</span>, <span class="st">"InteractionSet"</span>)</code></pre></div>
-<p>Install chromloop from github using devtools:</p>
+<p>The development version of chromloop can be installed from github using devtools:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ibn-salem/chromloop"</span>)</code></pre></div>
 </div>
@@ -75,9 +78,9 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <h2 class="hasAnchor">
 <a href="#basic-usage-example" class="anchor"></a>Basic usage example</h2>
 <p>Here we show how to use the package to predict chromatin looping interactions among CTCF moif locations on chromosome 22. As input only a single bigWig file is used from a STAT1 ChIP-seq experiment in human GM12878 cells.</p>
-<div id="get-motif-pairs" class="section level3">
-<h3 class="hasAnchor">
-<a href="#get-motif-pairs" class="anchor"></a>Get motif pairs</h3>
+<div id="get-motif-pairs" class="section level4">
+<h4 class="hasAnchor">
+<a href="#get-motif-pairs" class="anchor"></a>Get motif pairs</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(chromloop)
 
 <span class="co"># load provided CTCF motifs in human genome</span>
@@ -86,9 +89,9 @@ motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
 <span class="co"># get motifs pairs</span>
 gi &lt;-<span class="st"> </span><span class="kw"><a href="reference/prepareCandidates.html">prepareCandidates</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)</code></pre></div>
 </div>
-<div id="add-chip-seq-data-and-compute-correaltion" class="section level3">
-<h3 class="hasAnchor">
-<a href="#add-chip-seq-data-and-compute-correaltion" class="anchor"></a>Add ChIP-seq data and compute correaltion</h3>
+<div id="add-chip-seq-data-and-compute-correaltion" class="section level4">
+<h4 class="hasAnchor">
+<a href="#add-chip-seq-data-and-compute-correaltion" class="anchor"></a>Add ChIP-seq data and compute correaltion</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># use example ChIP-seq bigWig file</span>
 bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, 
@@ -97,12 +100,18 @@ bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<sp
 <span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span>
 gi &lt;-<span class="st"> </span><span class="kw"><a href="reference/addCor.html">addCor</a></span>(gi, bigWigFile)</code></pre></div>
 </div>
-<div id="predict-loops" class="section level3">
-<h3 class="hasAnchor">
-<a href="#predict-loops" class="anchor"></a>Predict loops</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loops &lt;-<span class="st"> </span><span class="kw"><a href="reference/predLoops.html">predLoops</a></span>(gi)</code></pre></div>
-<p>For more detailed usage instructions, see the package <a href="https://ibn-salem.github.io/chromloop/articles/chromloop.html">vignette</a>.</p>
+<div id="predict-loops" class="section level4">
+<h4 class="hasAnchor">
+<a href="#predict-loops" class="anchor"></a>Predict loops</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># predict looping interactions among all motif pairs</span>
+loops &lt;-<span class="st"> </span><span class="kw"><a href="reference/predLoops.html">predLoops</a></span>(gi)</code></pre></div>
+<p>For more detailed usage instructions, see the package <a href="https://ibn-salem.github.io/chromloop/articles/chromloop.html">vignette</a> or <a href="https://ibn-salem.github.io/chromloop/reference/index.html">reference documentation</a>.</p>
 </div>
+</div>
+<div id="issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#issues" class="anchor"></a>Issues</h2>
+<p>Please report any issues here: <a href="https://github.com/ibn-salem/chromloop/issues" class="uri">https://github.com/ibn-salem/chromloop/issues</a></p>
 </div>
 </div>
   </div>

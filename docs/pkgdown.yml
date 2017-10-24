@@ -1,0 +1,6 @@
+urls:
+  reference: https://ibn-salem.github.io/chromloop//reference
+  article: https://ibn-salem.github.io/chromloop//articles
+articles:
+  chromloop: chromloop.html
+

@@ -1,0 +1,33 @@
+url: https://ibn-salem.github.io/chromloop/
+
+reference:
+  - title: Interactions
+    contents:
+    - prepareCandidates
+    - getCisPairs
+    - addStrandCombination
+    - addMotifScore
+    - addInteractionSupport
+    - addCor
+    - addCovCor
+  - title: Reading genomic data
+    contents:
+    - addCovToGR
+    - parseLoopsRao
+    - parseLoopsTang2015
+  - title: Prediction
+    contents:
+    - predLoops
+  - title: Data sets
+    contents:
+    - motif.hg19.CTCF
+    - motif.hg19.CTCF.chr22
+    - motif.hg19.CTCF.chr22.cov
+    - modelBest10Avg
+    - cutoffByTF
+    - cutoffBest10
+
+navbar:
+  right:
+    - icon: fa-github
+      href: https://github.com/ibn-salem/chromloop

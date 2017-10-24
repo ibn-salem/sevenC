@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ibn-salem/chromloop">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -82,7 +87,7 @@
     </div>
 
     
-    <p>This dataset contain term names and estimates for logistic regression model
+    <p>This dataset contains term names and estimates for logistic regression model
 to predict chromatin looping interactions. The estimate represent an average
 of the 10 best performing models out of 121 transcription factor ChIP-seq
 data sets from ENCODE.</p>
@@ -92,22 +97,54 @@ data sets from ENCODE.</p>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>data.frame</code> with 7 rows and 2 columns:</p>
+    <p>An object of class <code>data.frame</code> with 7 rows and 2 columns
+  holding the term name and estimate.</p>
 <p></p><dl class='dl-horizontal'>
-    <dt>term</dt><dd><p>Term name</p></dd>
-    <dt>estimate</dt><dd><p>Parameter estimate</p></dd>
+    <dt>(Intercept)</dt><dd><p>The intercept of the logistic regression model.</p></dd>
+    <dt>dist</dt><dd><p>The genomic distance between the centers of motifs in base
+  pairs (bp).</p></dd>
+    <dt>strandOrientationdivergent</dt><dd><p>Orientation of motif pairs. 1 if
+  divergent 0 if not.</p></dd>
+    <dt>strandOrientationforward</dt><dd><p>Orientation of motif pairs. 1 if forward 0
+  if not.</p></dd>
+    <dt>strandOrientationreverse</dt><dd><p>Orientation of motif pairs. 1 if reverse 0
+  if not.</p></dd>
+    <dt>score_min</dt><dd><p>Minimum of motif hit score between both motifs in pair.
+  The motif score is defined as -log_10 of the p-value of the motif hit as
+  reported by RSAT matrix-scan tool. The unit is -log_10(p) where p is the
+  p-value.</p></dd>
+    <dt>cor</dt><dd><p>Pearson correlation coefficient of ChIP-seq signals across +/-
+  500 bp around CTCF motif centers.</p></dd>
     </dl>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Each of 121 transcriptin factor (TF) ChIP-seq data sets from ENCODE in
+    <p>Each of 121 transcription factor (TF) ChIP-seq data sets from ENCODE in
 GM12878 cells were used to train a logistic regression model. All CTCF motifs
 in <code><a href='motif.hg19.CTCF.html'>motif.hg19.CTCF</a></code> within a distance of 1 Mb were used as
 candidates. A given pair was labled as true loop interactions, if it has
-interaction support based on Hi-C lops in GM12878 from Rao et al. 2014 or
-ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best performing
-models were selected based on the average area under the
-precision-recall-curve in 10-fold cross-validation.</p>
+interaction support based on loops from Hi-C in human GM12878 cells from Rao
+et al. 2014 or ChIA-PET loops from Tang et al. 2015 in the same cell type.
+The 10 best performing models were selected based on the average area under
+the precision-recall-curve in 10-fold cross-validation.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Suhas S.P. Rao, Miriam H. Huntley, Neva C. Durand, Elena K. Stamenova, Ivan
+D. Bochkov, James T. Robinson, Adrian L. Sanborn, Ido Machol, Arina D. Omer,
+Eric S. Lander, Erez Lieberman Aiden, A 3D Map of the Human Genome at
+Kilobase Resolution Reveals #' Principles of Chromatin Looping, Cell, Volume
+159, Issue 7, 18 December 2014, Pages 1665-1680, ISSN 0092-8674,
+https://doi.org/10.1016/j.cell.2014.11.021.</p>
+<p>Zhonghui Tang, Oscar Junhong Luo, Xingwang Li, Meizhen Zheng, Jacqueline
+Jufen Zhu, Przemyslaw Szalaj, Pawel Trzaskoma, Adriana Magalska, Jakub
+Wlodarczyk, Blazej Ruszczycki, Paul Michalski, Emaly Piecuch, Ping Wang,
+Danjuan Wang, Simon Zhongyuan Tian, May Penrad-Mobayed, Laurent M. Sachs,
+Xiaoan Ruan, Chia-Lin Wei, Edison T. Liu, Grzegorz M. Wilczynski, Dariusz
+Plewczynski, Guoliang Li, Yijun Ruan, CTCF-Mediated Human 3D Genome
+Architecture Reveals Chromatin Topology for Transcription, Cell, Volume 163,
+Issue 7, 17 December 2015, Pages 1611-1627, ISSN 0092-8674,
+https://doi.org/10.1016/j.cell.2015.11.024.</p>
     
 
   </div>
@@ -118,6 +155,8 @@ precision-recall-curve in 10-fold cross-validation.</p>
       <li><a href="#format">Format</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
           </ul>
 
   </div>

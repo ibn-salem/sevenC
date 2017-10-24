@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ibn-salem/chromloop">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -80,7 +85,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;0.99.11</small>
+        <small>version&nbsp;0.99.12</small>
       </h1>
     </div>
 
@@ -95,11 +100,42 @@
       <tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+            <h2 id="section-interactions" class="hasAnchor"><a href="#section-interactions" class="anchor"></a>Interactions</h2>
             <p class="section-desc"></p>
           </th>
         </tr>
         <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="prepareCandidates.html">prepareCandidates</a></code> </p>
+          </td>
+          <td><p>Prepares motif pairs and add genomic features.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="getCisPairs.html">getCisPairs</a></code> </p>
+          </td>
+          <td><p>Build a <code>GInteractions</code> object with all pairs of input
+<code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> within a given distance.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="addStrandCombination.html">addStrandCombination</a></code> </p>
+          </td>
+          <td><p>Add combination of anchor strand orientation.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="addMotifScore.html">addMotifScore</a></code> </p>
+          </td>
+          <td><p>Add motif score of anchors.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="addInteractionSupport.html">addInteractionSupport</a></code> </p>
+          </td>
+          <td><p>Add column to <code>GInteractions</code> with overlap support.</p></td>
+        </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="addCor.html">addCor</a></code> </p>
@@ -111,92 +147,20 @@
             <p><code><a href="addCovCor.html">addCovCor</a></code> </p>
           </td>
           <td><p>Add correlation of anchor signals to pairs of close genomic regions.</p></td>
-        </tr><tr>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-reading-genomic-data" class="hasAnchor"><a href="#section-reading-genomic-data" class="anchor"></a>Reading genomic data</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
           <!--  -->
           <td>
             <p><code><a href="addCovToGR.html">addCovToGR</a></code> </p>
           </td>
           <td><p>Add coverage to regions in <code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="addInteractionSupport.html">addInteractionSupport</a></code> </p>
-          </td>
-          <td><p>Add column to <code>GInteractions</code> with overlap support.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="addMotifScore.html">addMotifScore</a></code> </p>
-          </td>
-          <td><p>Add motif score of anchors.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="addStrandCombination.html">addStrandCombination</a></code> </p>
-          </td>
-          <td><p>Add combination of anchor strand orientation.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="chromloop.html">chromloop</a></code> </p>
-          </td>
-          <td><p>Prediction of Chromatin Looping Interaction from ChIP-seq and Sequence
-Motifs.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cutoffBest10.html">cutoffBest10</a></code> </p>
-          </td>
-          <td><p>Default optimal cutoff value of logistic regression.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="cutoffByTF.html">cutoffByTF</a></code> </p>
-          </td>
-          <td><p>Optimal cutoff values for logistic regression models.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="getCisPairs.html">getCisPairs</a></code> </p>
-          </td>
-          <td><p>Build a <code>GInteractions</code> object with all pairs of input
-<code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> within a given distance.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="getOutOfBound.html">getOutOfBound</a></code> </p>
-          </td>
-          <td><p>Get out of chromosomal bound ranges.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="modelBest10Avg.html">modelBest10Avg</a></code> </p>
-          </td>
-          <td><p>Default parameters for logistic regression model.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="motif.hg19.CTCF.chr22.cov.html">motif.hg19.CTCF.chr22.cov</a></code> </p>
-          </td>
-          <td><p>CTCF motifs on human chromosome 22 with example coverage.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="motif.hg19.CTCF.chr22.html">motif.hg19.CTCF.chr22</a></code> </p>
-          </td>
-          <td><p>CTCF motif locations on chromosome 22 in human genome hg19.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="motif.hg19.CTCF.html">motif.hg19.CTCF</a></code> </p>
-          </td>
-          <td><p>CTCF motif locations in human genome hg19.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="noZeroVar.html">noZeroVar</a></code> </p>
-          </td>
-          <td><p>returns indices of columns with non-zero variance</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -210,30 +174,64 @@ Motifs.</p></td>
             <p><code><a href="parseLoopsTang2015.html">parseLoopsTang2015</a></code> </p>
           </td>
           <td><p>Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="predLogit.html">predLogit</a></code> </p>
-          </td>
-          <td><p>Predict interaction probability using logistic regresstion model.</p></td>
-        </tr><tr>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-prediction" class="hasAnchor"><a href="#section-prediction" class="anchor"></a>Prediction</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
           <!--  -->
           <td>
             <p><code><a href="predLoops.html">predLoops</a></code> </p>
           </td>
-          <td><p>Predict looping interaction probability.</p></td>
+          <td><p>Predict looping interactions.</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-data-sets" class="hasAnchor"><a href="#section-data-sets" class="anchor"></a>Data sets</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="motif.hg19.CTCF.html">motif.hg19.CTCF</a></code> </p>
+          </td>
+          <td><p>CTCF motif locations in human genome hg19.</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="prepareCandidates.html">prepareCandidates</a></code> </p>
+            <p><code><a href="motif.hg19.CTCF.chr22.html">motif.hg19.CTCF.chr22</a></code> </p>
           </td>
-          <td><p>Prepares motif pairs and add genomic features.</p></td>
+          <td><p>CTCF motif locations on chromosome 22 in human genome hg19.</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="slideMean.html">slideMean</a></code> </p>
+            <p><code><a href="motif.hg19.CTCF.chr22.cov.html">motif.hg19.CTCF.chr22.cov</a></code> </p>
           </td>
-          <td><p>Sliding mean over x of intervals of size k</p></td>
+          <td><p>CTCF motifs on human chromosome 22 with example coverage.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="modelBest10Avg.html">modelBest10Avg</a></code> </p>
+          </td>
+          <td><p>Default parameters for logistic regression model.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="cutoffByTF.html">cutoffByTF</a></code> </p>
+          </td>
+          <td><p>Optimal cutoff values for logistic regression models.</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="cutoffBest10.html">cutoffBest10</a></code> </p>
+          </td>
+          <td><p>Default optimal cutoff value of logistic regression.</p></td>
         </tr>
       </tbody>
       </table>
@@ -243,7 +241,10 @@ Motifs.</p></td>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-interactions">Interactions</a></li>
+      <li><a href="#section-reading-genomic-data">Reading genomic data</a></li>
+      <li><a href="#section-prediction">Prediction</a></li>
+      <li><a href="#section-data-sets">Data sets</a></li>
     </ul>
   </div>
 </div>

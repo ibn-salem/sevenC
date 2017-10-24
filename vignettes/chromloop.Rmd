@@ -328,6 +328,7 @@ As a very simple validation we can now compare the prediction score for looping 
 boxplot(gi$pred ~ gi$loop)
 
 ```
+
 This shows higher prediction scores for truly looping motif pairs.
 However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. 
 A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the chromloop paper. 

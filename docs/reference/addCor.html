@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/ibn-salem/chromloop">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -85,9 +90,9 @@
     <p>This function first adds ChIP-seq signals along all regions of motif location
 using the function <code><a href='addCovToGR.html'>addCovToGR</a></code>. Than it calculates the
 correlation of coverage for each input pair using the function
-<code><a href='addCovCor.html'>addCovCor</a></code>. The Pearson correlation coeffiicent is added as new
+<code><a href='addCovCor.html'>addCovCor</a></code>. The Pearson correlation coefficient is added as new
 metadata column to the input interactions. Note, this function does not work
-on windows because reading of bigWig fiels is currently not supported on
+on windows because reading of bigWig files is currently not supported on
 windows.</p>
     
 
@@ -124,7 +129,7 @@ combined.</p></td>
 
     <p>An <code><a href='http://www.rdocumentation.org/packages/InteractionSet/topics/GInteractions-class'>GInteractions</a></code> object like <code>gi</code>
  with a new metadata column <code>colname</code> holding Pearson correlation
- coeffiicents of ChIP-seq signals for each anchor pair.</p>
+ coefficient of ChIP-seq signals for each anchor pair.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
