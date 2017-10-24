@@ -4,7 +4,7 @@
 #' Distance is calculated from the center of input regions.
 #'
 #' @param inGR \code{\link[GenomicRanges]{GRanges}} object of genomic regions.
-#'   The ranges shuld be sorted according to chr, strand, and start position.
+#'   The ranges should be sorted according to chr, strand, and start position.
 #'   Use \code{\link[BiocGenerics]{sort}} to sort it.
 #' @param maxDist maximal distance in base-pairs between pairs of ranges as
 #'   single  numeric value.
@@ -86,7 +86,7 @@ noZeroVar <- function(dat) {
 #'This function adds a vector with correlation values for each input
 #'interaction. Only works for input interaction within the given \code{maxDist}
 #'distance. Note, this function does not work on windows because reading of
-#'bigWig fiels is currently not supported on windows.
+#'bigWig files is currently not supported on windows.
 #'
 #'@param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
 #'@param datacol a string matching an annotation column in \code{regions(gi)}.
@@ -503,9 +503,9 @@ prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
 #'This function first adds ChIP-seq signals along all regions of motif location
 #'using the function \code{\link{addCovToGR}}. Than it calculates the
 #'correlation of coverage for each input pair using the function
-#'\code{\link{addCovCor}}. The Pearson correlation coeffiicent is added as new
+#'\code{\link{addCovCor}}. The Pearson correlation coefficient is added as new
 #'metadata column to the input interactions. Note, this function does not work
-#'on windows because reading of bigWig fiels is currently not supported on
+#'on windows because reading of bigWig files is currently not supported on
 #'windows.
 #'
 #'@param gi \code{\link[InteractionSet]{GInteractions}} object.
@@ -516,7 +516,7 @@ prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
 #'
 #'@return An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
 #'  with a new metadata column \code{colname} holding Pearson correlation
-#'  coeffiicents of ChIP-seq signals for each anchor pair.
+#'  coefficient of ChIP-seq signals for each anchor pair.
 #'
 #'@examples
 #'if (.Platform$OS.type != "windows") {

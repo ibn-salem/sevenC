@@ -9,7 +9,7 @@ getCisPairs(inGR, maxDist = 1e+07)
 }
 \arguments{
 \item{inGR}{\code{\link[GenomicRanges]{GRanges}} object of genomic regions.
-The ranges shuld be sorted according to chr, strand, and start position.
+The ranges should be sorted according to chr, strand, and start position.
 Use \code{\link[BiocGenerics]{sort}} to sort it.}
 
 \item{maxDist}{maximal distance in base-pairs between pairs of ranges as

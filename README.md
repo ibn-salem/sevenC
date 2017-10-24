@@ -2,7 +2,7 @@
 R package to predict chromatin looping interactions from ChIP-seq data and 
 sequnece motifs.
 
-Chromatin looping is an importent feature of
+Chromatin looping is an important feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
   transcription factor binding sites, in close physical proximity of regulated 
   target genes.

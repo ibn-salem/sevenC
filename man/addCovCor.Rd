@@ -28,7 +28,7 @@ A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
 This function adds a vector with correlation values for each input
 interaction. Only works for input interaction within the given \code{maxDist}
 distance. Note, this function does not work on windows because reading of
-bigWig fiels is currently not supported on windows.
+bigWig files is currently not supported on windows.
 }
 \examples{
 if (.Platform$OS.type != "windows") {

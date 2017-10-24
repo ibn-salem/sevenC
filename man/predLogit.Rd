@@ -2,7 +2,7 @@
 % Please edit documentation in R/prediction.R
 \name{predLogit}
 \alias{predLogit}
-\title{Predict interaction probability using logistic regresstion model.}
+\title{Predict interaction probability using logistic regression model.}
 \usage{
 predLogit(data, formula, betas)
 }
@@ -16,9 +16,9 @@ be available in the data frame.}
 should be in the same order as variables in \code{formula}.}
 }
 \value{
-A numeric vector with interaction probabilities for each ovservation
+A numeric vector with interaction probabilities for each observation
   in \code{df}. NAs are produced for NAs in \code{df}.
 }
 \description{
-Predict interaction probability using logistic regresstion model.
+Predict interaction probability using logistic regression model.
 }

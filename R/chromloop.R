@@ -1,7 +1,7 @@
 #' Prediction of Chromatin Looping Interaction from ChIP-seq and Sequence
 #' Motifs.
 #'
-#' Chromatin looping is an importent feature of eukaryotic genomes and can bring
+#' Chromatin looping is an important feature of eukaryotic genomes and can bring
 #' regulatory sequences, such as enhancers or transcription factor binding
 #' sites, in close physical proximity of regulated target genes. Here, we
 #' provide a tool that uses protein binding signals from ChIP-seq and sequence

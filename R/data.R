@@ -83,36 +83,76 @@
 
 #' Default parameters for logistic regression model.
 #'
-#' This dataset contain term names and estimates for logistic regression model
+#' This dataset contains term names and estimates for logistic regression model
 #' to predict chromatin looping interactions. The estimate represent an average
 #' of the 10 best performing models out of 121 transcription factor ChIP-seq
 #' data sets from ENCODE.
 #'
-#' Each of 121 transcriptin factor (TF) ChIP-seq data sets from ENCODE in
+#' Each of 121 transcription factor (TF) ChIP-seq data sets from ENCODE in
 #' GM12878 cells were used to train a logistic regression model. All CTCF motifs
 #' in \code{\link{motif.hg19.CTCF}} within a distance of 1 Mb were used as
 #' candidates. A given pair was labled as true loop interactions, if it has
-#' interaction support based on Hi-C lops in GM12878 from Rao et al. 2014 or
-#' ChIA-PET loops from Tang et al. 2015 in GM12878 cells. The 10 best performing
-#' models were selected based on the average area under the
-#' precision-recall-curve in 10-fold cross-validation.
+#' interaction support based on loops from Hi-C in human GM12878 cells from Rao
+#' et al. 2014 or ChIA-PET loops from Tang et al. 2015 in the same cell type.
+#' The 10 best performing models were selected based on the average area under
+#' the precision-recall-curve in 10-fold cross-validation.
 #'
-#' @format An object of class \code{data.frame} with 7 rows and 2 columns:
+#'
+#' @references
+#'
+#' Suhas S.P. Rao, Miriam H. Huntley, Neva C. Durand, Elena K. Stamenova, Ivan
+#' D. Bochkov, James T. Robinson, Adrian L. Sanborn, Ido Machol, Arina D. Omer,
+#' Eric S. Lander, Erez Lieberman Aiden, A 3D Map of the Human Genome at
+#' Kilobase Resolution Reveals #' Principles of Chromatin Looping, Cell, Volume
+#' 159, Issue 7, 18 December 2014, Pages 1665-1680, ISSN 0092-8674,
+#' https://doi.org/10.1016/j.cell.2014.11.021.
+#'
+#' Zhonghui Tang, Oscar Junhong Luo, Xingwang Li, Meizhen Zheng, Jacqueline
+#' Jufen Zhu, Przemyslaw Szalaj, Pawel Trzaskoma, Adriana Magalska, Jakub
+#' Wlodarczyk, Blazej Ruszczycki, Paul Michalski, Emaly Piecuch, Ping Wang,
+#' Danjuan Wang, Simon Zhongyuan Tian, May Penrad-Mobayed, Laurent M. Sachs,
+#' Xiaoan Ruan, Chia-Lin Wei, Edison T. Liu, Grzegorz M. Wilczynski, Dariusz
+#' Plewczynski, Guoliang Li, Yijun Ruan, CTCF-Mediated Human 3D Genome
+#' Architecture Reveals Chromatin Topology for Transcription, Cell, Volume 163,
+#' Issue 7, 17 December 2015, Pages 1611-1627, ISSN 0092-8674,
+#' https://doi.org/10.1016/j.cell.2015.11.024.
+#'
+#' @format An object of class \code{data.frame} with 7 rows and 2 columns
+#'   holding the term name and estimate.
 #'
 #'   \describe{
 #'
-#'   \item{term}{Term name}
+#'   \item{(Intercept)}{The intercept of the logistic regression model.}
 #'
-#'   \item{estimate}{Parameter estimate}
+#'   \item{dist}{The genomic distance between the centers of motifs in base
+#'   pairs (bp).}
+#'
+#'   \item{strandOrientationdivergent}{Orientation of motif pairs. 1 if
+#'   divergent 0 if not.}
+#'
+#'   \item{strandOrientationforward}{Orientation of motif pairs. 1 if forward 0
+#'   if not.}
+#'
+#'   \item{strandOrientationreverse}{Orientation of motif pairs. 1 if reverse 0
+#'   if not.}
+#'
+#'   \item{score_min}{Minimum of motif hit score between both motifs in pair.
+#'   The motif score is defined as -log_10 of the p-value of the motif hit as
+#'   reported by RSAT matrix-scan tool. The unit is -log_10(p) where p is the
+#'   p-value.}
+#'
+#'   \item{cor}{Pearson correlation coefficient of ChIP-seq signals across +/-
+#'   500 bp around CTCF motif centers.}
 #'
 #'   }
+#'
 #'
 "modelBest10Avg"
 
 
 #' Optimal cutoff values for logistic regression models.
 #'
-#' This dataset contains opimal cutoff scores for the response value of logistic
+#' This dataset contains optimal cutoff scores for the response value of logistic
 #' regression models. The cutoff is based on optimal F1-scores. A separate model
 #' was trained For each of 121 TF ChIP-seq datasets in human GM12878 cells. The
 #' model performance were calculated with Hi-C and ChIA-PET interactions using
@@ -138,6 +178,6 @@
 #'
 #' This value is the average optimal cutoff value on the 10 best performing TF
 #' ChIP-seq data sets. It is used as default cutoff value on the logistic
-#' regression response score in \code{\link{predLoops}} fucntion. See
+#' regression response score in \code{\link{predLoops}} function See
 #' \code{?'cutoffByTF'} for more details.
 "cutoffBest10"

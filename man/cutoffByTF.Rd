@@ -21,7 +21,7 @@
 cutoffByTF
 }
 \description{
-This dataset contains opimal cutoff scores for the response value of logistic
+This dataset contains optimal cutoff scores for the response value of logistic
 regression models. The cutoff is based on optimal F1-scores. A separate model
 was trained For each of 121 TF ChIP-seq datasets in human GM12878 cells. The
 model performance were calculated with Hi-C and ChIA-PET interactions using
