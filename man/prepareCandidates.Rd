@@ -4,7 +4,7 @@
 \alias{prepareCandidates}
 \title{Prepares motif pairs and add genomic features.}
 \usage{
-prepareCandidates(motifs, maxDist = 1e+07, scoreColname = "score")
+prepareCandidates(motifs, maxDist = 1e+06, scoreColname = "score")
 }
 \arguments{
 \item{motifs}{\code{\link[GenomicRanges]{GRanges}} object with motif

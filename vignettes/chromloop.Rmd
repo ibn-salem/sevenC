@@ -163,7 +163,7 @@ if (.Platform$OS.type == 'windows') {
 
 This adds a new metadata column to `motifs` holding a `NumericList` with ChIP-seq signals for each motif location. 
 ```{r}
-motifs$cov
+motifs$chip
 ```
 
 ### Build pairs of motifs as candidate interactions
@@ -197,7 +197,7 @@ loops <- predLoops(gi)
 
 loops
 ```
-This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column `chip` and interaction probability in `pred`.
+This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column `chip`. The column `pred` holds the predicted interaction probability according to the logistic regression model.
 
 Note, that without specifying further options, the function `predLoops()` uses a default model that was optimized for several transcription factor ChIP-seq data sets by using experimental chromatin loops from Hi-C and ChIA-PET for validations. 
 However, users can specify custom features using the `formular` argument and provide custom parameters using the `betas`argument. 
@@ -324,8 +324,9 @@ gi
 
 As a very simple validation we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.
 
-```{r, fig.width = 6}
-boxplot(gi$pred ~ gi$loop)
+```{r, fig.width = 3, fig.height = 6}
+boxplot(gi$pred ~ gi$loop, 
+        ylab = "Predicted interaction probability")
 
 ```
 

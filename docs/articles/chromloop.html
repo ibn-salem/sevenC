@@ -29,7 +29,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -148,8 +148,20 @@ bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read ChIP-seq coverage </span>
 motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)</code></pre></div>
 <p>This adds a new metadata column to <code>motifs</code> holding a <code>NumericList</code> with ChIP-seq signals for each motif location.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">motifs<span class="op">$</span>cov</code></pre></div>
-<pre><code>## NULL</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">motifs<span class="op">$</span>chip</code></pre></div>
+<pre><code>## NumericList of length 696
+## [["chr22"]] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [["chr22"]] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ... 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [["chr22"]] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ... 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [["chr22"]] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 ... 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+## [["chr22"]] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ... 2 2 2 2 2 2 2 2 2 3 3 3 3 3
+## [["chr22"]] 2 2 2 2 2 2 2 2 2 2 2 2 ... 12 12 12 12 12 12 12 12 12 12 12
+## [["chr22"]] 15 15 15 15 15 15 15 15 15 15 15 15 ... 8 8 8 8 8 8 8 8 8 8 8
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## ...
+## &lt;686 more elements&gt;</code></pre>
 </div>
 <div id="build-pairs-of-motifs-as-candidate-interactions" class="section level3">
 <h3 class="hasAnchor">
@@ -252,7 +264,7 @@ loops</code></pre></div>
 ##   -------
 ##   regions: 696 ranges and 6 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
-<p>This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column <code>chip</code> and interaction probability in <code>pred</code>.</p>
+<p>This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column <code>chip</code>. The column <code>pred</code> holds the predicted interaction probability according to the logistic regression model.</p>
 <p>Note, that without specifying further options, the function <code><a href="../reference/predLoops.html">predLoops()</a></code> uses a default model that was optimized for several transcription factor ChIP-seq data sets by using experimental chromatin loops from Hi-C and ChIA-PET for validations. However, users can specify custom features using the <code>formular</code> argument and provide custom parameters using the <code>betas</code>argument. Furthermore, per default the <code><a href="../reference/predLoops.html">predLoops()</a></code> function report only looping interactions that mead a minimal prediction score threshold. This can be modified using the <code>cutoff</code> argument.</p>
 </div>
 </div>
@@ -382,8 +394,9 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoop
 ##   regions: 696 ranges and 6 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>As a very simple validation we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gi<span class="op">$</span>pred <span class="op">~</span><span class="st"> </span>gi<span class="op">$</span>loop)</code></pre></div>
-<p><img src="chromloop_files/figure-html/unnamed-chunk-21-1.png" width="576"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gi<span class="op">$</span>pred <span class="op">~</span><span class="st"> </span>gi<span class="op">$</span>loop, 
+        <span class="dt">ylab =</span> <span class="st">"Predicted interaction probability"</span>)</code></pre></div>
+<p><img src="chromloop_files/figure-html/unnamed-chunk-21-1.png" width="288"></p>
 <p>This shows higher prediction scores for truly looping motif pairs. However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the chromloop paper.</p>
 </div>
 </div>

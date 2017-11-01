@@ -33,7 +33,7 @@
 #' @importFrom BiocGenerics sort
 #' @importFrom GenomicRanges resize findOverlaps
 #' @export
-getCisPairs <- function(inGR, maxDist = 10e6){
+getCisPairs <- function(inGR, maxDist = 1e6){
 
   # check that input GRanges object is sorted
   if (!all(inGR == sort(inGR))) stop("Input ranges inGR need to be sorted. Use
@@ -484,7 +484,7 @@ addMotifScore <- function(gi, scoreColname = "score"){
 #'
 #' @import InteractionSet
 #' @export
-prepareCandidates <- function(motifs, maxDist = 10e6, scoreColname = "score"){
+prepareCandidates <- function(motifs, maxDist = 1e6, scoreColname = "score"){
 
   # get pairs of motifs as GInteraction object
   gi <- getCisPairs(motifs, maxDist = maxDist)

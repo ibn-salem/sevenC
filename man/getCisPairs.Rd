@@ -5,7 +5,7 @@
 \title{Build a \code{\link{GInteractions}} object with all pairs of input
 \code{\link[GenomicRanges]{GRanges}} within a given distance.}
 \usage{
-getCisPairs(inGR, maxDist = 1e+07)
+getCisPairs(inGR, maxDist = 1e+06)
 }
 \arguments{
 \item{inGR}{\code{\link[GenomicRanges]{GRanges}} object of genomic regions.
