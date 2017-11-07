@@ -121,52 +121,14 @@
   <span class='st'>"GM12878_HiCCUPS.chr22_1-18000000.loop.txt"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"chromloop"</span>)
 
 <span class='co'># read loops form example file:</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsRao</span>(<span class='no'>exampleLoopFile</span>)</div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  .default = col_integer(),</span>
-#&gt; <span class='message'>  color = col_character(),</span>
-#&gt; <span class='message'>  e_bl = col_double(),</span>
-#&gt; <span class='message'>  e_donut = col_double(),</span>
-#&gt; <span class='message'>  e_h = col_double(),</span>
-#&gt; <span class='message'>  e_v = col_double(),</span>
-#&gt; <span class='message'>  fdr_bl = col_double(),</span>
-#&gt; <span class='message'>  fdr_donut = col_double(),</span>
-#&gt; <span class='message'>  fdr_h = col_double(),</span>
-#&gt; <span class='message'>  fdr_v = col_double(),</span>
-#&gt; <span class='message'>  radius = col_double(),</span>
-#&gt; <span class='message'>  sequence_1 = col_character(),</span>
-#&gt; <span class='message'>  orientation_1 = col_character(),</span>
-#&gt; <span class='message'>  uniqueness_1 = col_character(),</span>
-#&gt; <span class='message'>  sequence2 = col_character(),</span>
-#&gt; <span class='message'>  orientation_2 = col_character(),</span>
-#&gt; <span class='message'>  uniqueness_2 = col_character()</span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>See spec(...) for full column specifications.</span></div><div class='input'>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsRao</span>(<span class='no'>exampleLoopFile</span>)
+
 
 <span class='co'># read loops with custom seqinfo object:</span>
 <span class='no'>customSeqInfo</span> <span class='kw'>&lt;-</span> <span class='fu'>Seqinfo</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"chr1"</span>, <span class='st'>"chr22"</span>),
    <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>^<span class='fl'>8</span>, <span class='fl'>10</span>^<span class='fl'>8</span>), <span class='kw'>isCircular</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>),
    <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"custom"</span>)
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsRao</span>(<span class='no'>exampleLoopFile</span>, <span class='kw'>seqinfo</span> <span class='kw'>=</span> <span class='no'>customSeqInfo</span>)</div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  .default = col_integer(),</span>
-#&gt; <span class='message'>  color = col_character(),</span>
-#&gt; <span class='message'>  e_bl = col_double(),</span>
-#&gt; <span class='message'>  e_donut = col_double(),</span>
-#&gt; <span class='message'>  e_h = col_double(),</span>
-#&gt; <span class='message'>  e_v = col_double(),</span>
-#&gt; <span class='message'>  fdr_bl = col_double(),</span>
-#&gt; <span class='message'>  fdr_donut = col_double(),</span>
-#&gt; <span class='message'>  fdr_h = col_double(),</span>
-#&gt; <span class='message'>  fdr_v = col_double(),</span>
-#&gt; <span class='message'>  radius = col_double(),</span>
-#&gt; <span class='message'>  sequence_1 = col_character(),</span>
-#&gt; <span class='message'>  orientation_1 = col_character(),</span>
-#&gt; <span class='message'>  uniqueness_1 = col_character(),</span>
-#&gt; <span class='message'>  sequence2 = col_character(),</span>
-#&gt; <span class='message'>  orientation_2 = col_character(),</span>
-#&gt; <span class='message'>  uniqueness_2 = col_character()</span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>See spec(...) for full column specifications.</span></div><div class='input'>
-</div></pre>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsRao</span>(<span class='no'>exampleLoopFile</span>, <span class='kw'>seqinfo</span> <span class='kw'>=</span> <span class='no'>customSeqInfo</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

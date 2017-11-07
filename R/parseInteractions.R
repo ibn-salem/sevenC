@@ -29,19 +29,25 @@
 parseLoopsRao <- function(inFile, ...){
 
   # parse input file
-  raoDF <- as.data.frame(readr::read_tsv(inFile))
+  raoDF <- as.data.frame(readr::read_tsv(
+    inFile,
+    col_types = readr::cols(
+      chr1 = readr::col_character(),
+      chr2 = readr::col_character())
+    ))
 
   # get chromosome column
-  chr <- paste0("chr", raoDF$chr1)
+  chr_1 <- paste0("chr", as.character(raoDF$chr1))
+  chr_2 <- paste0("chr", as.character(raoDF$chr2))
 
   # substract 1 bp from end coordinate to have inclusive interval ranges
   upAnchor <- GRanges(
-      chr,
+      chr_1,
       IRanges(raoDF[, "x1"], raoDF[, "x2"] - 1),
       ...)
 
   downAnchor <- GRanges(
-    chr,
+    chr_2,
     IRanges(raoDF[, "y1"], raoDF[, "y2"] - 1),
     ...)
 
