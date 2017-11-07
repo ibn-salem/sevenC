@@ -34,7 +34,7 @@ predLogit <- function(data, formula, betas){
 #'
 #'@param gi A \code{\link[InteractionSet]{GInteractions}} object with coverage
 #'  correlation and genomic features in metadata columns. See
-#'  \link{prepareCandidates} and \link{addCor} to build it.
+#'  \link{prepareCisPairs} and \link{addCor} to build it.
 #'@param formula A \code{\link[stats]{formula}}. All predictor variables should
 #'  be available in the in metadata columns of \code{gi}. If NULL, the following
 #'  default formula is used: \code{~ dist + strandOrientation + score_min +
@@ -54,7 +54,7 @@ predLogit <- function(data, formula, betas){
 #'@return A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an
 #'  additional metadata column holding the predicted looping probability.
 #'
-#'@seealso \code{\link{prepareCandidates}}, \code{\link{addCor}}
+#'@seealso \code{\link{prepareCisPairs}}, \code{\link{addCor}}
 #'
 #' @examples
 #'
@@ -62,7 +62,7 @@ predLogit <- function(data, formula, betas){
 #'motifGR <- chromloop::motif.hg19.CTCF.chr22.cov
 #'
 #'# build candidate interactions
-#'gi <- prepareCandidates(motifGR, scoreColname = "sig")
+#'gi <- prepareCisPairs(motifGR, scoreColname = "sig")
 #'
 #'# add ChIP-seq signals correlation
 #'gi <- addCovCor(gi)

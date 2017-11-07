@@ -103,7 +103,7 @@
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
 
 <span class="co"># get motifs pairs</span>
-gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCandidates.html">prepareCandidates</a></span>(motifs, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)</code></pre></div>
+gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)</code></pre></div>
 </div>
 <div id="add-chip-seq-data-and-compute-correaltion" class="section level3">
 <h3 class="hasAnchor">
@@ -167,7 +167,7 @@ motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addC
 <h3 class="hasAnchor">
 <a href="#build-pairs-of-motifs-as-candidate-interactions" class="anchor"></a>Build pairs of motifs as candidate interactions</h3>
 <p>Now we build a dataset with all pairs of CTCF motif within 1 Mb and annotate it with distance, motif orientation, and motif score.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCandidates.html">prepareCandidates</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)
 
 gi</code></pre></div>
 <pre><code>## StrictGInteractions object with 15586 interactions and 5 metadata columns:
@@ -213,7 +213,7 @@ gi</code></pre></div>
 ##   -------
 ##   regions: 696 ranges and 6 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
-<p>The function <code><a href="../reference/prepareCandidates.html">prepareCandidates()</a></code> returns a <code>GInteractoin</code> object from the <em><a href="http://bioconductor.org/packages/InteractonSet">InteractonSet</a></em> package, representing all motif pairs within the defined distance. Metadata columns of the <code>GInteractoin</code> object hold the genomic distance between motifs in bp (<code>dist</code>), the orientation of motifs (<code>strandOrientation</code>), and motif score as -log<sub>10</sub> of the motif hit p-value (<code>score_1</code>, <code>score_2</code>, and <code>score_min</code>). Note, that the function <code><a href="../reference/prepareCandidates.html">prepareCandidates()</a></code> is wrapper for three individual functions that performs each step separately and allow more options. First, <code><a href="../reference/getCisPairs.html">getCisPairs()</a></code> is used to builds the <code>GInteractoin</code> object. Than <code><a href="../reference/addStrandCombination.html">addStrandCombination()</a></code> adds the four possible strand combinations of motifs pairs. Finally, <code><a href="../reference/addMotifScore.html">addMotifScore()</a></code> adds the minimum motif score for each pair. These features are later used as variables for predictions.</p>
+<p>The function <code><a href="../reference/prepareCisPairs.html">prepareCisPairs()</a></code> returns a <code>GInteractoin</code> object from the <em><a href="http://bioconductor.org/packages/InteractonSet">InteractonSet</a></em> package, representing all motif pairs within the defined distance. Metadata columns of the <code>GInteractoin</code> object hold the genomic distance between motifs in bp (<code>dist</code>), the orientation of motifs (<code>strandOrientation</code>), and motif score as -log<sub>10</sub> of the motif hit p-value (<code>score_1</code>, <code>score_2</code>, and <code>score_min</code>). Note, that the function <code><a href="../reference/prepareCisPairs.html">prepareCisPairs()</a></code> is wrapper for three individual functions that performs each step separately and allow more options. First, <code><a href="../reference/getCisPairs.html">getCisPairs()</a></code> is used to builds the <code>GInteractoin</code> object. Than <code><a href="../reference/addStrandCombination.html">addStrandCombination()</a></code> adds the four possible strand combinations of motifs pairs. Finally, <code><a href="../reference/addMotifScore.html">addMotifScore()</a></code> adds the minimum motif score for each pair. These features are later used as variables for predictions.</p>
 </div>
 </div>
 <div id="compute-chip-seq-similarity-at-motif-pairs" class="section level2">
@@ -308,7 +308,7 @@ bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<sp
 motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)
 
 <span class="co"># build motif pairs</span>
-gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCandidates.html">prepareCandidates</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)
+gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)
 
 <span class="co"># add correaltion of ChIP-signal</span>
 gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCor.html">addCovCor</a></span>(gi)</code></pre></div>

@@ -445,7 +445,8 @@ addMotifScore <- function(gi, scoreColname = "score"){
   return(gi)
 }
 
-#' Prepares motif pairs and add genomic features.
+#' Prepares motif pairs as \code{\link[InteractionSet]{GInteractions}} and add
+#' genomic features.
 #'
 #' @param motifs \code{\link[GenomicRanges]{GRanges}} object with motif
 #'   locations.
@@ -472,19 +473,19 @@ addMotifScore <- function(gi, scoreColname = "score"){
 #'
 #'
 #'# prepare candidates
-#'gi <- prepareCandidates(anchorGR)
+#'gi <- prepareCisPairs(anchorGR)
 #'
 #'
 #'# prepare candidates using a mimial distance of 10 bp
-#'gi <- prepareCandidates(anchorGR, maxDist = 10)
+#'gi <- prepareCisPairs(anchorGR, maxDist = 10)
 #'
 #'# prepare candidates using an alternative score value in anchors
 #'anchorGR$myScore <- rnorm(length(anchorGR))
-#'gi <- prepareCandidates(anchorGR, scoreColname = "myScore")
+#'gi <- prepareCisPairs(anchorGR, scoreColname = "myScore")
 #'
 #' @import InteractionSet
 #' @export
-prepareCandidates <- function(motifs, maxDist = 1e6, scoreColname = "score"){
+prepareCisPairs <- function(motifs, maxDist = 1e6, scoreColname = "score"){
 
   # get pairs of motifs as GInteraction object
   gi <- getCisPairs(motifs, maxDist = maxDist)
@@ -529,7 +530,7 @@ prepareCandidates <- function(motifs, maxDist = 1e6, scoreColname = "score"){
 #'  motifGR <- chromloop::motif.hg19.CTCF.chr22
 #'
 #'  # build candidate interactions
-#'  gi <- prepareCandidates(motifGR, scoreColname = "sig")
+#'  gi <- prepareCisPairs(motifGR, scoreColname = "sig")
 #'
 #'
 #'  # add ChIP-seq signals correlation

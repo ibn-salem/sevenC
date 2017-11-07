@@ -44,7 +44,7 @@ if (.Platform$OS.type != "windows") {
  motifGR <- chromloop::motif.hg19.CTCF.chr22
 
  # build candidate interactions
- gi <- prepareCandidates(motifGR, scoreColname = "sig")
+ gi <- prepareCisPairs(motifGR, scoreColname = "sig")
 
 
  # add ChIP-seq signals correlation

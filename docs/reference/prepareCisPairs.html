@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepares motif pairs and add genomic features. — prepareCandidates • chromloop</title>
+<title>Prepares motif pairs as <code><a href='http://www.rdocumentation.org/packages/InteractionSet/topics/GInteractions-class'>GInteractions</a></code> and add
+genomic features. — prepareCisPairs • chromloop</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,14 +84,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepares motif pairs and add genomic features.</h1>
+    <h1>Prepares motif pairs as <code><a href='http://www.rdocumentation.org/packages/InteractionSet/topics/GInteractions-class'>GInteractions</a></code> and add
+genomic features.</h1>
     </div>
 
     
-    <p>Prepares motif pairs and add genomic features.</p>
+    <p>Prepares motif pairs as <code><a href='http://www.rdocumentation.org/packages/InteractionSet/topics/GInteractions-class'>GInteractions</a></code> and add
+genomic features.</p>
     
 
-    <pre class="usage"><span class='fu'>prepareCandidates</span>(<span class='no'>motifs</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
+    <pre class="usage"><span class='fu'>prepareCisPairs</span>(<span class='no'>motifs</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"score"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -134,15 +137,15 @@ score.</p></td>
 
 
 <span class='co'># prepare candidates</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCandidates</span>(<span class='no'>anchorGR</span>)
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCisPairs</span>(<span class='no'>anchorGR</span>)
 
 
 <span class='co'># prepare candidates using a mimial distance of 10 bp</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCandidates</span>(<span class='no'>anchorGR</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCisPairs</span>(<span class='no'>anchorGR</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
 <span class='co'># prepare candidates using an alternative score value in anchors</span>
 <span class='no'>anchorGR</span>$<span class='no'>myScore</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fu'>length</span>(<span class='no'>anchorGR</span>))
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCandidates</span>(<span class='no'>anchorGR</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"myScore"</span>)</div></pre>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareCisPairs</span>(<span class='no'>anchorGR</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"myScore"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

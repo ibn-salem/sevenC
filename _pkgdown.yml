@@ -3,7 +3,7 @@ url: https://ibn-salem.github.io/chromloop/
 reference:
   - title: Interactions
     contents:
-    - prepareCandidates
+    - prepareCisPairs
     - getCisPairs
     - addStrandCombination
     - addMotifScore

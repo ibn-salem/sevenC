@@ -280,9 +280,9 @@ test_that("addMotifScore works on toy example", {
 
 })
 
-test_that("prepareCandidates works on toy example data", {
+test_that("prepareCisPairs works on toy example data", {
 
-  gi <- prepareCandidates(toyGR, 10)
+  gi <- prepareCisPairs(toyGR, 10)
 
   expect_equal(length(gi), 3)
   expect_true("strandOrientation" %in% names(mcols(gi)))

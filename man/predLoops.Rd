@@ -10,7 +10,7 @@ predLoops(gi, formula = NULL, betas = NULL, colname = "pred",
 \arguments{
 \item{gi}{A \code{\link[InteractionSet]{GInteractions}} object with coverage
 correlation and genomic features in metadata columns. See
-\link{prepareCandidates} and \link{addCor} to build it.}
+\link{prepareCisPairs} and \link{addCor} to build it.}
 
 \item{formula}{A \code{\link[stats]{formula}}. All predictor variables should
 be available in the in metadata columns of \code{gi}. If NULL, the following
@@ -47,7 +47,7 @@ interaction probabilities.
 motifGR <- chromloop::motif.hg19.CTCF.chr22.cov
 
 # build candidate interactions
-gi <- prepareCandidates(motifGR, scoreColname = "sig")
+gi <- prepareCisPairs(motifGR, scoreColname = "sig")
 
 # add ChIP-seq signals correlation
 gi <- addCovCor(gi)
@@ -76,5 +76,5 @@ loops <- predLoops(gi, formula = myFormula, betas = myParams)
 
 }
 \seealso{
-\code{\link{prepareCandidates}}, \code{\link{addCor}}
+\code{\link{prepareCisPairs}}, \code{\link{addCor}}
 }
