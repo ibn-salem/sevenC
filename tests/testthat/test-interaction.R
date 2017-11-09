@@ -37,8 +37,8 @@ rtracklayer::export.bw(cov, bwFile)
 #'
 #' pairs:
 #' 1 4
-#' 2 4
 #' 2 3
+#' 2 4
 
 toySeqInfo <- Seqinfo(seqnames = c("chr1"),
                                         seqlengths = c(25),
