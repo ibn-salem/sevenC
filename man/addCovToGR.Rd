@@ -7,7 +7,8 @@
 addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
 }
 \arguments{
-\item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions}
+\item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions. It
+should contain a valid seqinfo object with defined seqlengths.}
 
 \item{bwFile}{File path or connection to BigWig file with coverage to parse
 from.}
@@ -32,9 +33,9 @@ other signal in the input bigWig file) to each range in a
 \code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
-column holding a \code{\link[IRanges]{NumericList}} object. Note, this function
-does not work on windows because reading of bigWig files is currently not
-supported on windows.
+column holding a \code{\link[IRanges]{NumericList}} object. Note, this
+function does not work on windows because reading of bigWig files is currently
+not supported on windows.
 }
 \examples{
 if (.Platform$OS.type != "windows") {

@@ -60,7 +60,7 @@ if (.Platform$OS.type != "windows") {
 
 
  # add ChIP-seq correlation for signals in bins of 10 bp
- gi <- addCor(gi, exampleBigWig, window = 500)
+ gi <- addCor(gi, exampleBigWig, binSize = 10)
 
 }
 }

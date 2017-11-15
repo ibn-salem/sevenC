@@ -546,7 +546,7 @@ prepareCisPairs <- function(motifs, maxDist = 1e6, scoreColname = "score"){
 #'
 #'
 #'  # add ChIP-seq correlation for signals in bins of 10 bp
-#'  gi <- addCor(gi, exampleBigWig, window = 500)
+#'  gi <- addCor(gi, exampleBigWig, binSize = 10)
 #'
 #'}
 #'@import InteractionSet
