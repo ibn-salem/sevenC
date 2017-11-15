@@ -8,7 +8,12 @@ inGR <- GRanges(
   IRanges(
     c(10, 20, 30, 100, 1000),
     c(15, 25, 35, 105, 1005)
-  )
+  ),
+  seqinfo = Seqinfo(seqnames = "chr1",
+                                  seqlengths = 2000,
+                                  isCircular = FALSE,
+                                  genome = "inGR")
+
 )
 
 cov <- RleList(list(

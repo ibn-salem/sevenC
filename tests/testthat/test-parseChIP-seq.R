@@ -110,6 +110,8 @@ test_that("addCovToGR handles out of chromosome coordinates", {
 
 test_that("addCovToGR handles input ranges without seqinfo object", {
 
+  skip("Currently not supported.")
+
   # bigWig parsing fails on windows in rtracklayer::import.bw()
   if (.Platform$OS.type != 'windows') {
 
@@ -131,6 +133,36 @@ test_that("addCovToGR handles input ranges without seqinfo object", {
   }
 })
 
+test_that("addCovToGR handles chromosomes not contained in bigWig file", {
+
+  # bigWig parsing fails on windows in rtracklayer::import.bw()
+  if (.Platform$OS.type != 'windows') {
+
+    out_gr <- GRanges(
+      c(rep("chr2", 3), "chrNew"),
+      IRanges(
+        c(2, 700, 2999, 10),
+        c(2, 700, 2999, 20)
+      ),
+      seqinfo = Seqinfo(
+        c("chr2", "chrNew"),
+        c(5000, 100),
+        c(FALSE, FALSE),
+        genome = "chrNewGenome"
+      )
+    )
+
+    # expect Warning that chrNew is not contained in bigWig file
+    testthat::expect_warning(
+      grCov <- addCovToGR(out_gr, test_bw, window = 10, binSize = 1,
+                        colname = "covTest")
+    )
+    expect_true(!is.null(grCov$covTest))
+    expect_equal(grCov$covTest[[1]], c(rep(NA, 4), rep(-1, 6)))
+    expect_true(all(sapply(grCov$covTest, length) == 10))
+    expect_true(!any(is.na(grCov$covTest[[3]])))
+  }
+})
 
 test_that("addCovToGR reversed coverage for regions on negative strand.", {
 

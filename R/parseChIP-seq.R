@@ -70,11 +70,12 @@ slideMean <- function(x, k){
 #'\code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
 #'fixed-sized window around the region center. For regions with negative strand,
 #'the coverage vector is reversed. The coverage signal is added as new metadata
-#'column holding a \code{\link[IRanges]{NumericList}} object. Note, this function
-#'does not work on windows because reading of bigWig files is currently not
-#'supported on windows.
+#'column holding a \code{\link[IRanges]{NumericList}} object. Note, this
+#'function does not work on windows because reading of bigWig files is currently
+#'not supported on windows.
 #'
-#'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions
+#'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions. It
+#'  should contain a valid seqinfo object with defined seqlengths.
 #'@param bwFile File path or connection to BigWig file with coverage to parse
 #'  from.
 #'@param window Numeric scalar for window size around the center of ranges in
@@ -126,6 +127,7 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
   stopifnot(is.numeric(window), length(window) == 1)
   stopifnot(is.numeric(binSize), length(binSize) == 1)
   stopifnot(is.character(colname), length(colname) == 1)
+  stopifnot(!any(is.na(seqlengths(gr))))
 
   # if OS is Windows rais warning, add NA, and return.
   if (.Platform$OS.type == 'windows') {
@@ -162,11 +164,25 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
   selectWin <- keepSeqlevels(ancWin, unique(seqnames(ancWin)))
   selection <- rtracklayer::BigWigSelection(selectWin)
 
-  # parse coverage for selected regions as NumericList
-  covAnc <- rtracklayer::import.bw(
+  # parse coverage from selected regions as GRanges object
+  covGR <- rtracklayer::import.bw(
     bwFile,
     selection = selection,
-    as = "NumericList")
+    as = "GRanges",
+    seqinfo = seqinfo(ancWin))
+
+  # update covGR with seqinfo to allow subsetting with ancWin
+  if ( !any(is.na(seqlengths(ancWin))) ) {
+    seqlevels(covGR) <- seqlevels(ancWin)
+    seqinfo(covGR) <- seqinfo(ancWin)
+  }
+
+  # convert to Rle object
+  covRle <- coverage(covGR, weight = covGR$score)
+
+  # get coverage as NumericList for all regions
+  covAncRle <- covRle[ancWin]
+  covAnc <- NumericList(covAncRle)
 
   # add NAs for out of bound regions
   covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){
