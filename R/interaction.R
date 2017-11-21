@@ -97,6 +97,14 @@ noZeroVar <- function(dat) {
 #'@param maxDist maximal distance of pairs in bp as numeric. If maxDist=NULL,
 #'  the maximal distance is computed from input interactions gi by
 #'  \code{max(pairdist(gi))}.
+#'@param use an optional character string giving a method for computing
+#'  covariances in the presence of missing values. See \code{\link[stats]{cor}}
+#'  for more details.
+#'@param method a character string indicating which correlation coefficient (or
+#'  covariance) is to be computed. One of "pearson" (default), "kendall", or
+#'  "spearman": can be abbreviated. See \code{\link[stats]{cor}} for more
+#'  details.
+#'
 #'@return A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
 #'  just with an additional column added.
 #' @examples
@@ -131,7 +139,7 @@ noZeroVar <- function(dat) {
 #'@importFrom methods is
 #'@export
 addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
-                           maxDist = NULL){
+                      maxDist = NULL, use = "everything", method = "pearson"){
 
 
 
@@ -204,7 +212,7 @@ addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
     # compute pairwise correlations for all regions in this bin
     if (n != 1) {
 
-      m <- stats::cor(dat[, subIdx])
+      m <- stats::cor(dat[, subIdx], use = use, method = method)
 
     }else{
 

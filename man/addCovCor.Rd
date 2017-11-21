@@ -4,7 +4,8 @@
 \alias{addCovCor}
 \title{Add correlation of anchor signals to pairs of close genomic regions.}
 \usage{
-addCovCor(gi, datacol = "chip", colname = "cor_chip", maxDist = NULL)
+addCovCor(gi, datacol = "chip", colname = "cor_chip", maxDist = NULL,
+  use = "everything", method = "pearson")
 }
 \arguments{
 \item{gi}{A sorted \code{\link[InteractionSet]{GInteractions}} object.}
@@ -19,6 +20,15 @@ interaction as a \code{NumericList}.}
 \item{maxDist}{maximal distance of pairs in bp as numeric. If maxDist=NULL,
 the maximal distance is computed from input interactions gi by
 \code{max(pairdist(gi))}.}
+
+\item{use}{an optional character string giving a method for computing
+covariances in the presence of missing values. See \code{\link[stats]{cor}}
+for more details.}
+
+\item{method}{a character string indicating which correlation coefficient (or
+covariance) is to be computed. One of "pearson" (default), "kendall", or
+"spearman": can be abbreviated. See \code{\link[stats]{cor}} for more
+details.}
 }
 \value{
 A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
