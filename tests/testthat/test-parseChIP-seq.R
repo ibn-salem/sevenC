@@ -22,6 +22,8 @@ exampleGR <- GRanges(
 
 test_path <- system.file("tests", package = "rtracklayer")
 test_bw <- file.path(test_path, "test.bw")
+test_wig <- file.path(test_path, "step.wig")
+
 # GRanges object with 9 ranges and 1 metadata column:
 #   seqnames       ranges strand |     score
 # <Rle>    <IRanges>  <Rle> | <numeric>
@@ -213,4 +215,35 @@ test_that("addCovToGR works with chr22 example data", {
 
     expect_true("chip" %in% names(mcols(motifGR)))
   }
+})
+
+test_that("addCovToGR works with wig file", {
+
+
+  # build custom gr with proper chroms as in step.wig
+  chr19_gr <- GRanges(
+    rep("chr19", 3),
+    IRanges(
+      c(59104901, 59105901, 59106301),
+      c(59104911, 59105911, 59106311)
+    ),
+    seqinfo = Seqinfo(seqnames = c("chr18", "chr19"),
+                      seqlengths = c(60000000, 60000000),
+                      isCircular = c(FALSE, FALSE),
+                      genome = "chr19_gr")
+  )
+
+  # run with wig file
+  grCov <- addCovToGR(
+    chr19_gr,
+    test_wig, window = 10,
+    binSize = 1,
+    colname = "covTest")
+
+    expect_equal(length(chr19_gr), length(grCov))
+    expect_true(all(all(!is.na(grCov$covTest))))
+    expect_equal(length(mcols(grCov)[, "covTest"]), length(chr19_gr))
+    # compare to actual step.wig file from rtracklayer package
+    expect_equal(grCov$covTest[[1]][1], 12.5)
+
 })

@@ -92,9 +92,9 @@ other signal in the input bigWig file) to each range in a
 <code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object. The coverage is reported for a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
-column holding a <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code> object. Note, this function
-does not work on windows because reading of bigWig files is currently not
-supported on windows.</p>
+column holding a <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/AtomicList-class'>NumericList</a></code> object. Note, this
+function does not work on windows because reading of bigWig files is currently
+not supported on windows.</p>
     
 
     <pre class="usage"><span class='fu'>addCovToGR</span>(<span class='no'>gr</span>, <span class='no'>bwFile</span>, <span class='kw'>window</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>binSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"chip"</span>)</pre>
@@ -104,12 +104,13 @@ supported on windows.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gr</th>
-      <td><p><code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object with genomic regions</p></td>
+      <td><p><code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object with genomic regions. It
+should contain a valid seqinfo object with defined seqlengths.</p></td>
     </tr>
     <tr>
       <th>bwFile</th>
-      <td><p>File path or connection to BigWig file with coverage to parse
-from.</p></td>
+      <td><p>File path or connection to BigWig or wig file with coverage to
+parse from.</p></td>
     </tr>
     <tr>
       <th>window</th>

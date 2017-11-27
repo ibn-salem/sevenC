@@ -76,8 +76,8 @@ slideMean <- function(x, k){
 #'
 #'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions. It
 #'  should contain a valid seqinfo object with defined seqlengths.
-#'@param bwFile File path or connection to BigWig file with coverage to parse
-#'  from.
+#'@param bwFile File path or connection to BigWig or wig file with coverage to
+#'  parse from.
 #'@param window Numeric scalar for window size around the center of ranges in
 #'  \code{gr}.
 #'@param binSize Integer scalar as size of bins to which the coverage values are
@@ -120,7 +120,8 @@ slideMean <- function(x, k){
 #'@importFrom IRanges trim NumericList
 #'@importFrom methods is
 #'@export
-addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip"){
+addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
+                       colname = "chip"){
 
   # check input arguments
   stopifnot(file.exists(bwFile), length(bwFile) == 1)
@@ -165,7 +166,7 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
   selection <- rtracklayer::BigWigSelection(selectWin)
 
   # parse coverage from selected regions as GRanges object
-  covGR <- rtracklayer::import.bw(
+  covGR <- rtracklayer::import(
     bwFile,
     selection = selection,
     as = "GRanges",

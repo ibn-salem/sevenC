@@ -93,7 +93,8 @@ distance. Note, this function does not work on windows because reading of
 bigWig files is currently not supported on windows.</p>
     
 
-    <pre class="usage"><span class='fu'>addCovCor</span>(<span class='no'>gi</span>, <span class='kw'>datacol</span> <span class='kw'>=</span> <span class='st'>"chip"</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"cor_chip"</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>addCovCor</span>(<span class='no'>gi</span>, <span class='kw'>datacol</span> <span class='kw'>=</span> <span class='st'>"chip"</span>, <span class='kw'>colname</span> <span class='kw'>=</span> <span class='st'>"cor_chip"</span>, <span class='kw'>maxDist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>use</span> <span class='kw'>=</span> <span class='st'>"everything"</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -118,6 +119,19 @@ interaction as a <code>NumericList</code>.</p></td>
       <td><p>maximal distance of pairs in bp as numeric. If maxDist=NULL,
 the maximal distance is computed from input interactions gi by
 <code>max(pairdist(gi))</code>.</p></td>
+    </tr>
+    <tr>
+      <th>use</th>
+      <td><p>an optional character string giving a method for computing
+covariances in the presence of missing values. See <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code>
+for more details.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>a character string indicating which correlation coefficient (or
+covariance) is to be computed. One of "pearson" (default), "kendall", or
+"spearman": can be abbreviated. See <code><a href='http://www.rdocumentation.org/packages/stats/topics/cor'>cor</a></code> for more
+details.</p></td>
     </tr>
     </table>
     

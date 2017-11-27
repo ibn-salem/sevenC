@@ -10,8 +10,8 @@ addCovToGR(gr, bwFile, window = 1000, binSize = 1, colname = "chip")
 \item{gr}{\code{\link[GenomicRanges]{GRanges}} object with genomic regions. It
 should contain a valid seqinfo object with defined seqlengths.}
 
-\item{bwFile}{File path or connection to BigWig file with coverage to parse
-from.}
+\item{bwFile}{File path or connection to BigWig or wig file with coverage to
+parse from.}
 
 \item{window}{Numeric scalar for window size around the center of ranges in
 \code{gr}.}
