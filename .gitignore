@@ -8,6 +8,7 @@
 data-raw/GM12878_Stat1.bigWig
 data-raw/E-MTAB-2323.additional.1.zip
 data-raw/TS5_*
+data-raw/hg19_MA0139.1.mrkv1.ms.gz
 
 # ignore bin directory
 bin
