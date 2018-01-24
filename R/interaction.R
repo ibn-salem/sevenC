@@ -114,7 +114,8 @@ noZeroVar <- function(dat) {
 #'   motifGR <- sevenC::motif.hg19.CTCF.chr22
 #'
 #'   # use example bigWig file
-#'   "GM12878_Stat1.chr22_1-18000000.bigWig", package = "sevenC")
+#'  exampleBigWig <- system.file("extdata",
+#'      "GM12878_Stat1.chr22_1-18000000.bigWig", package = "sevenC")
 #'
 #'   # add coverage from bigWig file
 #'   motifGR <- addCovToGR(motifGR, exampleBigWig)
