@@ -4,7 +4,7 @@
 .Ruserdata
 .Rprofile
 
-# ignore temporary raw data from ENCODE
+# ignore temporary raw data from ENCODE and other
 data-raw/GM12878_Stat1.bigWig
 data-raw/E-MTAB-2323.additional.1.zip
 data-raw/TS5_*
