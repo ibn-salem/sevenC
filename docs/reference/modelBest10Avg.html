@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default parameters for logistic regression model. — modelBest10Avg • sevenC</title>
+<title>Default parameters for logistic regression model in sevenC. — modelBest10Avg • sevenC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,13 +83,13 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default parameters for logistic regression model.</h1>
+    <h1>Default parameters for logistic regression model in sevenC.</h1>
     </div>
 
     
     <p>This dataset contains term names and estimates for logistic regression model
 to predict chromatin looping interactions. The estimate represent an average
-of the 10 best performing models out of 121 transcription factor ChIP-seq
+of the 10 best performing models out of 124 transcription factor ChIP-seq
 data sets from ENCODE.</p>
     
 
@@ -111,22 +111,23 @@ data sets from ENCODE.</p>
   if not.</p></dd>
     <dt>score_min</dt><dd><p>Minimum of motif hit score between both motifs in pair.
   The motif score is defined as -log_10 of the p-value of the motif hit as
-  reported by RSAT matrix-scan tool. The unit is -log_10(p) where p is the
-  p-value.</p></dd>
+  reported by JASPAR motif tracks. The unit is -log_10(p) where p is the
+  p-value of the motif hit.</p></dd>
     <dt>cor</dt><dd><p>Pearson correlation coefficient of ChIP-seq signals across +/-
   500 bp around CTCF motif centers.</p></dd>
     </dl>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Each of 121 transcription factor (TF) ChIP-seq data sets from ENCODE in
+    <p>Each of 124 transcription factor (TF) ChIP-seq data sets from ENCODE in
 GM12878 cells were used to train a logistic regression model. All CTCF motifs
 in <code><a href='motif.hg19.CTCF.html'>motif.hg19.CTCF</a></code> within a distance of 1 Mb were used as
 candidates. A given pair was labled as true loop interactions, if it has
 interaction support based on loops from Hi-C in human GM12878 cells from Rao
 et al. 2014 or ChIA-PET loops from Tang et al. 2015 in the same cell type.
 The 10 best performing models were selected based on the average area under
-the precision-recall-curve in 10-fold cross-validation.</p>
+the precision-recall-curve in 10-fold cross-validation.
+The parameters were than averaged across the 10 best performig models.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -146,6 +147,10 @@ Architecture Reveals Chromatin Topology for Transcription, Cell, Volume 163,
 Issue 7, 17 December 2015, Pages 1611-1627, ISSN 0092-8674,
 https://doi.org/10.1016/j.cell.2015.11.024.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='cutoffBest10.html'>cutoffBest10</a></code></p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -157,6 +162,8 @@ https://doi.org/10.1016/j.cell.2015.11.024.</p>
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>

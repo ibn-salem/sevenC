@@ -62,14 +62,14 @@
 "motif.hg19.CTCF.chr22.cov"
 
 
-#' Default parameters for logistic regression model.
+#' Default parameters for logistic regression model in sevenC.
 #'
 #' This dataset contains term names and estimates for logistic regression model
 #' to predict chromatin looping interactions. The estimate represent an average
-#' of the 10 best performing models out of 121 transcription factor ChIP-seq
+#' of the 10 best performing models out of 124 transcription factor ChIP-seq
 #' data sets from ENCODE.
 #'
-#' Each of 121 transcription factor (TF) ChIP-seq data sets from ENCODE in
+#' Each of 124 transcription factor (TF) ChIP-seq data sets from ENCODE in
 #' GM12878 cells were used to train a logistic regression model. All CTCF motifs
 #' in \code{\link{motif.hg19.CTCF}} within a distance of 1 Mb were used as
 #' candidates. A given pair was labled as true loop interactions, if it has
@@ -77,6 +77,7 @@
 #' et al. 2014 or ChIA-PET loops from Tang et al. 2015 in the same cell type.
 #' The 10 best performing models were selected based on the average area under
 #' the precision-recall-curve in 10-fold cross-validation.
+#' The parameters were than averaged across the 10 best performig models.
 #'
 #'
 #' @references
@@ -119,15 +120,15 @@
 #'
 #'   \item{score_min}{Minimum of motif hit score between both motifs in pair.
 #'   The motif score is defined as -log_10 of the p-value of the motif hit as
-#'   reported by RSAT matrix-scan tool. The unit is -log_10(p) where p is the
-#'   p-value.}
+#'   reported by JASPAR motif tracks. The unit is -log_10(p) where p is the
+#'   p-value of the motif hit.}
 #'
 #'   \item{cor}{Pearson correlation coefficient of ChIP-seq signals across +/-
 #'   500 bp around CTCF motif centers.}
 #'
 #'   }
 #'
-#'
+#' @seealso \code{\link{cutoffBest10}}
 "modelBest10Avg"
 
 
@@ -135,7 +136,7 @@
 #'
 #' This dataset contains optimal cutoff scores for the response value of logistic
 #' regression models. The cutoff is based on optimal F1-scores. A separate model
-#' was trained For each of 121 TF ChIP-seq datasets in human GM12878 cells. The
+#' was trained For each of 124 TF ChIP-seq datasets in human GM12878 cells. The
 #' model performance were calculated with Hi-C and ChIA-PET interactions using
 #' 10-fold cross-validation.
 #'
@@ -153,6 +154,7 @@
 #'
 #'   }
 #'
+#'@seealso \code{\link{modelBest10Avg}}
 "cutoffByTF"
 
 #' Default optimal cutoff value of logistic regression.
@@ -161,4 +163,6 @@
 #' ChIP-seq data sets. It is used as default cutoff value on the logistic
 #' regression response score in \code{\link{predLoops}} function See
 #' \code{?'cutoffByTF'} for more details.
+#'
+#' @seealso \code{\link{cutoffByTF}}, \code{\link{modelBest10Avg}}
 "cutoffBest10"

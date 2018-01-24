@@ -35,8 +35,7 @@ JASPAR_HG19_CTCF_URL <- "http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks
 # define minimal significance threshold as p-value
 MOTIF_PVAL <- 2.5 * 1e-06
 
-# Parse CTCF motif sites from JASPAR track -----------------
-#*******************************************************************************
+# Parse CTCF motif sites from JASPAR track
 
 # define colnames and parse TSV file from JASPAR
 # header: chr `start (1-based)`   end `rel_score * 1000` `-1 * log10(p_value) * 100` strand
@@ -78,7 +77,7 @@ devtools::use_data(motif.hg19.CTCF, overwrite = TRUE)
 # add subset of CTCF moitif locations on chr22
 #-------------------------------------------------------------------------------
 motif.hg19.CTCF.chr22 <- motif.hg19.CTCF[seqnames(motif.hg19.CTCF) == "chr22"]
-  # & end(motif.hg19.CTCF) <= 18000000]
+
 devtools::use_data(motif.hg19.CTCF.chr22, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
@@ -92,7 +91,8 @@ devtools::use_data(motif.hg19.CTCF.chr22.cov, overwrite = TRUE)
 #-------------------------------------------------------------------------------
 # add default model parametes trained on best 10 performing TF ChIP-seq data
 #-------------------------------------------------------------------------------
-model_best_n_file <- "data-raw/v04_screen_TF_lfc.motifSig6_w1000_b1.bestNModelDF.tsv"
+model_best_n_file <- "data-raw/v05_screen_TF_lfc.motifPval2.5e-06_w1000_b1.bestNModelDF.tsv"
+
 modelBest10Avg <- readr::read_tsv(model_best_n_file) %>%
   select(term, estimate_mean) %>%
   rename(estimate = estimate_mean) %>%
@@ -102,7 +102,7 @@ devtools::use_data(modelBest10Avg, overwrite = TRUE)
 #-------------------------------------------------------------------------------
 # add best f1-score cutoff for each TF
 #-------------------------------------------------------------------------------
-f1ModelDF_file <- "data-raw/v04_screen_TF_lfc.motifSig6_w1000_b1.f1ModelDF.tsv"
+f1ModelDF_file <- "data-raw/v05_screen_TF_lfc.motifPval2.5e-06_w1000_b1.f1ModelDF.tsv"
 
 cutoffByTF <- readr::read_tsv(f1ModelDF_file) %>%
   select(-max_idx)
@@ -112,7 +112,7 @@ devtools::use_data(cutoffByTF, overwrite = TRUE)
 #-------------------------------------------------------------------------------
 # add default cutoff using optimal f1-score on best 10 performing TF datasets
 #-------------------------------------------------------------------------------
-topNf1ModelDF_file <- "data-raw/v04_screen_TF_lfc.motifSig6_w1000_b1.topNf1ModelDF.tsv"
+topNf1ModelDF_file <- "data-raw/v05_screen_TF_lfc.motifPval2.5e-06_w1000_b1.topNf1ModelDF.tsv"
 cutoffBest10 <- readr::read_tsv(topNf1ModelDF_file)$mean_max_cutoff
 
 devtools::use_data(cutoffBest10, overwrite = TRUE)
@@ -161,29 +161,5 @@ loopFinalFile <- "inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.cluste
 
 write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names = FALSE,
             quote = FALSE, sep = "\t")
-
-
-# #-------------------------------------------------------------------------------
-# # Download Capture-Hi-C sample data from Mifsud et al. 2015
-# #-------------------------------------------------------------------------------
-#
-# work_dir <- getwd()
-# zipURL <- "http://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2323/E-MTAB-2323.additional.1.zip"
-# zipFile <- "E-MTAB-2323.additional.1.zip"
-# inFile <- "TS5_GM12878_promoter-promoter_significant_interactions.txt"
-# outFile <- paste0(work_dir, "/inst/extdata/", inFile, ".chr22")
-#
-# setwd("data-raw")
-#
-# download.file(zipURL, zipFile)
-# system(paste("unzip", zipFile))
-# # grep for header and chr22
-# system(
-#   paste("grep -E -e \"^chr[[:space:]]\" -e \"chr22\" ", inFile, ">", outFile)
-#   )
-#
-# setwd(work_dir)
-
-
 
 

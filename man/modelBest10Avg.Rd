@@ -3,7 +3,7 @@
 \docType{data}
 \name{modelBest10Avg}
 \alias{modelBest10Avg}
-\title{Default parameters for logistic regression model.}
+\title{Default parameters for logistic regression model in sevenC.}
 \format{An object of class \code{data.frame} with 7 rows and 2 columns
   holding the term name and estimate.
 
@@ -25,8 +25,8 @@
 
   \item{score_min}{Minimum of motif hit score between both motifs in pair.
   The motif score is defined as -log_10 of the p-value of the motif hit as
-  reported by RSAT matrix-scan tool. The unit is -log_10(p) where p is the
-  p-value.}
+  reported by JASPAR motif tracks. The unit is -log_10(p) where p is the
+  p-value of the motif hit.}
 
   \item{cor}{Pearson correlation coefficient of ChIP-seq signals across +/-
   500 bp around CTCF motif centers.}
@@ -38,11 +38,11 @@ modelBest10Avg
 \description{
 This dataset contains term names and estimates for logistic regression model
 to predict chromatin looping interactions. The estimate represent an average
-of the 10 best performing models out of 121 transcription factor ChIP-seq
+of the 10 best performing models out of 124 transcription factor ChIP-seq
 data sets from ENCODE.
 }
 \details{
-Each of 121 transcription factor (TF) ChIP-seq data sets from ENCODE in
+Each of 124 transcription factor (TF) ChIP-seq data sets from ENCODE in
 GM12878 cells were used to train a logistic regression model. All CTCF motifs
 in \code{\link{motif.hg19.CTCF}} within a distance of 1 Mb were used as
 candidates. A given pair was labled as true loop interactions, if it has
@@ -50,6 +50,7 @@ interaction support based on loops from Hi-C in human GM12878 cells from Rao
 et al. 2014 or ChIA-PET loops from Tang et al. 2015 in the same cell type.
 The 10 best performing models were selected based on the average area under
 the precision-recall-curve in 10-fold cross-validation.
+The parameters were than averaged across the 10 best performig models.
 }
 \references{
 Suhas S.P. Rao, Miriam H. Huntley, Neva C. Durand, Elena K. Stamenova, Ivan
@@ -68,5 +69,8 @@ Plewczynski, Guoliang Li, Yijun Ruan, CTCF-Mediated Human 3D Genome
 Architecture Reveals Chromatin Topology for Transcription, Cell, Volume 163,
 Issue 7, 17 December 2015, Pages 1611-1627, ISSN 0092-8674,
 https://doi.org/10.1016/j.cell.2015.11.024.
+}
+\seealso{
+\code{\link{cutoffBest10}}
 }
 \keyword{datasets}

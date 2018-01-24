@@ -14,4 +14,7 @@ ChIP-seq data sets. It is used as default cutoff value on the logistic
 regression response score in \code{\link{predLoops}} function See
 \code{?'cutoffByTF'} for more details.
 }
+\seealso{
+\code{\link{cutoffByTF}}, \code{\link{modelBest10Avg}}
+}
 \keyword{datasets}
