@@ -25,31 +25,50 @@ print(object.size(bwSub), unit = "Kb")
 # save subset of file in inst/extdata as bigWig file
 rtracklayer::export(bwSub, con = bwFinalFile, format = "bigWig")
 
+#*******************************************************************************
+# add CTCF moitif locations in human genome from JASPAR motif tracks      ------
+#*******************************************************************************
 
-#-------------------------------------------------------------------------------
-# add CTCF moitif locations in genome
-#-------------------------------------------------------------------------------
-CTCF_hg19_file <- "data-raw/hg19_MA0139.1.mrkv1.ms.gz"
+# define link to TSV file from JASPAR tracks
+JASPAR_HG19_CTCF_URL <- "http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks/2018/hg19/tsv/MA0139.1.tsv.gz"
 
-hg19seqInfo <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)
+# define minimal significance threshold as p-value
+MOTIF_PVAL <- 2.5 * 1e-06
 
-# parse matrix-scan motif:
-motifDF <- readr::read_tsv(CTCF_hg19_file, comment = ";")
+# Parse CTCF motif sites from JASPAR track -----------------
+#*******************************************************************************
 
-# filter for p-values <= 10^-6
-motifDF <- motifDF[motifDF$Pval <= 10^-6, ]
+# define colnames and parse TSV file from JASPAR
+# header: chr `start (1-based)`   end `rel_score * 1000` `-1 * log10(p_value) * 100` strand
+col_names = c("chr", "start", "end", "name", "score", "log10_pval_times_100", "strand")
+allMotifDF <- read_tsv(JASPAR_HG19_CTCF_URL, col_names = col_names, skip = 1,
+                       col_type = cols(
+                         chr = col_character(),
+                         start = col_integer(),
+                         end = col_integer(),
+                         name = col_character(),
+                         score = col_integer(),
+                         log10_pval_times_100 = col_integer(),
+                         strand = col_character()
+                       )) %>%
+  mutate(log10_pval = log10_pval_times_100 / 100)
 
-motif.hg19.CTCF <- GRanges(
-  motifDF[[1]],
-  IRanges(motifDF$start, motifDF$end),
-  strand = ifelse(motifDF$strand == "D", "+", "-"),
-  as.data.frame(motifDF[,c("sequence", "weight", "Pval", "ln_Pval", "sig")]),
-  seqinfo = hg19seqInfo
-)
+motifDF <- allMotifDF %>%
+  filter(log10_pval >= -log10(MOTIF_PVAL))
 
+# take seqinfo object from hg19 TxDb package
+seqInfoHg19 <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
+
+# build GRanges object
+motif.hg19.CTCF <- GRanges(motifDF$chr, IRanges(motifDF$start, motifDF$end),
+                   strand = motifDF$strand,
+                   score = motifDF$log10_pval,
+                   seqinfo = seqInfoHg19)
+# sort
 motif.hg19.CTCF <- sort(motif.hg19.CTCF)
 
-
+# print size and number
 print(object.size(motif.hg19.CTCF), unit = "auto")
 print(length(motif.hg19.CTCF))
 
