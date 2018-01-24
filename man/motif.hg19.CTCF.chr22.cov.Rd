@@ -4,7 +4,7 @@
 \name{motif.hg19.CTCF.chr22.cov}
 \alias{motif.hg19.CTCF.chr22.cov}
 \title{CTCF motifs on human chromosome 22 with example coverage.}
-\format{An object of class \code{GRanges} of length 696.}
+\format{An object of class \code{GRanges} of length 917.}
 \usage{
 motif.hg19.CTCF.chr22.cov
 }

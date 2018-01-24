@@ -44,7 +44,7 @@ if (.Platform$OS.type != "windows") {
  motifGR <- sevenC::motif.hg19.CTCF.chr22
 
  # build candidate interactions
- gi <- prepareCisPairs(motifGR, scoreColname = "sig")
+ gi <- prepareCisPairs(motifGR)
 
 
  # add ChIP-seq signals correlation

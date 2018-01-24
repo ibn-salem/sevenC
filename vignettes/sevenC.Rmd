@@ -67,7 +67,7 @@ library(sevenC)
 motifs <- motif.hg19.CTCF.chr22
 
 # get motifs pairs
-gi <- prepareCisPairs(motifs, scoreColname = "sig")
+gi <- prepareCisPairs(motifs)
 ```
 
 ### Add ChIP-seq data and compute correaltion
@@ -86,7 +86,7 @@ gi <- addCor(gi, bigWigFile)
 if (.Platform$OS.type == 'windows') {
   # use motif data with ChIP-seq coverage
   motifs <- motif.hg19.CTCF.chr22.cov
-  gi <- prepareCisPairs(motifs, scoreColname = "sig")
+  gi <- prepareCisPairs(motifs)
   gi <- addCovCor(gi)
   
 } else {
@@ -171,7 +171,7 @@ motifs$chip
 
 Now we build a dataset with all pairs of CTCF motif within 1 Mb and annotate it with distance, motif orientation, and motif score. 
 ```{r}
-gi <- prepareCisPairs(motifs, maxDist = 10^6, scoreColname = "sig")
+gi <- prepareCisPairs(motifs, maxDist = 10^6)
 
 gi
 ```
@@ -244,7 +244,7 @@ bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig",
 motifs <- addCovToGR(motifs, bigWigFile)
 
 # build motif pairs
-gi <- prepareCisPairs(motifs, maxDist = 10^6, scoreColname = "sig")
+gi <- prepareCisPairs(motifs, maxDist = 10^6)
 
 # add correaltion of ChIP-signal
 gi <- addCovCor(gi)
@@ -266,7 +266,7 @@ if (.Platform$OS.type == 'windows') {
   motifs <- addCovToGR(motifs, bigWigFile)
 }
   
-gi <- prepareCisPairs(motifs, maxDist = 10^6, scoreColname = "sig")
+gi <- prepareCisPairs(motifs, maxDist = 10^6)
 
 # add correaltion of ChIP-signal
 gi <- addCovCor(gi)
@@ -334,6 +334,12 @@ boxplot(gi$pred ~ gi$loop,
 This shows higher prediction scores for truly looping motif pairs.
 However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. 
 A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the sevenC paper. 
+
+## session Info 
+```{r}
+sessionInfo()
+```
+
 
 # References
 

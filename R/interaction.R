@@ -537,7 +537,7 @@ prepareCisPairs <- function(motifs, maxDist = 1e6, scoreColname = "score"){
 #'  motifGR <- sevenC::motif.hg19.CTCF.chr22
 #'
 #'  # build candidate interactions
-#'  gi <- prepareCisPairs(motifGR, scoreColname = "sig")
+#'  gi <- prepareCisPairs(motifGR)
 #'
 #'
 #'  # add ChIP-seq signals correlation

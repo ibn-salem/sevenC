@@ -47,7 +47,7 @@ library(sevenC)
 motifs <- motif.hg19.CTCF.chr22
 
 # get motifs pairs
-gi <- prepareCisPairs(motifs, maxDist = 10^6, scoreColname = "sig")
+gi <- prepareCisPairs(motifs, maxDist = 10^6)
 ```
 
 #### Add ChIP-seq data and compute correaltion

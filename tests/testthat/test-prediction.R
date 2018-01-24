@@ -2,7 +2,7 @@ context("predictions")
 
 
 # prepare gi from chr22 exampple data set
-exampleGI <- prepareCisPairs(motif.hg19.CTCF.chr22.cov, scoreColname = "sig")
+exampleGI <- prepareCisPairs(motif.hg19.CTCF.chr22.cov)
 
 exampleGI <- addCovCor(exampleGI)
 

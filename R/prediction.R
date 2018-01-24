@@ -62,7 +62,7 @@ predLogit <- function(data, formula, betas){
 #'motifGR <- sevenC::motif.hg19.CTCF.chr22.cov
 #'
 #'# build candidate interactions
-#'gi <- prepareCisPairs(motifGR, scoreColname = "sig")
+#'gi <- prepareCisPairs(motifGR)
 #'
 #'# add ChIP-seq signals correlation
 #'gi <- addCovCor(gi)

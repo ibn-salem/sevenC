@@ -144,6 +144,9 @@ test_that("coverage is added to gi on small example dataset", {
       window = 10,
       binSize = 1,
       colname = "cov")
+
+    expect_true("cov" %in% names(mcols(regions(gi))))
+    expect_equal(length(regions(gi)), length(regions(gi)$cov))
   }
 })
 
@@ -165,6 +168,8 @@ test_that("addCovCor works with chr22 example data", {
     gi <- getCisPairs(motifGR, 1e5)
 
     gi <- addCovCor(gi, datacol = "chip")
+
+    expect_true("cor_chip" %in% names(mcols(gi)))
   }
 })
 
@@ -238,6 +243,8 @@ test_that("interactions can be annotated with Hi-C loops", {
 
   mcols(gi)[,"loop"] <- ovl
 
+  expect_true("loop" %in% names(mcols(gi)))
+  expect_true(is.logical(gi$loop))
 })
 
 test_that("addInteractionSupport works with toy example", {
