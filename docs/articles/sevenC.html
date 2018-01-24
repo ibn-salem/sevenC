@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prediction of chromatin looping interactions with <em>chromloop</em> • chromloop</title>
+<title>Prediction of chromatin looping interactions with <em>sevenC</em> • sevenC</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">chromloop</a>
+      <a class="navbar-brand" href="../index.html">sevenC</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -35,7 +35,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/chromloop.html">Get Started</a>
+  <a href="../articles/sevenC.html">Get Started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -43,7 +43,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ibn-salem/chromloop">
+  <a href="https://github.com/ibn-salem/sevenC">
     <span class="fa fa-github"></span>
      
   </a>
@@ -60,7 +60,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Prediction of chromatin looping interactions with <em>chromloop</em>
+      <h1>Prediction of chromatin looping interactions with <em>sevenC</em>
 </h1>
                         <h4 class="author">Jonas Ibn-Salem</h4>
             <address class="author_afil">
@@ -75,7 +75,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      <p>Chromatin looping is an important feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
+      <p>Chromatin looping is an important feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide sevenC, a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
     </div>
     
 <div class="contents">
@@ -85,7 +85,7 @@
 <p>Gene expression is regulated by binding of transcription factors (TF) to genomic DNA. However, many binding sites are in distal regulatory region, such as enhancers, that are hundreds of kilo bases apart of genes. These regulatory regions can physically interact with promoters of regulated genes by chromatin looping interactions. These looping interaction can be measured genome wide by chromatin conformation capture techniques such as Hi-C or ChIA-PET <span class="citation">(Rao et al. 2014, <span class="citation">Tang et al. (2015)</span>)</span>. Despite many exciting insights into the three-dimensional organization of genomes, these experimental methods are not only elaborate and expansive but also require require lots of sample material (in case of ChIA-PET) or have limited resolution of 5-40 kb (in case of Hi-C).</p>
 <p>In contrast, the binding sites of TFs can be detected genome-wide by ChIP-seq experiment which are available for hundreds of TFs in many cell type and conditions. However, classical analysis of ChIP-seq gives only the direct binding sites of targeted TFs (peaks) and it is not trivial to associate them to the regulated gene without chromatin looping information.</p>
 <p>Therefore, we provide a computational method to predict chromatin interactions from only genomic sequence features and ChIP-seq data. The predicted looping interactions can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thereby improve functional downstream analysis on the level of genes.</p>
-<p>In this vignette, we show how to use the R package <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. Furthermore, we show how to train the the prediction model using custom data.</p>
+<p>In this vignette, we show how to use the R package <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. Furthermore, we show how to train the the prediction model using custom data.</p>
 </div>
 <div id="predict-chromatin-looping-interactions" class="section level1">
 <h1 class="hasAnchor">
@@ -93,11 +93,11 @@
 <div id="basic-usage-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#basic-usage-example" class="anchor"></a>Basic usage example</h2>
-<p>Here we show how to use the <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> package with default options to predict chromatin looping interactions among CTCF motif locations on chromosome 22. As input only a single bigWig file with example ChIP-seq data is used.</p>
+<p>Here we show how to use the <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package with default options to predict chromatin looping interactions among CTCF motif locations on chromosome 22. As input only a single bigWig file with example ChIP-seq data is used.</p>
 <div id="get-motif-pairs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-motif-pairs" class="anchor"></a>Get motif pairs</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(chromloop)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sevenC)
 
 <span class="co"># load provided CTCF motifs in human genome</span>
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
@@ -110,7 +110,7 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareC
 <a href="#add-chip-seq-data-and-compute-correaltion" class="anchor"></a>Add ChIP-seq data and compute correaltion</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use example ChIP-seq bigWig file</span>
 bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, 
-  <span class="dt">package =</span> <span class="st">"chromloop"</span>)
+  <span class="dt">package =</span> <span class="st">"sevenC"</span>)
 
 <span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span>
 gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCor.html">addCor</a></span>(gi, bigWigFile)</code></pre></div>
@@ -129,8 +129,8 @@ loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predL
 <div id="prepare-ctcf-motif-pairs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#prepare-ctcf-motif-pairs" class="anchor"></a>Prepare CTCF motif pairs</h3>
-<p>First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. We use CTCF motif hits in human chromosome 22 as provide by <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> package. In general, any CTCF motif pairs can be used if provided as <code>GRanges</code> object. To use the motif hit score, the motif data should contain a -log<sub>10</sub> transformed p-value describing the significance of each motif hit. Here, we use CTCF motif hits from RSAT matrix-scan on chromosome 22 as provided as <code>motif.hg19.CTCF.chr22</code> in the <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> package. For more information on the motif data set, see <code><a href="../reference/motif.hg19.CTCF.html">?motif.hg19.CTCF</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(chromloop)
+<p>First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. We use CTCF motif hits in human chromosome 22 as provide by <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package. In general, any CTCF motif pairs can be used if provided as <code>GRanges</code> object. To use the motif hit score, the motif data should contain a -log<sub>10</sub> transformed p-value describing the significance of each motif hit. Here, we use CTCF motif hits from RSAT matrix-scan on chromosome 22 as provided as <code>motif.hg19.CTCF.chr22</code> in the <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package. For more information on the motif data set, see <code><a href="../reference/motif.hg19.CTCF.html">?motif.hg19.CTCF</a></code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sevenC)
 
 <span class="co"># load provided CTCF motifs</span>
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</code></pre></div>
@@ -140,10 +140,10 @@ motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#add-chip-seq-signals-at-motifs-sites" class="anchor"></a>Add ChIP-seq signals at motifs sites</h3>
 <p>To predict loops we need the ChIP-seq signals at all motif sites. Therefore, we read an example bigWig file with ChIP-seq signals<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p>
-<p>An example file with only data on a subset of chromosome 22 is provide as part of the <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> package. The full file can be downloaded from ENCODE <span class="citation">(Dunham et al. 2012)</span> <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig">here</a>. The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.</p>
+<p>An example file with only data on a subset of chromosome 22 is provide as part of the <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package. The full file can be downloaded from ENCODE <span class="citation">(Dunham et al. 2012)</span> <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig">here</a>. The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># use example ChIP-seq bigWig file</span>
 bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, 
-  <span class="dt">package =</span> <span class="st">"chromloop"</span>)</code></pre></div>
+  <span class="dt">package =</span> <span class="st">"sevenC"</span>)</code></pre></div>
 <p>We add ChIP-seq signals to all motifs in a window of 1000 bp using the function <code><a href="../reference/addCovToGR.html">addCovToGR()</a></code> as follows</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read ChIP-seq coverage </span>
 motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)</code></pre></div>
@@ -292,7 +292,7 @@ loops</code></pre></div>
 <div id="train-prediciton-model-using-custom-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#train-prediciton-model-using-custom-data" class="anchor"></a>Train prediciton model using custom data</h1>
-<p>Here, we show how to use <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> to build and train a logistic regression model for loop prediction.</p>
+<p>Here, we show how to use <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> to build and train a logistic regression model for loop prediction.</p>
 <div id="prepare-moitf-pairs-and-add-chip-seq-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prepare-moitf-pairs-and-add-chip-seq-data" class="anchor"></a>Prepare moitf pairs and add ChIP-seq data</h2>
@@ -302,7 +302,7 @@ motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
 
 <span class="co"># use example ChIP-seq coverage file</span>
 bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, 
-  <span class="dt">package =</span> <span class="st">"chromloop"</span>)
+  <span class="dt">package =</span> <span class="st">"sevenC"</span>)
 
 <span class="co"># add ChIP-seq coverage</span>
 motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)
@@ -316,10 +316,10 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCo
 <div id="train-predictor-with-known-loops" class="section level2">
 <h2 class="hasAnchor">
 <a href="#train-predictor-with-known-loops" class="anchor"></a>Train predictor with known loops</h2>
-<p>We need to label true looping interactions by using experimental data of chromatin interactions. Here, we use loops from high resolution Hi-C experiments in human GM12878 cells <span class="citation">(Rao et al. 2014)</span>. An example file with loops on chromosome 22 is provided with the <em><a href="http://bioconductor.org/packages/chromloop">chromloop</a></em> package and the function <code><a href="../reference/parseLoopsRao.html">parseLoopsRao()</a></code> reads loops in the format provided by Rao et al. and returns a <code>GInteraction</code> object.</p>
+<p>We need to label true looping interactions by using experimental data of chromatin interactions. Here, we use loops from high resolution Hi-C experiments in human GM12878 cells <span class="citation">(Rao et al. 2014)</span>. An example file with loops on chromosome 22 is provided with the <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package and the function <code><a href="../reference/parseLoopsRao.html">parseLoopsRao()</a></code> reads loops in the format provided by Rao et al. and returns a <code>GInteraction</code> object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># parse known loops</span>
 knownLoopFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, 
-  <span class="st">"GM12878_HiCCUPS.chr22_1-18000000.loop.txt"</span>, <span class="dt">package =</span> <span class="st">"chromloop"</span>)
+  <span class="st">"GM12878_HiCCUPS.chr22_1-18000000.loop.txt"</span>, <span class="dt">package =</span> <span class="st">"sevenC"</span>)
 
 knownLoops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parseLoopsRao.html">parseLoopsRao</a></span>(knownLoopFile)</code></pre></div>
 <p>We can add a new metadata column to the motif pairs <code>gi</code>, indicating whether the pair is interacting in the experimental data using the function <code><a href="../reference/addInteractionSupport.html">addInteractionSupport()</a></code>.</p>
@@ -396,8 +396,8 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoop
 <p>As a very simple validation we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gi<span class="op">$</span>pred <span class="op">~</span><span class="st"> </span>gi<span class="op">$</span>loop, 
         <span class="dt">ylab =</span> <span class="st">"Predicted interaction probability"</span>)</code></pre></div>
-<p><img src="chromloop_files/figure-html/unnamed-chunk-21-1.png" width="288"></p>
-<p>This shows higher prediction scores for truly looping motif pairs. However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the chromloop paper.</p>
+<p><img src="sevenC_files/figure-html/unnamed-chunk-21-1.png" width="288"></p>
+<p>This shows higher prediction scores for truly looping motif pairs. However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the sevenC paper.</p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

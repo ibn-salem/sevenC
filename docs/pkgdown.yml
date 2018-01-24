@@ -1,6 +1,6 @@
 urls:
-  reference: https://ibn-salem.github.io/chromloop//reference
-  article: https://ibn-salem.github.io/chromloop//articles
+  reference: https://ibn-salem.github.io/sevenC//reference
+  article: https://ibn-salem.github.io/sevenC//articles
 articles:
-  chromloop: chromloop.html
+  sevenC: sevenC.html
 

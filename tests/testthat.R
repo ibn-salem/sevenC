@@ -1,4 +1,4 @@
 library(testthat)
-library(chromloop)
+library(sevenC)
 
-test_check("chromloop")
+test_check("sevenC")

@@ -151,10 +151,10 @@ test_that("addCovCor works with chr22 example data", {
 
   exampleBigWig <- system.file("extdata",
                                "GM12878_Stat1.chr22_1-18000000.bigWig",
-                               package = "chromloop")
+                               package = "sevenC")
 
   # use internal motif data
-  motifGR <- chromloop::motif.hg19.CTCF.chr22
+  motifGR <- sevenC::motif.hg19.CTCF.chr22
 
   # bigWig parsing fails on windows in rtracklayer::import.bw()
   if (.Platform$OS.type != 'windows') {
@@ -172,7 +172,7 @@ test_that("addCovCor works with chr22 example data", {
 test_that("getCisPairs works with whole CTCF motif data", {
 
   # use internal motif data
-  motifGR <- chromloop::motif.hg19.CTCF
+  motifGR <- sevenC::motif.hg19.CTCF
 
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e6)
@@ -221,7 +221,7 @@ test_that("addCovCor runs on toy example dataset", {
 test_that("interactions can be annotated with Hi-C loops", {
 
   # use internal motif data on chr22
-  motifGR <- chromloop::motif.hg19.CTCF.chr22
+  motifGR <- sevenC::motif.hg19.CTCF.chr22
 
   # get all pairs within 1Mb
   gi <- getCisPairs(motifGR, 1e6)
@@ -230,7 +230,7 @@ test_that("interactions can be annotated with Hi-C loops", {
   exampleLoopFile <- system.file(
     "extdata",
     "GM12878_HiCCUPS.chr22_1-18000000.loop.txt",
-    package = "chromloop")
+    package = "sevenC")
 
   loopGI <- parseLoopsRao(exampleLoopFile, seqinfo = seqinfo(gi))
 

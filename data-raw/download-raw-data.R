@@ -65,7 +65,7 @@ devtools::use_data(motif.hg19.CTCF.chr22, overwrite = TRUE)
 #-------------------------------------------------------------------------------
 # add example ChIP-seq coverage
 #-------------------------------------------------------------------------------
-motif.hg19.CTCF.chr22.cov <- chromloop::addCovToGR(
+motif.hg19.CTCF.chr22.cov <- sevenC::addCovToGR(
   motif.hg19.CTCF.chr22,
   bwFinalFile)
 devtools::use_data(motif.hg19.CTCF.chr22.cov, overwrite = TRUE)

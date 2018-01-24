@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add coverage to regions in <code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object. — addCovToGR • chromloop</title>
+<title>Add coverage to regions in <code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a></code> object. — addCovToGR • sevenC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">chromloop</a>
+      <a class="navbar-brand" href="../index.html">sevenC</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -58,7 +58,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/chromloop.html">Get Started</a>
+  <a href="../articles/sevenC.html">Get Started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -67,7 +67,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ibn-salem/chromloop">
+  <a href="https://github.com/ibn-salem/sevenC">
     <span class="fa fa-github"></span>
      
   </a>
@@ -141,10 +141,10 @@ combined.</p></td>
 
  <span class='co'># use example bigWig file of ChIP-seq signals on human chromosome 22</span>
  <span class='no'>exampleBigWig</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>,
- <span class='st'>"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"chromloop"</span>)
+ <span class='st'>"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sevenC"</span>)
 
  <span class='co'># use example CTCF moitf location on human chromosome 22</span>
- <span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>chromloop</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/chromloop/topics/motif.hg19.CTCF.chr22'>motif.hg19.CTCF.chr22</a></span>
+ <span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sevenC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/sevenC/topics/motif.hg19.CTCF.chr22'>motif.hg19.CTCF.chr22</a></span>
 
  <span class='co'># add ChIP-seq signals to motif regions</span>
  <span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='fu'>addCovToGR</span>(<span class='no'>motifGR</span>, <span class='no'>exampleBigWig</span>)

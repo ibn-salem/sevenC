@@ -1,5 +1,5 @@
 CHANGES IN VERSION 0.99.0
 -------------------------
 
-    o New package "chromloop" for predicting chromatin looping interactions
+    o New package "sevenC" for predicting chromatin looping interactions
       from ChIP-seq data and DNA-sequence motifs.

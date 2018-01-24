@@ -1,7 +1,7 @@
 context("parseChIP-seq")
 
 exampleBigWig <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig",
-                             package = "chromloop")
+                             package = "sevenC")
 
 toySeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
                                     seqlengths = c(10^8, 10^8),
@@ -206,7 +206,7 @@ test_that("addCovToGR handles binSize and window paramter correctly.", {
 test_that("addCovToGR works with chr22 example data", {
 
   # use internal motif data
-  motifGR <- chromloop::motif.hg19.CTCF.chr22
+  motifGR <- sevenC::motif.hg19.CTCF.chr22
 
   # bigWig parsing fails on windows in rtracklayer::import.bw()
   if (.Platform$OS.type != 'windows') {

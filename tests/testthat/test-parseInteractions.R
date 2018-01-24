@@ -3,7 +3,7 @@ context("parseInteractions")
 
 exampleLoopFile <- system.file("extdata",
                                "GM12878_HiCCUPS.chr22_1-18000000.loop.txt",
-                               package = "chromloop")
+                               package = "sevenC")
 
 
 
@@ -37,7 +37,7 @@ test_that("parseLoopsTang2015 works with example file", {
   exampleLoopTang2015File <- system.file(
     "extdata",
     "ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt",
-    package = "chromloop")
+    package = "sevenC")
 
   gi <- parseLoopsTang2015(exampleLoopTang2015File)
 

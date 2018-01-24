@@ -33,7 +33,7 @@ file is added as annotation column with colname "score".
 \examples{
 exampleLoopTang2015File <- system.file("extdata",
    "ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt",
-   package = "chromloop")
+   package = "sevenC")
 
 gi <- parseLoopsTang2015(exampleLoopTang2015File)
 

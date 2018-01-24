@@ -1,6 +1,6 @@
 ---
-title: "Prediction of chromatin looping interactions with *chromloop*"
-shorttitle: "chromloop package"
+title: "Prediction of chromatin looping interactions with *sevenC*"
+shorttitle: "sevenC package"
 author: 
 - name: Jonas Ibn-Salem
   affiliation:
@@ -11,13 +11,13 @@ author:
   affiliation:
     - *JGU
     - *IMB
-package: chromloop
+package: sevenC
 abstract: >
   Chromatin looping is an important feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
   transcription factor binding sites, in close physical proximity of regulated 
   target genes.
-  Here, we provide a tool that uses protein binding signals from ChIP-seq and
+  Here, we provide sevenC, a tool that uses protein binding signals from ChIP-seq and
   sequence motif information to predict chromatin looping events. Cross-linking 
   of proteins that bind close to loop anchors result in ChIP-seq signals at both 
   anchor loci. These signals are used at CTCF motif pairs together with their 
@@ -29,9 +29,9 @@ output:
   BiocStyle::html_document:
     toc_float: true
   BiocStyle::pdf_document:
-bibliography: chromloop.bib
+bibliography: sevenC.bib
 vignette: >
-  %\VignetteIndexEntry{Introduction to chromloop}
+  %\VignetteIndexEntry{Introduction to sevenC}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -47,20 +47,20 @@ In contrast, the binding sites of TFs can be detected genome-wide by ChIP-seq ex
 Therefore, we provide a computational method to predict chromatin interactions from only genomic sequence features and ChIP-seq data. 
 The predicted looping interactions can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thereby improve functional downstream analysis on the level of genes.
 
-In this vignette, we show how to use the R package `r BiocStyle::Biocpkg("chromloop")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
+In this vignette, we show how to use the R package `r BiocStyle::Biocpkg("sevenC")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
 Furthermore, we show how to train the the prediction model using custom data.
 
 # Predict chromatin looping interactions
 
 ## Basic usage example
-Here we show how to use the `r BiocStyle::Biocpkg("chromloop")` package with 
+Here we show how to use the `r BiocStyle::Biocpkg("sevenC")` package with 
 default options to predict chromatin looping interactions 
 among CTCF motif locations on chromosome 22. As input only a single bigWig file 
 with example ChIP-seq data is used.
 
 ### Get motif pairs
 ```{r, results = "hide", message = FALSE}
-library(chromloop)
+library(sevenC)
 
 # load provided CTCF motifs in human genome
 motifs <- motif.hg19.CTCF.chr22
@@ -74,7 +74,7 @@ gi <- prepareCisPairs(motifs, scoreColname = "sig")
 
 # use example ChIP-seq bigWig file
 bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
-  package = "chromloop")
+  package = "sevenC")
 
 # add ChIP-seq coverage and compute correaltion at motif pairs
 gi <- addCor(gi, bigWigFile)
@@ -91,7 +91,7 @@ if (.Platform$OS.type == 'windows') {
 } else {
   # use example ChIP-seq bigWig file
   bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
-    package = "chromloop")
+    package = "sevenC")
   
   # add ChIP-seq coverage and compute correaltion at motif pairs
   gi <- addCor(gi, bigWigFile)
@@ -114,12 +114,12 @@ in human GM12878 cells.
 
 ### Prepare CTCF motif pairs
 First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. 
-We use CTCF motif hits in human chromosome 22 as provide by `r BiocStyle::Biocpkg("chromloop")` package.
+We use CTCF motif hits in human chromosome 22 as provide by `r BiocStyle::Biocpkg("sevenC")` package.
 In general, any CTCF motif pairs can be used if provided as `GRanges` object. 
 To use the motif hit score, the motif data should contain a -log~10~ transformed p-value describing the significance of each motif hit.
-Here, we use CTCF motif hits from RSAT matrix-scan on chromosome 22 as provided as `motif.hg19.CTCF.chr22` in the `r BiocStyle::Biocpkg("chromloop")` package. For more information on the motif data set, see `?motif.hg19.CTCF`.
+Here, we use CTCF motif hits from RSAT matrix-scan on chromosome 22 as provided as `motif.hg19.CTCF.chr22` in the `r BiocStyle::Biocpkg("sevenC")` package. For more information on the motif data set, see `?motif.hg19.CTCF`.
 ```{r, results = "hide", message = FALSE}
-library(chromloop)
+library(sevenC)
 
 # load provided CTCF motifs
 motifs <- motif.hg19.CTCF.chr22
@@ -136,12 +136,12 @@ Therefore, we read an example bigWig file with ChIP-seq signals^[Note, reading o
 See `help(rtracklayer::import.bw)` for more information. Users on Windows need to add ChIP-seq signals as `NumierList` by other means.]. 
 
 An example file with only data on a subset of chromosome 22 is provide as part of
-the `r BiocStyle::Biocpkg("chromloop")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig). The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.
+the `r BiocStyle::Biocpkg("sevenC")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig). The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.
 
 ```{r}
 # use example ChIP-seq bigWig file
 bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
-  package = "chromloop")
+  package = "sevenC")
 ```
 
 We add ChIP-seq signals to all motifs in a window of 1000 bp using the function `addCovToGR()` as follows
@@ -226,7 +226,7 @@ export.bedpe(loops, "loop_interactions.bedpe", score = "pred")
 
 
 # Train prediciton model using custom data
-Here, we show how to use  `r BiocStyle::Biocpkg("chromloop")` to build and train a logistic regression model for loop prediction. 
+Here, we show how to use  `r BiocStyle::Biocpkg("sevenC")` to build and train a logistic regression model for loop prediction. 
 
 ## Prepare moitf pairs and add ChIP-seq data
 First, we need to build the pairs of motifs as candidate and add the ChIP-seq data as shown above. 
@@ -237,7 +237,7 @@ motifs <- motif.hg19.CTCF.chr22
 
 # use example ChIP-seq coverage file
 bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
-  package = "chromloop")
+  package = "sevenC")
 
 # add ChIP-seq coverage
 motifs <- addCovToGR(motifs, bigWigFile)
@@ -259,7 +259,7 @@ if (.Platform$OS.type == 'windows') {
   
   # use example ChIP-seq coverage file
   bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
-    package = "chromloop")
+    package = "sevenC")
   
   # add ChIP-seq coverage
   motifs <- addCovToGR(motifs, bigWigFile)
@@ -275,11 +275,11 @@ gi <- addCovCor(gi)
 
 We need to label true looping interactions by using experimental data of chromatin interactions. 
 Here, we use loops from high resolution Hi-C experiments in human GM12878 cells [@Rao2014].
-An example file with loops on chromosome 22 is provided with the `r BiocStyle::Biocpkg("chromloop")` package and the function `parseLoopsRao()` reads loops in the format provided by Rao et al. and returns a `GInteraction` object.
+An example file with loops on chromosome 22 is provided with the `r BiocStyle::Biocpkg("sevenC")` package and the function `parseLoopsRao()` reads loops in the format provided by Rao et al. and returns a `GInteraction` object.
 ```{r, message = FALSE}
 # parse known loops
 knownLoopFile <- system.file("extdata", 
-  "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "chromloop")
+  "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "sevenC")
 
 knownLoops <- parseLoopsRao(knownLoopFile)
 ```
@@ -332,7 +332,7 @@ boxplot(gi$pred ~ gi$loop,
 
 This shows higher prediction scores for truly looping motif pairs.
 However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. 
-A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the chromloop paper. 
+A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the sevenC paper. 
 
 # References
 

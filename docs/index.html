@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prediction of chromatin looping interactions from ChIP-seq and sequence motifs • chromloop</title>
+<title>7C: Computational chromosome conformation capture by correlation of ChIP-seq at CTCF motifs • sevenC</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">chromloop</a>
+      <a class="navbar-brand" href="index.html">sevenC</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -35,7 +35,7 @@
   </a>
 </li>
 <li>
-  <a href="articles/chromloop.html">Get Started</a>
+  <a href="articles/sevenC.html">Get Started</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -43,7 +43,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ibn-salem/chromloop">
+  <a href="https://github.com/ibn-salem/sevenC">
     <span class="fa fa-github"></span>
      
   </a>
@@ -59,20 +59,20 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="chromloop" class="section level1">
+    <div id="sevenc" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#chromloop" class="anchor"></a>chromloop</h1></div>
-<p>R package to predict chromatin looping interactions from ChIP-seq data and sequnece motifs.</p>
-<p>Chromatin looping is an important feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
+<a href="#sevenc" class="anchor"></a>sevenC</h1></div>
+<p>R package to predict chromatin looping interactions from ChIP-seq by computational chromosome conformation capture by correlation of ChIP-seq at CTCF motifs (7C).</p>
+<p>Chromatin looping is an important feature of eukaryotic genomes and can bring regulatory sequences, such as enhancers or transcription factor binding sites, in close physical proximity of regulated target genes. Here, we provide 7C, a tool that uses protein binding signals from ChIP-seq and sequence motif information to predict chromatin looping events. Cross-linking of proteins that bind close to loop anchors result in ChIP-seq signals at both anchor loci. These signals are used at CTCF motif pairs together with their distance and orientation to each other to predict whether they interact or not. The resulting chromatin loops can be used to associate enhancers or transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target genes.</p>
 <div id="intallation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#intallation" class="anchor"></a>Intallation</h2>
-<p>The chromloop package depends on some R packages from Bioconductor. They can be installed as follows</p>
+<p>The <em>sevenC</em> package depends on some R packages from Bioconductor. They can be installed as follows</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)
 <span class="kw">biocLite</span>(<span class="st">"rtracklayer"</span>, <span class="st">"InteractionSet"</span>)</code></pre></div>
-<p>The development version of chromloop can be installed from github using devtools:</p>
+<p>The development version can be installed from github using devtools:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ibn-salem/chromloop"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ibn-salem/sevenC"</span>)</code></pre></div>
 </div>
 <div id="basic-usage-example" class="section level2">
 <h2 class="hasAnchor">
@@ -81,7 +81,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="get-motif-pairs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-motif-pairs" class="anchor"></a>Get motif pairs</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(chromloop)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sevenC)
 
 <span class="co"># load provided CTCF motifs in human genome</span>
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
@@ -95,7 +95,7 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="reference/prepareCisP
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># use example ChIP-seq bigWig file</span>
 bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-18000000.bigWig"</span>, 
-  <span class="dt">package =</span> <span class="st">"chromloop"</span>)
+  <span class="dt">package =</span> <span class="st">"sevenC"</span>)
 
 <span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span>
 gi &lt;-<span class="st"> </span><span class="kw"><a href="reference/addCor.html">addCor</a></span>(gi, bigWigFile)</code></pre></div>
@@ -105,13 +105,13 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="reference/addCor.html
 <a href="#predict-loops" class="anchor"></a>Predict loops</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># predict looping interactions among all motif pairs</span>
 loops &lt;-<span class="st"> </span><span class="kw"><a href="reference/predLoops.html">predLoops</a></span>(gi)</code></pre></div>
-<p>For more detailed usage instructions, see the package <a href="https://ibn-salem.github.io/chromloop/articles/chromloop.html">vignette</a> or <a href="https://ibn-salem.github.io/chromloop/reference/index.html">reference documentation</a>.</p>
+<p>For more detailed usage instructions, see the package <a href="https://ibn-salem.github.io/sevenC/articles/sevenC.html">vignette</a> or <a href="https://ibn-salem.github.io/sevenC/reference/index.html">reference documentation</a>.</p>
 </div>
 </div>
 <div id="issues" class="section level2">
 <h2 class="hasAnchor">
 <a href="#issues" class="anchor"></a>Issues</h2>
-<p>Please report any issues here: <a href="https://github.com/ibn-salem/chromloop/issues" class="uri">https://github.com/ibn-salem/chromloop/issues</a></p>
+<p>Please report any issues here: <a href="https://github.com/ibn-salem/sevenC/issues" class="uri">https://github.com/ibn-salem/sevenC/issues</a></p>
 </div>
 </div>
   </div>

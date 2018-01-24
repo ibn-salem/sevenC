@@ -94,10 +94,10 @@ slideMean <- function(x, k){
 #'
 #'  # use example bigWig file of ChIP-seq signals on human chromosome 22
 #'  exampleBigWig <- system.file("extdata",
-#'  "GM12878_Stat1.chr22_1-18000000.bigWig", package = "chromloop")
+#'  "GM12878_Stat1.chr22_1-18000000.bigWig", package = "sevenC")
 #'
 #'  # use example CTCF moitf location on human chromosome 22
-#'  motifGR <- chromloop::motif.hg19.CTCF.chr22
+#'  motifGR <- sevenC::motif.hg19.CTCF.chr22
 #'
 #'  # add ChIP-seq signals to motif regions
 #'  motifGR <- addCovToGR(motifGR, exampleBigWig)

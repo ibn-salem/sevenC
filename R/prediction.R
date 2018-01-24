@@ -59,7 +59,7 @@ predLogit <- function(data, formula, betas){
 #' @examples
 #'
 #'# use example CTCF moitf location on human chromosome 22 with chip coverage
-#'motifGR <- chromloop::motif.hg19.CTCF.chr22.cov
+#'motifGR <- sevenC::motif.hg19.CTCF.chr22.cov
 #'
 #'# build candidate interactions
 #'gi <- prepareCisPairs(motifGR, scoreColname = "sig")

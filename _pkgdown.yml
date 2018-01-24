@@ -1,4 +1,4 @@
-url: https://ibn-salem.github.io/chromloop/
+url: https://ibn-salem.github.io/sevenC/
 
 reference:
   - title: Interactions
@@ -30,4 +30,4 @@ reference:
 navbar:
   right:
     - icon: fa-github
-      href: https://github.com/ibn-salem/chromloop
+      href: https://github.com/ibn-salem/sevenC
