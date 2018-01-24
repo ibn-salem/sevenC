@@ -1,6 +1,6 @@
 # sevenC
-R package to predict chromatin looping interactions from ChIP-seq by computational 
-chromosome conformation capture by correlation of ChIP-seq at CTCF motifs (7C).
+
+## Computational chromosome conformation capture by correlation of ChIP-seq at CTCF motifs
 
 Chromatin looping is an important feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
