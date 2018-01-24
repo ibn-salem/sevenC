@@ -15,10 +15,11 @@ motifs in a windows of 1000 bp around the motif center as
 \code{\link[IRanges]{NumericList}}. The data is from a ChIP-seq experiment
 for STAT1 in human GM12878 cells. The full bigWig file can be downloaded from
 ENCODE (Dunham et al. 2012)
-[here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).
-}
-\details{
+\url{http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig}.
 See \code{\link{motif.hg19.CTCF}} and \code{\link{motif.hg19.CTCF.chr22}} for
 a more details and the motif data set.
+}
+\seealso{
+\code{\link{motif.hg19.CTCF}}, \code{\link{motif.hg19.CTCF.chr22}}
 }
 \keyword{datasets}

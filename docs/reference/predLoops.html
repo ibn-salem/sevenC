@@ -150,7 +150,7 @@ ChIP-seq data sets. See <code><a href='cutoffBest10.html'>?cutoffBest10</a></cod
 <span class='no'>motifGR</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sevenC</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/sevenC/topics/motif.hg19.CTCF.chr22.cov'>motif.hg19.CTCF.chr22.cov</a></span>
 
 <span class='co'># build candidate interactions</span>
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepareCisPairs.html'>prepareCisPairs</a></span>(<span class='no'>motifGR</span>, <span class='kw'>scoreColname</span> <span class='kw'>=</span> <span class='st'>"sig"</span>)
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepareCisPairs.html'>prepareCisPairs</a></span>(<span class='no'>motifGR</span>)
 
 <span class='co'># add ChIP-seq signals correlation</span>
 <span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='addCovCor.html'>addCovCor</a></span>(<span class='no'>gi</span>)

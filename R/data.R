@@ -1,68 +1,46 @@
 #' CTCF motif locations in human genome hg19.
 #'
 #' A dataset containing the motif hits of the CTCF recognition motif from JASPAR
-#' database (MA0139.1) in human genome assembly hg19.
+#' database (MA0139.1, \url{http://jaspar.genereg.net/matrix/MA0139.1/}) in human
+#' genome assembly hg19.
 #'
-#' The dataset was created by using the tool RSAT matrix-scan
-#' (\url{http://www.rsat.eu/}) to get all motif hits in the hg19 genome
-#' sequence. The PFM motif model for CTCF was downloaded from JASPAR database
-#' using this url:
+#' The dataset was downloaded from JASPAR 2018 motif tracks from the following
+#' URL:
 # nolint start
-#' \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm}
+#' \url{http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks/2018/hg19/tsv/MA0139.1.tsv.gz}
 # nolint end
-#' The following parameters where used.
 #'
-#' \describe{ \item{-quick}{} \item{origin start}{} \item{-bginput}{}
-#' \item{-markov 1}{} \item{-2str}{} \item{-uth pval 0.0001}{} \item{-return
-#' pvalue}{} } More information on each parameter can be found on the
-#' matrix-scan manual page:
-#' \url{http://pedagogix-tagc.univ-mrs.fr/rsat/help.matrix-scan.html}
+#' Motif locations were filtered to contain only motif hists with p-value
+#' \eqn{\le 2.5 * 10^-6}.
+#' The p-value is the motif hit significance as repoted from the
+#' motif scanning alogrithim used during construction of the JASPAR motif
+#' tracks. More information on the JASPAR motif track pipeline can be found
+#' here:
+#' \url{https://github.com/wassermanlab/JASPAR-UCSC-tracks}.
 #'
-#' The dataset was than filtered to contain only motif hists with p-value
-#' \eqn{\le 10^-6}.
+#' @format \code{\link[GenomicRanges]{GRanges}} object with 38774 ranges on
+#' positive and negative strand with 1 meta column:
 #'
-#' @format GRanges object with 132739 ranges on positive and negative strand
-#'   indicated and 5 meta columns:
+#'   \describe{ \item{score}{
+#'   The significance socre of the motif hit, defined as -log_10(p-value).
+#'   }
+#'   }
 #'
-#'   \describe{ \item{sequence}{genomic DNA sequence}
-#'
-#'   \item{weight}{ The program scans the input sequences with a
-#'   position-specific scoring matrix (PSSM) by selecting, at each position, a
-#'   sequence segment (S) of the same length as the matrix, and assigning a
-#'   score to this segment.
-#'
-#'   The segment score (weight) is calculated according to the theory developed
-#'   by Jerry Hertz and Gary Stormo (1999), but with the capability to use
-#'   Markov chain-based background models, as proposed by Thijs et al. (2001).
-#'
-#'   The weight of a sequence segment (Ws) is calculated as the log-ratio
-#'   between two probabilities: \deqn{ Ws = log(P(S|M)/P(S|B)) } where
-#'   \deqn{proba_M = P(S|M)} is the probability to generate the sequence segment
-#'   given the matrix. \deqn{proba_B = P(S|B)} is the probability to generate
-#'   the sequence segment given the background model.}
-#'
-#'   \item{Pval}{The site-wise P-value estimates the significance of the weight
-#'   associated to each site. It is computed from the matrix, according to the
-#'   probabilities described in Staden (1989), Bailey (1998).}
-#'
-#'   \item{ln_Pval}{The natural logarithm of the p-value.}
-#'
-#'   \item{sig}{The significance, defined as sig = -log_10(P-value)} }
 #' @source
 # nolint start
-#' \url{http://jaspar.genereg.net/html/DOWNLOAD/JASPAR_CORE/pfm/individual/MA0139.1.pfm}
+#' \url{http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks/2018/hg19/tsv/MA0139.1.tsv.gz}
 # nolint end
-#' and \url{http://www.rsat.eu/}
 "motif.hg19.CTCF"
 
 #' CTCF motif locations on chromosome 22 in human genome hg19.
 #'
 #' A dataset containing the motif hits of the CTCF recognition motif from JASPAR
 #' database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
-#' \eqn{\le 10^-6} on chromosome 22 are reported.
+#' \eqn{\le 2.5 * 10^-6} on chromosome 22 are reported.
 #'
 #' See '?motif.hg19.CTCF' for a more details and the full data set.
 #'
+#' @seealso \code{\link{motif.hg19.CTCF}}
 "motif.hg19.CTCF.chr22"
 
 #' CTCF motifs on human chromosome 22 with example coverage.
@@ -73,10 +51,13 @@
 #' \code{\link[IRanges]{NumericList}}. The data is from a ChIP-seq experiment
 #' for STAT1 in human GM12878 cells. The full bigWig file can be downloaded from
 #' ENCODE (Dunham et al. 2012)
-#' [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig).
-#'
+# nolint start
+#' \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig}.
+# nolint end
 #' See \code{\link{motif.hg19.CTCF}} and \code{\link{motif.hg19.CTCF.chr22}} for
 #' a more details and the motif data set.
+#'
+#' @seealso \code{\link{motif.hg19.CTCF}}, \code{\link{motif.hg19.CTCF.chr22}}
 #'
 "motif.hg19.CTCF.chr22.cov"
 

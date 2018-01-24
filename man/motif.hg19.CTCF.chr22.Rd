@@ -11,9 +11,12 @@ motif.hg19.CTCF.chr22
 \description{
 A dataset containing the motif hits of the CTCF recognition motif from JASPAR
 database (MA0139.1) in human genome assembly hg19. Only motifs with a p-value
-\eqn{\le 10^-6} on chromosome 22 are reported.
+\eqn{\le 2.5 * 10^-6} on chromosome 22 are reported.
 }
 \details{
 See '?motif.hg19.CTCF' for a more details and the full data set.
+}
+\seealso{
+\code{\link{motif.hg19.CTCF}}
 }
 \keyword{datasets}

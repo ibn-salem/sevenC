@@ -103,7 +103,7 @@
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22
 
 <span class="co"># get motifs pairs</span>
-gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)</code></pre></div>
+gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs)</code></pre></div>
 </div>
 <div id="add-chip-seq-data-and-compute-correaltion" class="section level3">
 <h3 class="hasAnchor">
@@ -134,7 +134,7 @@ loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predL
 
 <span class="co"># load provided CTCF motifs</span>
 motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</code></pre></div>
-<p>The CTCF motif are represented as <code>GRanges</code> object from the <em><a href="http://bioconductor.org/packages/GenomicRanges">GenomicRanges</a></em> package. There are 696 CTCF motif locations on chromosome 22. The genome assembly is hg19. Four metadata columns show motif match similarity as weight score, p-value, log transformed p-value and significance score. Use <code>help(motif.hg19.CTCF)</code> to get more information on the motif dataset.</p>
+<p>The CTCF motif are represented as <code>GRanges</code> object from the <em><a href="http://bioconductor.org/packages/GenomicRanges">GenomicRanges</a></em> package. There are 917 CTCF motif locations on chromosome 22. The genome assembly is hg19. Four metadata columns show motif match similarity as weight score, p-value, log transformed p-value and significance score. Use <code>help(motif.hg19.CTCF)</code> to get more information on the motif dataset.</p>
 </div>
 <div id="add-chip-seq-signals-at-motifs-sites" class="section level3">
 <h3 class="hasAnchor">
@@ -149,69 +149,69 @@ bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<sp
 motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)</code></pre></div>
 <p>This adds a new metadata column to <code>motifs</code> holding a <code>NumericList</code> with ChIP-seq signals for each motif location.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">motifs<span class="op">$</span>chip</code></pre></div>
-<pre><code>## NumericList of length 696
-## [["chr22"]] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 4 4 4 4 4 4 4 4 4 4 4 4 4 4
+<pre><code>## NumericList of length 917
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [["chr22"]] 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 ... 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ## [["chr22"]] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 ... 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-## [["chr22"]] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ... 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-## [["chr22"]] 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 ... 3 3 3 3 3 3 3 3 3 3 3 3 3 3
-## [["chr22"]] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 ... 2 2 2 2 2 2 2 2 2 3 3 3 3 3
-## [["chr22"]] 2 2 2 2 2 2 2 2 2 2 2 2 ... 12 12 12 12 12 12 12 12 12 12 12
-## [["chr22"]] 15 15 15 15 15 15 15 15 15 15 15 15 ... 8 8 8 8 8 8 8 8 8 8 8
-## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ## ...
-## &lt;686 more elements&gt;</code></pre>
+## &lt;907 more elements&gt;</code></pre>
 </div>
 <div id="build-pairs-of-motifs-as-candidate-interactions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#build-pairs-of-motifs-as-candidate-interactions" class="anchor"></a>Build pairs of motifs as candidate interactions</h3>
 <p>Now we build a dataset with all pairs of CTCF motif within 1 Mb and annotate it with distance, motif orientation, and motif score.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>)
 
 gi</code></pre></div>
-<pre><code>## StrictGInteractions object with 15586 interactions and 5 metadata columns:
+<pre><code>## StrictGInteractions object with 26076 interactions and 5 metadata columns:
 ##           seqnames1              ranges1     seqnames2
 ##               &lt;Rle&gt;            &lt;IRanges&gt;         &lt;Rle&gt;
-##       [1]     chr22 [16124116, 16124134] ---     chr22
-##       [2]     chr22 [16124116, 16124134] ---     chr22
-##       [3]     chr22 [16124116, 16124134] ---     chr22
-##       [4]     chr22 [16124116, 16124134] ---     chr22
-##       [5]     chr22 [16124116, 16124134] ---     chr22
+##       [1]     chr22 [16186188, 16186206] ---     chr22
+##       [2]     chr22 [16186188, 16186206] ---     chr22
+##       [3]     chr22 [16186188, 16186206] ---     chr22
+##       [4]     chr22 [16186188, 16186206] ---     chr22
+##       [5]     chr22 [16186188, 16186206] ---     chr22
 ##       ...       ...                  ... ...       ...
-##   [15582]     chr22 [50964897, 50964915] ---     chr22
-##   [15583]     chr22 [50964897, 50964915] ---     chr22
-##   [15584]     chr22 [51058993, 51059011] ---     chr22
-##   [15585]     chr22 [51058993, 51059011] ---     chr22
-##   [15586]     chr22 [51135224, 51135242] ---     chr22
+##   [26072]     chr22 [51110780, 51110798] ---     chr22
+##   [26073]     chr22 [51110780, 51110798] ---     chr22
+##   [26074]     chr22 [51130130, 51130148] ---     chr22
+##   [26075]     chr22 [51130130, 51130148] ---     chr22
+##   [26076]     chr22 [51160028, 51160046] ---     chr22
 ##                        ranges2 |      dist strandOrientation   score_1
 ##                      &lt;IRanges&gt; | &lt;integer&gt;       &lt;character&gt; &lt;numeric&gt;
-##       [1] [16201463, 16201481] |     77347           forward     7.032
-##       [2] [16335406, 16335424] |    211290           forward     7.032
-##       [3] [16097012, 16097030] |     27104         divergent     7.032
-##       [4] [16405612, 16405630] |    281496        convergent     7.032
-##       [5] [17083197, 17083215] |    959081        convergent     7.032
+##       [1] [16205307, 16205325] |     19119           forward      6.05
+##       [2] [16238548, 16238566] |     52360           forward      6.05
+##       [3] [16239188, 16239206] |     53000           forward      6.05
+##       [4] [16239827, 16239845] |     53639           forward      6.05
+##       [5] [16247246, 16247264] |     61058           forward      6.05
 ##       ...                  ... .       ...               ...       ...
-##   [15582] [51135224, 51135242] |    170327           reverse     8.222
-##   [15583] [51158780, 51158798] |    193883           reverse     8.222
-##   [15584] [51135224, 51135242] |     76231           reverse     6.244
-##   [15585] [51158780, 51158798] |     99787           reverse     6.244
-##   [15586] [51158780, 51158798] |     23556           reverse     6.201
+##   [26072] [51160028, 51160046] |     49248           reverse      6.21
+##   [26073] [51172084, 51172102] |     61304           reverse      6.21
+##   [26074] [51160028, 51160046] |     29898           reverse      6.33
+##   [26075] [51172084, 51172102] |     41954           reverse      6.33
+##   [26076] [51172084, 51172102] |     12056           reverse      5.64
 ##             score_2 score_min
 ##           &lt;numeric&gt; &lt;numeric&gt;
-##       [1]     6.409     6.409
-##       [2]     6.167     6.167
-##       [3]     6.244     6.244
-##       [4]     6.721     6.721
-##       [5]     6.292     6.292
+##       [1]      5.72      5.72
+##       [2]      5.92      5.92
+##       [3]      5.90      5.90
+##       [4]      5.92      5.92
+##       [5]      5.92      5.92
 ##       ...       ...       ...
-##   [15582]     6.201     6.201
-##   [15583]     7.174     7.174
-##   [15584]     6.201     6.201
-##   [15585]     7.174     6.244
-##   [15586]     7.174     6.201
+##   [26072]      5.64      5.64
+##   [26073]      5.90      5.90
+##   [26074]      5.64      5.64
+##   [26075]      5.90      5.90
+##   [26076]      5.90      5.64
 ##   -------
-##   regions: 696 ranges and 6 metadata columns
+##   regions: 917 ranges and 2 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>The function <code><a href="../reference/prepareCisPairs.html">prepareCisPairs()</a></code> returns a <code>GInteractoin</code> object from the <em><a href="http://bioconductor.org/packages/InteractonSet">InteractonSet</a></em> package, representing all motif pairs within the defined distance. Metadata columns of the <code>GInteractoin</code> object hold the genomic distance between motifs in bp (<code>dist</code>), the orientation of motifs (<code>strandOrientation</code>), and motif score as -log<sub>10</sub> of the motif hit p-value (<code>score_1</code>, <code>score_2</code>, and <code>score_min</code>). Note, that the function <code><a href="../reference/prepareCisPairs.html">prepareCisPairs()</a></code> is wrapper for three individual functions that performs each step separately and allow more options. First, <code><a href="../reference/getCisPairs.html">getCisPairs()</a></code> is used to builds the <code>GInteractoin</code> object. Than <code><a href="../reference/addStrandCombination.html">addStrandCombination()</a></code> adds the four possible strand combinations of motifs pairs. Finally, <code><a href="../reference/addMotifScore.html">addMotifScore()</a></code> adds the minimum motif score for each pair. These features are later used as variables for predictions.</p>
 </div>
@@ -230,39 +230,30 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCo
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(gi)
 
 loops</code></pre></div>
-<pre><code>## StrictGInteractions object with 8 interactions and 7 metadata columns:
+<pre><code>## StrictGInteractions object with 5 interactions and 7 metadata columns:
 ##       seqnames1              ranges1     seqnames2              ranges2 |
 ##           &lt;Rle&gt;            &lt;IRanges&gt;         &lt;Rle&gt;            &lt;IRanges&gt; |
-##   [1]     chr22 [17398482, 17398500] ---     chr22 [17539262, 17539280] |
-##   [2]     chr22 [17600547, 17600565] ---     chr22 [17601508, 17601526] |
-##   [3]     chr22 [17600547, 17600565] ---     chr22 [17601546, 17601564] |
-##   [4]     chr22 [17600547, 17600565] ---     chr22 [17652202, 17652220] |
-##   [5]     chr22 [17600838, 17600856] ---     chr22 [17601546, 17601564] |
-##   [6]     chr22 [17601508, 17601526] ---     chr22 [17652202, 17652220] |
-##   [7]     chr22 [17601508, 17601526] ---     chr22 [17652850, 17652868] |
-##   [8]     chr22 [17652500, 17652518] ---     chr22 [17652850, 17652868] |
-##            dist strandOrientation   score_1   score_2 score_min   cor_chip
-##       &lt;integer&gt;       &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt;
-##   [1]    140780        convergent     6.009     6.167     6.009  0.7902839
-##   [2]       961           forward     7.678     7.824     7.678  0.4792622
-##   [3]       999        convergent     7.678     6.456     6.456 -0.1316063
-##   [4]     51655        convergent     7.678     6.201     6.201  0.7836006
-##   [5]       708        convergent     6.201     6.456     6.201  0.4247492
-##   [6]     50694        convergent     7.824     6.201     6.201  0.3831105
-##   [7]     51342        convergent     7.824    10.796     7.824 -0.3702664
-##   [8]       350        convergent     8.509    10.796     8.509  0.8631771
+##   [1]     chr22 [16186188, 16186206] ---     chr22 [16239188, 16239206] |
+##   [2]     chr22 [16238548, 16238566] ---     chr22 [16409786, 16409804] |
+##   [3]     chr22 [17398482, 17398500] ---     chr22 [17539262, 17539280] |
+##   [4]     chr22 [17652500, 17652518] ---     chr22 [17652850, 17652868] |
+##   [5]     chr22 [17539262, 17539280] ---     chr22 [17652850, 17652868] |
+##            dist strandOrientation   score_1   score_2 score_min  cor_chip
+##       &lt;integer&gt;       &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+##   [1]     53000           forward      6.05      5.90      5.90 0.8850727
+##   [2]    171238        convergent      5.92      5.79      5.79 0.6750000
+##   [3]    140780        convergent      6.48      6.89      6.48 0.7902839
+##   [4]       350        convergent      7.64      8.49      7.64 0.8631771
+##   [5]    113588           reverse      6.89      8.49      6.89 0.6385812
 ##            pred
 ##       &lt;numeric&gt;
-##   [1] 0.4010825
-##   [2] 0.2784833
-##   [3] 0.1957508
-##   [4] 0.5188280
-##   [5] 0.3933609
-##   [6] 0.3251221
-##   [7] 0.2099542
-##   [8] 0.8555726
+##   [1] 0.2020939
+##   [2] 0.2912231
+##   [3] 0.4673653
+##   [4] 0.7825201
+##   [5] 0.2401556
 ##   -------
-##   regions: 696 ranges and 6 metadata columns
+##   regions: 917 ranges and 2 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column <code>chip</code>. The column <code>pred</code> holds the predicted interaction probability according to the logistic regression model.</p>
 <p>Note, that without specifying further options, the function <code><a href="../reference/predLoops.html">predLoops()</a></code> uses a default model that was optimized for several transcription factor ChIP-seq data sets by using experimental chromatin loops from Hi-C and ChIA-PET for validations. However, users can specify custom features using the <code>formular</code> argument and provide custom parameters using the <code>betas</code>argument. Furthermore, per default the <code><a href="../reference/predLoops.html">predLoops()</a></code> function report only looping interactions that mead a minimal prediction score threshold. This can be modified using the <code>cutoff</code> argument.</p>
@@ -308,7 +299,7 @@ bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<sp
 motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)
 
 <span class="co"># build motif pairs</span>
-gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">scoreColname =</span> <span class="st">"sig"</span>)
+gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>)
 
 <span class="co"># add correaltion of ChIP-signal</span>
 gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCor.html">addCovCor</a></span>(gi)</code></pre></div>
@@ -350,54 +341,137 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoop
 )</code></pre></div>
 <p>Here, we have to use the same formula as argument as in the model fitting step above. The <code>betas</code> argument takes the coefficients of the logistic regression model. Finally, the argument <code>cutoff = NULL</code> ensures that no filtering is done and all input candidates are reported. The prediction score is added as a new metadata column to <code>gi</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gi </code></pre></div>
-<pre><code>## StrictGInteractions object with 15586 interactions and 8 metadata columns:
+<pre><code>## StrictGInteractions object with 26076 interactions and 8 metadata columns:
 ##           seqnames1              ranges1     seqnames2
 ##               &lt;Rle&gt;            &lt;IRanges&gt;         &lt;Rle&gt;
-##       [1]     chr22 [16124116, 16124134] ---     chr22
-##       [2]     chr22 [16124116, 16124134] ---     chr22
-##       [3]     chr22 [16124116, 16124134] ---     chr22
-##       [4]     chr22 [16124116, 16124134] ---     chr22
-##       [5]     chr22 [16124116, 16124134] ---     chr22
+##       [1]     chr22 [16186188, 16186206] ---     chr22
+##       [2]     chr22 [16186188, 16186206] ---     chr22
+##       [3]     chr22 [16186188, 16186206] ---     chr22
+##       [4]     chr22 [16186188, 16186206] ---     chr22
+##       [5]     chr22 [16186188, 16186206] ---     chr22
 ##       ...       ...                  ... ...       ...
-##   [15582]     chr22 [50964897, 50964915] ---     chr22
-##   [15583]     chr22 [50964897, 50964915] ---     chr22
-##   [15584]     chr22 [51058993, 51059011] ---     chr22
-##   [15585]     chr22 [51058993, 51059011] ---     chr22
-##   [15586]     chr22 [51135224, 51135242] ---     chr22
+##   [26072]     chr22 [51110780, 51110798] ---     chr22
+##   [26073]     chr22 [51110780, 51110798] ---     chr22
+##   [26074]     chr22 [51130130, 51130148] ---     chr22
+##   [26075]     chr22 [51130130, 51130148] ---     chr22
+##   [26076]     chr22 [51160028, 51160046] ---     chr22
 ##                        ranges2 |      dist strandOrientation   score_1
 ##                      &lt;IRanges&gt; | &lt;integer&gt;       &lt;character&gt; &lt;numeric&gt;
-##       [1] [16201463, 16201481] |     77347           forward     7.032
-##       [2] [16335406, 16335424] |    211290           forward     7.032
-##       [3] [16097012, 16097030] |     27104         divergent     7.032
-##       [4] [16405612, 16405630] |    281496        convergent     7.032
-##       [5] [17083197, 17083215] |    959081        convergent     7.032
+##       [1] [16205307, 16205325] |     19119           forward      6.05
+##       [2] [16238548, 16238566] |     52360           forward      6.05
+##       [3] [16239188, 16239206] |     53000           forward      6.05
+##       [4] [16239827, 16239845] |     53639           forward      6.05
+##       [5] [16247246, 16247264] |     61058           forward      6.05
 ##       ...                  ... .       ...               ...       ...
-##   [15582] [51135224, 51135242] |    170327           reverse     8.222
-##   [15583] [51158780, 51158798] |    193883           reverse     8.222
-##   [15584] [51135224, 51135242] |     76231           reverse     6.244
-##   [15585] [51158780, 51158798] |     99787           reverse     6.244
-##   [15586] [51158780, 51158798] |     23556           reverse     6.201
+##   [26072] [51160028, 51160046] |     49248           reverse      6.21
+##   [26073] [51172084, 51172102] |     61304           reverse      6.21
+##   [26074] [51160028, 51160046] |     29898           reverse      6.33
+##   [26075] [51172084, 51172102] |     41954           reverse      6.33
+##   [26076] [51172084, 51172102] |     12056           reverse      5.64
 ##             score_2 score_min   cor_chip     loop         pred
 ##           &lt;numeric&gt; &lt;numeric&gt;  &lt;numeric&gt; &lt;factor&gt;    &lt;numeric&gt;
-##       [1]     6.409     6.409 -0.1371194  No loop 9.782302e-10
-##       [2]     6.167     6.167       &lt;NA&gt;  No loop         &lt;NA&gt;
-##       [3]     6.244     6.244 -0.2117460  No loop 6.638165e-10
-##       [4]     6.721     6.721       &lt;NA&gt;  No loop         &lt;NA&gt;
-##       [5]     6.292     6.292  0.7153757  No loop 2.363332e-01
+##       [1]      5.72      5.72  0.3395405  No loop 1.424999e-09
+##       [2]      5.92      5.92 -0.1046916  No loop 4.018554e-10
+##       [3]      5.90      5.90  0.8850727  No loop 5.288972e-09
+##       [4]      5.92      5.92 -0.1709607  No loop 3.367131e-10
+##       [5]      5.92      5.92 -0.1046916  No loop 3.906432e-10
 ##       ...       ...       ...        ...      ...          ...
-##   [15582]     6.201     6.201       &lt;NA&gt;  No loop         &lt;NA&gt;
-##   [15583]     7.174     7.174       &lt;NA&gt;  No loop         &lt;NA&gt;
-##   [15584]     6.201     6.201       &lt;NA&gt;  No loop         &lt;NA&gt;
-##   [15585]     7.174     6.244       &lt;NA&gt;  No loop         &lt;NA&gt;
-##   [15586]     7.174     6.201       &lt;NA&gt;  No loop         &lt;NA&gt;
+##   [26072]      5.64      5.64       &lt;NA&gt;  No loop         &lt;NA&gt;
+##   [26073]      5.90      5.90       &lt;NA&gt;  No loop         &lt;NA&gt;
+##   [26074]      5.64      5.64       &lt;NA&gt;  No loop         &lt;NA&gt;
+##   [26075]      5.90      5.90       &lt;NA&gt;  No loop         &lt;NA&gt;
+##   [26076]      5.90      5.64       &lt;NA&gt;  No loop         &lt;NA&gt;
 ##   -------
-##   regions: 696 ranges and 6 metadata columns
+##   regions: 917 ranges and 2 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>As a very simple validation we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gi<span class="op">$</span>pred <span class="op">~</span><span class="st"> </span>gi<span class="op">$</span>loop, 
         <span class="dt">ylab =</span> <span class="st">"Predicted interaction probability"</span>)</code></pre></div>
 <p><img src="sevenC_files/figure-html/unnamed-chunk-21-1.png" width="288"></p>
 <p>This shows higher prediction scores for truly looping motif pairs. However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the sevenC paper.</p>
+</div>
+<div id="session-info" class="section level2">
+<h2 class="hasAnchor">
+<a href="#session-info" class="anchor"></a>session Info</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+<pre><code>## R version 3.4.1 (2017-06-30)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 16.04.3 LTS
+## 
+## Matrix products: default
+## BLAS: /usr/lib/openblas-base/libblas.so.3
+## LAPACK: /usr/lib/libopenblasp-r0.2.18.so
+## 
+## locale:
+##  [1] LC_CTYPE=de_DE.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=de_DE.UTF-8        LC_COLLATE=de_DE.UTF-8    
+##  [5] LC_MONETARY=de_DE.UTF-8    LC_MESSAGES=de_DE.UTF-8   
+##  [7] LC_PAPER=de_DE.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=de_DE.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+## [8] methods   base     
+## 
+## other attached packages:
+##  [1] GenomicInteractions_1.12.0 sevenC_0.0.0.9000         
+##  [3] InteractionSet_1.6.0       SummarizedExperiment_1.8.1
+##  [5] DelayedArray_0.4.1         matrixStats_0.53.0        
+##  [7] Biobase_2.38.0             GenomicRanges_1.30.1      
+##  [9] GenomeInfoDb_1.14.0        IRanges_2.12.0            
+## [11] S4Vectors_0.16.0           BiocGenerics_0.24.0       
+## 
+## loaded via a namespace (and not attached):
+##  [1] ProtGenerics_1.10.0           bitops_1.0-6                 
+##  [3] bit64_0.9-7                   RColorBrewer_1.1-2           
+##  [5] progress_1.1.2                httr_1.3.1                   
+##  [7] rprojroot_1.3-2               tools_3.4.1                  
+##  [9] backports_1.1.2               R6_2.2.2                     
+## [11] rpart_4.1-12                  Hmisc_4.1-1                  
+## [13] DBI_0.7                       lazyeval_0.2.1               
+## [15] Gviz_1.22.2                   colorspace_1.3-2             
+## [17] nnet_7.3-12                   gridExtra_2.3                
+## [19] prettyunits_1.0.2             RMySQL_0.10.13               
+## [21] curl_3.1                      bit_1.1-12                   
+## [23] compiler_3.4.1                htmlTable_1.11.2             
+## [25] rtracklayer_1.38.3            scales_0.5.0                 
+## [27] checkmate_1.8.5               readr_1.1.1                  
+## [29] stringr_1.2.0                 digest_0.6.14                
+## [31] Rsamtools_1.30.0              foreign_0.8-69               
+## [33] rmarkdown_1.8                 XVector_0.18.0               
+## [35] pkgconfig_2.0.1               base64enc_0.1-3              
+## [37] dichromat_2.0-0               htmltools_0.3.6              
+## [39] ensembldb_2.2.0               BSgenome_1.46.0              
+## [41] htmlwidgets_1.0               rlang_0.1.6                  
+## [43] rstudioapi_0.7                RSQLite_2.0                  
+## [45] BiocInstaller_1.28.0          shiny_1.0.5                  
+## [47] bindr_0.1                     BiocParallel_1.12.0          
+## [49] dplyr_0.7.4                   acepack_1.4.1                
+## [51] VariantAnnotation_1.24.5      RCurl_1.95-4.10              
+## [53] magrittr_1.5                  GenomeInfoDbData_1.0.0       
+## [55] Formula_1.2-2                 Matrix_1.2-12                
+## [57] Rcpp_0.12.15                  munsell_0.4.3                
+## [59] stringi_1.1.6                 yaml_2.1.16                  
+## [61] zlibbioc_1.24.0               plyr_1.8.4                   
+## [63] AnnotationHub_2.10.1          grid_3.4.1                   
+## [65] blob_1.1.0                    lattice_0.20-35              
+## [67] Biostrings_2.46.0             splines_3.4.1                
+## [69] GenomicFeatures_1.30.0        hms_0.4.0                    
+## [71] knitr_1.18                    pillar_1.1.0                 
+## [73] igraph_1.1.2                  boot_1.3-20                  
+## [75] biomaRt_2.34.2                glue_1.2.0                   
+## [77] XML_3.98-1.9                  evaluate_0.10.1              
+## [79] biovizBase_1.26.0             latticeExtra_0.6-28          
+## [81] data.table_1.10.4-3           httpuv_1.3.5                 
+## [83] gtable_0.2.0                  assertthat_0.2.0             
+## [85] ggplot2_2.2.1                 mime_0.5                     
+## [87] xtable_1.8-2                  AnnotationFilter_1.2.0       
+## [89] survival_2.41-3               tibble_1.4.2                 
+## [91] GenomicAlignments_1.14.1      AnnotationDbi_1.40.0         
+## [93] memoise_1.1.0                 bindrcpp_0.2                 
+## [95] cluster_2.0.6                 interactiveDisplayBase_1.16.0
+## [97] BiocStyle_2.6.1</code></pre>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -450,6 +524,7 @@ gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoop
       <li><a href="#train-predictor-with-known-loops">Train predictor with known loops</a></li>
       <li><a href="#train-logistic-regression-model">Train logistic regression model</a></li>
       <li><a href="#predict-loops-with-custom-model">Predict loops with custom model</a></li>
+      <li><a href="#session-info">session Info</a></li>
       </ul>
 </li>
       <li><a href="#references">References</a></li>
