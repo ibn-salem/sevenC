@@ -71,6 +71,6 @@ Issue 7, 17 December 2015, Pages 1611-1627, ISSN 0092-8674,
 https://doi.org/10.1016/j.cell.2015.11.024.
 }
 \seealso{
-\code{\link{cutoffBest10}}
+\code{\link{cutoffBest10}} and \code{\link{TFspecificModels}}
 }
 \keyword{datasets}

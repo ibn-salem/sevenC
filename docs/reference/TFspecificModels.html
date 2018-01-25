@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Optimal cutoff values for logistic regression models. — cutoffByTF • sevenC</title>
+<title>TF specific parameters for logistic regression in sevenC — TFspecificModels • sevenC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,33 +83,34 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Optimal cutoff values for logistic regression models.</h1>
+    <h1>TF specific parameters for logistic regression in sevenC</h1>
     </div>
 
     
-    <p>This dataset contains optimal cutoff scores for the response value of logistic
-regression models. The cutoff is based on optimal F1-scores. A separate model
-was trained For each of 124 TF ChIP-seq datasets in human GM12878 cells. The
-model performance was calculated with Hi-C and ChIA-PET interactions using
-10-fold cross-validation.</p>
+    <p>sevenC was trained on 124 TF ChIP-seq data sets from ENCODE. Specific
+parameters are provided in this data set.</p>
     
 
-    <pre class="usage"><span class='no'>cutoffByTF</span></pre>
+    <pre class="usage"><span class='no'>TFspecificModels</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>tbl_df</code> with 121 rows and 3 columns:</p>
+    <p>A <code>data.frame</code> with 868 rows and 7 columns.</p>
 <p></p><dl class='dl-horizontal'>
-    <dt>TF</dt><dd><p>Transcription factor name</p></dd>
-    <dt>max_cutoff</dt><dd><p>The optimal cutoff on the logistic regression response
-  value</p></dd>
-    <dt>max_f1</dt><dd><p>The optimal f1-score associated to the <code>max_cutoff</code>
-  value</p></dd>
-    </dl>
+    <dt>TF</dt><dd><p>TF name used in ChIP-seq experiment.</p></dd>
+    <dt>file_accession</dt><dd><p>File accession ID from ENCODE project</p></dd>
+    <dt>term</dt><dd><p>Model term name. See <code><a href='modelBest10Avg.html'>modelBest10Avg</a></code> for more
+  detials.</p></dd>
+    <dt>estimate_mean</dt><dd><p>Mean parameter estimate in 10-fold cross-validation</p></dd>
+    <dt>estimate_median</dt><dd><p>Median parameter estimate in 10-fold
+  cross-validation</p></dd>
+    <dt>estimate_sd</dt><dd><p>Standard deviation of parameter estimate in 10-fold
+  cross-validation</p></dd>
+  </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='modelBest10Avg.html'>modelBest10Avg</a></code> and <code><a href='TFspecificModels.html'>TFspecificModels</a></code></p>
+    <p><code><a href='modelBest10Avg.html'>modelBest10Avg</a></code> and <code><a href='cutoffByTF.html'>cutoffByTF</a></code></p>
     
 
   </div>

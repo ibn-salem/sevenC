@@ -100,6 +100,13 @@ modelBest10Avg <- readr::read_tsv(model_best_n_file) %>%
 devtools::use_data(modelBest10Avg, overwrite = TRUE)
 
 #-------------------------------------------------------------------------------
+# add TF specific models as data frame
+#-------------------------------------------------------------------------------
+TFspecific_ModelDF_meta_file = "data-raw/v05_screen_TF_lfc.motifPval2.5e-06_w1000_b1.TFspecific_ModelDF_meta.tsv"
+TFspecificModels <- read_tsv(TFspecific_ModelDF_meta_file)
+devtools::use_data(TFspecificModels, overwrite = TRUE)
+
+#-------------------------------------------------------------------------------
 # add best f1-score cutoff for each TF
 #-------------------------------------------------------------------------------
 f1ModelDF_file <- "data-raw/v05_screen_TF_lfc.motifPval2.5e-06_w1000_b1.f1ModelDF.tsv"

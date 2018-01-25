@@ -128,16 +128,43 @@
 #'
 #'   }
 #'
-#' @seealso \code{\link{cutoffBest10}}
+#' @seealso \code{\link{cutoffBest10}} and \code{\link{TFspecificModels}}
 "modelBest10Avg"
 
+#' TF specific parameters for logistic regression in sevenC
+#'
+#' sevenC was trained on 124 TF ChIP-seq data sets from ENCODE. Specific
+#' parameters are provided in this data set.
+#'
+#' @format A \code{data.frame} with 868 rows and 7 columns.
+#'
+#'   \describe{
+#'
+#'   \item{TF}{TF name used in ChIP-seq experiment.}
+#'
+#'   \item{file_accession}{File accession ID from ENCODE project}
+#'
+#'   \item{term}{Model term name. See \code{\link{modelBest10Avg}} for more
+#'   detials.}
+#'
+#'   \item{estimate_mean}{Mean parameter estimate in 10-fold cross-validation}
+#'
+#'   \item{estimate_median}{Median parameter estimate in 10-fold
+#'   cross-validation}
+#'
+#'   \item{estimate_sd}{Standard deviation of parameter estimate in 10-fold
+#'   cross-validation}
+#'   }
+#'
+#' @seealso \code{\link{modelBest10Avg}} and \code{\link{cutoffByTF}}
+"TFspecificModels"
 
 #' Optimal cutoff values for logistic regression models.
 #'
 #' This dataset contains optimal cutoff scores for the response value of logistic
 #' regression models. The cutoff is based on optimal F1-scores. A separate model
 #' was trained For each of 124 TF ChIP-seq datasets in human GM12878 cells. The
-#' model performance were calculated with Hi-C and ChIA-PET interactions using
+#' model performance was calculated with Hi-C and ChIA-PET interactions using
 #' 10-fold cross-validation.
 #'
 #' @format An object of class \code{tbl_df} with 121 rows and 3 columns:
@@ -154,7 +181,7 @@
 #'
 #'   }
 #'
-#'@seealso \code{\link{modelBest10Avg}}
+#'@seealso \code{\link{modelBest10Avg}} and \code{\link{TFspecificModels}}
 "cutoffByTF"
 
 #' Default optimal cutoff value of logistic regression.
