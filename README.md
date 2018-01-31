@@ -1,5 +1,8 @@
 # sevenC
 
+[![Travis build status](https://travis-ci.org/ibn-salem/sevenC.svg?branch=master)](https://travis-ci.org/ibn-salem/sevenC)
+ [![Coverage status](https://codecov.io/gh/ibn-salem/sevenC/branch/master/graph/badge.svg)](https://codecov.io/github/ibn-salem/sevenC?branch=master)
+
 ## Computational chromosome conformation capture by correlation of ChIP-seq at CTCF motifs
 
 Chromatin looping is an important feature of

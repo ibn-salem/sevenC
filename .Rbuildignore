@@ -4,3 +4,5 @@
 .lintr
 ^docs$
 ^_pkgdown\.yml$
+^\.travis\.yml$
+^codecov\.yml$
