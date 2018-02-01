@@ -3,7 +3,7 @@
 [![Travis build status](https://travis-ci.org/ibn-salem/sevenC.svg?branch=master)](https://travis-ci.org/ibn-salem/sevenC)
  [![Coverage status](https://codecov.io/gh/ibn-salem/sevenC/branch/master/graph/badge.svg)](https://codecov.io/github/ibn-salem/sevenC?branch=master)
 
-## Computational chromosome conformation capture by correlation of ChIP-seq at CTCF motifs
+## Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs
 
 Chromatin looping is an important feature of
   eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
@@ -38,7 +38,7 @@ devtools::install_github("ibn-salem/sevenC")
 
 ## Basic usage example
 Here we show how to use the package to predict chromatin looping interactions 
-among CTCF moif locations on chromosome 22. 
+among CTCF motif locations on chromosome 22. 
 As input only a single bigWig file is used from a STAT1 ChIP-seq experiment 
 in human GM12878 cells. 
 
