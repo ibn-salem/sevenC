@@ -1,0 +1,13 @@
+citEntry(entry="article",
+         title = "Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs",
+         author = personList( as.person("Jonas Ibn-Salem"),
+                              as.person("Miguel A. Andrade-Navarro")),
+         year = 2018,
+         journal = "bioRxiv",
+         doi = "10.1101/257584",
+         pages = "257584",
+         url = "https://doi.org/10.1101/257584",
+         textVersion =
+         paste("Ibn-Salem, J., Andrade-Davarro, M. A.",
+               "Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs",
+                "bioRxiv 257584 (2018)" ) )
