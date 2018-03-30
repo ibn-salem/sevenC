@@ -13,18 +13,16 @@ author:
     - *IMB
 package: sevenC
 abstract: >
-  Chromatin looping is an important feature of
-  eukaryotic genomes and can bring regulatory sequences, such as enhancers or 
-  transcription factor binding sites, in close physical proximity of regulated 
-  target genes.
-  Here, we provide sevenC, an R package that uses protein binding signals from 
-  ChIP-seq and
-  sequence motif information to predict chromatin looping events. Cross-linking 
-  of proteins that bind close to loop anchors result in ChIP-seq signals at both 
-  anchor loci. These signals are used at CTCF motif pairs together with their
+  Chromatin looping is an essential feature of eukaryotic genomes and can bring
+  regulatory sequences, such as enhancers or transcription factor binding sites,
+  in the close physical proximity of regulated target genes. Here, we provide
+  sevenC, an R package that uses protein binding signals from ChIP-seq and
+  sequence motif information to predict chromatin looping events. Cross-linking of
+  proteins that bind close to loop anchors result in ChIP-seq signals at both
+  anchor loci. These signals are used at CTCF  motif pairs together with their
   distance and orientation to each other to predict whether they interact or not.
-  The resulting chromatin loops can be used to associate enhancers or 
-  transcription factor binding sites (e.g. ChIP-seq peaks) to regulated target 
+  The resulting chromatin loops can be used to associate enhancers or
+  transcription factor binding sites (e.g., ChIP-seq peaks) to regulated target
   genes.
 output:
   BiocStyle::html_document:
@@ -38,26 +36,42 @@ vignette: >
 ---
 # Background and introduction
 
-Gene expression is regulated by binding of transcription factors (TF) to genomic DNA. 
-However, many binding sites are in distal regulatory region, such as enhancers, that are hundreds of kilo bases apart of genes.
-These regulatory regions can physically interact with promoters of regulated genes by chromatin looping interactions. 
-These looping interaction can be measured genome wide by chromatin conformation capture techniques such as Hi-C or ChIA-PET [@Rao2014, @Tang2015a]. Despite many exciting insights into the three-dimensional organization of genomes, these experimental methods are not only elaborate and expansive but also require require lots of sample material (in case of ChIA-PET) or have limited resolution of 5-40 kb (in case of Hi-C). 
+Gene expression is regulated by binding of transcription factors (TF) to genomic
+DNA. However, many binding sites are in distal regulatory regions, such as
+enhancers, that are hundreds of kilobases apart from genes. These regulatory
+regions can physically interact with promoters of regulated genes by chromatin
+looping interactions. These looping interaction can be measured genome-wide by
+chromatin conformation capture techniques such as Hi-C or ChIA-PET [@Rao2014;
+@Tang2015]. Despite many exciting insights into the three-dimensional
+organization of genomes, these experimental methods are not only elaborate and
+expansive but also have limited resolution and are only available for a limited
+number of cell types and conditions. In contrast, the binding sites of TFs can
+be detected genome-wide by ChIP-seq experiment with high resolution and are
+available for hundreds of TFs in many cell type and conditions. However,
+classical analysis of ChIP-seq gives only the direct binding sites of targeted
+TFs (ChIP-seq peaks) and it is not trivial to associate them to the regulated
+gene without chromatin looping information. Therefore, we provide a
+computational method to predict chromatin interactions from only genomic
+sequence features and ChIP-seq data. The predicted looping interactions can be
+used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated
+genes and thereby improve functional downstream analysis on the level of genes.
 
-In contrast, the binding sites of TFs can be detected genome-wide by ChIP-seq experiment which are available for hundreds of TFs in many cell type and conditions. However, classical analysis of ChIP-seq gives only the direct binding sites of targeted TFs (peaks) and it is not trivial to associate them to the regulated gene without chromatin looping information.
+In this vignette, we show how to use the R package `r
+BiocStyle::Biocpkg("sevenC")` to predict chromatin looping interactions between
+CTCF motifs by using only ChIP-seq data form a single experiment. Furthermore,
+we show how to train the prediction model using custom data.
 
-Therefore, we provide a computational method to predict chromatin interactions from only genomic sequence features and ChIP-seq data. 
-The predicted looping interactions can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thereby improve functional downstream analysis on the level of genes.
-
-In this vignette, we show how to use the R package `r BiocStyle::Biocpkg("sevenC")` to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. 
-Furthermore, we show how to train the the prediction model using custom data.
+A more detailed explanation of the sevenC method together with prediction
+performance analysis is available in the associated preprint [@Ibn-Salem2018].
 
 # Predict chromatin looping interactions
 
 ## Basic usage example
-Here we show how to use the `r BiocStyle::Biocpkg("sevenC")` package with 
-default options to predict chromatin looping interactions 
-among CTCF motif locations on chromosome 22. As input only a single bigWig file 
-with example ChIP-seq data is used.
+
+Here we show how to use the `r BiocStyle::Biocpkg("sevenC")` package with
+default options to predict chromatin looping interactions among CTCF motif locations on the human chromosome 22. As input, we only use CTCF motif
+locations and a single bigWig file from a STAT1 ChIP-seq experiment in human
+GM12878 cells [@Dunham2012].
 
 ### Get motif pairs
 ```{r, results = "hide", message = FALSE}
@@ -109,34 +123,32 @@ loops <- predLoops(gi)
 ## More detailed usage example
 
 Here we show in more detail each step of the loop prediction process. 
-Again, we want to predict chromatin looping interactions among CTCF motif locations on chromosome 22. 
-As input only a single bigWig file is used with coverage from a STAT1 ChIP-seq experiment 
-in human GM12878 cells.
+Again, we want to predict chromatin looping interactions among CTCF motif locations on chromosome 22 using a ChIP-seq for STAT1 in human GM12878 cells.
 
 ### Prepare CTCF motif pairs
+
 First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. 
 We use CTCF motif hits in human chromosome 22 as provide by `r BiocStyle::Biocpkg("sevenC")` package.
-In general, any CTCF motif pairs can be used if provided as `GRanges` object. 
-To use the motif hit score, the motif data should contain a -log~10~ transformed p-value describing the significance of each motif hit.
-Here, we use CTCF motif hits from RSAT matrix-scan on chromosome 22 as provided as `motif.hg19.CTCF.chr22` in the `r BiocStyle::Biocpkg("sevenC")` package. For more information on the motif data set, see `?motif.hg19.CTCF`.
+In general, any CTCF motifs can be used if provided as `GRanges`. 
+To use the motif similarity score as a predictive feature, the motif data should contain -log~10~ transformed p-values describing the significance of each motif hit.
+Here, we use CTCF motif sites as provided from the JASPAR genome browser tracks [@Khan2018].
+The objedt `motif.hg19.CTCF.chr22` in the `r BiocStyle::Biocpkg("sevenC")` package contains CTCF motif locations on chromosome 22. For more information on the motif data set, see `?motif.hg19.CTCF`.
 ```{r, results = "hide", message = FALSE}
 library(sevenC)
 
 # load provided CTCF motifs
 motifs <- motif.hg19.CTCF.chr22
 ```
-The CTCF motif are represented as `GRanges` object from the `r BiocStyle::Biocpkg("GenomicRanges")` package. There are `r length(motifs)` CTCF motif locations on chromosome 22. 
-The genome assembly is hg19. 
-Four metadata columns show motif match similarity as weight score, p-value, log transformed p-value and significance score. 
-Use `help(motif.hg19.CTCF)` to get more information on the motif dataset.
+The CTCF motif are represented as `GRanges` object from the `r BiocStyle::Biocpkg("GenomicRanges")` package. There are `r length(motifs)` CTCF motif locations on chromosome 22. The genome assembly is hg19. 
+one metadata column named `score` shows motif match similarity as -log~10~ transformed p-value. 
 
 ### Add ChIP-seq signals at motifs sites
 
-To predict loops we need the ChIP-seq signals at all motif sites. 
+To predict loops, we need the ChIP-seq signals at all motif sites. 
 Therefore, we read an example bigWig file with ChIP-seq signals^[Note, reading of bigWig files is currently not supported on Windows. 
 See `help(rtracklayer::import.bw)` for more information. Users on Windows need to add ChIP-seq signals as `NumierList` by other means.]. 
 
-An example file with only data on a subset of chromosome 22 is provide as part of
+An example file with only data on a subset of chromosome 22 is provided as part of
 the `r BiocStyle::Biocpkg("sevenC")` package. The full file can be downloaded from ENCODE [@Dunham2012]  [here](http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig). The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.
 
 ```{r}
@@ -176,15 +188,15 @@ gi <- prepareCisPairs(motifs, maxDist = 10^6)
 gi
 ```
 The function `prepareCisPairs()` returns a `GInteractoin` object from the `r BiocStyle::Biocpkg("InteractonSet")` package, representing all motif pairs within the defined distance. 
-Metadata columns of the `GInteractoin` object hold the genomic distance between motifs in bp (`dist`), the orientation of motifs (`strandOrientation`), and motif score as -log~10~ of the motif hit p-value (`score_1`, `score_2`, and `score_min`). 
-Note, that the function `prepareCisPairs()` is wrapper for three individual functions that performs each step separately and allow more options. 
+The metadata columns of the `GInteractoin` object hold the genomic distance between motifs in bp (`dist`), the orientation of motifs (`strandOrientation`), and the motif score as -log~10~ of the motif hit p-value (`score_1`, `score_2`, and `score_min`). 
+Note, that the function `prepareCisPairs()` is a wrapper for three individual functions that perform each step separately and allow more options. 
 First, `getCisPairs()` is used to builds the `GInteractoin` object. Than `addStrandCombination()` adds the four possible strand combinations of motifs pairs. Finally, `addMotifScore()` adds the minimum motif score for each pair.
-These features are later used as variables for predictions. 
+These genomic features are used later as predictive variables. 
 
 ## Compute ChIP-seq similarity at motif pairs
 
-Now, we compute the correlation of ChIP-seq signals for all motif pairs across positions around motif centers.
-Essentially, for two motifs the corresponding ChIP-seq signal vectors that were added to `motifs` before, are compared by Pearson correlation. High correlation of ChIP-seq signals at two motifs indicate a similar ChIP-seq coverage profile at the two motifs. This in turn is characteristic for interacting motifs, where ChIP signals are found on both side with a similar distance to motif centers.
+Now, we compute the similarity of ChIP-seq signals for all motif pairs as the correlation of signals across positions around motif centers.
+Thereby, for two motifs the corresponding ChIP-seq signal vectors that were added to `motifs` before, are compared by Pearson correlation. A high correlation of ChIP-seq signals at two motifs indicates a similar ChIP-seq coverage profile at the two motifs. This, in turn, is characteristic for physical interaction via chromatin looping, where ChIP signals are found on both sides with a similar distance to motif centers [@Ibn-Salem2018].
 The correlation coefficient is added as additional metadata column to `gi`.
 ```{r}
 # add ChIP-seq coverage and compute correaltion at motif pairs
@@ -192,30 +204,34 @@ gi <- addCovCor(gi)
 ```
 
 ## Predict loops
-Now we can predict chromatin loops integrating the ChIP-seq correlation with other genomic features in a logistic regression model.
+Now we can predict chromatin loops integrating from the ChIP-seq correlation and other genomic features in a logistic regression model. 
+This is implemented in the `predLoops()` function.
 ```{r}
 loops <- predLoops(gi)
 
 loops
 ```
-This result in a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column `chip`. The column `pred` holds the predicted interaction probability according to the logistic regression model.
+The `predLoops()` function returns a subset of motif pairs that are predicted to interact. The interactions are annotated with ChIP-seq correlation in column `cor_chip`. The column `pred` holds the predicted interaction probability according to the logistic regression model.
 
-Note, that without specifying further options, the function `predLoops()` uses a default model that was optimized for several transcription factor ChIP-seq data sets by using experimental chromatin loops from Hi-C and ChIA-PET for validations. 
-However, users can specify custom features using the `formular` argument and provide custom parameters using the `betas`argument. 
-Furthermore, per default the `predLoops()` function report only looping interactions that mead a minimal prediction score threshold. This can be modified using the `cutoff` argument. 
+Note, that without specifying further options, the function `predLoops()` uses a default model that was optimized for several transcription factor ChIP-seq datasets by using experimental chromatin loops from Hi-C and ChIA-PET for validations [@Ibn-Salem2018]. 
+However, users can specify custom features using the `formula` argument and provide custom parameters using the `betas` argument. 
+Furthermore, per default the `predLoops()` function report only looping interactions that reach a minimal prediction score threshold. The fraction of reported loops can be modified using the `cutoff` argument. 
 
-# Downstream analysis with chromatin loops
+# Downstream analysis with predicted chromatin loops
 
 ## Linking sets of regions
-Predicted loops are represented as `GInteraction` and can therefore be used easily for downstream analysis with functions from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
-For example linking two sets of regions (like ChIP-seq peaks and genes) can be done using the `linkOverlaps` function. 
-See the [vignette](http://bioconductor.org/packages/release/bioc/vignettes/InteractionSet/inst/doc/interactions.html) of the `r BiocStyle::Biocpkg("InteractonSet")` package for more details and examples. 
 
-## Write predicted loops to output file
+Predicted loops are represented as `GInteraction` and can, therefore, be used easily for downstream analysis with functions from the `r BiocStyle::Biocpkg("InteractonSet")` package. 
+For example, linking two sets of regions (like ChIP-seq peaks and genes) can be done using the `linkOverlaps` function. 
+See the [vignette](http://bioconductor.org/packages/release/bioc/vignettes/InteractionSet/inst/doc/interactions.html) from the `r BiocStyle::Biocpkg("InteractonSet")` package for more details and examples on working with `GInteraction` objects. 
+
+## Write predicted loops to an output file
+
 Since looping interactions are stored as `GInteraction` objects, they 
 can be exported as 
-[BED-PE](http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) 
+[BEDPE](http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format) 
 files using functions from `r BiocStyle::Biocpkg("GenomicInteractions")` package.
+These files can be used for visualization in genome browsers or the [Juicebox](https://www.aidenlab.org/juicebox/) tool.
 
 ```{r, results = "hide", message = FALSE}
 library(GenomicInteractions)
@@ -226,11 +242,11 @@ export.bedpe(loops, "loop_interactions.bedpe", score = "pred")
 ```
 
 
-# Train prediciton model using custom data
+# Train prediction model using custom data
 Here, we show how to use  `r BiocStyle::Biocpkg("sevenC")` to build and train a logistic regression model for loop prediction. 
 
-## Prepare moitf pairs and add ChIP-seq data
-First, we need to build the pairs of motifs as candidate and add the ChIP-seq data as shown above. 
+## Prepare motif pairs and add ChIP-seq data
+First, we need to build the pairs of motifs as candidates and add the ChIP-seq data as shown above. 
 
 ```{r eval = FALSE, echo = TRUE}
 # load provided CTCF motifs
@@ -275,7 +291,7 @@ gi <- addCovCor(gi)
 ## Train predictor with known loops
 
 We need to label true looping interactions by using experimental data of chromatin interactions. 
-Here, we use loops from high resolution Hi-C experiments in human GM12878 cells [@Rao2014].
+Here, we use loops from high-resolution Hi-C experiments in human GM12878 cells [@Rao2014].
 An example file with loops on chromosome 22 is provided with the `r BiocStyle::Biocpkg("sevenC")` package and the function `parseLoopsRao()` reads loops in the format provided by Rao et al. and returns a `GInteraction` object.
 ```{r, message = FALSE}
 # parse known loops
@@ -293,7 +309,7 @@ gi <- addInteractionSupport(gi, knownLoops)
 The experimental support is added as factor with levels `"Loop"` and `"No loop"` as metadata column named `loop`. The column name  can be modified using the `colname` argument.
 
 ## Train logistic regression model 
-We can use the `glm()` function in R to fit a logistic regression model in which the `loop` column is the dependent variable and the ChIP-seq correlation, distance, and strand orientation are the predictors. 
+We can use the R function `glm()` to fit a logistic regression model in which the `loop` column is the dependent variable and the ChIP-seq correlation, distance, and strand orientation are the predictors. 
 
 ```{r}
 fit <- glm(
@@ -303,7 +319,7 @@ fit <- glm(
   )
 ```
 
-## Predict loops with custom model
+## Predict loops with a custom model
 Now, we can use this model to add predicted looping probabilities.
 
 ```{r}
@@ -323,19 +339,19 @@ The prediction score is added as a new metadata column to `gi`.
 gi 
 ```
 
-As a very simple validation we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.
+As a very simple validation, we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.
 
-```{r, fig.width = 3, fig.height = 6}
+```{r, fig.width = 2, fig.height = 4}
 boxplot(gi$pred ~ gi$loop, 
         ylab = "Predicted interaction probability")
 
 ```
 
-This shows higher prediction scores for truly looping motif pairs.
+The plot shows higher prediction scores for truly looping motif pairs.
 However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. 
-A more detailed evaluation of prediction performance using cross-validation and different cell types is soon available in the 7C paper. 
+A more detailed evaluation of prediction performance using cross-validation and different cell types is described in the 7C paper [@Ibn-Salem2018]. 
+## Session info 
 
-## session Info 
 ```{r}
 sessionInfo()
 ```
