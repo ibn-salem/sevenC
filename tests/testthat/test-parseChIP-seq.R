@@ -1,6 +1,6 @@
 context("parseChIP-seq")
 
-exampleBigWig <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig",
+exampleBigWig <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig",
                              package = "sevenC")
 
 toySeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
@@ -11,8 +11,8 @@ toySeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
 exampleGR <- GRanges(
   rep("chr22", 3),
   IRanges(
-    18000000 - c(1000, 500, 100),
-    18000000 - c(991, 491, 91)
+    30000000 - c(1000, 500, 100),
+    30000000 - c(991, 491, 91)
   ),
   seqinfo = Seqinfo(seqnames = "chr22",
                                   seqlengths = 10^8,

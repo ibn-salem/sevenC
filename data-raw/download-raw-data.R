@@ -7,7 +7,7 @@ require(tidyverse)
 
 bwURLstr <- "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig"
 bwTmpFile <- "data-raw/GM12878_Stat1.bigWig"
-bwFinalFile <- "inst/extdata/GM12878_Stat1.chr22_1-18000000.bigWig"
+bwFinalFile <- "inst/extdata/GM12878_Stat1.chr22_1-30000000.bigWig"
 dir.create("inst/extdata", recursive = TRUE)
 
 #require(RCurl)
@@ -15,15 +15,19 @@ dir.create("inst/extdata", recursive = TRUE)
 
 download.file(bwURLstr, destfile = bwTmpFile)
 
+# read bigWig file as GRanges
 bw <- rtracklayer::import(bwTmpFile)
-bwSub <- IRanges::subsetByOverlaps(
-  bw, GenomicRanges::GRanges("chr22", IRanges::IRanges(1, 18000000))
-  )
 
-print(object.size(bwSub), unit = "Kb")
+# get subset on chr22 1:30000000
+bwSub <- IRanges::subsetByOverlaps(
+  bw, GenomicRanges::GRanges("chr22", IRanges::IRanges(1, 30000000))
+)
+
+print(object.size(bwSub), unit = "Mb")
 
 # save subset of file in inst/extdata as bigWig file
 rtracklayer::export(bwSub, con = bwFinalFile, format = "bigWig")
+# rtracklayer::export(bwChr22, con = bwFinalFile, format = "bigWig")
 
 #*******************************************************************************
 # add CTCF moitif locations in human genome from JASPAR motif tracks      ------
@@ -133,19 +137,19 @@ tmp <- tempfile()
 
 download.file(loopURL, tmp)
 
-df <- read.table(gzfile(tmp), header=TRUE)
+df <- read.table(gzfile(tmp), header = TRUE)
 
 # filter for only chromosome 22 in some start region
 fltDF <- subset(df, chr1 == 22 &
                   chr2 == 22 &
-                  x2 <= 18000000 &
-                  y2 <= 18000000)
+                  x2 <= 30000000 &
+                  y2 <= 30000000)
 
 # save subset of file in inst/extdata as raw .txt file
-loopFinalFile <- "inst/extdata/GM12878_HiCCUPS.chr22_1-18000000.loop.txt"
+loopFinalFile <- "inst/extdata/GM12878_HiCCUPS.chr22_1-30000000.loop.txt"
 
-write.table(fltDF, file=loopFinalFile, col.names = TRUE, row.names=FALSE,
-            quote=FALSE, sep="\t")
+write.table(fltDF, file = loopFinalFile, col.names = TRUE, row.names = FALSE,
+            quote = FALSE, sep = "\t")
 
 #-------------------------------------------------------------------------------
 # Download sample ChIA-pet data from Tang et al. 2015 Cell
@@ -160,13 +164,13 @@ df <- read.table(gzfile(tmp), header = FALSE)
 # filter for only chromosome 22 in some start region
 fltDF <- subset(df, V1 == "chr22" &
                   V4 == "chr22" &
-                  V3 <= 18000000 &
-                  V6 <= 18000000)
+                  V3 <= 30000000 &
+                  V6 <= 30000000)
 
 # save subset of file in inst/extdata as raw .txt file
-loopFinalFile <- "inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt"
+loopFinalFile <- "inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt"
 
-write.table(fltDF, file=loopFinalFile, col.names = FALSE, row.names = FALSE,
+write.table(fltDF, file = loopFinalFile, col.names = FALSE, row.names = FALSE,
             quote = FALSE, sep = "\t")
 
 

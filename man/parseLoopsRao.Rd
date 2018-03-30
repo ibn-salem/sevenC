@@ -24,7 +24,7 @@ Parse chromatin loops from Rao et al. 2014 as strict
 
 # use example loop file
 exampleLoopFile <- system.file("extdata",
-  "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "sevenC")
+  "GM12878_HiCCUPS.chr22_1-30000000.loop.txt", package = "sevenC")
 
 # read loops form example file:
 gi <- parseLoopsRao(exampleLoopFile)

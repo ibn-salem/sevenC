@@ -48,7 +48,7 @@ if (.Platform$OS.type != "windows") {
 
   # use example bigWig file
  exampleBigWig <- system.file("extdata",
-     "GM12878_Stat1.chr22_1-18000000.bigWig", package = "sevenC")
+     "GM12878_Stat1.chr22_1-30000000.bigWig", package = "sevenC")
 
   # add coverage from bigWig file
   motifGR <- addCovToGR(motifGR, exampleBigWig)

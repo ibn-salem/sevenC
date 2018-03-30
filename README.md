@@ -62,7 +62,7 @@ gi <- prepareCisPairs(motifs, maxDist = 10^6)
 
 ```R
 # use example ChIP-seq bigWig file
-bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig", 
   package = "sevenC")
 
 # add ChIP-seq coverage and compute correaltion at motif pairs

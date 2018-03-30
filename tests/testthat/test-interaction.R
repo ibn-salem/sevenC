@@ -153,7 +153,7 @@ test_that("coverage is added to gi on small example dataset", {
 test_that("addCovCor works with chr22 example data", {
 
   exampleBigWig <- system.file("extdata",
-                               "GM12878_Stat1.chr22_1-18000000.bigWig",
+                               "GM12878_Stat1.chr22_1-30000000.bigWig",
                                package = "sevenC")
 
   # use internal motif data
@@ -234,7 +234,7 @@ test_that("interactions can be annotated with Hi-C loops", {
   # parse loops from internal data
   exampleLoopFile <- system.file(
     "extdata",
-    "GM12878_HiCCUPS.chr22_1-18000000.loop.txt",
+    "GM12878_HiCCUPS.chr22_1-30000000.loop.txt",
     package = "sevenC")
 
   loopGI <- parseLoopsRao(exampleLoopFile, seqinfo = seqinfo(gi))

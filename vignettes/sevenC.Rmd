@@ -88,7 +88,7 @@ gi <- prepareCisPairs(motifs)
 ```{r eval = FALSE, echo = TRUE}
 
 # use example ChIP-seq bigWig file
-bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig", 
   package = "sevenC")
 
 # add ChIP-seq coverage and compute correaltion at motif pairs
@@ -105,7 +105,7 @@ if (.Platform$OS.type == 'windows') {
   
 } else {
   # use example ChIP-seq bigWig file
-  bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+  bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig", 
     package = "sevenC")
   
   # add ChIP-seq coverage and compute correaltion at motif pairs
@@ -153,7 +153,7 @@ the `r BiocStyle::Biocpkg("sevenC")` package. The full file can be downloaded fr
 
 ```{r}
 # use example ChIP-seq bigWig file
-bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig", 
   package = "sevenC")
 ```
 
@@ -253,7 +253,7 @@ First, we need to build the pairs of motifs as candidates and add the ChIP-seq d
 motifs <- motif.hg19.CTCF.chr22
 
 # use example ChIP-seq coverage file
-bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig", 
   package = "sevenC")
 
 # add ChIP-seq coverage
@@ -275,7 +275,7 @@ if (.Platform$OS.type == 'windows') {
   motifs <- motif.hg19.CTCF.chr22
   
   # use example ChIP-seq coverage file
-  bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-18000000.bigWig", 
+  bigWigFile <- system.file("extdata", "GM12878_Stat1.chr22_1-30000000.bigWig", 
     package = "sevenC")
   
   # add ChIP-seq coverage
@@ -296,7 +296,7 @@ An example file with loops on chromosome 22 is provided with the `r BiocStyle::B
 ```{r, message = FALSE}
 # parse known loops
 knownLoopFile <- system.file("extdata", 
-  "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "sevenC")
+  "GM12878_HiCCUPS.chr22_1-30000000.loop.txt", package = "sevenC")
 
 knownLoops <- parseLoopsRao(knownLoopFile)
 ```

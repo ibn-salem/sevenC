@@ -11,7 +11,7 @@
 #'
 #' # use example loop file
 #'exampleLoopFile <- system.file("extdata",
-#'   "GM12878_HiCCUPS.chr22_1-18000000.loop.txt", package = "sevenC")
+#'   "GM12878_HiCCUPS.chr22_1-30000000.loop.txt", package = "sevenC")
 #'
 #'# read loops form example file:
 #'gi <- parseLoopsRao(exampleLoopFile)
@@ -86,7 +86,7 @@ parseLoopsRao <- function(inFile, ...){
 #'
 #' @examples
 #'exampleLoopTang2015File <- system.file("extdata",
-#'    "ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt",
+#'    "ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt",
 #'    package = "sevenC")
 #'
 #'gi <- parseLoopsTang2015(exampleLoopTang2015File)
