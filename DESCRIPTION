@@ -1,7 +1,7 @@
 Package: sevenC
 Type: Package
 Title: Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs
-Version: 0.0.1
+Version: 0.99.0
 Authors@R: person("Jonas", "Ibn-Salem", email = "j.ibn-salem@uni-mainz.de", role = c("aut", "cre"))
 Description: Chromatin looping is an essential feature of eukaryotic genomes and can bring
     regulatory sequences, such as enhancers or transcription factor binding sites,
@@ -41,3 +41,4 @@ RoxygenNote: 6.0.1
 biocViews: DNA3DStructure, ChIPchip, Coverage, DataImport, Epigenetics, 
   FunctionalGenomics, Classification, Regression, ChIPSeq, HiC, Annotation
 VignetteBuilder: knitr
+BugReports: https://github.com/ibn-salem/sevenC/issues

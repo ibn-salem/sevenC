@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>. — parseLoopsTang2015" />
+
+<meta property="og:description" content="Reads pairwise ChIA-PET interaction from an input file." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +38,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,8 +55,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">sevenC</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">sevenC</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -58,7 +70,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/sevenC.html">Get Started</a>
+  <a href="../articles/sevenC.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,6 +85,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +93,11 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>.</h1>
+    
     </div>
 
     
@@ -92,7 +106,7 @@
 
     <pre class="usage"><span class='fu'>parseLoopsTang2015</span>(<span class='no'>inFile</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -112,7 +126,8 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>It reads files with the following tab-delimited format:</p><table><tr><td> chr12</td>
+    <p>It reads files with the following tab-delimited format:</p>
+<table><tr><td> chr12</td>
 <td> 48160351</td>
 <td> 48161634</td>
 <td>  chr12</td>
@@ -120,7 +135,7 @@
 <td>
 48232848</td>
 <td> 27 </td>
-</tr><tr><td> chr7</td>
+</tr><tr><td><br /> chr7</td>
 <td> 77284664</td>
 <td> 77285815</td>
 <td> chr7</td>
@@ -128,7 +143,7 @@
 <td>
 77388928</td>
 <td> 7 </td>
-</tr><tr><td> chr4</td>
+</tr><tr><td><br /> chr4</td>
 <td> 128459961</td>
 <td> 128460166</td>
 <td> chr4</td>
@@ -144,10 +159,10 @@ file is added as annotation column with colname "score".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>exampleLoopTang2015File</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>,
-   <span class='st'>"ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt"</span>,
+   <span class='st'>"ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt"</span>,
    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sevenC"</span>)
 
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang2015</span>(<span class='no'>exampleLoopTang2015File</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang2015</span>(<span class='no'>exampleLoopTang2015File</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  X1 = col_character(),</span>
 #&gt; <span class='message'>  X2 = col_integer(),</span>
@@ -161,7 +176,7 @@ file is added as annotation column with colname "score".</p>
 <span class='no'>customSeqInfo</span> <span class='kw'>&lt;-</span> <span class='fu'>Seqinfo</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"chr1"</span>, <span class='st'>"chr22"</span>),
    <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>^<span class='fl'>8</span>, <span class='fl'>10</span>^<span class='fl'>8</span>), <span class='kw'>isCircular</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>),
    <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"custom"</span>)
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang2015</span>(<span class='no'>exampleLoopTang2015File</span>, <span class='kw'>seqinfo</span> <span class='kw'>=</span> <span class='no'>customSeqInfo</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-18000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang2015</span>(<span class='no'>exampleLoopTang2015File</span>, <span class='kw'>seqinfo</span> <span class='kw'>=</span> <span class='no'>customSeqInfo</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  X1 = col_character(),</span>
 #&gt; <span class='message'>  X2 = col_integer(),</span>
@@ -195,11 +210,14 @@ file is added as annotation column with colname "score".</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

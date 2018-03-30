@@ -24,6 +24,7 @@ reference:
     - motif.hg19.CTCF.chr22
     - motif.hg19.CTCF.chr22.cov
     - modelBest10Avg
+    - TFspecificModels
     - cutoffByTF
     - cutoffBest10
 
