@@ -35,7 +35,7 @@ Suggests:
     rmarkdown,
     GenomicInteractions,
     covr
-Depends: R (>= 3.4),
+Depends: R (>= 3.5),
   InteractionSet (>= 1.2.0)
 RoxygenNote: 6.0.1
 biocViews: DNA3DStructure, ChIPchip, Coverage, DataImport, Epigenetics, 
