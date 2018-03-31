@@ -130,8 +130,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
   stopifnot(is.character(colname), length(colname) == 1)
   stopifnot(!any(is.na(seqlengths(gr))))
 
-  # if OS is Windows rais warning, add NA, and return.
-  if (.Platform$OS.type == 'windows') {
+  # test if file type is bigWig by suffix
+  isBigWig <- any(endsWith(bwFile, c(".bw", ".bigWig", ".bigwig", ".BigWig")))
+
+  # if OS is Windows and file type is bigWig rais warning, add NA, and return.
+  if (.Platform$OS.type == 'windows' & isBigWig) {
 
     warning(paste(
       "Reading of bigWig files is not supported on winodws",
