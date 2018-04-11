@@ -32,14 +32,14 @@ test_that("parseLoopsRao works toy genome as seqinfo", {
 
 })
 
-test_that("parseLoopsTang2015 works with example file", {
+test_that("parseLoopsTang works with example file", {
 
   exampleLoopTang2015File <- system.file(
     "extdata",
     "ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt",
     package = "sevenC")
 
-  gi <- parseLoopsTang2015(exampleLoopTang2015File)
+  gi <- parseLoopsTang(exampleLoopTang2015File)
 
   df <- read.table(exampleLoopTang2015File, header = FALSE)
 

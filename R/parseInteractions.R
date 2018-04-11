@@ -89,19 +89,19 @@ parseLoopsRao <- function(inFile, ...){
 #'    "ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt",
 #'    package = "sevenC")
 #'
-#'gi <- parseLoopsTang2015(exampleLoopTang2015File)
+#'gi <- parseLoopsTang(exampleLoopTang2015File)
 #'
 #'# read loops with custom seqinfo object:
 #'customSeqInfo <- Seqinfo(seqnames = c("chr1", "chr22"),
 #'    seqlengths = c(10^8, 10^8), isCircular = c(FALSE, FALSE),
 #'    genome = "custom")
-#'gi <- parseLoopsTang2015(exampleLoopTang2015File, seqinfo = customSeqInfo)
+#'gi <- parseLoopsTang(exampleLoopTang2015File, seqinfo = customSeqInfo)
 #'
 #'
 #' @import InteractionSet
 #' @importFrom IRanges IRanges
 #' @export
-parseLoopsTang2015 <- function(inFile, ...){
+parseLoopsTang <- function(inFile, ...){
 
   message("INFO: Parse ChiA-PET interactions from file: ", inFile)
 
