@@ -8,6 +8,6 @@ citEntry(entry="article",
          pages = "257584",
          url = "https://doi.org/10.1101/257584",
          textVersion =
-         paste("Ibn-Salem, J., Andrade-Davarro, M. A.",
+         paste("Ibn-Salem, J., Andrade-Navarro, M. A.",
                "Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs",
                 "bioRxiv 257584 (2018)" ) )
