@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>. — parseLoopsTang2015 • sevenC</title>
+<title>Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>. — parseLoopsTang • sevenC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>. — parseLoopsTang2015" />
+<meta property="og:title" content="Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>. — parseLoopsTang" />
 
 <meta property="og:description" content="Reads pairwise ChIA-PET interaction from an input file." />
 <meta name="twitter:card" content="summary" />
@@ -57,7 +57,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sevenC</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.4</span>
       </span>
     </div>
 
@@ -98,13 +98,14 @@
     <div class="page-header">
     <h1>Parse chromatin interactions from Tang et al. 2015 as <code>GInteractions</code>.</h1>
     
+    <div class="hidden name"><code>parseLoopsTang.Rd</code></div>
     </div>
 
     
     <p>Reads pairwise ChIA-PET interaction from an input file.</p>
     
 
-    <pre class="usage"><span class='fu'>parseLoopsTang2015</span>(<span class='no'>inFile</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>parseLoopsTang</span>(<span class='no'>inFile</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,7 +163,7 @@ file is added as annotation column with colname "score".</p>
    <span class='st'>"ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt"</span>,
    <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"sevenC"</span>)
 
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang2015</span>(<span class='no'>exampleLoopTang2015File</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang</span>(<span class='no'>exampleLoopTang2015File</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  X1 = col_character(),</span>
 #&gt; <span class='message'>  X2 = col_integer(),</span>
@@ -176,7 +177,7 @@ file is added as annotation column with colname "score".</p>
 <span class='no'>customSeqInfo</span> <span class='kw'>&lt;-</span> <span class='fu'>Seqinfo</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"chr1"</span>, <span class='st'>"chr22"</span>),
    <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>^<span class='fl'>8</span>, <span class='fl'>10</span>^<span class='fl'>8</span>), <span class='kw'>isCircular</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>),
    <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"custom"</span>)
-<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang2015</span>(<span class='no'>exampleLoopTang2015File</span>, <span class='kw'>seqinfo</span> <span class='kw'>=</span> <span class='no'>customSeqInfo</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+<span class='no'>gi</span> <span class='kw'>&lt;-</span> <span class='fu'>parseLoopsTang</span>(<span class='no'>exampleLoopTang2015File</span>, <span class='kw'>seqinfo</span> <span class='kw'>=</span> <span class='no'>customSeqInfo</span>)</div><div class='output co'>#&gt; <span class='message'>INFO: Parse ChiA-PET interactions from file: /home/ibnsalem/project/sevenC/inst/extdata/ChIA-PET_GM12878_Tang2015.chr22_1-30000000.clusters.txt</span></div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  X1 = col_character(),</span>
 #&gt; <span class='message'>  X2 = col_integer(),</span>

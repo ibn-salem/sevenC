@@ -15,7 +15,7 @@ https://ibn-salem.github.io/sevenC//reference/motif.hg19.CTCF.chr22.html
 https://ibn-salem.github.io/sevenC//reference/motif.hg19.CTCF.chr22.cov.html
 https://ibn-salem.github.io/sevenC//reference/noZeroVar.html
 https://ibn-salem.github.io/sevenC//reference/parseLoopsRao.html
-https://ibn-salem.github.io/sevenC//reference/parseLoopsTang2015.html
+https://ibn-salem.github.io/sevenC//reference/parseLoopsTang.html
 https://ibn-salem.github.io/sevenC//reference/predLogit.html
 https://ibn-salem.github.io/sevenC//reference/predLoops.html
 https://ibn-salem.github.io/sevenC//reference/prepareCisPairs.html
