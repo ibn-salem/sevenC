@@ -1,0 +1,9 @@
+pandoc: 2.1.1
+pkgdown: 0.1.0.9000
+pkgdown_sha: b074c575119c35459f544f15e3dae3a6d617d9bb
+articles:
+  sevenC: sevenC.html
+urls:
+  reference: https://ibn-salem.github.io/sevenC//reference
+  article: https://ibn-salem.github.io/sevenC//articles
+
