@@ -124,11 +124,13 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
                        colname = "chip"){
 
   # check input arguments
-  stopifnot(file.exists(bwFile), length(bwFile) == 1)
-  stopifnot(is.numeric(window), length(window) == 1)
-  stopifnot(is.numeric(binSize), length(binSize) == 1)
-  stopifnot(is.character(colname), length(colname) == 1)
-  stopifnot(!any(is.na(seqlengths(gr))))
+  stopifnot(
+    file.exists(bwFile), length(bwFile) == 1,
+    is.numeric(window), length(window) == 1,
+    is.numeric(binSize), length(binSize) == 1,
+    is.character(colname), length(colname) == 1,
+    !any(is.na(seqlengths(gr)))
+  )
 
   # test if file type is bigWig by suffix
   isBigWig <- any(endsWith(bwFile, c(".bw", ".bigWig", ".bigwig", ".BigWig")))

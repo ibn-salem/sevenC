@@ -94,8 +94,10 @@ predLogit <- function(data, formula, betas){
 predLoops <- function(gi, formula = NULL, betas=NULL, colname = "pred",
                       cutoff = get("cutoffBest10")){
   # check arguments
-  stopifnot(is(formula, "formula") | is.null(formula))
-  stopifnot(is.numeric(betas) | is.null(betas))
+  stopifnot(
+    is(formula, "formula") | is.null(formula),
+    is.numeric(betas) | is.null(betas)
+  )
 
   # if no formula is given, use default formula
   if (is.null(formula)) {
