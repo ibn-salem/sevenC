@@ -13,6 +13,7 @@ data-raw/hg19_MA0139.1.mrkv1.ms.gz
 # ignore bin directory
 bin
 inst/doc
+docs
 
 # example outputof vignettes
 vignettes/loop_interactions.bedpe
