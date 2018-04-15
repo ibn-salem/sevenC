@@ -27,9 +27,9 @@ abstract: >
     transcription factor binding sites (e.g., ChIP-seq peaks) to regulated 
     target genes.
 output:
-  BiocStyle::pdf_document:
   BiocStyle::html_document:
     toc_float: true
+  BiocStyle::pdf_document:
 bibliography: sevenC.bib
 vignette: >
   %\VignetteIndexEntry{Introduction to sevenC}
@@ -160,10 +160,7 @@ p-value.
 ### Add ChIP-seq signals at motifs sites
 
 To predict loops, we need the ChIP-seq signals at all motif sites. Therefore, we
-read an example bigWig file with ChIP-seq signals^[Note, reading of bigWig files
-is currently not supported on Windows. See `help(rtracklayer::import.bw)` for
-more information. Users on Windows need to add ChIP-seq signals as `NumierList`
-by other means.].
+read an example bigWig file with ChIP-seq signals.
 
 An example file with only data on a subset of chromosome 22 is provided as part
 of the `r BiocStyle::Biocpkg("sevenC")` package. The full file can be downloaded
@@ -201,6 +198,11 @@ ChIP-seq signals for each motif location.
 ```{r}
 motifs$chip
 ```
+Please note, on Windows systems, reading of bigWig files is currently not
+supported. See `help(rtracklayer::import.bw)` for more information. Users on
+Windows need to get ChIP-seq signals around motif sites as a `NumierList`
+object. A `NumericList` `l` with ChIP-signal counts around each motif list can
+be added by `motifs$chip <- l`.
 
 ### Build pairs of motifs as candidate interactions
 
