@@ -159,7 +159,7 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
   ancWin <- trim(ancWin)
 
   # trim start in case there is no seqinof object
-  start(ancWin) <- ifelse(start(ancWin) > 0, start(ancWin), 1)
+  start(ancWin)[start(ancWin) <= 0] <- 1
 
   # get numeric with coverage of each region
 
