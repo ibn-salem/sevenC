@@ -189,7 +189,7 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
   covAnc <- NumericList(covAncRle)
 
   # add NAs for out of bound regions
-  covAnc[outDF$idx] <- lapply(seq_along(outDF$idx), function(i){
+  covAnc[outDF$idx] <- purrr::map(seq_along(outDF$idx), function(i){
     covAnc[outDF$idx][[i]] <- c(
       rep(NA, outDF[i, "left"]),
       covAnc[outDF$idx][[i]],

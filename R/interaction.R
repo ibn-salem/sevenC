@@ -37,7 +37,7 @@ getCisPairs <- function(inGR, maxDist = 1e6){
 
   # check that input GRanges object is sorted
   if (!all(inGR == sort(inGR))) stop("Input ranges inGR need to be sorted. Use
-                                     sort(inGR) to sort it")
+                                     sort(inGR) to sort them.")
 
   # get center postions of each input range
   posGR <- resize(inGR, width = 1, fix = "center")
@@ -193,7 +193,7 @@ addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
   covList <- mcols(regions(gi))[, datacol]
   datamat <- as.matrix(covList)
 
-  corMatList <- lapply(1:length(binGR), function(i){
+  corMatList <- purrr::map(seq_along(binGR), function(i){
 
     # get regions in this bin
     regIdx <- subjectHits(hits)[queryHits(hits) == i]
