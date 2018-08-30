@@ -30,8 +30,9 @@ The *sevenC* package depends on some R packages from Bioconductor. They can be
 installed as follows
 
 ```R
-source("https://bioconductor.org/biocLite.R")
-biocLite("rtracklayer", "InteractionSet")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("rtracklayer", "InteractionSet")
 ```
 
 The development version of *sevenC* can be installed from GitHub:
