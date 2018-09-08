@@ -26,16 +26,15 @@ https://doi.org/10.1101/257584
 
 ## Intallation
 
-The *sevenC* package depends on some R packages from Bioconductor. They can be 
-installed as follows
+To install the *sevenC* package, start R and enter:
 
 ```R
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-BiocManager::install("rtracklayer", "InteractionSet")
+BiocManager::install("sevenC")
 ```
 
-The development version of *sevenC* can be installed from GitHub:
+Alternatively, the development version of *sevenC* can be installed from GitHub:
 
 ```R
 #install.packages("devtools")

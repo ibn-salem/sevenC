@@ -58,19 +58,29 @@ sequence features and ChIP-seq data. The predicted looping interactions can be
 used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated
 genes and thereby improve functional downstream analysis on the level of genes.
 
-In this vignette, we show how to use the R package `r
-BiocStyle::Biocpkg("sevenC")` to predict chromatin looping interactions between
-CTCF motifs by using only ChIP-seq data form a single experiment. Furthermore,
-we show how to train the prediction model using custom data.
+In this vignette, we show how to use the R package `r Biocpkg("sevenC")` to
+predict chromatin looping interactions between CTCF motifs by using only
+ChIP-seq data form a single experiment. Furthermore, we show how to train the
+prediction model using custom data.
 
 A more detailed explanation of the sevenC method together with prediction
 performance analysis is available in the associated preprint [@Ibn-Salem2018].
+
+# Installation
+
+To install the *sevenC* package, start R and enter:
+
+```{r, eval = FALSE}
+# install.packages("BiocManager")
+BiocManager::install("sevenC")
+```
+
 
 # Predict chromatin looping interactions
 
 ## Basic usage example
 
-Here we show how to use the `r BiocStyle::Biocpkg("sevenC")` package with
+Here we show how to use the `r Biocpkg("sevenC")` package with
 default options to predict chromatin looping interactions among CTCF motif
 locations on the human chromosome 22. As input, we only use CTCF motif locations
 and a single bigWig file from a STAT1 ChIP-seq experiment in human GM12878 cells
@@ -133,7 +143,7 @@ chromosome 22 using a ChIP-seq for STAT1 in human GM12878 cells.
 
 First, we need to prepare CTCF motif pairs as candidate anchors for chromatin
 loop interactions. We use CTCF motif hits in human chromosome 22 as provide by
-`r BiocStyle::Biocpkg("sevenC")` package. In general, any CTCF motifs can be
+`r Biocpkg("sevenC")` package. In general, any CTCF motifs can be
 used if provided as `GRanges`.
 To use the motif similarity score as a predictive feature, the motif data should
 contain -log~10~ transformed p-values describing the significance of each motif
