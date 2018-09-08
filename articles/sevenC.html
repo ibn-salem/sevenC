@@ -8,8 +8,13 @@
 <title>Prediction of chromatin looping interactions with <em>sevenC</em> • sevenC</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<<<<<<< HEAD
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Prediction of chromatin looping interactions with &lt;em&gt;sevenC&lt;/em&gt;">
+=======
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Prediction of chromatin looping interactions with &lt;em&gt;sevenC&lt;/em&gt;">
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -29,7 +34,11 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sevenC</a>
+<<<<<<< HEAD
         <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+=======
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.4</span>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
       </span>
     </div>
 
@@ -75,8 +84,12 @@
       </address>
                               <h4 class="author">Miguel Andrade-Navarro</h4>
             <address class="author_afil">
+<<<<<<< HEAD
       Faculty of Biology, Johannes Gutenberg University of Mainz, 55128 Mainz, Germany<br><small class="dont-index">Source: <a href="https://github.com/ibn-salem/sevenC/blob/master/vignettes/sevenC.Rmd"><code>vignettes/sevenC.Rmd</code></a></small>
       <div class="hidden name"><code>sevenC.Rmd</code></div>
+=======
+      Faculty of Biology, Johannes Gutenberg University of Mainz, 55128 Mainz, Germany<br><div class="hidden name"><code>sevenC.Rmd</code></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 
     </address>
 </div>
@@ -91,6 +104,7 @@
 <h1 class="hasAnchor">
 <a href="#background-and-introduction" class="anchor"></a>Background and introduction</h1>
 <p>Gene expression is regulated by binding of transcription factors (TF) to genomic DNA. However, many binding sites are in distal regulatory regions, such as enhancers, that are hundreds of kilobases apart from genes. These regulatory regions can physically interact with promoters of regulated genes by chromatin looping interactions. These looping interaction can be measured genome-wide by chromatin conformation capture techniques such as Hi-C or ChIA-PET <span class="citation">(Rao et al. 2014; Tang et al. 2015)</span>. Despite many exciting insights into the three-dimensional organization of genomes, these experimental methods are not only elaborate and expansive but also have limited resolution and are only available for a limited number of cell types and conditions. In contrast, the binding sites of TFs can be detected genome-wide by ChIP-seq experiment with high resolution and are available for hundreds of TFs in many cell type and conditions. However, classical analysis of ChIP-seq gives only the direct binding sites of targeted TFs (ChIP-seq peaks) and it is not trivial to associate them to the regulated gene without chromatin looping information. Therefore, we provide a computational method to predict chromatin interactions from only genomic sequence features and ChIP-seq data. The predicted looping interactions can be used to associate TF binding sites (ChIP-seq peaks) or enhancers to regulated genes and thereby improve functional downstream analysis on the level of genes.</p>
+<<<<<<< HEAD
 <p>In this vignette, we show how to use the R package <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. Furthermore, we show how to train the prediction model using custom data.</p>
 <p>A more detailed explanation of the sevenC method together with prediction performance analysis is available in the associated preprint <span class="citation">(Ibn-Salem and Andrade-Navarro 2018)</span>.</p>
 </div>
@@ -101,6 +115,11 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("BiocManager")</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"sevenC"</span>)</a></code></pre></div>
 </div>
+=======
+<p>In this vignette, we show how to use the R package <code>r BiocStyle::Biocpkg("sevenC")</code> to predict chromatin looping interactions between CTCF motifs by using only ChIP-seq data form a single experiment. Furthermore, we show how to train the prediction model using custom data.</p>
+<p>A more detailed explanation of the sevenC method together with prediction performance analysis is available in the associated preprint <span class="citation">(Ibn-Salem and Andrade-Navarro 2018)</span>.</p>
+</div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <div id="predict-chromatin-looping-interactions" class="section level1">
 <h1 class="hasAnchor">
 <a href="#predict-chromatin-looping-interactions" class="anchor"></a>Predict chromatin looping interactions</h1>
@@ -111,6 +130,7 @@
 <div id="get-motif-pairs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#get-motif-pairs" class="anchor"></a>Get motif pairs</h3>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(sevenC)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># load provided CTCF motifs in human genome</span></a>
@@ -118,22 +138,45 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># get motifs pairs</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(sevenC)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># load provided CTCF motifs in human genome</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># get motifs pairs</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 <div id="add-chip-seq-data-and-compute-correaltion" class="section level3">
 <h3 class="hasAnchor">
 <a href="#add-chip-seq-data-and-compute-correaltion" class="anchor"></a>Add ChIP-seq data and compute correaltion</h3>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># use example ChIP-seq bigWig file</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2">bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-30000000.bigWig"</span>, </a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCor.html">addCor</a></span>(gi, bigWigFile)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># use example ChIP-seq bigWig file</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-30000000.bigWig"</span>, </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCor.html">addCor</a></span>(gi, bigWigFile)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 <div id="predict-loops" class="section level3">
 <h3 class="hasAnchor">
 <a href="#predict-loops" class="anchor"></a>Predict loops</h3>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># predict looping interactions among all motif pairs</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(gi)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># predict looping interactions among all motif pairs</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(gi)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 </div>
 <div id="more-detailed-usage-example" class="section level2">
@@ -144,10 +187,17 @@
 <h3 class="hasAnchor">
 <a href="#prepare-ctcf-motif-pairs" class="anchor"></a>Prepare CTCF motif pairs</h3>
 <p>First, we need to prepare CTCF motif pairs as candidate anchors for chromatin loop interactions. We use CTCF motif hits in human chromosome 22 as provide by <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package. In general, any CTCF motifs can be used if provided as <code>GRanges</code>. To use the motif similarity score as a predictive feature, the motif data should contain -log<sub>10</sub> transformed p-values describing the significance of each motif hit. Here, we use CTCF motif sites as provided from the JASPAR genome browser tracks <span class="citation">(Khan et al. 2018)</span>. The objedt <code>motif.hg19.CTCF.chr22</code> in the <code>r BiocStyle::Biocpkg("sevenC")</code> package contains CTCF motif locations on chromosome 22. For more information on the motif data set, see <code><a href="../reference/motif.hg19.CTCF.html">?motif.hg19.CTCF</a></code>.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(sevenC)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># load provided CTCF motifs</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4">motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(sevenC)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># load provided CTCF motifs</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <p>The CTCF motif are represented as <code>GRanges</code> object from the <code>r BiocStyle::Biocpkg("GenomicRanges")</code> package. There are 917 CTCF motif locations on chromosome 22. The genome assembly is hg19. one metadata column named <code>score</code> shows motif match similarity as -log<sub>10</sub> transformed p-value.</p>
 </div>
 <div id="add-chip-seq-signals-at-motifs-sites" class="section level3">
@@ -155,6 +205,7 @@
 <a href="#add-chip-seq-signals-at-motifs-sites" class="anchor"></a>Add ChIP-seq signals at motifs sites</h3>
 <p>To predict loops, we need the ChIP-seq signals at all motif sites. Therefore, we read an example bigWig file with ChIP-seq signals.</p>
 <p>An example file with only data on a subset of chromosome 22 is provided as part of the <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package. The full file can be downloaded from ENCODE <span class="citation">(Dunham et al. 2012)</span> <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig">here</a>. The file contains for each position in the genome the log-fold-change of ChIP-seq signals versus input control.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># use example ChIP-seq bigWig file</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-30000000.bigWig"</span>, </a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a></code></pre></div>
@@ -163,6 +214,16 @@
 <a class="sourceLine" id="cb7-2" data-line-number="2">motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)</a></code></pre></div>
 <p>This adds a new metadata column to <code>motifs</code> holding a <code>NumericList</code> with ChIP-seq signals for each motif location.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">motifs<span class="op">$</span>chip</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># use example ChIP-seq bigWig file</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-30000000.bigWig"</span>, </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a></code></pre></div>
+<p>We add ChIP-seq signals to all motifs in a window of 1000 bp using the function <code><a href="../reference/addCovToGR.html">addCovToGR()</a></code> as follows.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># read ChIP-seq coverage </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)</a></code></pre></div>
+<p>This adds a new metadata column to <code>motifs</code> holding a <code>NumericList</code> with ChIP-seq signals for each motif location.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">motifs<span class="op">$</span>chip</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <pre><code>## NumericList of length 917
 ## [["chr22"]] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ... 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ## [["chr22"]] 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 ... 2 2 2 2 2 2 2 2 2 2 2 2 2 2
@@ -182,9 +243,15 @@
 <h3 class="hasAnchor">
 <a href="#build-pairs-of-motifs-as-candidate-interactions" class="anchor"></a>Build pairs of motifs as candidate interactions</h3>
 <p>Now we build a dataset with all pairs of CTCF motif within 1 Mb and annotate it with distance, motif orientation, and motif score.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">gi</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">gi</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <pre><code>## StrictGInteractions object with 26076 interactions and 5 metadata columns:
 ##           seqnames1           ranges1     seqnames2           ranges2 |
 ##               &lt;Rle&gt;         &lt;IRanges&gt;         &lt;Rle&gt;         &lt;IRanges&gt; |
@@ -222,16 +289,27 @@
 <h2 class="hasAnchor">
 <a href="#compute-chip-seq-similarity-at-motif-pairs" class="anchor"></a>Compute ChIP-seq similarity at motif pairs</h2>
 <p>Now, we compute the similarity of ChIP-seq signals for all motif pairs as the correlation of signals across positions around motif centers. Thereby, for two motifs the corresponding ChIP-seq signal vectors that were added to <code>motifs</code> before, are compared by Pearson correlation. A high correlation of ChIP-seq signals at two motifs indicates a similar ChIP-seq coverage profile at the two motifs. This, in turn, is characteristic for physical interaction via chromatin looping, where ChIP signals are found on both sides with a similar distance to motif centers <span class="citation">(Ibn-Salem and Andrade-Navarro 2018)</span>. The correlation coefficient is added as additional metadata column to <code>gi</code>.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCor.html">addCovCor</a></span>(gi)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># add ChIP-seq coverage and compute correaltion at motif pairs</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCor.html">addCovCor</a></span>(gi)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 <div id="predict-loops-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predict-loops-1" class="anchor"></a>Predict loops</h2>
 <p>Now we can predict chromatin loops integrating from the ChIP-seq correlation and other genomic features in a logistic regression model. This is implemented in the <code><a href="../reference/predLoops.html">predLoops()</a></code> function.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(gi)</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">loops</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">loops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(gi)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">loops</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <pre><code>## StrictGInteractions object with 607 interactions and 7 metadata columns:
 ##         seqnames1           ranges1     seqnames2           ranges2 |
 ##             &lt;Rle&gt;         &lt;IRanges&gt;         &lt;Rle&gt;         &lt;IRanges&gt; |
@@ -291,10 +369,20 @@
 <h2 class="hasAnchor">
 <a href="#write-predicted-loops-to-an-output-file" class="anchor"></a>Write predicted loops to an output file</h2>
 <p>Since looping interactions are stored as <code>GInteraction</code> objects, they can be exported as <a href="http://bedtools.readthedocs.io/en/latest/content/general-usage.html#bedpe-format">BEDPE</a> files using functions from <em><a href="http://bioconductor.org/packages/GenomicInteractions">GenomicInteractions</a></em> package. These files can be used for visualization in genome browsers or the <a href="https://www.aidenlab.org/juicebox/">Juicebox</a> tool.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">library</span>(GenomicInteractions)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co"># export to output file</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/GenomicInteractions/topics/export.bedpe">export.bedpe</a></span>(loops, <span class="st">"loop_interactions.bedpe"</span>, <span class="dt">score =</span> <span class="st">"pred"</span>)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">library</span>(GenomicInteractions)</a></code></pre></div>
+<pre><code>## Warning: replacing previous import 'BiocGenerics::Position' by
+## 'ggplot2::Position' when loading 'GenomicInteractions'</code></pre>
+<pre><code>## Warning: replacing previous import 'BiocGenerics::sd' by 'stats::sd' when
+## loading 'GenomicInteractions'</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># export to output file</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/GenomicInteractions/topics/export.bedpe">export.bedpe</a></span>(loops, <span class="st">"loop_interactions.bedpe"</span>, <span class="dt">score =</span> <span class="st">"pred"</span>)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 </div>
 <div id="train-prediction-model-using-custom-data" class="section level1">
@@ -305,6 +393,7 @@
 <h2 class="hasAnchor">
 <a href="#prepare-motif-pairs-and-add-chip-seq-data" class="anchor"></a>Prepare motif pairs and add ChIP-seq data</h2>
 <p>First, we need to build the pairs of motifs as candidates and add the ChIP-seq data as shown above.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># load provided CTCF motifs</span></a>
 <a class="sourceLine" id="cb16-2" data-line-number="2">motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</a>
 <a class="sourceLine" id="cb16-3" data-line-number="3"></a>
@@ -320,11 +409,29 @@
 <a class="sourceLine" id="cb16-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co"># add correaltion of ChIP-signal</span></a>
 <a class="sourceLine" id="cb16-15" data-line-number="15">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCor.html">addCovCor</a></span>(gi)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># load provided CTCF motifs</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">motifs &lt;-<span class="st"> </span>motif.hg19.CTCF.chr22</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co"># use example ChIP-seq coverage file</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">bigWigFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"GM12878_Stat1.chr22_1-30000000.bigWig"</span>, </a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">  <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co"># add ChIP-seq coverage</span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">motifs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovToGR.html">addCovToGR</a></span>(motifs, bigWigFile)</a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="co"># build motif pairs</span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/prepareCisPairs.html">prepareCisPairs</a></span>(motifs, <span class="dt">maxDist =</span> <span class="dv">10</span><span class="op">^</span><span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co"># add correaltion of ChIP-signal</span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addCovCor.html">addCovCor</a></span>(gi)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 <div id="train-predictor-with-known-loops" class="section level2">
 <h2 class="hasAnchor">
 <a href="#train-predictor-with-known-loops" class="anchor"></a>Train predictor with known loops</h2>
 <p>We need to label true looping interactions by using experimental data of chromatin interactions. Here, we use loops from high-resolution Hi-C experiments in human GM12878 cells <span class="citation">(Rao et al. 2014)</span>. An example file with loops on chromosome 22 is provided with the <em><a href="http://bioconductor.org/packages/sevenC">sevenC</a></em> package and the function <code><a href="../reference/parseLoopsRao.html">parseLoopsRao()</a></code> reads loops in the format provided by Rao et al. and returns a <code>GInteraction</code> object.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># parse known loops</span></a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">knownLoopFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, </a>
 <a class="sourceLine" id="cb17-3" data-line-number="3">  <span class="st">"GM12878_HiCCUPS.chr22_1-30000000.loop.txt"</span>, <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a>
@@ -333,22 +440,41 @@
 <p>We can add a new metadata column to the motif pairs <code>gi</code>, indicating whether the pair is interacting in the experimental data using the function <code><a href="../reference/addInteractionSupport.html">addInteractionSupport()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># add known loops</span></a>
 <a class="sourceLine" id="cb18-2" data-line-number="2">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addInteractionSupport.html">addInteractionSupport</a></span>(gi, knownLoops)</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># parse known loops</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">knownLoopFile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, </a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">  <span class="st">"GM12878_HiCCUPS.chr22_1-30000000.loop.txt"</span>, <span class="dt">package =</span> <span class="st">"sevenC"</span>)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">knownLoops &lt;-<span class="st"> </span><span class="kw"><a href="../reference/parseLoopsRao.html">parseLoopsRao</a></span>(knownLoopFile)</a></code></pre></div>
+<p>We can add a new metadata column to the motif pairs <code>gi</code>, indicating whether the pair is interacting in the experimental data using the function <code><a href="../reference/addInteractionSupport.html">addInteractionSupport()</a></code>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># add known loops</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/addInteractionSupport.html">addInteractionSupport</a></span>(gi, knownLoops)</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <p>The experimental support is added as factor with levels <code>"Loop"</code> and <code>"No loop"</code> as metadata column named <code>loop</code>. The column name can be modified using the <code>colname</code> argument.</p>
 </div>
 <div id="train-logistic-regression-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#train-logistic-regression-model" class="anchor"></a>Train logistic regression model</h2>
 <p>We can use the R function <code>glm()</code> to fit a logistic regression model in which the <code>loop</code> column is the dependent variable and the ChIP-seq correlation, distance, and strand orientation are the predictors.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw">glm</span>(</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="dt">formula =</span> loop <span class="op">~</span><span class="st"> </span>cor_chip <span class="op">+</span><span class="st"> </span>dist <span class="op">+</span><span class="st"> </span>strandOrientation, </a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">  <span class="dt">data =</span> <span class="kw">mcols</span>(gi), </a>
 <a class="sourceLine" id="cb19-4" data-line-number="4">  <span class="dt">family =</span> <span class="kw">binomial</span>()</a>
 <a class="sourceLine" id="cb19-5" data-line-number="5">  )</a></code></pre></div>
+=======
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw">glm</span>(</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">  <span class="dt">formula =</span> loop <span class="op">~</span><span class="st"> </span>cor_chip <span class="op">+</span><span class="st"> </span>dist <span class="op">+</span><span class="st"> </span>strandOrientation, </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">  <span class="dt">data =</span> <span class="kw">mcols</span>(gi), </a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">  <span class="dt">family =</span> <span class="kw">binomial</span>()</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">  )</a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 <div id="predict-loops-with-a-custom-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predict-loops-with-a-custom-model" class="anchor"></a>Predict loops with a custom model</h2>
 <p>Now, we can use this model to add predicted looping probabilities.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># add predict loops</span></a>
 <a class="sourceLine" id="cb20-2" data-line-number="2">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">  gi,</a>
@@ -358,6 +484,17 @@
 <a class="sourceLine" id="cb20-7" data-line-number="7">)</a></code></pre></div>
 <p>Here, we have to use the same formula as argument as in the model fitting step above. The <code>betas</code> argument takes the coefficients of the logistic regression model. Finally, the argument <code>cutoff = NULL</code> ensures that no filtering is done and all input candidates are reported. The prediction score is added as a new metadata column to <code>gi</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">gi </a></code></pre></div>
+=======
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># add predict loops</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">gi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/predLoops.html">predLoops</a></span>(</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">  gi,</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">  <span class="dt">formula =</span> loop <span class="op">~</span><span class="st"> </span>cor_chip <span class="op">+</span><span class="st"> </span>dist <span class="op">+</span><span class="st"> </span>strandOrientation,</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">  <span class="dt">betas =</span> <span class="kw">coef</span>(fit),</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">  <span class="dt">cutoff =</span> <span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">)</a></code></pre></div>
+<p>Here, we have to use the same formula as argument as in the model fitting step above. The <code>betas</code> argument takes the coefficients of the logistic regression model. Finally, the argument <code>cutoff = NULL</code> ensures that no filtering is done and all input candidates are reported. The prediction score is added as a new metadata column to <code>gi</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">gi </a></code></pre></div>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <pre><code>## StrictGInteractions object with 26076 interactions and 8 metadata columns:
 ##           seqnames1           ranges1     seqnames2           ranges2 |
 ##               &lt;Rle&gt;         &lt;IRanges&gt;         &lt;Rle&gt;         &lt;IRanges&gt; |
@@ -402,14 +539,21 @@
 ##   regions: 917 ranges and 2 metadata columns
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>As a very simple validation, we can now compare the prediction score for looping and non-looping motif pairs using a boxplot.</p>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">boxplot</span>(gi<span class="op">$</span>pred <span class="op">~</span><span class="st"> </span>gi<span class="op">$</span>loop, </a>
 <a class="sourceLine" id="cb23-2" data-line-number="2">        <span class="dt">ylab =</span> <span class="st">"Predicted interaction probability"</span>)</a></code></pre></div>
 <p><img src="sevenC_files/figure-html/unnamed-chunk-22-1.png" width="288"></p>
+=======
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">boxplot</span>(gi<span class="op">$</span>pred <span class="op">~</span><span class="st"> </span>gi<span class="op">$</span>loop, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">        <span class="dt">ylab =</span> <span class="st">"Predicted interaction probability"</span>)</a></code></pre></div>
+<p><img src="sevenC_files/figure-html/unnamed-chunk-21-1.png" width="288"></p>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 <p>The plot shows higher prediction scores for truly looping motif pairs. However, this is an insufficient evaluation of prediction performance, since the prediction score is evaluated on the same data as it was trained. A more detailed evaluation of prediction performance using cross-validation and different cell types is described in the 7C paper <span class="citation">(Ibn-Salem and Andrade-Navarro 2018)</span>.</p>
 </div>
 <div id="session-info" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h2>
+<<<<<<< HEAD
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
@@ -418,6 +562,16 @@
 ## Matrix products: default
 ## BLAS: /home/ibnsalem/bin/R-3.5.1/lib64/R/lib/libRblas.so
 ## LAPACK: /home/ibnsalem/bin/R-3.5.1/lib64/R/lib/libRlapack.so
+=======
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<pre><code>## R Under development (unstable) (2018-04-09 r74569)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 16.04.4 LTS
+## 
+## Matrix products: default
+## BLAS: /home/ibnsalem/bin/R-devel/lib64/R/lib/libRblas.so
+## LAPACK: /home/ibnsalem/bin/R-devel/lib64/R/lib/libRlapack.so
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 ## 
 ## locale:
 ##  [1] LC_CTYPE=de_DE.UTF-8       LC_NUMERIC=C              
@@ -432,6 +586,7 @@
 ## [8] methods   base     
 ## 
 ## other attached packages:
+<<<<<<< HEAD
 ##  [1] GenomicInteractions_1.14.0  sevenC_1.0.0               
 ##  [3] InteractionSet_1.8.0        SummarizedExperiment_1.10.1
 ##  [5] DelayedArray_0.6.5          BiocParallel_1.14.2        
@@ -491,6 +646,66 @@
 ## [95] data.table_1.11.4        blob_1.1.1              
 ## [97] digest_0.6.16            munsell_0.5.0           
 ## [99] Gviz_1.24.0</code></pre>
+=======
+##  [1] GenomicInteractions_1.13.3  sevenC_0.99.3              
+##  [3] InteractionSet_1.7.7        SummarizedExperiment_1.9.16
+##  [5] DelayedArray_0.5.30         BiocParallel_1.13.3        
+##  [7] matrixStats_0.53.1          Biobase_2.39.2             
+##  [9] GenomicRanges_1.31.23       GenomeInfoDb_1.15.5        
+## [11] IRanges_2.13.28             S4Vectors_0.17.41          
+## [13] BiocGenerics_0.25.3         BiocStyle_2.7.8            
+## 
+## loaded via a namespace (and not attached):
+##  [1] colorspace_1.3-2          rprojroot_1.3-2          
+##  [3] biovizBase_1.27.2         htmlTable_1.11.2         
+##  [5] XVector_0.19.9            base64enc_0.1-3          
+##  [7] fs_1.2.2                  dichromat_2.0-0          
+##  [9] rstudioapi_0.7            roxygen2_6.0.1           
+## [11] bit64_0.9-7               AnnotationDbi_1.41.4     
+## [13] xml2_1.2.0                splines_3.6.0            
+## [15] knitr_1.20                Formula_1.2-2            
+## [17] jsonlite_1.5              Rsamtools_1.31.3         
+## [19] cluster_2.0.7-1           readr_1.1.1              
+## [21] compiler_3.6.0            httr_1.3.1               
+## [23] backports_1.1.2           assertthat_0.2.0         
+## [25] Matrix_1.2-14             lazyeval_0.2.1           
+## [27] acepack_1.4.1             htmltools_0.3.6          
+## [29] prettyunits_1.0.2         tools_3.6.0              
+## [31] bindrcpp_0.2.2            igraph_1.2.1             
+## [33] gtable_0.2.0              glue_1.2.0               
+## [35] GenomeInfoDbData_1.1.0    dplyr_0.7.4              
+## [37] Rcpp_0.12.16              pkgdown_0.1.0.9000       
+## [39] Biostrings_2.47.12        rtracklayer_1.39.10      
+## [41] xfun_0.1                  stringr_1.3.0            
+## [43] ensembldb_2.3.15          XML_3.98-1.10            
+## [45] zlibbioc_1.25.0           MASS_7.3-49              
+## [47] scales_0.5.0              BSgenome_1.47.5          
+## [49] VariantAnnotation_1.25.13 hms_0.4.2                
+## [51] ProtGenerics_1.11.0       AnnotationFilter_1.3.2   
+## [53] RColorBrewer_1.1-2        yaml_2.1.18              
+## [55] curl_3.2                  memoise_1.1.0            
+## [57] gridExtra_2.3             ggplot2_2.2.1            
+## [59] biomaRt_2.35.13           rpart_4.1-13             
+## [61] latticeExtra_0.6-28       stringi_1.1.7            
+## [63] RSQLite_2.1.0             desc_1.1.1               
+## [65] checkmate_1.8.5           GenomicFeatures_1.31.10  
+## [67] boot_1.3-20               rlang_0.2.0              
+## [69] pkgconfig_2.0.1           commonmark_1.4           
+## [71] bitops_1.0-6              evaluate_0.10.1          
+## [73] lattice_0.20-35           bindr_0.1.1              
+## [75] GenomicAlignments_1.15.13 htmlwidgets_1.0          
+## [77] bit_1.1-12                plyr_1.8.4               
+## [79] magrittr_1.5              bookdown_0.7             
+## [81] R6_2.2.2                  Hmisc_4.1-1              
+## [83] DBI_0.8                   pillar_1.2.1             
+## [85] foreign_0.8-70            survival_2.41-3          
+## [87] RCurl_1.95-4.10           nnet_7.3-12              
+## [89] tibble_1.4.2              crayon_1.3.4             
+## [91] rmarkdown_1.9             progress_1.1.2           
+## [93] grid_3.6.0                data.table_1.10.4-3      
+## [95] blob_1.1.1                digest_0.6.15            
+## [97] munsell_0.4.3             Gviz_1.23.3</code></pre>
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
@@ -522,7 +737,10 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#background-and-introduction">Background and introduction</a></li>
+<<<<<<< HEAD
       <li><a href="#installation">Installation</a></li>
+=======
+>>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
       <li>
 <a href="#predict-chromatin-looping-interactions">Predict chromatin looping interactions</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#basic-usage-example">Basic usage example</a></li>
