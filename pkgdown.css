@@ -218,7 +218,6 @@ a.sourceLine:hover {
   visibility: visible;
 }
 
-<<<<<<< HEAD
 /* mark.js ----------------------------*/
 
 mark {
@@ -230,11 +229,4 @@ mark {
 /* vertical spacing after htmlwidgets */
 .html-widget {
   margin-bottom: 10px;
-=======
-/* Docsearch -------------------------------------------------------------- */
-
-div.ds-dataset-1 {
-    overflow: auto;
-    max-height: 80vh;
->>>>>>> cc85f59ba546b611db1046bd67d12e222efc59eb
 }
