@@ -13,7 +13,7 @@ addInteractionSupport(gi, subject, colname = "loop", ...)
 
 \item{colname}{name of the new annotation column in \code{gi}.}
 
-\item{...}{additional arguments passed to \code{\link[IRanges]{overlapsAny}}.}
+\item{...}{additional arguments passed to \code{\link[IRanges:findOverlaps-methods]{overlapsAny}}.}
 }
 \value{
 \code{\link{InteractionSet}} \code{gi} as input but with additional

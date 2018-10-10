@@ -8,7 +8,7 @@ predLoops(gi, formula = NULL, betas = NULL, colname = "pred",
   cutoff = get("cutoffBest10"))
 }
 \arguments{
-\item{gi}{A \code{\link[InteractionSet]{GInteractions}} object with coverage
+\item{gi}{A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object with coverage
 correlation and genomic features in metadata columns. See
 \link{prepareCisPairs} and \link{addCor} to build it.}
 
@@ -32,11 +32,11 @@ optimal cutoff based on F1-score on 10 best performing transcription factor
 ChIP-seq data sets. See \code{?cutoffBest10} for more details.}
 }
 \value{
-A \code{\link[InteractionSet]{GInteractions}} as \code{gi} with an
+A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} as \code{gi} with an
  additional metadata column holding the predicted looping probability.
 }
 \description{
-This function takes a \code{\link[InteractionSet]{GInteractions}} object with
+This function takes a \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object with
 candidate looping interactions. It should be annotated with features in
 metadata columns. A logistic regression model is applied to predict looping
 interaction probabilities.

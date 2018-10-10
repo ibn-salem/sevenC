@@ -10,7 +10,7 @@ parseLoopsTang(inFile, ...)
 \item{inFile}{input file with loops}
 
 \item{...}{additional arguments, that will be passed to
-\code{\link[GenomicRanges]{GRanges}} functions.}
+\code{\link[GenomicRanges:GRanges-class]{GRanges}} functions.}
 }
 \value{
 An \code{\link{GInteractions}} with loops from input file.

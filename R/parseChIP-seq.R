@@ -63,18 +63,18 @@ slideMean <- function(x, k){
 }
 
 
-#'Add coverage to regions in \code{\link[GenomicRanges]{GRanges}} object.
+#'Add coverage to regions in \code{\link[GenomicRanges:GRanges-class]{GRanges}} object.
 #'
-#'This function adds a \code{\link[IRanges]{NumericList}}  of coverage (or any
+#'This function adds a \code{\link[IRanges:AtomicList]{NumericList}}  of coverage (or any
 #'other signal in the input bigWig file) to each range in a
-#'\code{\link[GenomicRanges]{GRanges}} object. The coverage is reported for a
+#'\code{\link[GenomicRanges:GRanges-class]{GRanges}} object. The coverage is reported for a
 #'fixed-sized window around the region center. For regions with negative strand,
 #'the coverage vector is reversed. The coverage signal is added as new metadata
-#'column holding a \code{\link[IRanges]{NumericList}} object. Note, this
+#'column holding a \code{\link[IRanges:AtomicList]{NumericList}} object. Note, this
 #'function does not work on windows because reading of bigWig files is currently
 #'not supported on windows.
 #'
-#'@param gr \code{\link[GenomicRanges]{GRanges}} object with genomic regions. It
+#'@param gr \code{\link[GenomicRanges:GRanges-class]{GRanges}} object with genomic regions. It
 #'  should contain a valid seqinfo object with defined seqlengths.
 #'@param bwFile File path or connection to BigWig or wig file with coverage to
 #'  parse from.
@@ -85,9 +85,9 @@ slideMean <- function(x, k){
 #'@param colname Character as name of the new column that is created in
 #'  \code{gr}.
 #'
-#'@return \code{\link[GenomicRanges]{GRanges}} as input but with an additional
+#'@return \code{\link[GenomicRanges:GRanges-class]{GRanges}} as input but with an additional
 #'  meta column containing the coverage values for each region as
-#'  \code{\link[IRanges]{NumericList}}.
+#'  \code{\link[IRanges:AtomicList]{NumericList}}.
 #'
 #'@examples
 #'if (.Platform$OS.type != "windows") {

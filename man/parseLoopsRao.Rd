@@ -3,7 +3,7 @@
 \name{parseLoopsRao}
 \alias{parseLoopsRao}
 \title{Parse chromatin loops from Rao et al. 2014 as strict
-\code{\link[InteractionSet]{GInteractions}}.}
+\code{\link[InteractionSet:InteractionSet-class]{GInteractions}}.}
 \usage{
 parseLoopsRao(inFile, ...)
 }
@@ -11,14 +11,14 @@ parseLoopsRao(inFile, ...)
 \item{inFile}{input file with loops}
 
 \item{...}{additional arguments, that will be passed to
-\code{\link[GenomicRanges]{GRanges}} functions.}
+\code{\link[GenomicRanges:GRanges-class]{GRanges}} functions.}
 }
 \value{
 \code{\link{GInteractions}} with loops from input file.
 }
 \description{
 Parse chromatin loops from Rao et al. 2014 as strict
-\code{\link[InteractionSet]{GInteractions}}.
+\code{\link[InteractionSet:InteractionSet-class]{GInteractions}}.
 }
 \examples{
 

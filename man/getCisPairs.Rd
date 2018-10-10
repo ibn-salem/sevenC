@@ -3,12 +3,12 @@
 \name{getCisPairs}
 \alias{getCisPairs}
 \title{Build a \code{\link{GInteractions}} object with all pairs of input
-\code{\link[GenomicRanges]{GRanges}} within a given distance.}
+\code{\link[GenomicRanges:GRanges-class]{GRanges}} within a given distance.}
 \usage{
 getCisPairs(inGR, maxDist = 1e+06)
 }
 \arguments{
-\item{inGR}{\code{\link[GenomicRanges]{GRanges}} object of genomic regions.
+\item{inGR}{\code{\link[GenomicRanges:GRanges-class]{GRanges}} object of genomic regions.
 The ranges should be sorted according to chr, strand, and start position.
 Use \code{\link[BiocGenerics]{sort}} to sort it.}
 
@@ -16,7 +16,7 @@ Use \code{\link[BiocGenerics]{sort}} to sort it.}
 single  numeric value.}
 }
 \value{
-A \code{\link[InteractionSet]{GInteractions}} object with all pairs
+A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object with all pairs
   within the given distance.
 }
 \description{

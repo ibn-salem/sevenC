@@ -7,7 +7,7 @@
 addCor(gi, bwFile, name = "chip", window = 1000, binSize = 1)
 }
 \arguments{
-\item{gi}{\code{\link[InteractionSet]{GInteractions}} object.}
+\item{gi}{\code{\link[InteractionSet:GInteractions-class]{GInteractions}} object.}
 
 \item{bwFile}{File path or connection to BigWig file with ChIP-seq signals.}
 
@@ -20,7 +20,7 @@ addCor(gi, bwFile, name = "chip", window = 1000, binSize = 1)
 combined.}
 }
 \value{
-An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
+An \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object like \code{gi}
  with a new metadata column \code{colname} holding Pearson correlation
  coefficient of ChIP-seq signals for each anchor pair.
 }

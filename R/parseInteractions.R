@@ -1,10 +1,10 @@
 
 #' Parse chromatin loops from Rao et al. 2014 as strict
-#' \code{\link[InteractionSet]{GInteractions}}.
+#' \code{\link[InteractionSet:InteractionSet-class]{GInteractions}}.
 #'
 #' @param inFile input file with loops
 #' @param ... additional arguments, that will be passed to
-#'   \code{\link[GenomicRanges]{GRanges}} functions.
+#'   \code{\link[GenomicRanges:GRanges-class]{GRanges}} functions.
 #' @return \code{\link{GInteractions}} with loops from input file.
 #'
 #' @examples
@@ -81,7 +81,7 @@ parseLoopsRao <- function(inFile, ...){
 #'
 #' @param inFile input file with loops
 #' @param ... additional arguments, that will be passed to
-#'  \code{\link[GenomicRanges]{GRanges}} functions.
+#'  \code{\link[GenomicRanges:GRanges-class]{GRanges}} functions.
 #' @return An \code{\link{GInteractions}} with loops from input file.
 #'
 #' @examples

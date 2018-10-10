@@ -8,7 +8,7 @@ addCovCor(gi, datacol = "chip", colname = "cor_chip", maxDist = NULL,
   use = "everything", method = "pearson")
 }
 \arguments{
-\item{gi}{A sorted \code{\link[InteractionSet]{GInteractions}} object.}
+\item{gi}{A sorted \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object.}
 
 \item{datacol}{a string matching an annotation column in \code{regions(gi)}.
 This column is assumed to hold the same number of values for each
@@ -31,7 +31,7 @@ covariance) is to be computed. One of "pearson" (default), "kendall", or
 details.}
 }
 \value{
-A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
+A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} similar to \code{gi}
  just with an additional column added.
 }
 \description{

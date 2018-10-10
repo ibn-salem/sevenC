@@ -1,14 +1,14 @@
 #' Build a \code{\link{GInteractions}} object with all pairs of input
-#' \code{\link[GenomicRanges]{GRanges}} within a given distance.
+#' \code{\link[GenomicRanges:GRanges-class]{GRanges}} within a given distance.
 #'
 #' Distance is calculated from the center of input regions.
 #'
-#' @param inGR \code{\link[GenomicRanges]{GRanges}} object of genomic regions.
+#' @param inGR \code{\link[GenomicRanges:GRanges-class]{GRanges}} object of genomic regions.
 #'   The ranges should be sorted according to chr, strand, and start position.
 #'   Use \code{\link[BiocGenerics]{sort}} to sort it.
 #' @param maxDist maximal distance in base-pairs between pairs of ranges as
 #'   single  numeric value.
-#' @return A \code{\link[InteractionSet]{GInteractions}} object with all pairs
+#' @return A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object with all pairs
 #'   within the given distance.
 #' @examples
 #'# build example GRanges as input
@@ -88,7 +88,7 @@ noZeroVar <- function(dat) {
 #'distance. Note, this function does not work on windows because reading of
 #'bigWig files is currently not supported on windows.
 #'
-#'@param gi A sorted \code{\link[InteractionSet]{GInteractions}} object.
+#'@param gi A sorted \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object.
 #'@param datacol a string matching an annotation column in \code{regions(gi)}.
 #'  This column is assumed to hold the same number of values for each
 #'  interaction as a \code{NumericList}.
@@ -105,7 +105,7 @@ noZeroVar <- function(dat) {
 #'  "spearman": can be abbreviated. See \code{\link[stats]{cor}} for more
 #'  details.
 #'
-#'@return A \code{\link[InteractionSet]{GInteractions}} similar to \code{gi}
+#'@return A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} similar to \code{gi}
 #'  just with an additional column added.
 #' @examples
 #'if (.Platform$OS.type != "windows") {
@@ -266,7 +266,7 @@ addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
 #' @param gi \code{\link{GInteractions}} object
 #' @param subject another \code{\link{GInteractions}} object
 #' @param colname name of the new annotation column in \code{gi}.
-#' @param ... additional arguments passed to \code{\link[IRanges]{overlapsAny}}.
+#' @param ... additional arguments passed to \code{\link[IRanges:findOverlaps-methods]{overlapsAny}}.
 #' @return \code{\link{InteractionSet}} \code{gi} as input but with additional
 #'   annotation column \code{colname} indicating whether each interaction
 #'   is supported by \code{subject} or not.
@@ -453,16 +453,16 @@ addMotifScore <- function(gi, scoreColname = "score"){
   return(gi)
 }
 
-#' Prepares motif pairs as \code{\link[InteractionSet]{GInteractions}} and add
+#' Prepares motif pairs as \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} and add
 #' genomic features.
 #'
-#' @param motifs \code{\link[GenomicRanges]{GRanges}} object with motif
+#' @param motifs \code{\link[GenomicRanges:GRanges-class]{GRanges}} object with motif
 #'   locations.
 #' @inheritParams getCisPairs
 #' @inheritParams addStrandCombination
 #' @inheritParams addMotifScore
 #'
-#' @return An \code{\link[InteractionSet]{GInteractions}} object with motif
+#' @return An \code{\link[InteractionSet:GInteractions-class]{GInteractions}} object with motif
 #'   pairs and annotations of distance, strand orientation, and motif scores.
 #'
 #' @examples
@@ -517,13 +517,13 @@ prepareCisPairs <- function(motifs, maxDist = 1e6, scoreColname = "score"){
 #'on windows because reading of bigWig files is currently not supported on
 #'windows.
 #'
-#'@param gi \code{\link[InteractionSet]{GInteractions}} object.
+#'@param gi \code{\link[InteractionSet:GInteractions-class]{GInteractions}} object.
 #'@param bwFile File path or connection to BigWig file with ChIP-seq signals.
 #'@param name Character indicating the sample name.
 #'@inheritParams addCovToGR
 #'@inheritParams addCovCor
 #'
-#'@return An \code{\link[InteractionSet]{GInteractions}} object like \code{gi}
+#'@return An \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object like \code{gi}
 #'  with a new metadata column \code{colname} holding Pearson correlation
 #'  coefficient of ChIP-seq signals for each anchor pair.
 #'

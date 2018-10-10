@@ -2,13 +2,13 @@
 % Please edit documentation in R/interaction.R
 \name{prepareCisPairs}
 \alias{prepareCisPairs}
-\title{Prepares motif pairs as \code{\link[InteractionSet]{GInteractions}} and add
+\title{Prepares motif pairs as \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} and add
 genomic features.}
 \usage{
 prepareCisPairs(motifs, maxDist = 1e+06, scoreColname = "score")
 }
 \arguments{
-\item{motifs}{\code{\link[GenomicRanges]{GRanges}} object with motif
+\item{motifs}{\code{\link[GenomicRanges:GRanges-class]{GRanges}} object with motif
 locations.}
 
 \item{maxDist}{maximal distance in base-pairs between pairs of ranges as
@@ -18,11 +18,11 @@ single  numeric value.}
 score.}
 }
 \value{
-An \code{\link[InteractionSet]{GInteractions}} object with motif
+An \code{\link[InteractionSet:GInteractions-class]{GInteractions}} object with motif
   pairs and annotations of distance, strand orientation, and motif scores.
 }
 \description{
-Prepares motif pairs as \code{\link[InteractionSet]{GInteractions}} and add
+Prepares motif pairs as \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} and add
 genomic features.
 }
 \examples{
