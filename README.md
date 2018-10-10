@@ -1,7 +1,11 @@
 # sevenC
 
 [![Travis build status](https://travis-ci.org/ibn-salem/sevenC.svg?branch=master)](https://travis-ci.org/ibn-salem/sevenC)
- [![Coverage status](https://codecov.io/gh/ibn-salem/sevenC/branch/master/graph/badge.svg)](https://codecov.io/github/ibn-salem/sevenC?branch=master)
+[![Coverage status](https://codecov.io/gh/ibn-salem/sevenC/branch/master/graph/badge.svg)](https://codecov.io/github/ibn-salem/sevenC?branch=master)
+[![](https://img.shields.io/badge/release%20version-1.0.0-green.svg)](https://bioconductor.org/packages/sevenC)
+[![](https://img.shields.io/badge/devel%20version-1.1.2-blue.svg)](https://github.com/ibn-salem/sevenC)
+[![](https://img.shields.io/badge/download-390/total-blue.svg)](https://bioconductor.org/packages/stats/bioc/sevenC)
+[![](https://img.shields.io/badge/doi-10.18129/B9.bioc.sevenC-yellow.svg)](https://doi.org/10.18129/B9.bioc.sevenC)
 
 ## Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs
 
