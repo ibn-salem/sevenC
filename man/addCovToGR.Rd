@@ -25,15 +25,15 @@ combined.}
 \value{
 \code{\link[GenomicRanges:GRanges-class]{GRanges}} as input but with an additional
  meta column containing the coverage values for each region as
- \code{\link[IRanges:AtomicList]{NumericList}}.
+ \code{\link[IRanges:AtomicList-class]{NumericList}}.
 }
 \description{
-This function adds a \code{\link[IRanges:AtomicList]{NumericList}}  of coverage (or any
+This function adds a \code{\link[IRanges:AtomicList-class]{NumericList}}  of coverage (or any
 other signal in the input bigWig file) to each range in a
 \code{\link[GenomicRanges:GRanges-class]{GRanges}} object. The coverage is reported for a
 fixed-sized window around the region center. For regions with negative strand,
 the coverage vector is reversed. The coverage signal is added as new metadata
-column holding a \code{\link[IRanges:AtomicList]{NumericList}} object. Note, this
+column holding a \code{\link[IRanges:AtomicList-class]{NumericList}} object. Note, this
 function does not work on windows because reading of bigWig files is currently
 not supported on windows.
 }

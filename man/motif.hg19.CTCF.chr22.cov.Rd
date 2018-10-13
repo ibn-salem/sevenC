@@ -12,7 +12,7 @@ motif.hg19.CTCF.chr22.cov
 This dataset is the same as \code{\link{motif.hg19.CTCF.chr22}} but with one
 additional metadata colum, named "chip", holding ChIP-seq signals for all
 motifs in a windows of 1000 bp around the motif center as
-\code{\link[IRanges:AtomicList]{NumericList}}. The data is from a ChIP-seq experiment
+\code{\link[IRanges:AtomicList-class]{NumericList}}. The data is from a ChIP-seq experiment
 for STAT1 in human GM12878 cells. The full bigWig file can be downloaded from
 ENCODE (Dunham et al. 2012)
 \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeSydhTfbs/wgEncodeSydhTfbsGm12878Stat1StdSig.bigWig}.
