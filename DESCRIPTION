@@ -2,7 +2,7 @@ Package: sevenC
 Type: Package
 Title: Computational Chromosome Conformation Capture by Correlation of ChIP-seq 
     at CTCF motifs
-Version: 1.14.0
+Version: 1.15.0
 Authors@R: person("Jonas", "Ibn-Salem", email = "jonas.ibn-salem@tron-mainz.de", 
     role = c("aut", "cre"))
 Description: Chromatin looping is an essential feature of eukaryotic genomes and
