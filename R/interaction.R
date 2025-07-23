@@ -133,7 +133,7 @@ noZeroVar <- function(dat) {
 #'@import data.table
 #'@import InteractionSet
 #'@importFrom BiocGenerics start
-#'@importFrom GenomeInfoDb seqlengths seqinfo keepSeqlevels seqnames
+#'@importFrom Seqinfo seqlengths seqinfo seqnames
 #'@importFrom GenomicRanges GRanges findOverlaps slidingWindows
 #'@importFrom S4Vectors mcols mcols<- queryHits subjectHits
 #'@importFrom methods is

@@ -114,8 +114,7 @@ slideMean <- function(x, k){
 #'}
 #'@import InteractionSet
 #'@importFrom BiocGenerics start start<- strand
-#'@importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<-
-#'  seqinfo<-
+#'@importFrom Seqinfo seqlevelsInUse seqnames seqlevels seqlevels<- seqinfo<-
 #'@importFrom GenomicRanges resize coverage
 #'@importFrom IRanges trim NumericList
 #'@importFrom methods is
@@ -167,7 +166,7 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
 
   # define query region and trim seqinfo to avoid
   # warning in rtracklayer::import.bw
-  selectWin <- keepSeqlevels(ancWin, unique(seqnames(ancWin)))
+  seqlevels(selectWin) <- seqlevelsInUse(selectWin)
   selection <- rtracklayer::BigWigSelection(selectWin)
 
   # parse coverage from selected regions as GRanges object
