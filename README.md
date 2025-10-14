@@ -31,11 +31,12 @@ transcription factor binding sites (e.g., ChIP-seq peaks) to regulated
 target genes.
 
 A more detailed explanation of the sevenC method together with
-prediction performance analysis is available in the associated preprint:
+prediction performance analysis is available in the associated
+publication:
 
-Ibn-Salem, J. & Andrade-Navarro, M. A. Computational Chromosome
-Conformation Capture by Correlation of ChIP-seq at CTCF motifs. bioRxiv
-257584 (2018). <https://doi.org/10.1101/257584>
+Ibn-Salem, J. & Andrade-Navarro, M.A.  **7C: Computational Chromosome
+Conformation Capture by Correlation of ChIP-seq at CTCF motifs**. BMC
+Genomics 20, 777 (2019). <https://doi.org/10.1186/s12864-019-6088-0>
 
 ## Intallation
 
