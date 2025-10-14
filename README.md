@@ -3,11 +3,17 @@
 
 # sevenC
 
-[![Bioconductor](https://www.bioconductor.org/shields/build/release/bioc/sevenC.svg)](https://www.bioconductor.org/packages/release/bioc/html/sevenC.html)
+[![Bioc release
+status](http://www.bioconductor.org/shields/build/release/bioc/sevenC.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/sevenC)
+[![Bioc devel
+status](http://www.bioconductor.org/shields/build/devel/bioc/sevenC.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/sevenC)
+[![Bioc
+history](https://bioconductor.org/shields/years-in-bioc/sevenC.svg)](https://bioconductor.org/packages/release/bioc/html/sevenC.html#since)
+[![Bioc last
+commit](https://bioconductor.org/shields/lastcommit/devel/bioc/sevenC.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/sevenC/)
+
 [![R-CMD-check](https://github.com/ibn-salem/sevenC/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ibn-salem/sevenC/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/ibn-salem/sevenC/branch/main/graph/badge.svg)](https://codecov.io/gh/ibn-salem/sevenC)
-![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-success)
 
 ## Computational Chromosome Conformation Capture by Correlation of ChIP-seq at CTCF motifs
 
