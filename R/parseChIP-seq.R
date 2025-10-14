@@ -152,11 +152,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
     ancWin <- resize(gr, width = window, fix = "center")
   )
 
-  # Because quering coverage result in error for ranges outisde chromosome we
+  # Because querying coverage result in error for ranges outside chromosome we
   # need to get intervals defined outside of chromosomes
   outDF <- getOutOfBound(ancWin)
 
-  # trim ranges to fint within chromosomes
+  # trim ranges to fit within chromosomes
   ancWin <- trim(ancWin)
 
   # trim start in case there is no seqinof object
@@ -166,8 +166,8 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
 
   # define query region and trim seqinfo to avoid
   # warning in rtracklayer::import.bw
-  seqlevels(selectWin) <- seqlevelsInUse(selectWin)
-  selection <- rtracklayer::BigWigSelection(selectWin)
+  seqlevels(ancWin) <- seqlevelsInUse(ancWin)
+  selection <- rtracklayer::BigWigSelection(ancWin)
 
   # parse coverage from selected regions as GRanges object
   covGR <- rtracklayer::import(
