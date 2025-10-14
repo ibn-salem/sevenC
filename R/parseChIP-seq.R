@@ -7,6 +7,7 @@
 #'   \code{gr}, the second the size of the overlap to the left of the chromosome
 #'   and the third the size of the overlap to the right of the chromosome.
 #' @importFrom BiocGenerics end
+#' @keywords internal
 getOutOfBound <- function(gr){
 
   # check if extended regions are out of chromosome space
@@ -48,6 +49,7 @@ getOutOfBound <- function(gr){
 #' @param x numeric vector
 #' @param k interval size
 #' @return numeric vector of length \code{length(x) / k}.
+#' @keywords internal
 slideMean <- function(x, k){
 
   n <- length(x)

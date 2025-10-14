@@ -76,6 +76,7 @@ getCisPairs <- function(inGR, maxDist = 1e6){
 #'
 #' @param dat data.frame or matrix
 #' @return column indices of columns with non-zero variance
+#' @keywords internal
 noZeroVar <- function(dat) {
   out <- apply(dat, 2, function(x) length(unique(x)))
   which(out > 1)

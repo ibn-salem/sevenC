@@ -18,6 +18,10 @@ reference:
   - title: Prediction
     contents:
     - predLoops
+  - title: Other
+    contents:
+    - predLogit
+    - sevenC
   - title: Data sets
     contents:
     - motif.hg19.CTCF
