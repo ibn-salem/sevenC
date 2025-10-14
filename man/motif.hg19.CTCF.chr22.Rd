@@ -4,7 +4,9 @@
 \name{motif.hg19.CTCF.chr22}
 \alias{motif.hg19.CTCF.chr22}
 \title{CTCF motif locations on chromosome 22 in human genome hg19.}
-\format{An object of class \code{GRanges} of length 917.}
+\format{
+An object of class \code{GRanges} of length 917.
+}
 \usage{
 motif.hg19.CTCF.chr22
 }

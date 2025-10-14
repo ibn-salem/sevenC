@@ -4,8 +4,13 @@
 \alias{predLoops}
 \title{Predict looping interactions.}
 \usage{
-predLoops(gi, formula = NULL, betas = NULL, colname = "pred",
-  cutoff = get("cutoffBest10"))
+predLoops(
+  gi,
+  formula = NULL,
+  betas = NULL,
+  colname = "pred",
+  cutoff = get("cutoffBest10")
+)
 }
 \arguments{
 \item{gi}{A \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object with coverage

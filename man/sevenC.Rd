@@ -2,8 +2,8 @@
 % Please edit documentation in R/sevenC.R
 \docType{package}
 \name{sevenC}
-\alias{sevenC}
 \alias{sevenC-package}
+\alias{sevenC}
 \title{Computational chromosome conformation capture by correlation of ChIP-seq at
 CTCF motifs (7C)}
 \description{
@@ -19,4 +19,16 @@ whether they interact or not.
 The resulting chromatin loops might be used to associate enhancers or
 transcription factor binding sites (e.g., ChIP-seq peaks) to regulated
 target genes.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ibn-salem/sevenC}
+  \item Report bugs at \url{https://github.com/ibn-salem/sevenC/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Jonas Ibn-Salem \email{jonas.ibn-salem@tron-mainz.de}
+
 }

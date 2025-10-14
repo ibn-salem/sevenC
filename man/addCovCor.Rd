@@ -4,8 +4,14 @@
 \alias{addCovCor}
 \title{Add correlation of anchor signals to pairs of close genomic regions.}
 \usage{
-addCovCor(gi, datacol = "chip", colname = "cor_chip", maxDist = NULL,
-  use = "everything", method = "pearson")
+addCovCor(
+  gi,
+  datacol = "chip",
+  colname = "cor_chip",
+  maxDist = NULL,
+  use = "everything",
+  method = "pearson"
+)
 }
 \arguments{
 \item{gi}{A sorted \code{\link[InteractionSet:InteractionSet-class]{GInteractions}} object.}
