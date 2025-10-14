@@ -40,7 +40,7 @@ Suggests:
     covr
 Depends: R (>= 3.5),
   InteractionSet (>= 1.2.0)
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 7.3.3
 URL: https://github.com/ibn-salem/sevenC
 biocViews: DNA3DStructure, ChIPchip, Coverage, DataImport, Epigenetics, 
   FunctionalGenomics, Classification, Regression, ChIPSeq, HiC, Annotation

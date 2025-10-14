@@ -4,7 +4,8 @@
 \name{TFspecificModels}
 \alias{TFspecificModels}
 \title{TF specific parameters for logistic regression in sevenC}
-\format{A \code{data.frame} with 868 rows and 7 columns.
+\format{
+A \code{data.frame} with 868 rows and 7 columns.
 
   \describe{
 
@@ -22,7 +23,8 @@
 
   \item{estimate_sd}{Standard deviation of parameter estimate in 10-fold
   cross-validation}
-  }}
+  }
+}
 \usage{
 TFspecificModels
 }
