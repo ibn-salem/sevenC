@@ -18,3 +18,4 @@ numeric vector of length \code{length(x) / k}.
 Source:
 \url{http://stats.stackexchange.com/questions/3051/mean-of-a-sliding-window-in-r}
 }
+\keyword{internal}

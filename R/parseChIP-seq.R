@@ -7,6 +7,7 @@
 #'   \code{gr}, the second the size of the overlap to the left of the chromosome
 #'   and the third the size of the overlap to the right of the chromosome.
 #' @importFrom BiocGenerics end
+#' @keywords internal
 getOutOfBound <- function(gr){
 
   # check if extended regions are out of chromosome space
@@ -48,6 +49,7 @@ getOutOfBound <- function(gr){
 #' @param x numeric vector
 #' @param k interval size
 #' @return numeric vector of length \code{length(x) / k}.
+#' @keywords internal
 slideMean <- function(x, k){
 
   n <- length(x)
@@ -114,8 +116,7 @@ slideMean <- function(x, k){
 #'}
 #'@import InteractionSet
 #'@importFrom BiocGenerics start start<- strand
-#'@importFrom GenomeInfoDb keepSeqlevels seqnames seqlevels seqlevels<-
-#'  seqinfo<-
+#'@importFrom Seqinfo seqlevelsInUse seqnames seqlevels seqlevels<- seqinfo<-
 #'@importFrom GenomicRanges resize coverage
 #'@importFrom IRanges trim NumericList
 #'@importFrom methods is
@@ -153,11 +154,11 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
     ancWin <- resize(gr, width = window, fix = "center")
   )
 
-  # Because quering coverage result in error for ranges outisde chromosome we
+  # Because querying coverage result in error for ranges outside chromosome we
   # need to get intervals defined outside of chromosomes
   outDF <- getOutOfBound(ancWin)
 
-  # trim ranges to fint within chromosomes
+  # trim ranges to fit within chromosomes
   ancWin <- trim(ancWin)
 
   # trim start in case there is no seqinof object
@@ -167,8 +168,8 @@ addCovToGR <- function(gr, bwFile, window = 1000, binSize = 1,
 
   # define query region and trim seqinfo to avoid
   # warning in rtracklayer::import.bw
-  selectWin <- keepSeqlevels(ancWin, unique(seqnames(ancWin)))
-  selection <- rtracklayer::BigWigSelection(selectWin)
+  seqlevels(ancWin) <- seqlevelsInUse(ancWin)
+  selection <- rtracklayer::BigWigSelection(ancWin)
 
   # parse coverage from selected regions as GRanges object
   covGR <- rtracklayer::import(

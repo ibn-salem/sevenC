@@ -15,3 +15,4 @@ column indices of columns with non-zero variance
 \description{
 returns indices of columns with non-zero variance
 }
+\keyword{internal}

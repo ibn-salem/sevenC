@@ -4,7 +4,8 @@
 \name{modelBest10Avg}
 \alias{modelBest10Avg}
 \title{Default parameters for logistic regression model in sevenC.}
-\format{An object of class \code{data.frame} with 7 rows and 2 columns
+\format{
+An object of class \code{data.frame} with 7 rows and 2 columns
   holding the term name and estimate.
 
   \describe{
@@ -31,7 +32,8 @@
   \item{cor}{Pearson correlation coefficient of ChIP-seq signals across +/-
   500 bp around CTCF motif centers.}
 
-  }}
+  }
+}
 \usage{
 modelBest10Avg
 }

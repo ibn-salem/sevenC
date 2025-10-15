@@ -4,7 +4,8 @@
 \name{cutoffByTF}
 \alias{cutoffByTF}
 \title{Optimal cutoff values for logistic regression models.}
-\format{An object of class \code{tbl_df} with 121 rows and 3 columns:
+\format{
+An object of class \code{tbl_df} with 121 rows and 3 columns:
 
   \describe{
 
@@ -16,7 +17,8 @@
   \item{max_f1}{The optimal f1-score associated to the \code{max_cutoff}
   value}
 
-  }}
+  }
+}
 \usage{
 cutoffByTF
 }

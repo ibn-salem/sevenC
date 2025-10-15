@@ -18,3 +18,4 @@ A \code{data.frame} with rows for each range in \code{gr} that
 \description{
 Get out of chromosomal bound ranges.
 }
+\keyword{internal}

@@ -14,6 +14,5 @@
 #' transcription factor binding sites (e.g., ChIP-seq peaks) to regulated
 #' target genes.
 #'
-#' @docType package
 #' @name sevenC
-NULL
+"_PACKAGE"

@@ -18,3 +18,5 @@ pkgdown-output
 
 # example outputof vignettes
 vignettes/loop_interactions.bedpe
+/doc/
+/Meta/

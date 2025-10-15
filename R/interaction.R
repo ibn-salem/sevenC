@@ -76,6 +76,7 @@ getCisPairs <- function(inGR, maxDist = 1e6){
 #'
 #' @param dat data.frame or matrix
 #' @return column indices of columns with non-zero variance
+#' @keywords internal
 noZeroVar <- function(dat) {
   out <- apply(dat, 2, function(x) length(unique(x)))
   which(out > 1)
@@ -133,7 +134,7 @@ noZeroVar <- function(dat) {
 #'@import data.table
 #'@import InteractionSet
 #'@importFrom BiocGenerics start
-#'@importFrom GenomeInfoDb seqlengths seqinfo keepSeqlevels seqnames
+#'@importFrom Seqinfo seqlengths seqinfo seqnames
 #'@importFrom GenomicRanges GRanges findOverlaps slidingWindows
 #'@importFrom S4Vectors mcols mcols<- queryHits subjectHits
 #'@importFrom methods is
@@ -149,7 +150,7 @@ addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
   # (2) Run pairwise correlation for all ranges in each bin
   # (3) Combine correlations to data.frame with proper id1 and id2 in first
   #     columns
-  # (4) Query fubak data.frame with input pairs
+  # (4) Query final data.frame with input pairs
 
   # check input
   if ( any(is.na(seqlengths(gi))) ) {
@@ -187,7 +188,7 @@ addCovCor <- function(gi, datacol = "chip", colname = "cor_chip",
   hits <- findOverlaps(binGR, regions(gi))
 
   #-----------------------------------------------------------------------------
-  # (2) compute pairwise correlatin for all ranges in each bin
+  # (2) compute pairwise correlation for all ranges in each bin
   #-----------------------------------------------------------------------------
 
   covList <- mcols(regions(gi))[, datacol]

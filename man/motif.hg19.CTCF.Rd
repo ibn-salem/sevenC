@@ -4,13 +4,15 @@
 \name{motif.hg19.CTCF}
 \alias{motif.hg19.CTCF}
 \title{CTCF motif locations in human genome hg19.}
-\format{\code{\link[GenomicRanges:GRanges-class]{GRanges}} object with 38774 ranges on
+\format{
+\code{\link[GenomicRanges:GRanges-class]{GRanges}} object with 38774 ranges on
 positive and negative strand with 1 meta column:
 
   \describe{ \item{score}{
   The significance socre of the motif hit, defined as -log_10(p-value).
   }
-  }}
+  }
+}
 \source{
 \url{http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks/2018/hg19/tsv/MA0139.1.tsv.gz}
 }

@@ -6,3 +6,7 @@
 ^_pkgdown\.yml$
 ^\.travis\.yml$
 ^codecov\.yml$
+^README\.Rmd$
+^doc$
+^Meta$
+^\.github$
